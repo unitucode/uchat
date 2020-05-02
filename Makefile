@@ -1,6 +1,5 @@
-NAME = uchat
-CLIENT = client
-SERVER = server
+CLIENT = uchat
+SERVER = chat_server
 
 EMPTY = 
 SPACE = $(EMPTY) $(EMPTY)
@@ -12,16 +11,12 @@ INCD = inc
 
 
 SRCD_CLIENT = $(addprefix $(SRCD)/, client)
-
 SRCD_SERVER = $(addprefix $(SRCD)/, server)
-
-SRCD_UTILS = $(addprefix $(SRCD)/, utils)
+SRCD_UTILS = $(addprefix $(SRCD)/, utils utils/wrappers)
 
 
 INCD_CLIENT = $(addprefix $(INCD)/, client_inc)
-
 INCD_SERVER = $(addprefix $(INCD)/, server_inc)
-
 INCD_UTILS = $(addprefix $(INCD)/, utils_inc)
 
 
@@ -29,28 +24,26 @@ SRC_CLIENT = $(foreach dir,$(SRCD_CLIENT), $(wildcard $(dir)/*.c))
 SRC_SERVER = $(foreach dir,$(SRCD_SERVER), $(wildcard $(dir)/*.c))
 SRC_UTILS = $(foreach dir,$(SRCD_UTILS), $(wildcard $(dir)/*.c))
 
+
 OBJS_CLIENT = $(addprefix $(OBJD)/, $(notdir $(SRC_CLIENT:%.c=%.o)))
 OBJS_SERVER = $(addprefix $(OBJD)/, $(notdir $(SRC_SERVER:%.c=%.o)))
 OBJS_UTILS = $(addprefix $(OBJD)/, $(notdir $(SRC_UTILS:%.c=%.o)))
 
+
 CFLAGS = -std=c11 $(addprefix -W, all extra error pedantic)
 CPPFLAGS = -I$(INCD_UTILS)
-
 CC = clang
 
-all: $(NAME)
-
-$(NAME): $(CLIENT) $(SERVER)
+all: $(CLIENT) $(SERVER)
 
 $(CLIENT): CPPFLAGS += -I$(INCD_CLIENT)
-
 $(SERVER): CPPFLAGS += -I$(INCD_SERVER)
 
 $(CLIENT): $(OBJS_CLIENT) $(OBJS_UTILS)
 $(SERVER): $(OBJS_SERVER) $(OBJS_UTILS)
 
 $(SERVER) $(CLIENT):
-	@$(CC) -o $@ $<
+	@$(CC) -o $@ $^
 	@printf "\x1b[32;1m$@ created\x1b[0m\n"
 
 $(OBJS_CLIENT) $(OBJS_UTILS) $(OBJS_SERVER): obj/%.o: %.c | $(OBJD)
