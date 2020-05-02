@@ -23,4 +23,5 @@ void mx_push_node(t_list *list, void *data, size_t index);
 void mx_remove_node(t_list *list, size_t index);
 t_node *mx_new_node(void *data);
 t_list *mx_new_list();
+void mx_delete_list(t_list **list);
 
