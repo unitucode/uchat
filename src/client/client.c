@@ -1,17 +1,46 @@
 #include "client.h"
 
-int main(int argc, char **argv) {
-    argc++;
-    argv++;
-    t_list *list = mx_new_list();
+static int sockfd;
+static FILE *fp;
+static int done;
 
-    mx_push_node(list, strdup("hello1"), 0);
-    mx_push_node(list, strdup("hello2"), 0);
-    printf("size = %zu\n", list->size);
-    for (t_node *node = list->head; node; node = node->next) {
-        fprintf(stderr, "%s\n", node->data);
-    }
-    fprintf(stderr, "test\n");
-    mx_delete_list(&list);
-    system("leaks -q uchat");
+void *copyto(void *arg) {
+    char sendline[1024];
+    arg = NULL;
+    while (fgets(sendline, 1024, fp) != NULL)
+        write(sockfd, sendline, strlen(sendline));
+    
+    shutdown(sockfd, SHUT_WR);
+    done = 1;
+    return NULL;
 }
+
+void str_cli(FILE *fp_arg, int sockfd_arg) {
+    char *recvline = mx_malloc(1025);
+    pthread_t tid;
+
+    sockfd = sockfd_arg;
+    fp = fp_arg;
+    mx_pthread_create(&tid, NULL, copyto, NULL);
+
+    FILE *fd = fdopen(sockfd, "r");
+    size_t len = 0;
+    while (getline(&recvline, &len, fd) > 0)
+        fputs(recvline, stdout);
+
+    if (done == 0)
+        exit(1);
+}
+
+
+int main(int argc, char **argv) {
+    int sockfd;
+
+    if (argc != 3) {
+        printf("usage\n");
+        exit(1);
+    }
+    sockfd = mx_tcp_connect(argv[1], argv[2]);
+    str_cli(stdin, sockfd);
+}
+
