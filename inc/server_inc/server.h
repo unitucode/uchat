@@ -8,6 +8,7 @@ typedef struct s_client {
     struct sockaddr *cliaddr;
     socklen_t len;
     char ip[INET_ADDRSTRLEN];
+    char port[8];
     int socket_fd;
 }              t_client;
 
