@@ -3,25 +3,26 @@
 static void *doit(void *arg);
 
 int main(int argc, char **argv) {
-    int listen_fd, *iptr;
-    pthread_t tid;
-    socklen_t addrlen, len;
-    struct sockaddr *cliaddr;
+    int listen_fd = 0;
+    pthread_t tid = 0;
+    struct sockaddr *cliaddr = NULL;
+    t_client *client = mx_new_client();
+    t_list *list = mx_new_list();
 
     if (argc == 2) {
-        listen_fd = mx_tcp_listen(argv[1], &addrlen);
+        listen_fd = mx_tcp_listen(argv[1], &client->len);
     }
     else {
         printf("usage");
         exit(1);
     }
-    cliaddr = mx_malloc(addrlen);
+    client->cliaddr = mx_malloc(client->len);
 
     while (1) {
-        len = addrlen;
-        iptr = mx_malloc(sizeof(int));
-        *iptr = mx_accept(listen_fd, cliaddr, &len);
-        mx_pthread_create(&tid, NULL, &doit, iptr);
+        client->socket_fd = mx_accept(listen_fd, cliaddr, &client->len);
+        mx_get_client_info(client);
+        mx_push_node(list, client, MX_LIST_BACK);
+        mx_pthread_create(&tid, NULL, &doit, list);
     }
 }
 
@@ -41,11 +42,11 @@ again:
 }
 
 static void *doit(void *arg) {
-    int connfd = *((int *)arg);
-    printf("connfd = %d\n", connfd);
-    free(arg);
+    t_list *list = (t_list*)arg;
+    t_client *client = (t_client *)list->head->data;
+    printf("connected %s\n", client->ip);
     pthread_detach(pthread_self());
-    str_echo(connfd);
-    mx_close(connfd);
+    str_echo(client->socket_fd);
+    mx_close(client->socket_fd);
     return NULL;
 }

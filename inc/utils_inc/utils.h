@@ -12,6 +12,7 @@
 #include <netdb.h>
 #include <pthread.h>
 #include <errno.h>
+#include <stdbool.h>
 
 #define MX_LIST_BACK 0
 
@@ -43,6 +44,8 @@ int mx_accept(int socket, struct sockaddr *restrict address,
               socklen_t *restrict address_len);
 int mx_pthread_create(pthread_t *thread, const pthread_attr_t *attr,
                    void *(*start_routine)(void *), void *arg);
+int mx_getaddrinfo(const char *hostname, const char *servname,
+                   const struct addrinfo *hints, struct addrinfo **res);
 
 //list
 void mx_push_node(t_list *list, void *data, size_t index);
