@@ -1,19 +1,19 @@
 #include "utils.h"
 
 /*
- * Write current time to log
+ * Write current time to the log
  */
 void mx_log_time(FILE *fd) {
     long ttime = time(NULL);
     char *stime = ctime(&ttime);
     char *rtime = strndup(stime, strlen(stime) - 1);
 
-    fprintf(fd, "%s\t", rtime);
+    fprintf(fd, "[%s] ", rtime);
     free(rtime);
 }
 
 /*
- * Write type to log
+ * Write type to the log
  */
 void mx_log_type(FILE *fd, t_logtype type) {
     if (type == LOGMSG)
@@ -22,4 +22,12 @@ void mx_log_type(FILE *fd, t_logtype type) {
         fprintf(fd, "WARNING: ");
     else if (type == LOGERR)
         fprintf(fd, "ERROR: ");
+}
+
+/*
+ * If there is errno, write it to the log
+*/
+void mx_log_errno(FILE *fd) {
+    if (errno != 0)
+        fprintf(fd, "[ERRNO is %d: %s] ", errno, strerror(errno));
 }
