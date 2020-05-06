@@ -43,6 +43,20 @@ typedef enum e_logtype {
     LOGERR
 }            t_logtype;
 
+
+typedef enum e_msg_types {
+    MX_LOGIN = 48,
+    MX_PASSWORD = 49,
+    MX_USER_COUNT = 50,
+    MX_MESSAGE = 51,
+    MX_FILE = 52
+}            t_msg_types;
+
+typedef struct s_msg_config {
+    char *message;
+    char *len;
+}              t_msg_config;
+
 //wrappers
 void *mx_malloc(size_t size);
 int mx_socket(int domain, int type, int protocol);
@@ -72,3 +86,9 @@ void mx_log_type(FILE *fd, t_logtype type);
 void mx_log_errno(FILE *fd);
 void mx_loger(const char *file, t_logtype type, const char *fmt, ...);
 void mx_eloger(const char *file, t_logtype type, const char *fmt, ...);
+
+//Protocol
+t_msg_config *mx_message_typing(int msg_type, char *message);
+void mx_free_msg_stract(t_msg_config *msg);
+void mx_strdel(void **tds);
+char *mx_itoa(int number);
