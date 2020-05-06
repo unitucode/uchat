@@ -69,5 +69,6 @@ void mx_delete_list(t_list **list);
 //logs
 void mx_log_time(FILE *fd);
 void mx_log_type(FILE *fd, t_logtype type);
+void mx_log_errno(FILE *fd);
 void mx_loger(const char *file, t_logtype type, const char *fmt, ...);
 void mx_eloger(const char *file, t_logtype type, const char *fmt, ...);
