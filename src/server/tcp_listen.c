@@ -58,7 +58,7 @@ int mx_tcp_listen(const char *serv, socklen_t *addr_len) {
         mx_close(lis_fd);
     }
     if (!res)
-        exit(1); //error
+        mx_elogger(MX_LOG_FILE, LOGERR, "tcp_listen\n");
     mx_listen(lis_fd, MX_LISTENQ);
     if (addr_len)
         *addr_len = res->ai_addrlen;

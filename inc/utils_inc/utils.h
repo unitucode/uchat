@@ -18,6 +18,7 @@
 
 
 #define MX_LIST_BACK 0
+#define MX_LOG_FILE "info.log"
 
 typedef struct s_node {
     void *data;
@@ -43,6 +44,20 @@ typedef enum e_logtype {
     LOGERR
 }            t_logtype;
 
+
+typedef enum e_msg_types {
+    MX_LOGIN = 48,
+    MX_PASSWORD = 49,
+    MX_USER_COUNT = 50,
+    MX_MESSAGE = 51,
+    MX_FILE = 52
+}            t_msg_types;
+
+typedef struct s_msg_config {
+    char *message;
+    char *len;
+}              t_msg_config;
+
 //wrappers
 void *mx_malloc(size_t size);
 int mx_socket(int domain, int type, int protocol);
@@ -58,6 +73,8 @@ int mx_getaddrinfo(const char *hostname, const char *servname,
 int mx_pthread_mutex_init(pthread_mutex_t *mutex,
                           const pthread_mutexattr_t *attr);
 int mx_pthread_mutex_destroy(pthread_mutex_t *mutex);
+int mx_pthread_mutex_lock(pthread_mutex_t *mutex);
+int pthread_mutex_unlock(pthread_mutex_t *mutex);
 
 //list
 void mx_push_node(t_list *list, void *data, size_t index);
@@ -70,5 +87,11 @@ void mx_delete_list(t_list **list);
 void mx_log_time(FILE *fd);
 void mx_log_type(FILE *fd, t_logtype type);
 void mx_log_errno(FILE *fd);
-void mx_loger(const char *file, t_logtype type, const char *fmt, ...);
-void mx_eloger(const char *file, t_logtype type, const char *fmt, ...);
+void mx_logger(const char *file, t_logtype type, const char *fmt, ...);
+void mx_elogger(const char *file, t_logtype type, const char *fmt, ...);
+
+//Protocol
+t_msg_config *mx_message_typing(int msg_type, char *message);
+void mx_free_msg_stract(t_msg_config *msg);
+void mx_strdel(void **tds);
+char *mx_itoa(int number);

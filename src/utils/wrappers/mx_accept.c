@@ -10,9 +10,8 @@ int mx_accept(int socket, struct sockaddr *restrict address,
     while ((n = accept(socket, address, address_len)) < 0) {
         if (errno == ECONNABORTED)
             continue;
-        else {
-            //error
-        }
+        else
+            mx_elogger(MX_LOG_FILE, LOGERR, "accept\n");
     }
     return n;
 }

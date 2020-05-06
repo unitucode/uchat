@@ -5,10 +5,8 @@ t_chat *mx_init_chat(int argc, char **argv) {
 
     if (argc == 2)
         chat->listen_fd = mx_tcp_listen(argv[1], &chat->len);
-    else {
-        perror("usage"); //error
-        exit(1);
-    }
+    else
+        mx_elogger(NULL, LOGMSG, "usage: ./chat_server <port>\n");
     chat->clients = mx_new_list();
     mx_pthread_mutex_init(&chat->mutex, NULL);
     return chat;
