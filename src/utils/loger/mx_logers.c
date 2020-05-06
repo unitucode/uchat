@@ -36,9 +36,3 @@ void mx_eloger(const char *file, t_logtype type, const char *fmt, ...) {
     va_end(ap);
     exit(1);
 }
-
-int main() {
-    mx_loger(NULL, LOGWAR, "It is warrning %d\n", 2);
-    mx_loger("log", LOGMSG, "It is warrning %d\n", 3);
-    system("leaks -q a.out");
-}
