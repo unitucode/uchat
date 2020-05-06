@@ -6,9 +6,13 @@ static int done;
 
 void *copyto(void *arg) {
     char sendline[1024];
+    t_msg_config *msg = NULL;
     arg = NULL;
-    while (fgets(sendline, 1024, fp) != NULL)
-        write(sockfd, sendline, strlen(sendline));
+    while (fgets(sendline, 1024, fp) != NULL) {
+        msg = mx_message_typing(MX_LOGIN, sendline);
+        write(sockfd, msg->message, strlen(msg->message));
+        mx_free_msg_stract(msg);
+    }
     
     shutdown(sockfd, SHUT_WR);
     done = 1;

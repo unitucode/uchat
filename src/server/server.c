@@ -31,8 +31,10 @@ void str_echo(int sockfd) {
     char buf[1024];
 
 again:
-    while ((n = read(sockfd, buf, 1024)) > 0)
+    while ((n = read(sockfd, buf, 1024)) > 0) {
+        puts(buf);
         write(sockfd, buf, n);
+    }
     
     if (n < 0 && errno == EINTR)
         goto again;
