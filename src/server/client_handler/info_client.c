@@ -8,14 +8,14 @@ static void get_ipv4_info(t_client *client) {
     struct sockaddr_in *sin = (struct sockaddr_in*)client->cliaddr;
 
     if (!inet_ntop(AF_INET, &sin->sin_addr, client->ip, sizeof(client->ip))) {
-        //warning
+        mx_logger(MX_LOG_FILE, LOGWAR, "IPv4 inet_ntop\n");
     }
     if (ntohs(sin->sin_port)) {
         snprintf(client->port, sizeof(client->port),
                  "%d", ntohs(sin->sin_port));
     }
     else {
-        //warning
+        mx_logger(MX_LOG_FILE, LOGWAR, "port ntohs\n");
     }
 }
 
@@ -29,14 +29,14 @@ static void get_ipv6_info(t_client *client) {
 
     if (!inet_ntop(AF_INET6, &sin6->sin6_addr,
         client->ip, sizeof(client->ip))) {
-        //warning
+        mx_logger(MX_LOG_FILE, LOGWAR, "IPv6 inet_ntop\n");
     }
     if (ntohs(sin6->sin6_port)) {
         snprintf(client->port, sizeof(client->port),
                  "%d", ntohs(sin6->sin6_port));
     }
     else {
-        //Warning
+        mx_logger(MX_LOG_FILE, LOGWAR, "port ntohs\n");
     }
 }
 

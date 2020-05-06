@@ -4,6 +4,7 @@
 
 #define MX_LISTENQ 1024
 #define MX_PORT_LEN 8
+#define MX_SERVER_LOG_FILE "server.log"
 
 typedef struct s_client {
     struct sockaddr *cliaddr;

@@ -40,6 +40,7 @@ int main(int argc, char **argv) {
         printf("usage\n");
         exit(1);
     }
+    mx_logger(MX_LOG_FILE, LOGMSG, "started client: %s %s %s\n", argv[0], argv[1], argv[2]);
     sockfd = mx_tcp_connect(argv[1], argv[2]);
     str_cli(stdin, sockfd);
 }

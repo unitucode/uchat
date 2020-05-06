@@ -31,7 +31,7 @@ int mx_tcp_connect(const char *host, const char *serv) {
         mx_close(sockfd);
     }
     if (!res)
-        exit(1); //error
+        mx_elogger(MX_LOG_FILE, LOGERR, "tcp_connect\n");
     freeaddrinfo(res_save);
     return sockfd;
 }
