@@ -19,8 +19,10 @@ void mx_logger(const char *file, t_logtype type, const char *fmt, ...) {
         va_end(ap);
         fclose(fd);
     }
-    else
+    else {
         perror("Can't open/create logfile");
+        errno = 0;
+    }
 }
 
 /*
@@ -42,6 +44,8 @@ void mx_elogger(const char *file, t_logtype type, const char *fmt, ...) {
         va_end(ap);
         exit(1);
     }
-    else
+    else {
         perror("Can't open/create logfile");
+        errno = 0;
+    }
 }
