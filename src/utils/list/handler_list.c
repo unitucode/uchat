@@ -53,28 +53,6 @@ void mx_remove_node(t_list *list, size_t index) {
 }
 
 /*
- * Creates new node of list
- */
-t_node *mx_new_node(void *data) {
-    t_node *new_node = mx_malloc(sizeof(t_node));
-
-    new_node->data = data;
-    new_node->next = NULL;
-    return new_node;
-}
-
-/*
- * Creates new list of nodes
- */
-t_list *mx_new_list() {
-    t_list *new_list = mx_malloc(sizeof(t_list));
-
-    new_list->head = NULL;
-    new_list->size = 0;
-    return new_list;
-}
-
-/*
  * Deletes list of nodes
  */
 void mx_delete_list(t_list **list) {

@@ -1,48 +1,67 @@
 #include "server.h"
 
 /*
- * Listens to socket and port
- * Works with IPv4 and IPv6
+ * Sets socket and validates
  */
-int mx_tcp_listen(const char *serv, socklen_t *addr_len) {
-    int listen_fd, n;
-    const int on = 1;
-    struct addrinfo	hints, *res = NULL, *ressave = NULL;
+static bool set_socket(int *lis_fd, struct addrinfo *res) {
+    *lis_fd = socket(res->ai_family, res->ai_socktype, res->ai_protocol);
+    if (*lis_fd < 0)
+        return true;
+    return false;
+}
+
+/*
+ * Initialization sockopt for setsockopt
+ */
+static void init_sockopt(int fd, const int on) {
+    t_sockopt sockopt;
+
+    sockopt.socket = fd;
+    sockopt.level = SOL_SOCKET;
+    sockopt.option_name = SO_REUSEADDR;
+    sockopt.option_value = &on;
+    sockopt.option_len = sizeof(on);
+    mx_setsockopt(&sockopt);
+}
+
+/*
+ * Initialization res for addrinfo
+ */
+static struct addrinfo *init_res(const char *serv) {
+    struct addrinfo *res;
+    struct addrinfo hints;
 
     bzero(&hints, sizeof(struct addrinfo));
     hints.ai_flags = AI_PASSIVE;
     hints.ai_family = AF_UNSPEC;
     hints.ai_socktype = SOCK_STREAM;
+    mx_getaddrinfo(NULL, serv, &hints, &res);
+    return res;
+}
 
-    if ((n = getaddrinfo(NULL, serv, &hints, &res)) != 0) {
-        fprintf(stderr, "tcp_listen error\n");
-        exit(1);
-    }
+/*
+ * Listens to socket and port
+ * Works with IPv4, IPv6 and domens
+ */
+int mx_tcp_listen(const char *serv, socklen_t *addr_len) {
+    int lis_fd = 0;
+    const int on = 1;
+    struct addrinfo	*res_save = init_res(serv);
+    struct addrinfo *res = NULL;
 
-    do {
-        listen_fd = socket(res->ai_family, res->ai_socktype, res->ai_protocol);
-        if (listen_fd < 0)
+    for (res = res_save; res; res = res->ai_next) {
+        if (set_socket(&lis_fd, res))
             continue;
-        t_sockopt sockopt;
-        sockopt.socket = listen_fd;
-        sockopt.level = SOL_SOCKET;
-        sockopt.option_name = SO_REUSEADDR;
-        sockopt.option_value = &on;
-        sockopt.option_len = sizeof(on);
-        mx_setsockopt(&sockopt);
-        if (bind(listen_fd, res->ai_addr, res->ai_addrlen) == 0)
+        init_sockopt(lis_fd, on);
+        if (!bind(lis_fd, res->ai_addr, res->ai_addrlen))
             break;
-        mx_close(listen_fd);
-    } while ((res = res->ai_next) != NULL);
-
-    if (res == NULL)
-        exit(1);
-
-    mx_listen(listen_fd, MX_LISTENQ);
-
+        mx_close(lis_fd);
+    }
+    if (!res)
+        exit(1); //error
+    mx_listen(lis_fd, MX_LISTENQ);
     if (addr_len)
         *addr_len = res->ai_addrlen;
-    
-    freeaddrinfo(ressave);
-    return listen_fd;
+    freeaddrinfo(res_save);
+    return lis_fd;
 }
