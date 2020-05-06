@@ -13,6 +13,9 @@
 #include <pthread.h>
 #include <errno.h>
 #include <stdbool.h>
+#include <stdarg.h>
+#include <time.h>
+
 
 #define MX_LIST_BACK 0
 
@@ -34,6 +37,12 @@ typedef struct s_sockopt {
     socklen_t option_len;
 }              t_sockopt;
 
+typedef enum e_logtype {
+    LOGMSG,
+    LOGWAR,
+    LOGERR
+}            t_logtype;
+
 //wrappers
 void *mx_malloc(size_t size);
 int mx_socket(int domain, int type, int protocol);
@@ -54,3 +63,8 @@ t_node *mx_new_node(void *data);
 t_list *mx_new_list();
 void mx_delete_list(t_list **list);
 
+//logs
+void mx_log_time(FILE *fd);
+void mx_log_type(FILE *fd, t_logtype type);
+void mx_loger(const char *file, t_logtype type, const char *fmt, ...);
+void mx_eloger(const char *file, t_logtype type, const char *fmt, ...);
