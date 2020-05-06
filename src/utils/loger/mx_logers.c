@@ -16,6 +16,7 @@ void mx_loger(const char *file, t_logtype type, const char *fmt, ...) {
     va_start(ap, fmt);
     vfprintf(fd, fmt, ap);
     va_end(ap);
+    fclose(fd);
 }
 
 /*

@@ -28,3 +28,5 @@ t_client *mx_new_client(socklen_t len);
 t_chat *mx_init_chat(int argc, char **argv);
 void mx_deinit_chat(t_chat **chat);
 void *client_handler(void *arg);
+void mx_delete_client_list(t_list *list, t_client *client);
+void mx_delete_client(t_client **client);

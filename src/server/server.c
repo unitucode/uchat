@@ -8,7 +8,7 @@ int main(int argc, char **argv) {
         client = mx_new_client(chat->len);
         client->socket_fd = mx_accept(chat->listen_fd, client->cliaddr, &client->len);
         mx_get_client_info(client);
-        printf("connected %s:%s\n", client->ip, client->port);
+        mx_loger("log.log", LOGMSG, "connected %s:%s\n", client->ip, client->port);
         mx_push_node(chat->clients, client, MX_LIST_BACK);
         chat->current_client = client;
         mx_pthread_create(&client->tid, NULL, &client_handler, chat);
