@@ -5,7 +5,7 @@
  */
 void mx_logger(const char *file, t_logtype type, const char *fmt, ...) {
     va_list ap;
-    FILE *fd;
+    FILE *fd = NULL;
 
     if (file == NULL)
         fd = stderr;
@@ -28,7 +28,7 @@ void mx_logger(const char *file, t_logtype type, const char *fmt, ...) {
  */
 void mx_elogger(const char *file, t_logtype type, const char *fmt, ...) {
     va_list ap;
-    FILE *fd;
+    FILE *fd = NULL;
 
     if (file == NULL)
         fd = stderr;
