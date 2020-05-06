@@ -46,6 +46,9 @@ int mx_pthread_create(pthread_t *thread, const pthread_attr_t *attr,
                    void *(*start_routine)(void *), void *arg);
 int mx_getaddrinfo(const char *hostname, const char *servname,
                    const struct addrinfo *hints, struct addrinfo **res);
+int mx_pthread_mutex_init(pthread_mutex_t *mutex,
+                          const pthread_mutexattr_t *attr);
+int mx_pthread_mutex_destroy(pthread_mutex_t *mutex);
 
 //list
 void mx_push_node(t_list *list, void *data, size_t index);
