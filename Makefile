@@ -12,7 +12,7 @@ INCD = inc
 
 SRCD_CLIENT = $(addprefix $(SRCD)/, client)
 SRCD_SERVER = $(addprefix $(SRCD)/, server)
-SRCD_UTILS = $(addprefix $(SRCD)/, utils utils/wrappers)
+SRCD_UTILS = $(addprefix $(SRCD)/, utils utils/wrappers utils/list)
 
 
 INCD_CLIENT = $(addprefix $(INCD)/, client_inc)
@@ -63,4 +63,4 @@ clean:
 	@rm -rf $(OBJD)
 	@printf "\x1b[34;1mdeleted $(OBJD)\x1b[0m\n"
 
-reinstall: uninstall $(NAME)
+reinstall: uninstall all

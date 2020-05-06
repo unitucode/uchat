@@ -1,26 +1,53 @@
 #include "server.h"
 
-t_client *mx_new_client(socklen_t len) {
-    t_client *client = malloc(sizeof(t_client));
-
-    bzero(client->ip, sizeof(client->ip));
-    bzero(client->port, sizeof(client->port));
-    client->len = len;
-    client->cliaddr = mx_malloc(len);
-    client->socket_fd = 0;
-    return client;
-}
-
-void mx_get_client_info(t_client *client) {
+/*
+ * Gets IPv4 from sockaddr_in to client->ip
+ * and port from sin->sin_port to client->port
+ */
+static void get_ipv4_info(t_client *client) {
     struct sockaddr_in *sin = (struct sockaddr_in*)client->cliaddr;
 
     if (!inet_ntop(AF_INET, &sin->sin_addr, client->ip, sizeof(client->ip))) {
         //warning
     }
-    if (ntohs(sin->sin_port) != 0) {
-        snprintf(client->port, sizeof(client->port), "%d", ntohs(sin->sin_port));
+    if (ntohs(sin->sin_port)) {
+        snprintf(client->port, sizeof(client->port),
+                 "%d", ntohs(sin->sin_port));
+    }
+    else {
+        //warning
+    }
+}
+
+
+/*
+ * Gets IPv6 from sockaddr_in6->sin6_addr to client->ip
+ * and port from sin6->sin6_port to client->port
+ */
+static void get_ipv6_info(t_client *client) {
+    struct sockaddr_in6 *sin6 = (struct sockaddr_in6*)client->cliaddr;
+
+    if (!inet_ntop(AF_INET6, &sin6->sin6_addr,
+        client->ip, sizeof(client->ip))) {
+        //warning
+    }
+    if (ntohs(sin6->sin6_port)) {
+        snprintf(client->port, sizeof(client->port),
+                 "%d", ntohs(sin6->sin6_port));
     }
     else {
         //Warning
+    }
+}
+
+/*
+ * Gets clients ip and port
+ */
+void mx_get_client_info(t_client *client) {
+    if (client->cliaddr->sa_family == AF_INET) {
+        get_ipv4_info(client);    
+    }
+    else if (client->cliaddr->sa_family == AF_INET6) {
+        get_ipv6_info(client);
     }
 }
