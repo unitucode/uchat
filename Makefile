@@ -29,7 +29,6 @@ OBJS_CLIENT = $(addprefix $(OBJD)/, $(notdir $(SRC_CLIENT:%.c=%.o)))
 OBJS_SERVER = $(addprefix $(OBJD)/, $(notdir $(SRC_SERVER:%.c=%.o)))
 OBJS_UTILS = $(addprefix $(OBJD)/, $(notdir $(SRC_UTILS:%.c=%.o)))
 
-
 CFLAGS = -std=c11 $(addprefix -W, all extra error pedantic)
 CPPFLAGS = -I$(INCD_UTILS)
 CC = clang
@@ -43,7 +42,7 @@ $(CLIENT): $(OBJS_CLIENT) $(OBJS_UTILS)
 $(SERVER): $(OBJS_SERVER) $(OBJS_UTILS)
 
 $(SERVER) $(CLIENT):
-	@$(CC) -o $@ $^
+	@$(CC) -l sqlite3 -o $@ $^
 	@printf "\x1b[32;1m$@ created\x1b[0m\n"
 
 $(OBJS_CLIENT) $(OBJS_UTILS) $(OBJS_SERVER): obj/%.o: %.c | $(OBJD)
