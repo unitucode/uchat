@@ -1,6 +1,14 @@
 #include "utils.h"
 
 /*
+ * Write pid and pgid to the log
+ */
+void mx_log_id(FILE *fd) {
+    int pid = getpid();
+    fprintf(fd, "[pid: %d|pgid: %d]", pid, getpgid(pid));
+}
+
+/*
  * Write current time to the log
  */
 void mx_log_time(FILE *fd) {
@@ -26,7 +34,7 @@ void mx_log_type(FILE *fd, t_logtype type) {
 
 /*
  * If there is errno, write it to the log
-*/
+ */
 void mx_log_errno(FILE *fd) {
     if (errno != 0) {
         fprintf(fd, "[ERRNO is %d: %s] ", errno, strerror(errno));
