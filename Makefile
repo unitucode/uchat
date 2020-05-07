@@ -1,5 +1,5 @@
 CLIENT = uchat
-SERVER = chat_server
+SERVER = uchat_server
 
 EMPTY = 
 SPACE = $(EMPTY) $(EMPTY)
@@ -12,7 +12,7 @@ INCD = inc
 
 SRCD_CLIENT = $(addprefix $(SRCD)/, client)
 SRCD_SERVER = $(addprefix $(SRCD)/, server server/client_handler)
-SRCD_UTILS = $(addprefix $(SRCD)/, utils utils/wrappers utils/list utils/loger utils/protocol)
+SRCD_UTILS = $(addprefix $(SRCD)/, utils utils/wrappers utils/list utils/logger utils/protocol)
 
 
 INCD_CLIENT = $(addprefix $(INCD)/, client_inc)
@@ -31,7 +31,8 @@ OBJS_UTILS = $(addprefix $(OBJD)/, $(notdir $(SRC_UTILS:%.c=%.o)))
 
 
 CFLAGS = -std=c11 $(addprefix -W, all extra error pedantic)
-CPPFLAGS = -I$(INCD_UTILS)
+CPPFLAGS += -I$(INCD_UTILS) -I/usr/local/opt/openssl/include
+LIBS += -L/usr/local/opt/openssl/lib -lssl -lcrypto -lsqlite3
 CC = clang
 
 all: $(CLIENT) $(SERVER)
@@ -43,7 +44,7 @@ $(CLIENT): $(OBJS_CLIENT) $(OBJS_UTILS)
 $(SERVER): $(OBJS_SERVER) $(OBJS_UTILS)
 
 $(SERVER) $(CLIENT):
-	@$(CC) -o $@ $^
+	@$(CC) -o $@ $^ $(LIBS)
 	@printf "\x1b[32;1m$@ created\x1b[0m\n"
 
 $(OBJS_CLIENT) $(OBJS_UTILS) $(OBJS_SERVER): obj/%.o: %.c | $(OBJD)

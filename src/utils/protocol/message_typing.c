@@ -22,6 +22,7 @@ t_pds *mx_request_creation(int req_type, char *req_body) {
     req_struct->len = strdup(str);
     return req_struct;
 }
+
 t_pdl *mx_request_decode(char *request) {
     t_pdl *decode_struct = malloc(sizeof(t_pdl));
     char str[1024];

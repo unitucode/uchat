@@ -13,6 +13,7 @@ void *copyto(void *arg) {
         request = mx_request_creation(MX_LOGIN, sendline); // Protocol creation
         write(sockfd, request->data, strlen(request->data));
         mx_free_request_struct(&request);
+        bzero(sendline, sizeof(sendline));
     }
     shutdown(sockfd, SHUT_WR);
     done = 1;
@@ -44,6 +45,7 @@ int main(int argc, char **argv) {
         printf("usage\n");
         exit(1);
     }
+    mx_logger(MX_LOG_FILE, LOGMSG, "started client: %s %s %s\n", argv[0], argv[1], argv[2]);
     sockfd = mx_tcp_connect(argv[1], argv[2]);
     str_cli(stdin, sockfd);
 }

@@ -18,6 +18,7 @@
 
 
 #define MX_LIST_BACK 0
+#define MX_LOG_FILE "info.log"
 
 typedef struct s_node {
     void *data;
@@ -80,6 +81,8 @@ int mx_getaddrinfo(const char *hostname, const char *servname,
 int mx_pthread_mutex_init(pthread_mutex_t *mutex,
                           const pthread_mutexattr_t *attr);
 int mx_pthread_mutex_destroy(pthread_mutex_t *mutex);
+int mx_pthread_mutex_lock(pthread_mutex_t *mutex);
+int mx_pthread_mutex_unlock(pthread_mutex_t *mutex);
 
 //list
 void mx_push_node(t_list *list, void *data, size_t index);
@@ -89,11 +92,12 @@ t_list *mx_new_list();
 void mx_delete_list(t_list **list);
 
 //logs
+void mx_log_id(FILE *fd);
 void mx_log_time(FILE *fd);
-void mx_log_type(FILE *fd, t_logtype type);
 void mx_log_errno(FILE *fd);
-void mx_loger(const char *file, t_logtype type, const char *fmt, ...);
-void mx_eloger(const char *file, t_logtype type, const char *fmt, ...);
+void mx_log_type(FILE *fd, t_logtype type);
+void mx_logger(const char *file, t_logtype type, const char *fmt, ...);
+void mx_elogger(const char *file, t_logtype type, const char *fmt, ...);
 
 //Protocol
 t_pds *mx_request_creation(int req_type, char *request);
