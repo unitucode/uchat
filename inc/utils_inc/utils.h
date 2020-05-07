@@ -52,10 +52,18 @@ typedef enum e_msg_types {
     MX_FILE = 52
 }            t_msg_types;
 
-typedef struct s_msg_config {
-    char *message;
+typedef struct s_pds { // Protocol Data Short view
+    char *data;
     char *len;
-}              t_msg_config;
+}              t_pds;
+
+typedef struct s_pdl { // Protocol Data Long view
+    int type;
+    char *data;
+    char *len;
+}              t_pdl;
+
+
 
 //wrappers
 void *mx_malloc(size_t size);
@@ -88,7 +96,9 @@ void mx_loger(const char *file, t_logtype type, const char *fmt, ...);
 void mx_eloger(const char *file, t_logtype type, const char *fmt, ...);
 
 //Protocol
-t_msg_config *mx_message_typing(int msg_type, char *message);
-void mx_free_msg_stract(t_msg_config *msg);
+t_pds *mx_request_creation(int req_type, char *request);
+t_pdl *mx_request_decode(char *request);
+void mx_free_request_struct(t_pds **request);
+void mx_free_decode_struct(t_pdl **decode_req);
 void mx_strdel(void **tds);
 char *mx_itoa(int number);

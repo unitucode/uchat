@@ -3,9 +3,11 @@
 static void str_echo(int sockfd, t_list *list, t_client *cur_client) {
     ssize_t n;
     char buf[1024];
+    t_pdl *decode_req = NULL;
 
 again:
     while ((n = read(sockfd, buf, 1024)) > 0) {
+        decode_req = mx_request_decode(buf); // Protocol decoding
         for (t_node *cur = list->head; cur; cur = cur->next) {
             t_client *client = (t_client*)cur->data;
             if (cur_client->socket_fd != client->socket_fd)
