@@ -32,7 +32,7 @@ OBJS_UTILS = $(addprefix $(OBJD)/, $(notdir $(SRC_UTILS:%.c=%.o)))
 
 CFLAGS = -std=c11 $(addprefix -W, all extra error pedantic)
 CPPFLAGS += -I$(INCD_UTILS) -I/usr/local/opt/openssl/include
-LIBS += -L/usr/local/opt/openssl/lib -lssl -lcrypto -lsqlite3
+LIBS += -L/usr/local/opt/openssl/lib -lssl -lcrypto -lsqlite3 -lpthread
 CC = clang
 
 all: $(CLIENT) $(SERVER)
