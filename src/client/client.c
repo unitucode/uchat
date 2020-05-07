@@ -12,6 +12,7 @@ void *copyto(void *arg) {
         msg = mx_message_typing(MX_LOGIN, sendline);
         write(sockfd, msg->message, strlen(msg->message));
         mx_free_msg_stract(msg);
+        bzero(sendline, sizeof(sendline));
     }
     
     shutdown(sockfd, SHUT_WR);

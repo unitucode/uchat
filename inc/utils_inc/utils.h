@@ -74,7 +74,7 @@ int mx_pthread_mutex_init(pthread_mutex_t *mutex,
                           const pthread_mutexattr_t *attr);
 int mx_pthread_mutex_destroy(pthread_mutex_t *mutex);
 int mx_pthread_mutex_lock(pthread_mutex_t *mutex);
-int pthread_mutex_unlock(pthread_mutex_t *mutex);
+int mx_pthread_mutex_unlock(pthread_mutex_t *mutex);
 
 //list
 void mx_push_node(t_list *list, void *data, size_t index);
