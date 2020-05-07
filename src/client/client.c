@@ -1,4 +1,5 @@
 #include "client.h"
+#include <sqlite3.h>
 
 static int sockfd;
 static FILE *fp;
@@ -32,10 +33,29 @@ void str_cli(FILE *fp_arg, int sockfd_arg) {
         exit(1);
 }
 
+static int callback(void* data, int argc, char** argv, char** azColName) {  
+    fprintf(stderr, "%s: ", (const char*)data); 
+  
+    for (int i = 0; i < argc; i++) { 
+        printf("%s = %s\n", azColName[i], argv[i] ? argv[i] : "NULL"); 
+    } 
+    printf("\n"); 
+    return 0; 
+} 
 
 int main(int argc, char **argv) {
     int sockfd;
+    sqlite3* DB;
+    int vlad = 0; 
+    vlad = sqlite3_open( "vlad.db", &DB);
 
+    char *sql1 = "INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY) "\
+                 "VALUES (5, 'vlad', 45, 'starichervicha', 200000000.00 ); ";
+    vlad = sqlite3_exec(DB, sql1, callback, 0, 0); 
+    char *sql = "SELECT ID from COMPANY WHERE NAME = 'vlad'";
+
+    vlad = sqlite3_exec(DB, sql, callback, (void*)"company worker", 0); 
+    sqlite3_close(DB);
     if (argc != 3) {
         printf("usage\n");
         exit(1);

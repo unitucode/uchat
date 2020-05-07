@@ -1,11 +1,10 @@
 #include "server.h"
-#include "sqlite3.h"
+#include <sqlite3.h>
 
-static int callback(void* data, int argc, char** argv, char** azColName) { 
-    int i; 
+static int callback(void* data, int argc, char** argv, char** azColName) {  
     fprintf(stderr, "%s: ", (const char*)data); 
   
-    for (i = 0; i < argc; i++) { 
+    for (int i = 0; i < argc; i++) { 
         printf("%s = %s\n", azColName[i], argv[i] ? argv[i] : "NULL"); 
     } 
     printf("\n"); 
@@ -13,47 +12,41 @@ static int callback(void* data, int argc, char** argv, char** azColName) {
 } 
 
 int main(int argc, char **argv) {
-    t_chat *chat = mx_init_chat(argc, argv);
-    t_client *client = NULL;
+    // start vlad
     sqlite3* DB;
     int vlad = 0; 
     vlad = sqlite3_open( "vlad.db", &DB);
-    // char *sql = "CREATE TABLE PERSON("
-    //             "ID INT PRIMARY KEY     NOT NULL, "
-    //             "NAME           TEXT    NOT NULL, "
-    //             "SURNAME          TEXT     NOT NULL, "
-    //             "AGE            INT     NOT NULL, "
-    //             "ADDRESS        CHAR(50), "
-    //             "SALARY         REAL );";
-    char *query = "SELECT * FROM PERSON;";
-    printf("до вставленяня\n\n");
-    sqlite3_exec(DB, query, callback, NULL, NULL);
-//    sql = ("INSERT INTO PERSON VALUES(1, 'STEVE', 'GATES', 30, 'PALO ALTO', 1000.0);"
-//                "INSERT INTO PERSON VALUES(2, 'BILL', 'ALLEN', 20, 'SEATTLE', 300.22);"
-//                "INSERT INTO PERSON VALUES(3, 'PAUL', 'JOBS', 24, 'SEATTLE', 9900.0);"); 
-    printf("after вставленяня\n\n");
-    char **base = {"vlad", "sasha", "pasha", "ura"}
-    char *sql = "INSERT INTO PERSON VALUES(2, 'BILL', 'ALLEN', 20, 'SEATTLE', 300.22);";
-    for () {
-
-    }
-    // vlad = sqlite3_exec(DB, sql, callback, 0, 0); 
-    // if (vlad != SQLITE_OK) {
-    //     printf("\nerror!!!\n\n");
-    // }
-    // else {
-    //     printf("\ncreated Successfully\n\n");
-    // }
-    // sql = "DELETE FROM PERSON WHERE ID = 2;"; 
+    printf("vlad = %d\n", vlad);
+    char *sql = "CREATE TABLE COMPANY("  \
+      "ID INT PRIMARY KEY     NOT NULL," \
+      "NAME           TEXT    NOT NULL," \
+      "AGE            INT     NOT NULL," \
+      "ADDRESS        CHAR(50)," \
+      "SALARY         REAL );";
+    vlad = sqlite3_exec(DB, sql, 0, 0, 0); 
+    printf("vlad = %d\n", vlad);
+    sql = "INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY) "  \
+         "VALUES (1, 'Paul', 32, 'California', 20000.00 ); " \
+         "INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY) "  \
+         "VALUES (2, 'Allen', 25, 'Texas', 15000.00 ); "     \
+         "INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY)" \
+         "VALUES (3, 'Teddy', 23, 'Norway', 20000.00 );" \
+         "INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY)" \
+         "VALUES (4, 'Mark', 25, 'Rich-Mond ', 65000.00 );";
     vlad = sqlite3_exec(DB, sql, callback, 0, 0); 
+    sql = "SELECT * from COMPANY";
+    vlad = sqlite3_exec(DB, sql, callback, (void*)"company worker", 0); 
     if (vlad != SQLITE_OK) {
         printf("\nerror!\n\n");
+        printf("%d\n", vlad);
     }
     else {
         printf("\n ok\n\n");
     }
     sqlite3_close(DB);
-    
+    //end vlad
+    t_chat *chat = mx_init_chat(argc, argv);
+    t_client *client = NULL;
     while (1) {
         client = mx_new_client(chat->len);
         client->socket_fd = mx_accept(chat->listen_fd, client->cliaddr, &client->len);
