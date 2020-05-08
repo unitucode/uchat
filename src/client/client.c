@@ -28,7 +28,6 @@ void str_cli(FILE *fp_arg, SSL *ssl) {
     bzero(&buf, sizeof(buf));
     fp = fp_arg;
     mx_pthread_create(&tid, NULL, copyto, ssl);
-
     while (SSL_read(ssl, buf, sizeof(buf)))
         printf("%s", buf);
 

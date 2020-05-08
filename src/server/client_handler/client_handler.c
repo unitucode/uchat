@@ -5,7 +5,7 @@ static void send_to_all(t_list *list, t_chat *chat, t_client *cur_client, char *
     for (t_node *cur = list->head; cur; cur = cur->next) {
         t_client *client = (t_client*)cur->data;
         if (cur_client->socket_fd != client->socket_fd) {
-            SSL_write(cur_client->ssl, buf, strlen(buf));
+            SSL_write(client->ssl, buf, strlen(buf));
         }
     }
     mx_pthread_mutex_unlock(&chat->mutex);
