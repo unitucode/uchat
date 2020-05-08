@@ -16,11 +16,12 @@
 #include <stdarg.h>
 #include <time.h>
 #include <sys/stat.h>
+#include "json.h"
 
 
 #define MX_LIST_BACK 0
 #define MX_LOG_FILE "info.log"
-#define MX_ROOM_CONFIG "room_config.json"
+#define MX_ROOM_CONFIG "config.json"
 
 typedef struct s_node {
     void *data;
@@ -100,4 +101,5 @@ void mx_strdel(void **tds);
 char *mx_itoa(int number);
 
 //room_config
-char *mx_open_room_config();
+json_value *mx_open_config();
+char *mx_get_config_val(char *key);
