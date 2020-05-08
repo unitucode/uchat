@@ -11,8 +11,8 @@ void mx_logger(const char *file, t_logtype type, const char *fmt, ...) {
         fd = stderr;
     if (fd == stderr
         || (fd = fopen(file, "a")) != NULL) {
-        mx_log_id(fd);
         mx_log_time(fd);
+        mx_log_id(fd);
         mx_log_errno(fd);
         mx_log_type(fd, type);
         va_start(ap, fmt);
@@ -37,8 +37,8 @@ void mx_elogger(const char *file, t_logtype type, const char *fmt, ...) {
         fd = stderr;
     if (fd == stderr
         || (fd = fopen(file, "a")) != NULL) {
-        mx_log_id(fd);
         mx_log_time(fd);
+        mx_log_id(fd);
         mx_log_errno(fd);
         mx_log_type(fd, type);
         va_start(ap, fmt);
