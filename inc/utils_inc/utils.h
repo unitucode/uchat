@@ -17,11 +17,30 @@
 #include <time.h>
 #include <sys/stat.h>
 #include "json.h"
+#include <openssl/ssl.h>
+#include <openssl/err.h>
 
 
 #define MX_LIST_BACK 0
 #define MX_LOG_FILE "info.log"
 #define MX_ROOM_CONFIG "config.json"
+
+#define MX_CERT_FILE "certificate.crt"
+#define MX_KEY_FILE "private_key.pem"
+#define MX_KEY_PASSWORD "12345678"
+
+typedef enum e_app_type {
+    CLIENT,
+    SERVER
+}            t_app_type;
+
+typedef struct s_ssl_con {
+    SSL_CTX *ctx;
+    SSL *ssl;
+    char *cert_file;
+    char *key_file;
+    char *password;
+}              t_ssl_con;
 
 typedef struct s_node {
     void *data;
@@ -47,19 +66,30 @@ typedef enum e_logtype {
     LOGERR
 }            t_logtype;
 
-
-typedef enum e_msg_types {
+typedef enum e_request_types {
     MX_LOGIN = 48,
     MX_PASSWORD = 49,
     MX_USER_COUNT = 50,
     MX_MESSAGE = 51,
-    MX_FILE = 52
-}            t_msg_types;
+    MX_FILE = 52,
+    MX_SIZE_MSG = 53
+}            t_request_types;
 
-typedef struct s_msg_config {
-    char *message;
+typedef struct s_pds { // Protocol Data Short view
+    char *data;
     char *len;
-}              t_msg_config;
+}              t_pds;
+
+typedef struct s_pdl { // Protocol Data Long view
+    int type;
+    char *data;
+    size_t len;
+}              t_pdl;
+
+
+
+//SSL
+t_ssl_con *mx_init_ssl(t_app_type type);
 
 //wrappers
 void *mx_malloc(size_t size);
@@ -77,7 +107,7 @@ int mx_pthread_mutex_init(pthread_mutex_t *mutex,
                           const pthread_mutexattr_t *attr);
 int mx_pthread_mutex_destroy(pthread_mutex_t *mutex);
 int mx_pthread_mutex_lock(pthread_mutex_t *mutex);
-int pthread_mutex_unlock(pthread_mutex_t *mutex);
+int mx_pthread_mutex_unlock(pthread_mutex_t *mutex);
 
 //list
 void mx_push_node(t_list *list, void *data, size_t index);
@@ -95,8 +125,10 @@ void mx_logger(const char *file, t_logtype type, const char *fmt, ...);
 void mx_elogger(const char *file, t_logtype type, const char *fmt, ...);
 
 //Protocol
-t_msg_config *mx_message_typing(int msg_type, char *message);
-void mx_free_msg_stract(t_msg_config *msg);
+t_pds *mx_request_creation(int req_type, char *request);
+t_pdl *mx_request_decode(char *request);
+void mx_free_request_struct(t_pds **request);
+void mx_free_decode_struct(t_pdl **decode_req);
 void mx_strdel(void **tds);
 char *mx_itoa(int number);
 
