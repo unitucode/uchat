@@ -92,11 +92,13 @@ typedef struct
 
 static void * default_alloc (size_t size, int zero, void * user_data)
 {
+   user_data = NULL;
    return zero ? calloc (1, size) : malloc (size);
 }
 
 static void default_free (void * ptr, void * user_data)
 {
+   user_data = NULL;
    free (ptr);
 }
 

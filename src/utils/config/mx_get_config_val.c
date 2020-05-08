@@ -32,7 +32,7 @@ char *mx_get_config_val(char *key) {
     json_value *json = mx_open_config();
     char *retstr = NULL;
 
-    for (int i = 0; i < json->u.object.length; i++)
+    for (unsigned int i = 0; i < json->u.object.length; i++)
         if (!strcmp(key, json->u.object.values[i].name))
             retstr = val_convert_to_str(json->u.object.values[i].value);
     json_value_free(json);

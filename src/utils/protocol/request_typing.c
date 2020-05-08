@@ -3,11 +3,13 @@
 void mx_free_request_struct(t_pds **request) {
     mx_strdel((void **)(&(*request)->data));
     mx_strdel((void **)(&(*request)->len));
+    free(*request);
     *request = NULL;
 }
 
 void mx_free_decode_struct(t_pdl **decode_req) {
     mx_strdel((void **)(&(*decode_req)->data));
+    free(*decode_req);
     *decode_req = NULL;
 }
 
