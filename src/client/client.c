@@ -7,13 +7,15 @@ static int done;
 void *copyto(void *arg) {
     char sendline[1024];
     t_pds *request = NULL;
-
     SSL *ssl = (SSL*)arg;
+    system("leaks -q uchat");
+
     while (fgets(sendline, 1024, fp) != NULL) {
         request = mx_request_creation(MX_LOGIN, sendline); // Protocol creation
-        SSL_write(ssl, request->data, strlen(request->data));
+        mx_send(ssl, request);
         mx_free_request_struct(&request);
         bzero(sendline, sizeof(sendline));
+        system("leaks -q uchat_server");
     }
     shutdown(sockfd, SHUT_WR);
     done = 1;

@@ -27,6 +27,8 @@
 #define MX_KEY_FILE "private_key.pem"
 #define MX_KEY_PASSWORD "12345678"
 
+#define MX_BUF_SIZE 1024
+
 typedef enum e_app_type {
     CLIENT,
     SERVER
@@ -88,6 +90,8 @@ typedef struct s_pdl { // Protocol Data Long view
 
 //SSL
 t_ssl_con *mx_init_ssl(t_app_type type);
+t_pdl *mx_recv(SSL *ssl);
+int mx_send(SSL *ssl, t_pds *data);
 
 //wrappers
 void *mx_malloc(size_t size);

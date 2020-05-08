@@ -1,36 +1,28 @@
 #include "server.h"
 
-static void send_to_all(t_list *list, t_chat *chat, t_client *cur_client, char *buf) {
-    t_pdl *decode_req = NULL;
+// static void send_to_all(t_list *list, t_chat *chat, t_client *cur_client, char *buf) {
     
-    mx_pthread_mutex_lock(&chat->mutex);
-    decode_req = mx_request_decode(buf); // Protocol decoding
-    for (t_node *cur = list->head; cur; cur = cur->next) {
-        t_client *client = (t_client*)cur->data;
-        if (cur_client->socket_fd != client->socket_fd) {
-            SSL_write(client->ssl, buf, strlen(buf));
-        }
+//     mx_pthread_mutex_lock(&chat->mutex);
+//     t_pds *pds = mx_request_creation(MX_MESSAGE, buf);
+//     for (t_node *cur = list->head; cur; cur = cur->next) {
+//         t_client *client = (t_client*)cur->data;
+//         if (cur_client->socket_fd != client->socket_fd) {
+//             mx_send(client->ssl, pds);
+//         }
+//     }
+//     mx_free_request_struct(&pds);
+//     mx_pthread_mutex_unlock(&chat->mutex);
+// }
+
+static void str_echo(t_client *client) {
+    t_pdl *pdl = NULL;
+    system("leaks -q uchat_server");
+
+    while ((pdl = mx_recv(client->ssl))) {
+        printf("get = %s\n", pdl->data);
+        mx_free_decode_struct(&pdl);
+        system("leaks -q uchat_server");
     }
-    mx_pthread_mutex_unlock(&chat->mutex);
-}
-
-static void str_echo(int sockfd, t_list *list, t_client *cur_client, t_chat *chat) {
-    ssize_t n;
-    char buf[1024];
-    sockfd++;
-
-    bzero(buf, sizeof(buf));
-again:
-    while ((n = SSL_read(cur_client->ssl, buf, sizeof(buf))) > 0) {
-        send_to_all(list, chat, cur_client, buf);
-        bzero(buf, sizeof(buf));
-    }
-    
-    if (n < 0 && errno == EINTR)
-        goto again;
-    else if (n < 0)
-        exit(1);
-
 }
 
 static void mx_disconnect_client(t_client *client) {
@@ -43,11 +35,9 @@ static void mx_disconnect_client(t_client *client) {
 
 static void *client_handler(void *arg) {
     t_client *client = (t_client*)arg;
-    t_chat *chat = (t_chat*)client->chat;
-    t_list *list = (t_list*)chat->clients;
 
     pthread_detach(pthread_self());
-    str_echo(client->socket_fd, list, client, chat);
+    str_echo(client);
     mx_disconnect_client(client);
     return NULL;
 }
