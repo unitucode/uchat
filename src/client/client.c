@@ -15,7 +15,6 @@ void *copyto(void *arg) {
         mx_free_msg_stract(msg);
         bzero(sendline, sizeof(sendline));
     }
-    
     shutdown(sockfd, SHUT_WR);
     done = 1;
     return NULL;

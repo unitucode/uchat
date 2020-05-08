@@ -15,12 +15,17 @@
 #include <stdbool.h>
 #include <stdarg.h>
 #include <time.h>
+<<<<<<< HEAD
 #include <openssl/ssl.h>
 #include <openssl/err.h>
+=======
+#include <sys/stat.h>
+>>>>>>> 24b5f4823d126a37c853b5e5cfdfab3be930ebb5
 
 
 #define MX_LIST_BACK 0
 #define MX_LOG_FILE "info.log"
+#define MX_ROOM_CONFIG "room_config.json"
 
 #define MX_CERT_FILE "certificate.crt"
 #define MX_KEY_FILE "private_key.pem"
@@ -71,10 +76,18 @@ typedef enum e_msg_types {
     MX_FILE = 52
 }            t_msg_types;
 
-typedef struct s_msg_config {
-    char *message;
+typedef struct s_pds { // Protocol Data Short view
+    char *data;
     char *len;
-}              t_msg_config;
+}              t_pds;
+
+typedef struct s_pdl { // Protocol Data Long view
+    int type;
+    char *data;
+    char *len;
+}              t_pdl;
+
+
 
 //SSL
 t_ssl_con *mx_init_ssl(t_app_type type);
@@ -113,7 +126,12 @@ void mx_logger(const char *file, t_logtype type, const char *fmt, ...);
 void mx_elogger(const char *file, t_logtype type, const char *fmt, ...);
 
 //Protocol
-t_msg_config *mx_message_typing(int msg_type, char *message);
-void mx_free_msg_stract(t_msg_config *msg);
+t_pds *mx_request_creation(int req_type, char *request);
+t_pdl *mx_request_decode(char *request);
+void mx_free_request_struct(t_pds **request);
+void mx_free_decode_struct(t_pdl **decode_req);
 void mx_strdel(void **tds);
 char *mx_itoa(int number);
+
+//room_config
+char *mx_open_room_config();

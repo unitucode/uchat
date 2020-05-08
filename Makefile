@@ -12,7 +12,8 @@ INCD = inc
 
 SRCD_CLIENT = $(addprefix $(SRCD)/, client)
 SRCD_SERVER = $(addprefix $(SRCD)/, server server/client_handler)
-SRCD_UTILS = $(addprefix $(SRCD)/, utils utils/wrappers utils/list utils/logger utils/protocol utils/ssl)
+SRCD_UTILS = $(addprefix $(SRCD)/, utils utils/wrappers utils/list \
+utils/room_config /utils/logger utils/protocol utils/ssl)
 
 
 INCD_CLIENT = $(addprefix $(INCD)/, client_inc)

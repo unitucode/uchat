@@ -1,7 +1,10 @@
 #include "server.h"
 
 static void send_to_all(t_list *list, t_chat *chat, t_client *cur_client, char *buf) {
+    t_pdl *decode_req = NULL;
+    
     mx_pthread_mutex_lock(&chat->mutex);
+    decode_req = mx_request_decode(buf); // Protocol decoding
     for (t_node *cur = list->head; cur; cur = cur->next) {
         t_client *client = (t_client*)cur->data;
         if (cur_client->socket_fd != client->socket_fd) {
