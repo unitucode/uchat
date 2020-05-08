@@ -27,12 +27,10 @@ t_pdl *mx_recv(SSL *ssl) {
         char buf[size + 1];
 
         buf[size + 1] = '\0';
-        if (SSL_read(ssl, buf, sizeof(buf)) > 0) {
+        if (SSL_read(ssl, buf, sizeof(buf)) > 0)
             pdl = mx_request_decode(buf);
-        }
-        else {
+        else
             mx_logger(MX_LOG_FILE, LOGWAR, "mx_recv\n");
-        }
     }
     return pdl;
 }
