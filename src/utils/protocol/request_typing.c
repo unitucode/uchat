@@ -8,7 +8,6 @@ void mx_free_request_struct(t_pds **request) {
 
 void mx_free_decode_struct(t_pdl **decode_req) {
     mx_strdel((void **)(&(*decode_req)->data));
-    mx_strdel((void **)(&(*decode_req)->len));
     *decode_req = NULL;
 }
 
@@ -31,7 +30,6 @@ t_pdl *mx_request_decode(char *request) {
     decode_struct->type = atoi(str);
     sprintf(str, "%s", ++request);
     decode_struct->data = strdup(str);
-    sprintf(str, "%lu", strlen(request) - 1);
-    decode_struct->len = strdup(str);
+    decode_struct->len = strlen(decode_struct->data);
     return decode_struct;
 }
