@@ -19,7 +19,6 @@
 #include <openssl/ssl.h>
 #include <openssl/err.h>
 
-
 #define MX_LIST_BACK 0
 #define MX_LOG_FILE "info.log"
 #define MX_ROOM_CONFIG "room_config.json"
@@ -65,12 +64,7 @@ typedef enum e_logtype {
     LOGERR
 }            t_logtype;
 
-<<<<<<< HEAD
-
 typedef enum e_request_types {
-=======
-typedef enum e_msg_types {
->>>>>>> 30665a6b9559f78cd1c4a8dfb517142540cdd271
     MX_LOGIN = 48,
     MX_PASSWORD = 49,
     MX_USER_COUNT = 50,
