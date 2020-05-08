@@ -21,6 +21,7 @@ typedef struct s_client {
     char port[MX_PORT_LEN];
     int socket_fd;
     t_chat *chat;
+    SSL *ssl;
 }              t_client;
 
 int mx_tcp_listen(const char *serv, socklen_t *addr_len);

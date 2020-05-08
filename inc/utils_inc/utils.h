@@ -15,10 +15,29 @@
 #include <stdbool.h>
 #include <stdarg.h>
 #include <time.h>
+#include <openssl/ssl.h>
+#include <openssl/err.h>
 
 
 #define MX_LIST_BACK 0
 #define MX_LOG_FILE "info.log"
+
+#define MX_CERT_FILE "certificate.crt"
+#define MX_KEY_FILE "private_key.pem"
+#define MX_KEY_PASSWORD "12345678"
+
+typedef enum e_app_type {
+    CLIENT,
+    SERVER
+}            t_app_type;
+
+typedef struct s_ssl_con {
+    SSL_CTX *ctx;
+    SSL *ssl;
+    char *cert_file;
+    char *key_file;
+    char *password;
+}              t_ssl_con;
 
 typedef struct s_node {
     void *data;
@@ -44,7 +63,6 @@ typedef enum e_logtype {
     LOGERR
 }            t_logtype;
 
-
 typedef enum e_msg_types {
     MX_LOGIN = 48,
     MX_PASSWORD = 49,
@@ -57,6 +75,9 @@ typedef struct s_msg_config {
     char *message;
     char *len;
 }              t_msg_config;
+
+//SSL
+t_ssl_con *mx_init_ssl(t_app_type type);
 
 //wrappers
 void *mx_malloc(size_t size);
