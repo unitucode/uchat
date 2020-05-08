@@ -13,6 +13,8 @@ int main(int argc, char **argv) {
                                       client->cliaddr, &client->len);
         ssl->ssl = SSL_new(ssl->ctx);
         SSL_set_fd(ssl->ssl, client->socket_fd);
+        if (SSL_accept(ssl->ssl) == -1)
+            mx_elogger(MX_LOG_FILE, LOGERR, "ssl_accept\n");
         client->chat = chat;
         client->ssl = ssl->ssl;
         mx_connect_client(client);

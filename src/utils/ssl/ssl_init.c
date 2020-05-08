@@ -6,9 +6,8 @@ static SSL_CTX *init_ctx(t_app_type type) {
 
     OpenSSL_add_all_algorithms();
     SSL_load_error_strings();
-    if (type == CLIENT) {
+    if (type == CLIENT)
         method = SSLv3_client_method();
-    }
     else if (type == SERVER)
         method = SSLv3_server_method();
     ctx = SSL_CTX_new(method);

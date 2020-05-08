@@ -39,12 +39,13 @@ void str_cli(FILE *fp_arg, SSL *ssl) {
 
 int main(int argc, char **argv) {
     int sockfd;
-    t_ssl_con *ssl = mx_init_ssl(CLIENT);
+    t_ssl_con *ssl = NULL;
 
     if (argc != 3) {
         printf("usage\n");
         exit(1);
     }
+    ssl = mx_init_ssl(CLIENT);
     mx_logger(MX_LOG_FILE, LOGMSG, "started client: %s %s %s\n", argv[0], argv[1], argv[2]);
     sockfd = mx_tcp_connect(argv[1], argv[2]);
     ssl->ssl = SSL_new(ssl->ctx);

@@ -5,7 +5,7 @@ static void send_to_all(t_list *list, t_chat *chat, t_client *cur_client, char *
     for (t_node *cur = list->head; cur; cur = cur->next) {
         t_client *client = (t_client*)cur->data;
         if (cur_client->socket_fd != client->socket_fd) {
-            dprintf(client->socket_fd, "user:[%s]: %s", cur_client->ip, buf);
+            SSL_write(cur_client->ssl, buf, strlen(buf));
         }
     }
     mx_pthread_mutex_unlock(&chat->mutex);
@@ -14,10 +14,11 @@ static void send_to_all(t_list *list, t_chat *chat, t_client *cur_client, char *
 static void str_echo(int sockfd, t_list *list, t_client *cur_client, t_chat *chat) {
     ssize_t n;
     char buf[1024];
+    sockfd++;
 
     bzero(buf, sizeof(buf));
 again:
-    while ((n = read(sockfd, buf, 1024)) > 0) {
+    while ((n = SSL_read(cur_client->ssl, buf, sizeof(buf))) > 0) {
         send_to_all(list, chat, cur_client, buf);
         bzero(buf, sizeof(buf));
     }
