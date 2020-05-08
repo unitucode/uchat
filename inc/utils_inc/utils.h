@@ -15,10 +15,12 @@
 #include <stdbool.h>
 #include <stdarg.h>
 #include <time.h>
+#include <sys/stat.h>
 
 
 #define MX_LIST_BACK 0
 #define MX_LOG_FILE "info.log"
+#define MX_ROOM_CONFIG "room_config.json"
 
 typedef struct s_node {
     void *data;
@@ -96,3 +98,6 @@ t_msg_config *mx_message_typing(int msg_type, char *message);
 void mx_free_msg_stract(t_msg_config *msg);
 void mx_strdel(void **tds);
 char *mx_itoa(int number);
+
+//room_config
+char *mx_open_room_config();
