@@ -19,6 +19,7 @@
 #include "json.h"
 #include <openssl/ssl.h>
 #include <openssl/err.h>
+#include <openssl/md5.h>
 
 
 #define MX_LIST_BACK 0

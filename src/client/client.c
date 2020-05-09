@@ -15,7 +15,6 @@ void *copyto(void *arg) {
         mx_send(ssl, request);
         mx_free_request_struct(&request);
         bzero(sendline, sizeof(sendline));
-        system("leaks -q uchat_server");
     }
     shutdown(sockfd, SHUT_WR);
     done = 1;
