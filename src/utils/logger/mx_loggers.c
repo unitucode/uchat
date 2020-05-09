@@ -10,7 +10,7 @@ void mx_logger(const char *file, t_logtype type, const char *fmt, ...) {
     if (file == NULL)
         fd = stderr;
     if (fd == stderr
-        || (fd = fopen(file, "a")) != NULL) {
+        || (fd = mx_fopen(file, "a")) != NULL) {
         mx_log_time(fd);
         mx_log_id(fd);
         mx_log_errno(fd);
@@ -18,7 +18,7 @@ void mx_logger(const char *file, t_logtype type, const char *fmt, ...) {
         va_start(ap, fmt);
         vfprintf(fd, fmt, ap);
         va_end(ap);
-        fclose(fd);
+        mx_fclose(fd);
     }
     else {
         perror("Can't open/create logfile");
@@ -36,7 +36,7 @@ void mx_elogger(const char *file, t_logtype type, const char *fmt, ...) {
     if (file == NULL)
         fd = stderr;
     if (fd == stderr
-        || (fd = fopen(file, "a")) != NULL) {
+        || (fd = mx_fopen(file, "a")) != NULL) {
         mx_log_time(fd);
         mx_log_id(fd);
         mx_log_errno(fd);

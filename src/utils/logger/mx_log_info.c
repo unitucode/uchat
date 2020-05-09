@@ -17,7 +17,7 @@ void mx_log_time(FILE *fd) {
     char *rtime = strndup(stime, strlen(stime) - 1);
 
     fprintf(fd, "[%s] ", rtime);
-    free(rtime);
+    mx_free((void **)&rtime);
 }
 
 /*
