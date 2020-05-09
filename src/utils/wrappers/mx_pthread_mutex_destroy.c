@@ -6,8 +6,7 @@
 int mx_pthread_mutex_destroy(pthread_mutex_t *mutex) {
     int result = pthread_mutex_destroy(mutex);
 
-    if (result) {
-        //error
-    }
+    if (result)
+        mx_elogger(MX_LOG_FILE, LOGERR, "pthread_mutex_destroy\n");
     return result;
 }

@@ -1,6 +1,10 @@
 chat_server
+uchat_server
 uchat
 .DS_Store
 test
 README.md
 obj
+info.log
+a.out
+.vscode/settings.json

@@ -15,6 +15,7 @@ static int callback(void* data, int argc, char** argv, char** azColName) {
 int main(int argc, char **argv) {
     t_chat *chat = mx_init_chat(argc, argv);
     t_client *client = NULL;
+<<<<<<< HEAD
     sqlite3* DB;
     int vlad = 0; 
     vlad = sqlite3_open( "vlad.db", &DB);
@@ -54,12 +55,22 @@ int main(int argc, char **argv) {
     }
     sqlite3_close(DB);
     
+=======
+    t_ssl_con *ssl = mx_init_ssl(SERVER);
+
+    mx_logger(MX_LOG_FILE, LOGMSG,
+              "started server pid[%d]: %s %s\n", getpid(), argv[0], argv[1]);
+>>>>>>> 996a8bce0f87019e79777fe2e3979b07b9dad6d9
     while (1) {
         client = mx_new_client(chat->len);
-        client->socket_fd = mx_accept(chat->listen_fd, client->cliaddr, &client->len);
-        mx_get_client_info(client);
-        mx_push_node(chat->clients, client, MX_LIST_BACK);
-        chat->current_client = client;
-        mx_pthread_create(&client->tid, NULL, &client_handler, chat);
+        client->socket_fd = mx_accept(chat->listen_fd,
+                                      client->cliaddr, &client->len);
+        ssl->ssl = SSL_new(ssl->ctx);
+        SSL_set_fd(ssl->ssl, client->socket_fd);
+        if (SSL_accept(ssl->ssl) == -1)
+            mx_elogger(MX_LOG_FILE, LOGERR, "ssl_accept\n");
+        client->chat = chat;
+        client->ssl = ssl->ssl;
+        mx_connect_client(client);
     }
 }

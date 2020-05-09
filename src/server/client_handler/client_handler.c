@@ -1,32 +1,54 @@
 #include "server.h"
 
-static void str_echo(int sockfd, t_list *list, t_client *cur_client) {
-    ssize_t n;
-    char buf[1024];
-
-again:
-    while ((n = read(sockfd, buf, 1024)) > 0) {
-        for (t_node *cur = list->head; cur; cur = cur->next) {
-            t_client *client = (t_client*)cur->data;
-            if (cur_client->socket_fd != client->socket_fd)
-                write(client->socket_fd, buf, n);
-        }
-    }
+// static void send_to_all(t_list *list, t_chat *chat, t_client *cur_client, char *buf) {
     
-    if (n < 0 && errno == EINTR)
-        goto again;
-    else if (n < 0)
-        exit(1);
+//     mx_pthread_mutex_lock(&chat->mutex);
+//     t_pds *pds = mx_request_creation(MX_MESSAGE, buf);
+//     for (t_node *cur = list->head; cur; cur = cur->next) {
+//         t_client *client = (t_client*)cur->data;
+//         if (cur_client->socket_fd != client->socket_fd) {
+//             mx_send(client->ssl, pds);
+//         }
+//     }
+//     mx_free_request_struct(&pds);
+//     mx_pthread_mutex_unlock(&chat->mutex);
+// }
 
+static void str_echo(t_client *client) {
+    t_pdl *pdl = NULL;
+    system("leaks -q uchat_server");
+
+    while ((pdl = mx_recv(client->ssl))) {
+        printf("get = %s\n", pdl->data);
+        if (pdl->type == MX_LOGIN) {
+            printf("%s: authorized!\n", pdl->data);
+        }
+        mx_free_decode_struct(&pdl);
+        system("leaks -q uchat_server");
+    }
 }
 
-void *client_handler(void *arg) {
-    t_chat *chat = (t_chat*)arg;
-    t_list *list = (t_list*)chat->clients;
-    t_client *client = chat->current_client;
+static void mx_disconnect_client(t_client *client) {
+    mx_pthread_mutex_lock(&client->chat->mutex);
+    mx_logger(MX_LOG_FILE, LOGMSG, "disconnected: IP[%s] port[%s]\n",
+              client->ip, client->port);
+    mx_delete_client_list(client->chat->clients, client);
+    mx_pthread_mutex_unlock(&client->chat->mutex);
+}
+
+static void *client_handler(void *arg) {
+    t_client *client = (t_client*)arg;
+
     pthread_detach(pthread_self());
-    str_echo(client->socket_fd, list, client);
-    mx_delete_client_list(chat->clients, client);
-    system("leaks -q chat_server");
+    str_echo(client);
+    mx_disconnect_client(client);
     return NULL;
+}
+
+void mx_connect_client(t_client *client) {
+    mx_get_client_info(client);
+    mx_push_node(client->chat->clients, client, MX_LIST_BACK);
+    mx_logger(MX_LOG_FILE, LOGMSG, "connected: IP[%s] port[%s]\n",
+              client->ip, client->port);
+    mx_pthread_create(&client->tid, NULL, &client_handler, client);
 }

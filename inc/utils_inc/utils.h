@@ -15,9 +15,35 @@
 #include <stdbool.h>
 #include <stdarg.h>
 #include <time.h>
+#include <sys/stat.h>
+#include "json.h"
+#include <openssl/ssl.h>
+#include <openssl/err.h>
 
 
 #define MX_LIST_BACK 0
+#define MX_LOG_FILE "info.log"
+#define MX_CONFIG "config.json"
+#define MX_DEFAULT_CONFIG "{\n\n}\n"
+
+#define MX_CERT_FILE "certificate.crt"
+#define MX_KEY_FILE "private_key.pem"
+#define MX_KEY_PASSWORD "12345678"
+
+#define MX_BUF_SIZE 1024
+
+typedef enum e_app_type {
+    CLIENT,
+    SERVER
+}            t_app_type;
+
+typedef struct s_ssl_con {
+    SSL_CTX *ctx;
+    SSL *ssl;
+    char *cert_file;
+    char *key_file;
+    char *password;
+}              t_ssl_con;
 
 typedef struct s_node {
     void *data;
@@ -43,8 +69,36 @@ typedef enum e_logtype {
     LOGERR
 }            t_logtype;
 
+typedef enum e_request_types {
+    MX_LOGIN = 48,
+    MX_PASSWORD = 49,
+    MX_USER_COUNT = 50,
+    MX_MESSAGE = 51,
+    MX_FILE = 52,
+    MX_SIZE_MSG = 53
+}            t_request_types;
+
+typedef struct s_pds { // Protocol Data Short view
+    char *data;
+    char *len;
+}              t_pds;
+
+typedef struct s_pdl { // Protocol Data Long view
+    int type;
+    char *data;
+    size_t len;
+}              t_pdl;
+
+
+
+//SSL
+t_ssl_con *mx_init_ssl(t_app_type type);
+t_pdl *mx_recv(SSL *ssl);
+int mx_send(SSL *ssl, t_pds *data);
+
 //wrappers
 void *mx_malloc(size_t size);
+void mx_free(void **ptr);
 int mx_socket(int domain, int type, int protocol);
 int mx_setsockopt(t_sockopt *sockopt);
 int mx_close(int fd);
@@ -58,6 +112,10 @@ int mx_getaddrinfo(const char *hostname, const char *servname,
 int mx_pthread_mutex_init(pthread_mutex_t *mutex,
                           const pthread_mutexattr_t *attr);
 int mx_pthread_mutex_destroy(pthread_mutex_t *mutex);
+int mx_pthread_mutex_lock(pthread_mutex_t *mutex);
+int mx_pthread_mutex_unlock(pthread_mutex_t *mutex);
+FILE *mx_fopen(const char * restrict path, const char * restrict mode);
+int mx_fclose(FILE *stream);
 
 //list
 void mx_push_node(t_list *list, void *data, size_t index);
@@ -67,8 +125,20 @@ t_list *mx_new_list();
 void mx_delete_list(t_list **list);
 
 //logs
+void mx_log_id(FILE *fd);
 void mx_log_time(FILE *fd);
-void mx_log_type(FILE *fd, t_logtype type);
 void mx_log_errno(FILE *fd);
-void mx_loger(const char *file, t_logtype type, const char *fmt, ...);
-void mx_eloger(const char *file, t_logtype type, const char *fmt, ...);
+void mx_log_type(FILE *fd, t_logtype type);
+void mx_logger(const char *file, t_logtype type, const char *fmt, ...);
+void mx_elogger(const char *file, t_logtype type, const char *fmt, ...);
+
+//Protocol
+t_pds *mx_request_creation(int req_type, char *request);
+t_pdl *mx_request_decode(char *request);
+void mx_free_request_struct(t_pds **request);
+void mx_free_decode_struct(t_pdl **decode_req);
+char *mx_itoa(int number);
+
+//room_config
+json_value *mx_open_config();
+char *mx_get_config_val(char *key);
