@@ -15,6 +15,7 @@ t_client *mx_new_client(socklen_t len) {
 }
 
 void mx_delete_client(t_client **client) {
+    SSL_free((*client)->ssl);
     mx_close((*client)->socket_fd);
     free((*client)->cliaddr);
     free(*client);
