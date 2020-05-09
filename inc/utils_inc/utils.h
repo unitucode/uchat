@@ -15,6 +15,7 @@
 #include <stdbool.h>
 #include <stdarg.h>
 #include <time.h>
+#include <sqlite3.h>
 
 
 #define MX_LIST_BACK 0

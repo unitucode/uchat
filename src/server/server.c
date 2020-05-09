@@ -22,18 +22,19 @@ int main(int argc, char **argv) {
       "NAME           TEXT    NOT NULL," \
       "AGE            INT     NOT NULL," \
       "ADDRESS        CHAR(50)," \
-      "SALARY         REAL );";
+      "SALARY         REAL," \
+      "MESSAGE        CHAR(100));";
     vlad = sqlite3_exec(DB, sql, 0, 0, 0); 
     printf("vlad = %d\n", vlad);
-    sql = "INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY) "  \
-         "VALUES (1, 'Paul', 32, 'California', 20000.00 ); " \
-         "INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY) "  \
-         "VALUES (2, 'Allen', 25, 'Texas', 15000.00 ); "     \
-         "INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY)" \
-         "VALUES (3, 'Teddy', 23, 'Norway', 20000.00 );" \
-         "INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY)" \
-         "VALUES (4, 'Mark', 25, 'Rich-Mond ', 65000.00 );";
-    vlad = sqlite3_exec(DB, sql, callback, 0, 0); 
+    sql = "INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY,MESSAGE)"  \
+         "VALUES (1, 'Paul', 32, 'California', 20000.00, 'привіт'); " \
+         "INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY,MESSAGE)"  \
+         "VALUES (2, 'Allen', 25, 'Texas', 15000.00, 'my name allen'); "     \
+         "INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY,MESSAGE)" \
+         "VALUES (3, 'Teddy', 23, 'Norway', 20000.00, 'how are you?');" \
+         "INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY,MESSAGE)" \
+         "VALUES (4, 'Mark', 25, 'Rich-Mond ', 65000.00, 'I am fine');";
+    vlad = sqlite3_exec(DB, sql, 0, 0, 0); 
     sql = "SELECT * from COMPANY";
     vlad = sqlite3_exec(DB, sql, callback, (void*)"company worker", 0); 
     if (vlad != SQLITE_OK) {
