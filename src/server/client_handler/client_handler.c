@@ -19,10 +19,9 @@ static void str_echo(t_client *client) {
     system("leaks -q uchat_server");
 
     while ((pdl = mx_recv(client->ssl))) {
-        printf("get = %s\n", pdl->data);
-        if (pdl->type == MX_LOGIN) {
-            printf("%s: authorized!\n", pdl->data);
-        }
+        char buf[MX_MD5_BUF_SIZE + 1];
+        mx_md5(buf, (const unsigned char*)pdl->data, strlen(pdl->data));
+        printf("get = %s, md5 = %s\n", pdl->data, buf);
         mx_free_decode_struct(&pdl);
     }
 }
