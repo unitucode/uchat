@@ -23,7 +23,8 @@
 
 #define MX_LIST_BACK 0
 #define MX_LOG_FILE "info.log"
-#define MX_ROOM_CONFIG "config.json"
+#define MX_CONFIG "config.json"
+#define MX_DEFAULT_CONFIG "{\n\n}\n"
 
 #define MX_CERT_FILE "certificate.crt"
 #define MX_KEY_FILE "private_key.pem"
@@ -97,6 +98,7 @@ int mx_send(SSL *ssl, t_pds *data);
 
 //wrappers
 void *mx_malloc(size_t size);
+void mx_free(void **ptr);
 int mx_socket(int domain, int type, int protocol);
 int mx_setsockopt(t_sockopt *sockopt);
 int mx_close(int fd);
@@ -112,6 +114,8 @@ int mx_pthread_mutex_init(pthread_mutex_t *mutex,
 int mx_pthread_mutex_destroy(pthread_mutex_t *mutex);
 int mx_pthread_mutex_lock(pthread_mutex_t *mutex);
 int mx_pthread_mutex_unlock(pthread_mutex_t *mutex);
+FILE *mx_fopen(const char * restrict path, const char * restrict mode);
+int mx_fclose(FILE *stream);
 
 //list
 void mx_push_node(t_list *list, void *data, size_t index);
@@ -133,7 +137,6 @@ t_pds *mx_request_creation(int req_type, char *request);
 t_pdl *mx_request_decode(char *request);
 void mx_free_request_struct(t_pds **request);
 void mx_free_decode_struct(t_pdl **decode_req);
-void mx_strdel(void **tds);
 char *mx_itoa(int number);
 
 //room_config
