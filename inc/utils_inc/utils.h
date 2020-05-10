@@ -85,6 +85,7 @@ typedef struct s_pds { // Protocol Data Short view
 }              t_pds;
 
 typedef struct s_pdl { // Protocol Data Long view
+    int room;
     int type;
     char *data;
     size_t len;
@@ -134,7 +135,7 @@ void mx_logger(const char *file, t_logtype type, const char *fmt, ...);
 void mx_elogger(const char *file, t_logtype type, const char *fmt, ...);
 
 //Protocol
-t_pds *mx_request_creation(int req_type, char *request);
+t_pds *mx_request_creation(int room, int req_type, char *req_body);
 t_pdl *mx_request_decode(char *request);
 void mx_free_request_struct(t_pds **request);
 void mx_free_decode_struct(t_pdl **decode_req);
