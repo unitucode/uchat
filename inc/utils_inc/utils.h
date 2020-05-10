@@ -72,12 +72,14 @@ typedef enum e_logtype {
 }            t_logtype;
 
 typedef enum e_request_types {
-    MX_LOGIN = 0,
-    MX_PASSWORD = 1,
+    MX_LOGIN = 0, //+
+    MX_PASSWORD = 1, //+
     MX_USER_COUNT = 2,
     MX_MESSAGE = 3,
     MX_FILE = 4,
-    MX_SIZE_MSG = 5
+    MX_SIZE_MSG = 5,
+    MX_ERR_MSG = 6,
+    MX_TOKEN_AUTH = 7
 }            t_request_types;
 
 typedef struct s_pds { // Protocol Data Short view
@@ -91,7 +93,6 @@ typedef struct s_pdl { // Protocol Data Long view
     char *data;
     size_t len;
 }              t_pdl;
-
 
 
 //SSL

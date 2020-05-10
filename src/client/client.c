@@ -4,6 +4,24 @@ static int sockfd;
 static FILE *fp;
 static int done;
 
+void login(SSL *ssl) {
+    char login[1024] = {0};
+    char password[1024] = {0};
+    t_pds *pass_request = NULL;
+    t_pds *login_requset = NULL;
+
+    printf("Enter your login: ");
+    fgets(login, 1024, fp);
+    printf("Enter your password: ");
+    fgets(password, 1024, fp);
+    pass_request = mx_request_creation(-1, MX_PASSWORD, password);
+    login_requset = mx_request_creation(-1, MX_LOGIN, login);
+    mx_send(ssl, login_requset);
+    mx_send(ssl, pass_request);
+    mx_free_request_struct(&pass_request);
+    mx_free_request_struct(&login_requset);
+}
+
 void *copyto(void *arg) {
     char sendline[1024];
     t_pds *request = NULL;
@@ -11,9 +29,14 @@ void *copyto(void *arg) {
     system("leaks -q uchat");
 
     while (fgets(sendline, 1024, fp) != NULL) {
-        request = mx_request_creation(/*Room id*/1, MX_USER_COUNT, sendline); // Protocol creation
-        mx_send(ssl, request);
-        mx_free_request_struct(&request);
+        if (!strcmp(sendline, "login\n")) {
+            login(ssl);
+        }
+        else {
+            request = mx_request_creation(/*Room id*/1, MX_USER_COUNT, sendline); // Protocol creation
+            mx_send(ssl, request);
+            mx_free_request_struct(&request);
+        }
         bzero(sendline, sizeof(sendline));
     }
     shutdown(sockfd, SHUT_WR);
@@ -28,8 +51,13 @@ void str_cli(FILE *fp_arg, SSL *ssl) {
     bzero(&buf, sizeof(buf));
     fp = fp_arg;
     mx_pthread_create(&tid, NULL, copyto, ssl);
-    while (SSL_read(ssl, buf, sizeof(buf)))
-        printf("%s", buf);
+    while (SSL_read(ssl, buf, sizeof(buf))) {
+        t_pdl *pdl = mx_request_decode(buf);
+        if (pdl->type == MX_ERR_MSG)
+            printf("ERROR: %s\n", pdl->data);
+        if (pdl->type == MX_TOKEN_AUTH)
+            printf("token = %s\n", pdl->data);
+    }
 
     if (done == 0)
         exit(1);

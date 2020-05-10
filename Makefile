@@ -13,7 +13,7 @@ INCD = inc
 SRCD_CLIENT = $(addprefix $(SRCD)/, client)
 SRCD_SERVER = $(addprefix $(SRCD)/, server server/client_handler)
 SRCD_UTILS = $(addprefix $(SRCD)/, utils utils/wrappers utils/list \
-utils/config /utils/logger utils/protocol utils/ssl)
+utils/config utils/logger utils/protocol utils/ssl)
 
 
 INCD_CLIENT = $(addprefix $(INCD)/, client_inc)
@@ -50,7 +50,7 @@ $(SERVER) $(CLIENT):
 
 $(OBJS_CLIENT) $(OBJS_UTILS) $(OBJS_SERVER): obj/%.o: %.c | $(OBJD)
 	@$(CC) $(CPPFLAGS) $(CFLAGS) -c -o $@ $<
-	@printf "\x1b[32mcompiled: \x1b[0m$<\n"
+	@printf "\x1b[32mcompiled: \x1b[0m$(notdir $<)\n"
 
 $(OBJD):
 	@mkdir -p $@

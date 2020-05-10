@@ -24,6 +24,9 @@ typedef struct s_client {
     SSL *ssl;
 }              t_client;
 
+//data protocol handler functions
+bool mx_log_in(t_pdl *login, t_client *client);
+
 int mx_tcp_listen(const char *serv, socklen_t *addr_len);
 void mx_get_client_info(t_client *client);
 t_client *mx_new_client(socklen_t len);
