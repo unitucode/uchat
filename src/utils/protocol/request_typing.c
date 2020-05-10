@@ -15,9 +15,9 @@ t_pds *mx_request_creation(int room, int req_type, char *req_body) {
     t_pds *req_struct = mx_malloc(sizeof(t_pds));
     char str[MX_BUF_SIZE];
 
-    sprintf(str, "%d|%c|%s", room, req_type, req_body);
+    sprintf(str, "%d|%d|%s", room, req_type, req_body);
     req_struct->data = strdup(str);
-    sprintf(str, "%lu", strlen(req_body));
+    sprintf(str, "%lu", strlen(req_struct->data));
     req_struct->len = strdup(str);
     return req_struct;
 }
@@ -33,7 +33,7 @@ static void pars_request(t_pdl *decode, char *request) {
     delim++;
     temp = strtok(first_part, "|");
     decode->room = atoi(temp);
-    temp = strtok(NULL, "|");
+    temp= strtok(NULL, "|");
     decode->type = atoi(temp);
     decode->data = strdup(delim);
     decode->len = strlen(delim);

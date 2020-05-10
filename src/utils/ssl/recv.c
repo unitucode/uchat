@@ -8,6 +8,7 @@ static int message_size(SSL *ssl) {
 
     while ((bytes = SSL_read(ssl, buf, sizeof(buf))) > 0) {
         pdl = mx_request_decode(buf);
+        printf("buf = %s\n", buf);
         if (pdl->type == MX_SIZE_MSG) {
             size = atoi(pdl->data);
             break;
