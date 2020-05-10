@@ -2,7 +2,7 @@
 
 int mx_send(SSL *ssl, t_pds *data) {
     bool result = true;
-    t_pds *pds = mx_request_creation(MX_SIZE_MSG, data->len);
+    t_pds *pds = mx_request_creation(/*Room id*/1, MX_SIZE_MSG, data->len);
 
     if (!SSL_write(ssl, pds->data, strlen(pds->data))) {
         mx_logger(MX_LOG_FILE, LOGWAR, "SSL_write len failed\n");
