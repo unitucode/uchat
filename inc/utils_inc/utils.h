@@ -19,8 +19,10 @@
 #include "json.h"
 #include <openssl/ssl.h>
 #include <openssl/err.h>
+#include <sqlite3.h>
 #include <openssl/md5.h>
 
+#define MX_DB_USER "users.db"
 
 #define MX_LIST_BACK 0
 #define MX_LOG_FILE "info.log"
@@ -38,6 +40,13 @@ typedef enum e_app_type {
     CLIENT,
     SERVER
 }            t_app_type;
+
+typedef struct s_user {
+    const char *token;
+    const char *login;
+    const char *password;
+    unsigned int id;
+}              t_user;
 
 typedef struct s_ssl_con {
     SSL_CTX *ctx;
@@ -147,3 +156,11 @@ char *mx_itoa(int number);
 //room_config
 json_value *mx_open_config();
 char *mx_get_config_val(char *key);
+
+//sqlite3
+void mx_create_table_user(sqlite3 *db_user);
+sqlite3 *mx_server_data_open(char *name_db);
+void mx_close_database(sqlite3 *database);
+t_user *mx_get_user(char *login, sqlite3 *db_user);
+t_user *mx_insert_user(sqlite3 *db_user, char *login, char *password, char *token);
+void mx_delete_user(t_user **user);

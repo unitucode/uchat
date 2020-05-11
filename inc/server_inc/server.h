@@ -1,6 +1,7 @@
 #pragma once
 
-#include "../utils_inc/utils.h"
+#include "utils.h"
+#include <sqlite3.h>
 
 #define MX_LISTENQ 1024
 #define MX_PORT_LEN 8

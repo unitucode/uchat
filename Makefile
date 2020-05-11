@@ -13,7 +13,7 @@ INCD = inc
 SRCD_CLIENT = $(addprefix $(SRCD)/, client)
 SRCD_SERVER = $(addprefix $(SRCD)/, server server/client_handler)
 SRCD_UTILS = $(addprefix $(SRCD)/, utils utils/wrappers utils/list \
-utils/config utils/logger utils/protocol utils/ssl)
+utils/config /utils/logger utils/protocol utils/ssl utils/database)
 
 
 INCD_CLIENT = $(addprefix $(INCD)/, client_inc)
@@ -29,7 +29,6 @@ SRC_UTILS = $(foreach dir,$(SRCD_UTILS), $(wildcard $(dir)/*.c))
 OBJS_CLIENT = $(addprefix $(OBJD)/, $(notdir $(SRC_CLIENT:%.c=%.o)))
 OBJS_SERVER = $(addprefix $(OBJD)/, $(notdir $(SRC_SERVER:%.c=%.o)))
 OBJS_UTILS = $(addprefix $(OBJD)/, $(notdir $(SRC_UTILS:%.c=%.o)))
-
 
 CFLAGS = -std=c11 $(addprefix -W, all extra error pedantic)
 CPPFLAGS += -I$(INCD_UTILS) -I/usr/local/opt/openssl/include -D_GNU_SOURCE
