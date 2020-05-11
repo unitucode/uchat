@@ -1,5 +1,4 @@
 #include "client.h"
-
 static int sockfd;
 static FILE *fp;
 static int done;
@@ -36,10 +35,10 @@ void str_cli(FILE *fp_arg, SSL *ssl) {
         exit(1);
 }
 
-
 int main(int argc, char **argv) {
     int sockfd;
     t_ssl_con *ssl = NULL;
+
 
     if (argc != 3) {
         printf("usage\n");

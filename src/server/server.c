@@ -1,66 +1,42 @@
 #include "server.h"
-#include "sqlite3.h"
+#include <sqlite3.h>
 
-static int callback(void* data, int argc, char** argv, char** azColName) { 
-    int i; 
-    fprintf(stderr, "%s: ", (const char*)data); 
-  
-    for (i = 0; i < argc; i++) { 
-        printf("%s = %s\n", azColName[i], argv[i] ? argv[i] : "NULL"); 
-    } 
-    printf("\n"); 
-    return 0; 
-} 
+int callbackvlad(void *message, int argc, char** argv, char **data_parametr) {
+
+    for (int i = 0; i < argc; i++) {
+        printf("%s -> %s\n", data_parametr[i], argv[i]);
+        if (strcmp("MESSAGE", data_parametr[i]) == 0 && argv[i] != NULL) {
+            message = strdup(argv[i]);
+        }
+    }
+    printf("Ok\n");
+    return 0;
+}
 
 int main(int argc, char **argv) {
+    sqlite3* database = mx_server_data_open(MX_DB_USER);
+    t_user *user = NULL;
+
+    mx_creat_table_user(database);
+    // user = mx_get_user("sfg", database);
+    // if (user != NULL) {
+    //     printf("ID -> %d\n", user->id);
+    //     printf("login -> %s\n", user->login);
+    //     printf("token -> %s\n", user->token);
+    //     printf("pass -> %s\n", user->password);
+    // }
+    // user = mx_insert_user(database, "sasha", "2021", "ilon mask");
+    // printf("login -> %s\n", user->login);
+    // printf("token -> %s\n", user->token);
+    // printf("pass -> %s\n", user->password);
+    // printf("ID -> %d\n", user->id);
+    // printf("two -> %d\n", sqlite3_exec(database, "SELECT * from USER where login = 'admin2'", callbackvlad, 0, 0));
+    mx_close_database(database);
+    mx_logger(MX_LOG_FILE, LOGMSG,"started server pid[%d]: %s %s\n", getpid(), argv[0], argv[1]);
+    //end vlad
     t_chat *chat = mx_init_chat(argc, argv);
     t_client *client = NULL;
-<<<<<<< HEAD
-    sqlite3* DB;
-    int vlad = 0; 
-    vlad = sqlite3_open( "vlad.db", &DB);
-    // char *sql = "CREATE TABLE PERSON("
-    //             "ID INT PRIMARY KEY     NOT NULL, "
-    //             "NAME           TEXT    NOT NULL, "
-    //             "SURNAME          TEXT     NOT NULL, "
-    //             "AGE            INT     NOT NULL, "
-    //             "ADDRESS        CHAR(50), "
-    //             "SALARY         REAL );";
-    char *query = "SELECT * FROM PERSON;";
-    printf("до вставленяня\n\n");
-    sqlite3_exec(DB, query, callback, NULL, NULL);
-//    sql = ("INSERT INTO PERSON VALUES(1, 'STEVE', 'GATES', 30, 'PALO ALTO', 1000.0);"
-//                "INSERT INTO PERSON VALUES(2, 'BILL', 'ALLEN', 20, 'SEATTLE', 300.22);"
-//                "INSERT INTO PERSON VALUES(3, 'PAUL', 'JOBS', 24, 'SEATTLE', 9900.0);"); 
-    printf("after вставленяня\n\n");
-    char **base = {"vlad", "sasha", "pasha", "ura"}
-    char *sql = "INSERT INTO PERSON VALUES(2, 'BILL', 'ALLEN', 20, 'SEATTLE', 300.22);";
-    for () {
-
-    }
-    // vlad = sqlite3_exec(DB, sql, callback, 0, 0); 
-    // if (vlad != SQLITE_OK) {
-    //     printf("\nerror!!!\n\n");
-    // }
-    // else {
-    //     printf("\ncreated Successfully\n\n");
-    // }
-    // sql = "DELETE FROM PERSON WHERE ID = 2;"; 
-    vlad = sqlite3_exec(DB, sql, callback, 0, 0); 
-    if (vlad != SQLITE_OK) {
-        printf("\nerror!\n\n");
-    }
-    else {
-        printf("\n ok\n\n");
-    }
-    sqlite3_close(DB);
-    
-=======
-    t_ssl_con *ssl = mx_init_ssl(SERVER);
-
-    mx_logger(MX_LOG_FILE, LOGMSG,
-              "started server pid[%d]: %s %s\n", getpid(), argv[0], argv[1]);
->>>>>>> 996a8bce0f87019e79777fe2e3979b07b9dad6d9
+     t_ssl_con *ssl = mx_init_ssl(SERVER);
     while (1) {
         client = mx_new_client(chat->len);
         client->socket_fd = mx_accept(chat->listen_fd,

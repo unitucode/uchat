@@ -13,7 +13,7 @@ INCD = inc
 SRCD_CLIENT = $(addprefix $(SRCD)/, client)
 SRCD_SERVER = $(addprefix $(SRCD)/, server server/client_handler)
 SRCD_UTILS = $(addprefix $(SRCD)/, utils utils/wrappers utils/list \
-utils/config /utils/logger utils/protocol utils/ssl)
+utils/config /utils/logger utils/protocol utils/ssl utils/database)
 
 
 INCD_CLIENT = $(addprefix $(INCD)/, client_inc)
@@ -44,11 +44,7 @@ $(CLIENT): $(OBJS_CLIENT) $(OBJS_UTILS)
 $(SERVER): $(OBJS_SERVER) $(OBJS_UTILS)
 
 $(SERVER) $(CLIENT):
-<<<<<<< HEAD
-	@$(CC) -l sqlite3 -o $@ $^
-=======
 	@$(CC) -o $@ $^ $(LIBS)
->>>>>>> 996a8bce0f87019e79777fe2e3979b07b9dad6d9
 	@printf "\x1b[32;1m$@ created\x1b[0m\n"
 
 $(OBJS_CLIENT) $(OBJS_UTILS) $(OBJS_SERVER): obj/%.o: %.c | $(OBJD)
