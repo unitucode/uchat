@@ -1,7 +1,7 @@
 #include "server.h"
 #include <sqlite3.h>
 
-int callbackvlad(void *message, int argc, char** argv, char **data_parametr) {
+int callback(void *message, int argc, char** argv, char **data_parametr) {
 
     for (int i = 0; i < argc; i++) {
         printf("%s -> %s\n", data_parametr[i], argv[i]);
@@ -15,7 +15,7 @@ int callbackvlad(void *message, int argc, char** argv, char **data_parametr) {
 
 int main(int argc, char **argv) {
     sqlite3* database = mx_server_data_open(MX_DB_USER);
-    t_user *user = NULL;
+    // t_user *user = NULL;
 
     mx_creat_table_user(database);
     // user = mx_get_user("sfg", database);
@@ -30,7 +30,7 @@ int main(int argc, char **argv) {
     // printf("token -> %s\n", user->token);
     // printf("pass -> %s\n", user->password);
     // printf("ID -> %d\n", user->id);
-    // printf("two -> %d\n", sqlite3_exec(database, "SELECT * from USER where login = 'admin2'", callbackvlad, 0, 0));
+    // printf("two -> %d\n", sqlite3_exec(database, "SELECT * from USER where login = 'admin2'", callback, 0, 0));
     mx_close_database(database);
     mx_logger(MX_LOG_FILE, LOGMSG,"started server pid[%d]: %s %s\n", getpid(), argv[0], argv[1]);
     //end vlad
