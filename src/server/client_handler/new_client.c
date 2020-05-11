@@ -4,7 +4,7 @@
  * Creates new client
  */
 t_client *mx_new_client(socklen_t len) {
-    t_client *client = malloc(sizeof(t_client));
+    t_client *client = mx_malloc(sizeof(t_client));
 
     strcpy(client->ip, "-");
     strcpy(client->port, "-");
@@ -15,10 +15,12 @@ t_client *mx_new_client(socklen_t len) {
 }
 
 void mx_delete_client(t_client **client) {
-    SSL_free((*client)->ssl);
-    mx_close((*client)->socket_fd);
-    free((*client)->cliaddr);
-    free(*client);
+    if (client && *client) {
+        SSL_free((*client)->ssl);
+        mx_close((*client)->socket_fd);
+        mx_free((void**)&(*client)->cliaddr);
+        mx_free((void**)client);
+    }
 }
 
 void mx_delete_client_list(t_list *list, t_client *client) {
@@ -31,7 +33,7 @@ void mx_delete_client_list(t_list *list, t_client *client) {
         mx_delete_client(&client);
         tmp = list->head;
         list->head = list->head->next;
-        free(tmp);
+        mx_free((void**)&tmp);
         return;
     }
     for (tmp_client = (t_client *)cur->next->data; cur; cur = cur->next)
@@ -39,6 +41,6 @@ void mx_delete_client_list(t_list *list, t_client *client) {
             break;
     tmp = cur->next;
     cur->next = tmp->next;
-    free(tmp);
+    mx_free((void**)&tmp);
     mx_delete_client(&client);
 }

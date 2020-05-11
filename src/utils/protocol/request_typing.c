@@ -1,14 +1,18 @@
 #include "utils.h"
 
 void mx_free_request_struct(t_pds **request) {
-    mx_free((void **)(&(*request)->data));
-    mx_free((void **)(&(*request)->len));
-    mx_free((void**)request);
+    if (request && *request) {
+        mx_free((void **)(&(*request)->data));
+        mx_free((void **)(&(*request)->len));
+        mx_free((void**)request);
+    }
 }
 
 void mx_free_decode_struct(t_pdl **decode_req) {
-    mx_free((void **)(&(*decode_req)->data));
-    mx_free((void**)decode_req);
+    if (decode_req && *decode_req) {
+        mx_free((void **)(&(*decode_req)->data));
+        mx_free((void**)decode_req);
+    }
 }
 
 t_pds *mx_request_creation(int room, int req_type, char *req_body) {
