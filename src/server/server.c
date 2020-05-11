@@ -15,9 +15,9 @@ int callbackvlad(void *message, int argc, char** argv, char **data_parametr) {
 
 int main(int argc, char **argv) {
     sqlite3* database = mx_server_data_open(MX_DB_USER);
-    t_user *user = NULL;
+    // t_user *user = NULL;
 
-    mx_creat_table_user(database);
+    mx_create_table_user(database);
     // user = mx_get_user("sfg", database);
     // if (user != NULL) {
     //     printf("ID -> %d\n", user->id);
@@ -33,7 +33,6 @@ int main(int argc, char **argv) {
     // printf("two -> %d\n", sqlite3_exec(database, "SELECT * from USER where login = 'admin2'", callbackvlad, 0, 0));
     mx_close_database(database);
     mx_logger(MX_LOG_FILE, LOGMSG,"started server pid[%d]: %s %s\n", getpid(), argv[0], argv[1]);
-    //end vlad
     t_chat *chat = mx_init_chat(argc, argv);
     t_client *client = NULL;
      t_ssl_con *ssl = mx_init_ssl(SERVER);
