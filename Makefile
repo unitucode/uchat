@@ -46,11 +46,11 @@ $(SERVER): $(OBJS_SERVER) $(OBJS_UTILS)
 
 $(SERVER) $(CLIENT):
 	@$(CC) -o $@ $^ $(LDLIBS)
-	@printf "\r\33[2K\x1b[32;1m$@ created\x1b[0m\n"
+	@printf "\x1b[32;1m$@ created\x1b[0m\n"
 
 $(OBJS_CLIENT) $(OBJS_UTILS) $(OBJS_SERVER): obj/%.o: %.c | $(OBJD)
 	@$(CC) $(CPPFLAGS) $(CFLAGS) -c -o $@ $<
-	@printf "\r\33[2K\x1b[32mcompiled: \x1b[0m$(notdir $<)"
+	@printf "\x1b[32mcompiled: \x1b[0m$(notdir $<)\n"
 
 $(OBJD):
 	@mkdir -p $@
