@@ -11,11 +11,10 @@ void *copyto(void *arg) {
     system("leaks -q uchat");
 
     while (fgets(sendline, 1024, fp) != NULL) {
-        request = mx_request_creation(MX_LOGIN, sendline); // Protocol creation
+        request = mx_request_creation(/*Room id*/1, MX_USER_COUNT, sendline); // Protocol creation
         mx_send(ssl, request);
         mx_free_request_struct(&request);
         bzero(sendline, sizeof(sendline));
-        system("leaks -q uchat_server");
     }
     shutdown(sockfd, SHUT_WR);
     done = 1;

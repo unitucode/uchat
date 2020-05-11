@@ -24,7 +24,6 @@ static void str_echo(t_client *client) {
             printf("%s: authorized!\n", pdl->data);
         }
         mx_free_decode_struct(&pdl);
-        system("leaks -q uchat_server");
     }
 }
 
