@@ -3,9 +3,11 @@ static int sockfd;
 static FILE *fp;
 static int done;
 
-void login(SSL *ssl) {
+
+void signup(SSL *ssl) {
     char login[1024] = {0};
     char password[1024] = {0};
+    char md5_password[MX_MD5_BUF_SIZE + 1];
     t_pds *pass_request = NULL;
     t_pds *login_requset = NULL;
 
@@ -13,8 +15,33 @@ void login(SSL *ssl) {
     fgets(login, 1024, fp);
     printf("Enter your password: ");
     fgets(password, 1024, fp);
-    pass_request = mx_request_creation(-1, MX_PASSWORD, password);
-    login_requset = mx_request_creation(-1, MX_LOGIN, login);
+    password[strlen(password) - 1] = '\0';
+    login[strlen(login) - 1] = '\0';
+    mx_md5(md5_password, (const unsigned char*)password, strlen(password));
+    pass_request = mx_request_creation(-1, MX_PASSWORD, md5_password);
+    login_requset = mx_request_creation(-1, MX_SIGN_UP, login);
+    mx_send(ssl, login_requset);
+    mx_send(ssl, pass_request);
+    mx_free_request_struct(&pass_request);
+    mx_free_request_struct(&login_requset);
+}
+
+void login(SSL *ssl) {
+    char login[1024] = {0};
+    char password[1024] = {0};
+    char md5_password[MX_MD5_BUF_SIZE + 1];
+    t_pds *pass_request = NULL;
+    t_pds *login_requset = NULL;
+
+    printf("Enter your login: ");
+    fgets(login, 1024, fp);
+    printf("Enter your password: ");
+    fgets(password, 1024, fp);
+    password[strlen(password) - 1] = '\0';
+    login[strlen(login) - 1] = '\0';
+    mx_md5(md5_password, (const unsigned char*)password, strlen(password));
+    pass_request = mx_request_creation(-1, MX_PASSWORD, md5_password);
+    login_requset = mx_request_creation(-1, MX_LOG_IN, login);
     mx_send(ssl, login_requset);
     mx_send(ssl, pass_request);
     mx_free_request_struct(&pass_request);
@@ -30,6 +57,9 @@ void *copyto(void *arg) {
     while (fgets(sendline, 1024, fp) != NULL) {
         if (!strcmp(sendline, "login\n")) {
             login(ssl);
+        }
+        else if (!strcmp(sendline, "signup\n")) {
+            signup(ssl);
         }
         else {
             request = mx_request_creation(/*Room id*/1, MX_USER_COUNT, sendline); // Protocol creation

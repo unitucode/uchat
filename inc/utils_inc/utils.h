@@ -81,14 +81,15 @@ typedef enum e_logtype {
 }            t_logtype;
 
 typedef enum e_request_types {
-    MX_LOGIN = 0, //+
+    MX_LOG_IN = 0, //+
     MX_PASSWORD = 1, //+
     MX_USER_COUNT = 2,
     MX_MESSAGE = 3,
     MX_FILE = 4,
     MX_SIZE_MSG = 5,
     MX_ERR_MSG = 6,
-    MX_TOKEN_AUTH = 7
+    MX_TOKEN_AUTH = 7,
+    MX_SIGN_UP
 }            t_request_types;
 
 typedef struct s_pds { // Protocol Data Short view
@@ -162,5 +163,5 @@ void mx_create_table_user(sqlite3 *db_user);
 sqlite3 *mx_server_data_open(char *name_db);
 void mx_close_database(sqlite3 *database);
 t_user *mx_get_user(char *login, sqlite3 *db_user);
-t_user *mx_insert_user(sqlite3 *db_user, char *login, char *password, char *token);
+t_user *mx_insert_user(char *login, char *password, char *token, sqlite3 *db_user);
 void mx_delete_user(t_user **user);

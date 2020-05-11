@@ -11,6 +11,7 @@ t_client *mx_new_client(socklen_t len) {
     client->len = len;
     client->cliaddr = mx_malloc(len);
     client->socket_fd = 0;
+    client->user = NULL;
     return client;
 }
 

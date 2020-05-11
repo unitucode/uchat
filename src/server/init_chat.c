@@ -21,6 +21,7 @@ t_chat *mx_init_chat(int argc, char **argv) {
 void mx_deinit_chat(t_chat **chat) {
     mx_delete_list(&(*chat)->clients);
     mx_pthread_mutex_destroy(&(*chat)->mutex);
+    mx_close_database((*chat)->database);
     free(*chat);
     *chat = NULL;
 }

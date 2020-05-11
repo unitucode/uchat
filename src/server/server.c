@@ -14,28 +14,13 @@ int callbackvlad(void *message, int argc, char** argv, char **data_parametr) {
 }
 
 int main(int argc, char **argv) {
-    sqlite3* database = mx_server_data_open(MX_DB_USER);
-    // t_user *user = NULL;
-
-    mx_create_table_user(database);
-    // user = mx_get_user("sfg", database);
-    // if (user != NULL) {
-    //     printf("ID -> %d\n", user->id);
-    //     printf("login -> %s\n", user->login);
-    //     printf("token -> %s\n", user->token);
-    //     printf("pass -> %s\n", user->password);
-    // }
-    // user = mx_insert_user(database, "sasha", "2021", "ilon mask");
-    // printf("login -> %s\n", user->login);
-    // printf("token -> %s\n", user->token);
-    // printf("pass -> %s\n", user->password);
-    // printf("ID -> %d\n", user->id);
-    // printf("two -> %d\n", sqlite3_exec(database, "SELECT * from USER where login = 'admin2'", callbackvlad, 0, 0));
-    mx_close_database(database);
-    mx_logger(MX_LOG_FILE, LOGMSG,"started server pid[%d]: %s %s\n", getpid(), argv[0], argv[1]);
     t_chat *chat = mx_init_chat(argc, argv);
+    chat->database = mx_server_data_open(MX_DB_USER);
     t_client *client = NULL;
-     t_ssl_con *ssl = mx_init_ssl(SERVER);
+    t_ssl_con *ssl = mx_init_ssl(SERVER);
+
+    mx_create_table_user(chat->database);
+    mx_logger(MX_LOG_FILE, LOGMSG,"started server pid[%d]: %s %s\n", getpid(), argv[0], argv[1]);
     while (1) {
         client = mx_new_client(chat->len);
         client->socket_fd = mx_accept(chat->listen_fd,
@@ -48,4 +33,5 @@ int main(int argc, char **argv) {
         client->ssl = ssl->ssl;
         mx_connect_client(client);
     }
+    mx_deinit_chat(&chat);
 }

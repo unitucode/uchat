@@ -12,6 +12,7 @@ typedef struct s_chat {
     t_list *clients;
     socklen_t len;
     pthread_mutex_t mutex;
+    sqlite3* database;
 }              t_chat;
 
 typedef struct s_client {
@@ -21,12 +22,15 @@ typedef struct s_client {
     char ip[INET6_ADDRSTRLEN];
     char port[MX_PORT_LEN];
     int socket_fd;
+    t_user *user;
     t_chat *chat;
     SSL *ssl;
 }              t_client;
 
 //data protocol handler functions
 bool mx_log_in(t_pdl *login, t_client *client);
+bool mx_sign_up(t_pdl *login, t_client *client);
+bool mx_authorization(t_client *client, t_pdl *data);
 
 int mx_tcp_listen(const char *serv, socklen_t *addr_len);
 void mx_get_client_info(t_client *client);

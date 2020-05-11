@@ -1,8 +1,8 @@
 #include "server.h"
 
 static void correct_data(t_pdl *login, t_client *client) {
-    char *token = "token"; // replace to get from db;
-    t_pds *pds = mx_request_creation(-1, MX_TOKEN_AUTH, token);
+    t_pds *pds = mx_request_creation(-1, MX_TOKEN_AUTH,
+                                     (char*)client->user->token);
 
     mx_send(client->ssl, pds);
     mx_logger(MX_LOG_FILE, LOGMSG, "Logged in: %s\n", login->data);
@@ -17,28 +17,29 @@ static void inccorect_data(t_client *client) {
     mx_free_request_struct(&pds);
 }
 
-static bool log_in(t_pdl *login, t_pdl *pass, t_client *client) {
-    // t_pds *pds = NULL;
+static void log_in(t_pdl *login, t_pdl *pass, t_client *client) {
+    t_user *user = mx_get_user(login->data, client->chat->database);
 
-    if (strcmp(login->data, "admin\n")) { //replace to check db
+    if (!user) {
         inccorect_data(client);
-        mx_logger(MX_LOG_FILE, LOGMSG, "Inccorect login: %s\n", login->data);
-        return false;
+        mx_logger(MX_LOG_FILE, LOGMSG, "Non-existent user %s\n", login->data);
     }
-    if (strcmp(pass->data, "admin\n")) { //repalce to check db
+    else if (strcmp(user->password, pass->data)) {
         inccorect_data(client);
-        mx_logger(MX_LOG_FILE, LOGMSG, "Inccorect pass: %s\n", login->data);
-        return false;
+        mx_logger(MX_LOG_FILE, LOGMSG, "Inccorect password %s\n",
+                  login->data);
+        mx_delete_user(&user);
     }
-    correct_data(login, client);
-    return true;
+    else {
+        client->user = user;
+        correct_data(login, client);
+    }
 }
 
 bool mx_log_in(t_pdl *login, t_client *client) {
     t_pdl *pass = NULL;
-    bool result = false;
 
-    if (login && login->type != MX_LOGIN)
+    if (login && login->type != MX_LOG_IN)
         return false;
     pass = mx_recv(client->ssl);
     if (pass && pass->type != MX_PASSWORD) {
@@ -48,7 +49,7 @@ bool mx_log_in(t_pdl *login, t_client *client) {
                   login->data);
         return false;
     }
-    result = log_in(login, pass, client);
+    log_in(login, pass, client);
     mx_free_decode_struct(&pass);
-    return result;
+    return true;
 }

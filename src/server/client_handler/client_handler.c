@@ -19,7 +19,10 @@ static void str_echo(t_client *client) {
     system("leaks -q uchat_server");
 
     while ((pdl = mx_recv(client->ssl))) {
-        mx_log_in(pdl, client);
+        if (!mx_authorization(client, pdl)) {
+            mx_free_decode_struct(&pdl);
+            break;
+        }
         mx_free_decode_struct(&pdl);
     }
 }

@@ -1,6 +1,6 @@
 #include <utils.h>
 
-t_user *mx_insert_user(sqlite3 *db_user, char *login, char *password, char *token) {
+t_user *mx_insert_user(char *login, char *password, char *token, sqlite3 *db_user) {
     char *sqlstr = NULL;
     sqlite3_str *new = sqlite3_str_new(db_user);
     sqlite3_stmt *stmt;

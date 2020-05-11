@@ -1,6 +1,6 @@
 #include <utils.h>
 
-void mx_creat_table_user(sqlite3 *db_user) {
+void mx_create_table_user(sqlite3 *db_user) {
     char *sql = "CREATE TABLE USER("  \
                 "ID             INTEGER PRIMARY KEY NOT NULL," \
                 "TOKEN          TEXT    NOT NULL," \
@@ -13,4 +13,3 @@ void mx_creat_table_user(sqlite3 *db_user) {
     //     mx_elogger(MX_LOG_FILE, LOGWAR, "error creat database table");
     // }
 }
-
