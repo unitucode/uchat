@@ -1,5 +1,8 @@
 #include "utils.h"
 
+/*
+ * Receive first packet with size of next packet
+ */
 static int message_size(SSL *ssl) {
     t_pdl *pdl = NULL;
     char buf[MX_BUF_SIZE];
@@ -22,6 +25,9 @@ static int message_size(SSL *ssl) {
     return size;
 }
 
+/*
+ * Receive message from ssl socket
+ */
 t_pdl *mx_recv(SSL *ssl) {
     t_pdl *pdl = NULL;
     int size = 0;

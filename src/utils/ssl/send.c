@@ -1,5 +1,8 @@
 #include "utils.h"
 
+/*
+ * Send message by ssl
+ */
 int mx_send(SSL *ssl, t_pds *data) {
     bool result = true;
     t_pds *pds = mx_request_creation(/*Room id*/1, MX_SIZE_MSG, data->len);

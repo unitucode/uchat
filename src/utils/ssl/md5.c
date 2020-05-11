@@ -1,5 +1,8 @@
 #include "utils.h"
 
+/*
+ * Creates md5 hash from str
+ */
 void mx_md5(char *buf, const unsigned char *str, size_t len) {
     unsigned char md5digest[MD5_DIGEST_LENGTH];
     char byte_buf[3];

@@ -14,6 +14,9 @@ t_client *mx_new_client(socklen_t len) {
     return client;
 }
 
+/*
+ * Deletes client
+ */
 void mx_delete_client(t_client **client) {
     if (client && *client) {
         SSL_free((*client)->ssl);
@@ -23,6 +26,9 @@ void mx_delete_client(t_client **client) {
     }
 }
 
+/*
+ * Deletes client from list of clients
+ */
 void mx_delete_client_list(t_list *list, t_client *client) {
     t_node *cur = list->head;
     t_node *tmp = NULL;
