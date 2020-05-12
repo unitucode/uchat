@@ -17,14 +17,14 @@ static void inccorect_data(t_client *client) {
     mx_free_request_struct(&pds);
 }
 
-static void log_in(t_pdl *login, t_pdl *pass, t_client *client) {
+static void log_in(t_pdl *login, char *pass, t_client *client) {
     t_user *user = mx_get_user(login->data, client->chat->database);
 
     if (!user) {
         inccorect_data(client);
         mx_logger(MX_LOG_FILE, LOGMSG, "Non-existent user %s\n", login->data);
     }
-    else if (strcmp(user->password, pass->data)) {
+    else if (strcmp(user->password, pass)) {
         inccorect_data(client);
         mx_logger(MX_LOG_FILE, LOGMSG, "Inccorect password %s\n",
                   login->data);
@@ -38,18 +38,21 @@ static void log_in(t_pdl *login, t_pdl *pass, t_client *client) {
 
 bool mx_log_in(t_pdl *login, t_client *client) {
     t_pdl *pass = NULL;
+    char md5_pass[MX_MD5_BUF_SIZE + 1];
 
-    if (login && login->type != MX_LOG_IN)
+    if (login && (login->type != MX_LOG_IN || !mx_isvalid_login(login->data)))
         return false;
     pass = mx_recv(client->ssl);
-    if (pass && pass->type != MX_PASSWORD) {
+    if (pass
+        && (pass->type != MX_PASSWORD || !mx_isvalid_hash(pass->data))) {
         mx_free_decode_struct(&pass);
         mx_logger(MX_LOG_FILE, LOGWAR,
                   "First packet was login(%s), but second wasn`t pass\n",
                   login->data);
         return false;
     }
-    log_in(login, pass, client);
+    mx_md5(md5_pass, (const unsigned char*)pass->data, pass->len);
+    log_in(login, md5_pass, client);
     mx_free_decode_struct(&pass);
     return true;
 }
