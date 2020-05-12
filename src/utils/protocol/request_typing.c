@@ -15,9 +15,22 @@ void mx_free_decode_struct(t_pdl **decode_req) {
     }
 }
 
-t_pds *mx_request_creation(int room, int req_type, char *req_body) {
+int get_counts_of_digits(int number) {
+    int count = (number == 0) ? 1 : 0;
+    while (number != 0) {
+        count++;
+        number /= 10;
+    }
+    return count;
+}
+
+t_pds *mx_request_creation(int room, t_request_types req_type, char *req_body) {
     t_pds *req_struct = mx_malloc(sizeof(t_pds));
-    char str[MX_BUF_SIZE];
+    int buf_size = strlen(req_body) +
+        get_counts_of_digits(room) +
+        get_counts_of_digits(req_type);
+        printf("Buf size - %d\n", buf_size);
+    char str[buf_size];
 
     sprintf(str, "%d|%d|%s", room, req_type, req_body);
     req_struct->data = strdup(str);
