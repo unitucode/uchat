@@ -19,9 +19,11 @@
 #include "json.h"
 #include <openssl/ssl.h>
 #include <openssl/err.h>
+#include <sqlite3.h>
 #include <openssl/md5.h>
 #include <regex.h>
 
+#define MX_DB_USER "users.db"
 
 #define MX_LIST_BACK 0
 #define MX_LOG_FILE "info.log"
@@ -34,11 +36,19 @@
 #define MX_KEY_PASSWORD "12345678"
 
 #define MX_BUF_SIZE 1024
+#define MX_MD5_BUF_SIZE 32
 
 typedef enum e_app_type {
     CLIENT,
     SERVER
 }            t_app_type;
+
+typedef struct s_user {
+    const char *token;
+    const char *login;
+    const char *password;
+    unsigned int id;
+}              t_user;
 
 typedef struct s_ssl_con {
     SSL_CTX *ctx;
@@ -73,12 +83,15 @@ typedef enum e_logtype {
 }            t_logtype;
 
 typedef enum e_request_types {
-    MX_LOGIN = 0,
-    MX_PASSWORD = 1,
+    MX_LOG_IN = 0, //+
+    MX_PASSWORD = 1, //+
     MX_USER_COUNT = 2,
     MX_MESSAGE = 3,
     MX_FILE = 4,
-    MX_SIZE_MSG = 5
+    MX_SIZE_MSG = 5,
+    MX_ERR_MSG = 6,
+    MX_TOKEN_AUTH = 7,
+    MX_SIGN_UP
 }            t_request_types;
 
 typedef struct s_pds { // Protocol Data Short view
@@ -100,6 +113,7 @@ int mx_match_search(char *str, char *regex);
 t_ssl_con *mx_init_ssl(t_app_type type);
 t_pdl *mx_recv(SSL *ssl);
 int mx_send(SSL *ssl, t_pds *data);
+void mx_md5(char *buf, const unsigned char *str, size_t len);
 
 //wrappers
 void *mx_malloc(size_t size);
@@ -147,3 +161,11 @@ char *mx_itoa(int number);
 //room_config
 json_value *mx_open_config();
 char *mx_get_config_val(char *key);
+
+//sqlite3
+void mx_create_table_user(sqlite3 *db_user);
+sqlite3 *mx_server_data_open(char *name_db);
+void mx_close_database(sqlite3 *database);
+t_user *mx_get_user(char *login, sqlite3 *db_user);
+t_user *mx_insert_user(char *login, char *password, char *token, sqlite3 *db_user);
+void mx_delete_user(t_user **user);

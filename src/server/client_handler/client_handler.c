@@ -16,12 +16,12 @@
 
 static void str_echo(t_client *client) {
     t_pdl *pdl = NULL;
-    system("leaks -q uchat_server");
+    // system("leaks -q uchat_server");
 
     while ((pdl = mx_recv(client->ssl))) {
-        printf("get = %s\n", pdl->data);
-        if (pdl->type == MX_LOGIN) {
-            printf("%s: authorized!\n", pdl->data);
+        if (!mx_authorization(client, pdl)) {
+            mx_free_decode_struct(&pdl);
+            break;
         }
         mx_free_decode_struct(&pdl);
     }

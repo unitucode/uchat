@@ -1,5 +1,8 @@
 #include "server.h"
 
+/*
+ * Initializates chat variables
+ */
 t_chat *mx_init_chat(int argc, char **argv) {
     t_chat *chat = mx_malloc(sizeof(t_chat));
 
@@ -12,9 +15,13 @@ t_chat *mx_init_chat(int argc, char **argv) {
     return chat;
 }
 
+/*
+ * Deinitializates chat variables
+ */
 void mx_deinit_chat(t_chat **chat) {
     mx_delete_list(&(*chat)->clients);
     mx_pthread_mutex_destroy(&(*chat)->mutex);
+    mx_close_database((*chat)->database);
     free(*chat);
     *chat = NULL;
 }
