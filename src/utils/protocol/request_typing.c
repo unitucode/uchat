@@ -60,7 +60,7 @@ static void pars_request(t_pdl *decode, char *request) {
 t_pdl *mx_request_decode(char *request) {
     t_pdl *decode_struct = NULL;
 
-    if(!(mx_match_search("1s|s23|sdfsdfs", MX_REQ_REGEX))) {
+    if(!(mx_match_search(request, MX_REQ_REGEX))) {
         mx_logger(MX_LOG_FILE, LOGWAR, "Undefined server request\n");
         return NULL;
     }
