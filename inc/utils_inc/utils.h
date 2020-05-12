@@ -30,6 +30,8 @@
 #define MX_CONFIG "config.json"
 #define MX_DEFAULT_CONFIG "{\n\n}\n"
 #define MX_REQ_REGEX "([0-9]+[|][0-9]+[|]).+" 
+#define MX_HASH_REGEX "^[a-f0-9]{32}$"
+#define MX_LOGIN_REGEX "^[a-z0-9_-]{3,22}$"
 
 #define MX_CERT_FILE "certificate.crt"
 #define MX_KEY_FILE "private_key.pem"
@@ -116,6 +118,9 @@ t_ssl_con *mx_init_ssl(t_app_type type);
 t_pdl *mx_recv(SSL *ssl);
 int mx_send(SSL *ssl, t_pds *data);
 void mx_md5(char *buf, const unsigned char *str, size_t len);
+bool mx_isvalid_hash(char *hash);
+bool mx_isvalid_login(char *login);
+bool mx_isvalid_token(char *token);
 
 //wrappers
 void *mx_malloc(size_t size);
