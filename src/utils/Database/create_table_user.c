@@ -3,9 +3,10 @@
 void mx_create_table_user(sqlite3 *db_user) {
     char *sql = "CREATE TABLE USER("  \
                 "ID             INTEGER PRIMARY KEY NOT NULL," \
-                "PASSWORD       TEXT    NOT NULL," \
-                "LOGIN          TEXT    NOT NULL," \
-                "TOKEN          TEXT    NOT NULL );";
+                "LOGIN      TEXT    NOT NULL," \
+                "PASSWORD          TEXT    NOT NULL," \
+                "TOKEN          TEXT    NOT NULL," \
+                "PERMISSION     INTEGER NOT NULL,);";
     sqlite3_exec(db_user, sql, 0, 0, 0);
     // printf("%d\n", returnvalues);
     // if (returnvalues != SQLITE_OK) {

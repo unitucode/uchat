@@ -48,6 +48,7 @@ typedef struct s_user {
     const char *login;
     const char *password;
     unsigned int id;
+    unsigned int permission;
 }              t_user;
 
 typedef struct s_ssl_con {
@@ -171,4 +172,5 @@ t_user *mx_get_user_by_login(char *login, sqlite3 *db_user);
 t_user *mx_insert_user(char *login, char *password, char *token, sqlite3 *db_user);
 void mx_delete_user(t_user **user);
 t_user *mx_get_user_by_token(char *token, sqlite3 *db_user);
+t_user *for_get_user(sqlite3_stmt *stmt);
 
