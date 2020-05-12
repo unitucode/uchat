@@ -99,7 +99,6 @@ int main(int argc, char **argv) {
     int sockfd;
     t_ssl_con *ssl = NULL;
 
-
     if (argc != 3) {
         printf("usage\n");
         exit(1);
@@ -114,4 +113,3 @@ int main(int argc, char **argv) {
     }
     str_cli(stdin, ssl->ssl);
 }
-

@@ -1,18 +1,14 @@
 #include <utils.h>
 
-t_user *mx_get_user(char *login, sqlite3 *db_user) {
+t_user *mx_get_user_on_token(char *token, sqlite3 *db_user) {
     sqlite3_stmt *stmt;
-    sqlite3_str *new = sqlite3_str_new(db_user);
     t_user *user = mx_malloc(sizeof(t_user));
     int returnvalue;
-    char *sqlstr = NULL;
 
-    sqlite3_str_appendf(new, "SELECT * from USER WHERE login = \'%s\'", login);
-    sqlstr = sqlite3_str_finish(new);
-    sqlite3_prepare(db_user, sqlstr, -1, &stmt, NULL);
-    printf("SQL request = %s\n", sqlstr);
+    sqlite3_prepare_v3(db_user, "SELECT * FROM USER WHERE token = ?1", -1, 0, &stmt, NULL);
+    sqlite3_bind_text(stmt, 1, token, -1, SQLITE_STATIC);
     if ((returnvalue = sqlite3_step(stmt)) != SQLITE_ROW) {
-        printf("користувача з таким логіном не існує\n");
+        printf("користувача з таким token не існує\n");
         return NULL;
     }
     user->id = sqlite3_column_int(stmt, 0);

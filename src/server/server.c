@@ -1,7 +1,7 @@
 #include "server.h"
 #include <sqlite3.h>
 
-int callbackvlad(void *message, int argc, char** argv, char **data_parametr) {
+int callback(void *message, int argc, char** argv, char **data_parametr) {
 
     for (int i = 0; i < argc; i++) {
         printf("%s -> %s\n", data_parametr[i], argv[i]);
@@ -14,6 +14,29 @@ int callbackvlad(void *message, int argc, char** argv, char **data_parametr) {
 }
 
 int main(int argc, char **argv) {
+    // sqlite3 *database = mx_server_data_open(MX_DB_USER);
+    // mx_create_table_user(database);
+    // t_user *user = mx_insert_user("admin1", "123", "token", database);
+    // printf("ID -> %d\n", user->id);
+    // printf("login -> %s\n", user->login);
+    // printf("pass -> %s\n", user->password);
+    // printf("token -> %s\n", user->token);
+    // user = mx_insert_user("admin2", "1234", "token", database);
+    // printf("ID -> %d\n", user->id);
+    // printf("login -> %s\n", user->login);
+    // printf("pass -> %s\n", user->password);
+    // printf("token -> %s\n", user->token);
+    // user = mx_insert_user("admin3", "12345", "token", database);
+    // printf("ID -> %d\n", user->id);
+    // printf("login -> %s\n", user->login);
+    // printf("pass -> %s\n", user->password);
+    // printf("token -> %s\n", user->token);
+    // user = mx_get_user_on_login("admin3", database);
+    // printf("ID -> %d\n", user->id);
+    // printf("login -> %s\n", user->login);
+    // printf("pass -> %s\n", user->password);
+    // printf("token -> %s\n", user->token);
+    // exit(1);
     t_chat *chat = mx_init_chat(argc, argv);
     chat->database = mx_server_data_open(MX_DB_USER);
     t_client *client = NULL;

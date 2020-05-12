@@ -1,22 +1,21 @@
 #include <utils.h>
 
 t_user *mx_insert_user(char *login, char *password, char *token, sqlite3 *db_user) {
-    char *sqlstr = NULL;
-    sqlite3_str *new = sqlite3_str_new(db_user);
     sqlite3_stmt *stmt;
     t_user *user = malloc(sizeof(t_user));
     int returnvalue = 0;
 
-    sqlite3_str_appendf(new, "INSERT INTO USER(LOGIN, PASSWORD, TOKEN) VALUES(\'%s\',\'%s\',\'%s\');", login, password, token);
-    sqlstr = sqlite3_str_finish(new);
-    if ((returnvalue = sqlite3_exec(db_user, sqlstr, 0, 0, 0)) != SQLITE_OK) {
+    sqlite3_prepare_v3(db_user, "INSERT INTO USER(LOGIN, PASSWORD, TOKEN) \
+                                 VALUES(?1, ?2, ?3);", -1, 0, &stmt, NULL);
+     sqlite3_bind_text(stmt, 1, login, -1, SQLITE_STATIC);
+     sqlite3_bind_text(stmt, 2, password, -1, SQLITE_STATIC);
+     sqlite3_bind_text(stmt, 3, token, -1, SQLITE_STATIC);
+    if ((returnvalue = sqlite3_step(stmt)) != SQLITE_DONE) {
         //  mx_elogger(MX_LOG_FILE, LOGWAR, "error insert database table");
     }
     printf("thread_safe = %d\n", sqlite3_threadsafe());
-    new = sqlite3_str_new(db_user);
-    sqlite3_str_appendf(new, "SELECT ID from USER WHERE login = \'%s\'", login);
-    sqlstr  = sqlite3_str_finish(new);
-    sqlite3_prepare(db_user, sqlstr, -1, &stmt, NULL);
+    sqlite3_prepare_v3(db_user, "SELECT ID from USER WHERE login = ?1", -1, 0, &stmt, NULL);
+    sqlite3_bind_text(stmt, 1, login, -1, SQLITE_STATIC);
     if ((returnvalue = sqlite3_step(stmt)) != SQLITE_ROW) {
         //  mx_elogger(MX_LOG_FILE, LOGWAR, "error select database table");
     }

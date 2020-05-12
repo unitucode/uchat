@@ -30,6 +30,7 @@ typedef struct s_client {
 //data protocol handler functions
 bool mx_log_in(t_pdl *login, t_client *client);
 bool mx_sign_up(t_pdl *login, t_client *client);
+bool mx_log_in_token(t_pdl *token, t_client *client);
 bool mx_authorization(t_client *client, t_pdl *data);
 
 int mx_tcp_listen(const char *serv, socklen_t *addr_len);

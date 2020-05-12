@@ -18,7 +18,7 @@ static void inccorect_data(t_client *client) {
 }
 
 static void log_in(t_pdl *login, char *pass, t_client *client) {
-    t_user *user = mx_get_user(login->data, client->chat->database);
+    t_user *user = mx_get_user_on_login(login->data, client->chat->database);
 
     if (!user) {
         inccorect_data(client);

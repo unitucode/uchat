@@ -172,6 +172,8 @@ char *mx_get_config_val(char *key);
 void mx_create_table_user(sqlite3 *db_user);
 sqlite3 *mx_server_data_open(char *name_db);
 void mx_close_database(sqlite3 *database);
-t_user *mx_get_user(char *login, sqlite3 *db_user);
+t_user *mx_get_user_on_login(char *login, sqlite3 *db_user);
 t_user *mx_insert_user(char *login, char *password, char *token, sqlite3 *db_user);
 void mx_delete_user(t_user **user);
+t_user *mx_get_user_on_token(char *token, sqlite3 *db_user);
+
