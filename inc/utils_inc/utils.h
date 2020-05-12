@@ -108,6 +108,7 @@ typedef struct s_pdl { // Protocol Data Long view
 
 //Utils
 int mx_match_search(char *str, char *regex);
+int mx_get_counts_of_digits(int number);
 
 //SSL
 t_ssl_con *mx_init_ssl(t_app_type type);
