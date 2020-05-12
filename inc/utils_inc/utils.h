@@ -178,4 +178,4 @@ t_user *mx_insert_user(char *login, char *password, char *token, sqlite3 *db_use
 void mx_delete_user(t_user **user);
 t_user *mx_get_user_by_token(char *token, sqlite3 *db_user);
 t_user *for_get_user(sqlite3_stmt *stmt);
-
+void mx_update_permission_of_user(unsigned int permission, char *login, sqlite3 *database);
