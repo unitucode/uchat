@@ -51,6 +51,20 @@ typedef struct s_user {
     unsigned int permission;
 }              t_user;
 
+typedef struct s_room {
+    unsigned int id;
+    unsigned int id_message;
+    char *login;
+    char *message;
+    char *date;
+}              t_room;
+
+typedef struct s_rooms {
+    unsigned int id;
+    char *name;
+}              t_rooms;
+
+
 typedef struct s_ssl_con {
     SSL_CTX *ctx;
     SSL *ssl;

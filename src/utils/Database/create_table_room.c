@@ -1,12 +1,12 @@
 #include <utils.h>
 
-void mx_create_table_user(sqlite3 *db_user) {
-    char *sql = "CREATE TABLE USERS("  \
+void mx_create_table_room(sqlite3 *db_user) {
+    char *sql = "CREATE TABLE ROOM("  \
                 "ID             INTEGER PRIMARY KEY NOT NULL," \
+                "ID_MESSAGE     INGEGER NOT NULL"  \
                 "LOGIN          TEXT    NOT NULL," \
-                "PASSWORD       TEXT    NOT NULL," \
-                "TOKEN          TEXT    NOT NULL," \
-                "PERMISSION     INTEGER NOT NULL);";
+                "MESSAGE        TEXT    NOT NULL," \
+                "DATE           TEXT    NOT NULL);";
     int tmp = 0;
 
     if ((tmp = sqlite3_exec(db_user, sql, 0, 0, 0)) != SQLITE_OK) {

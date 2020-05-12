@@ -1,13 +1,11 @@
 #include <utils.h>
 
-t_user *mx_insert_user(char *login, char *password,
-                       char *token, sqlite3 *db_user) {
+void mx_insert_room(t_room *room, sqlite3 *db_room) {
     sqlite3_stmt *stmt;
-    t_user *user = malloc(sizeof(t_user));
     int returnvalue = 0;
 
-    returnvalue = sqlite3_prepare_v3(db_user,
-                       "INSERT INTO USERS(LOGIN, PASSWORD, TOKEN, PERMISSION) \
+    returnvalue = sqlite3_prepare_v3(db_room,
+                       "INSERT INTO roomS(LOGIN, PASSWORD, TOKEN, PERMISSION) \
                        VALUES(?1, ?2, ?3, ?4);", -1, 0, &stmt, NULL);
     if (returnvalue == SQLITE_ERROR) {     
         mx_elogger(MX_LOG_FILE, LOGERR, "insert database table");
@@ -20,17 +18,16 @@ t_user *mx_insert_user(char *login, char *password,
         //  mx_elogger(MX_LOG_FILE, LOGERR, "insert database table");
     }
     printf("thread_safe = %d\n", sqlite3_threadsafe());
-    sqlite3_prepare_v3(db_user, "SELECT ID FROM USERS WHERE \
+    sqlite3_prepare_v3(db_room, "SELECT ID FROM roomS WHERE \
                                 login = ?1", -1, 0, &stmt, NULL);
     sqlite3_bind_text(stmt, 1, login, -1, SQLITE_STATIC);
     if ((returnvalue = sqlite3_step(stmt)) != SQLITE_ROW) {
         //  mx_elogger(MX_LOG_FILE, LOGERR, "select database table");
     }
-    user->id = sqlite3_column_int(stmt, 0);
+    room->id = sqlite3_column_int(stmt, 0);
     sqlite3_finalize(stmt);
-    user->login = strdup(login);
-    user->token = strdup(token);
-    user->password = strdup(password);
-    user->permission = 0;
-    return user;
+    room->login = strdup(login);
+    room->token = strdup(token);
+    room->password = strdup(password);
+    room->permission = 0;
 }
