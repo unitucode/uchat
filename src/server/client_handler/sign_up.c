@@ -16,8 +16,13 @@ static void correct_data(t_client *client) {
     mx_free_request_struct(&pds);
 }
 
+<<<<<<< HEAD
 static void sign_up(t_pdl *login, char *pass, t_client *client) {
     t_user *user = mx_get_user_on_token(login->data, client->chat->database);
+=======
+static void sign_up(t_pdl *login, t_pdl *pass, t_client *client) {
+    t_user *user = mx_get_user_by_login(login->data, client->chat->database);
+>>>>>>> b8fafd1e123366f1dfa15c747843dc3aaa435723
     char token[MX_MD5_BUF_SIZE + 1];
     char seed[login->len + strlen(pass) + 1];
 

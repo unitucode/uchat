@@ -1,6 +1,6 @@
 #include <utils.h>
 
-t_user *mx_get_user_on_login(char *login, sqlite3 *db_user) {
+t_user *mx_get_user_by_login(char *login, sqlite3 *db_user) {
     sqlite3_stmt *stmt;
     t_user *user = mx_malloc(sizeof(t_user));
     int returnvalue;
@@ -12,9 +12,9 @@ t_user *mx_get_user_on_login(char *login, sqlite3 *db_user) {
         return NULL;
     }
     user->id = sqlite3_column_int(stmt, 0);
-    user->login = strdup((const char*)sqlite3_column_text(stmt, 2));
-    user->token = strdup((const char*)sqlite3_column_text(stmt, 1));
-    user->password = strdup((const char*)sqlite3_column_text(stmt, 3));
+    user->login = strdup((const char*)sqlite3_column_text(stmt, 1));
+    user->password = strdup((const char*)sqlite3_column_text(stmt, 2));
+    user->token = strdup((const char*)sqlite3_column_text(stmt, 3));
     sqlite3_finalize(stmt);
     return user;
 }
