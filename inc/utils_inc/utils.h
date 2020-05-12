@@ -20,12 +20,14 @@
 #include <openssl/ssl.h>
 #include <openssl/err.h>
 #include <openssl/md5.h>
+#include <regex.h>
 
 
 #define MX_LIST_BACK 0
 #define MX_LOG_FILE "info.log"
 #define MX_CONFIG "config.json"
 #define MX_DEFAULT_CONFIG "{\n\n}\n"
+#define MX_REQ_REGEX "([0-9]+[|][0-9]+[|]).+" 
 
 #define MX_CERT_FILE "certificate.crt"
 #define MX_KEY_FILE "private_key.pem"
@@ -91,7 +93,8 @@ typedef struct s_pdl { // Protocol Data Long view
     size_t len;
 }              t_pdl;
 
-
+//Utils
+int mx_match_search(char *str, char *regex);
 
 //SSL
 t_ssl_con *mx_init_ssl(t_app_type type);

@@ -41,8 +41,13 @@ static void pars_request(t_pdl *decode, char *request) {
 }
 
 t_pdl *mx_request_decode(char *request) {
-    t_pdl *decode_struct = mx_malloc(sizeof(t_pdl));
+    t_pdl *decode_struct = NULL;
 
+    if(!(mx_match_search(request, MX_REQ_REGEX))) {
+        mx_logger(MX_LOG_FILE, LOGWAR, "Undefined server request\n");
+        return NULL;
+    }
+    decode_struct = mx_malloc(sizeof(t_pdl));
     pars_request(decode_struct, request);
     return decode_struct;
 }
