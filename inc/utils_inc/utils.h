@@ -29,7 +29,7 @@
 #define MX_LOG_FILE "info.log"
 #define MX_CONFIG "config.json"
 #define MX_DEFAULT_CONFIG "{\n\n}\n"
-#define MX_REQ_REGEX "^([0-9]+[|][0-9]+[|]).+$" 
+#define MX_REQ_REGEX "([0-9]+[|][0-9]+[|]).+" 
 #define MX_HASH_REGEX "^[a-f0-9]{32}$"
 #define MX_LOGIN_REGEX "^[a-z0-9_-]{3,22}$"
 

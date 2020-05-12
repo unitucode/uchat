@@ -41,10 +41,12 @@ bool mx_sign_up(t_pdl *login, t_client *client) {
     t_pdl *pass = NULL;
     char md5_pass[MX_MD5_BUF_SIZE + 1];
 
-    if (login && login->type != MX_SIGN_UP) 
+    if (login
+        && (login->type != MX_SIGN_UP || !mx_isvalid_login(login->data))) {
         return false;
+    }
     pass = mx_recv(client->ssl);
-    if (pass && (pass->type != MX_PASSWORD || mx_isvalid_hash(pass->data))) {
+    if (pass && (pass->type != MX_PASSWORD || !mx_isvalid_hash(pass->data))) {
         mx_free_decode_struct(&pass);
         mx_logger(MX_LOG_FILE, LOGWAR,
                   "First packet was login(%s), but second wasn`t pass\n",
