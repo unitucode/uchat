@@ -8,3 +8,5 @@ obj
 info.log
 a.out
 .vscode/settings.json
+.vscode
+users.db

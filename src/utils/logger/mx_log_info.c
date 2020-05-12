@@ -5,7 +5,13 @@
  */
 void mx_log_id(FILE *fd) {
     int pid = getpid();
-    fprintf(fd, "[pid: %d|pgid: %d]", pid, getpgid(pid));
+    int pgid = getpgid(pid);
+
+    if (pgid == -1) {
+        fprintf(stderr, "Logger error: getpgid problem\n");
+        exit(errno);
+    }
+    fprintf(fd, "[pid: %d|pgid: %d]", pid, pgid);
 }
 
 /*
@@ -13,9 +19,19 @@ void mx_log_id(FILE *fd) {
  */
 void mx_log_time(FILE *fd) {
     long ttime = time(NULL);
-    char *stime = ctime(&ttime);
-    char *rtime = strndup(stime, strlen(stime) - 1);
+    char *stime;
+    char *rtime;
 
+    if (ttime == -1) {
+        fprintf(stderr, "Logger error: time problem\n");
+        exit(errno);
+    }
+    stime = ctime(&ttime);
+    if (stime == NULL) {
+        fprintf(stderr, "Logger error: ctime problem\n");
+        exit(errno);
+    }
+    rtime = strndup(stime, strlen(stime) - 1);
     fprintf(fd, "[%s] ", rtime);
     mx_free((void **)&rtime);
 }

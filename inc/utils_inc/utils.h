@@ -20,19 +20,23 @@
 #include <openssl/ssl.h>
 #include <openssl/err.h>
 #include <sqlite3.h>
+#include <openssl/md5.h>
+#include <regex.h>
 
-#define MX_DB_USER "db_user.db"
+#define MX_DB_USER "users.db"
 
 #define MX_LIST_BACK 0
 #define MX_LOG_FILE "info.log"
 #define MX_CONFIG "config.json"
 #define MX_DEFAULT_CONFIG "{\n\n}\n"
+#define MX_REQ_REGEX "([0-9]+[|][0-9]+[|]).+" 
 
 #define MX_CERT_FILE "certificate.crt"
 #define MX_KEY_FILE "private_key.pem"
 #define MX_KEY_PASSWORD "12345678"
 
 #define MX_BUF_SIZE 1024
+#define MX_MD5_BUF_SIZE 32
 
 typedef enum e_app_type {
     CLIENT,
@@ -79,12 +83,15 @@ typedef enum e_logtype {
 }            t_logtype;
 
 typedef enum e_request_types {
-    MX_LOGIN = 48,
-    MX_PASSWORD = 49,
-    MX_USER_COUNT = 50,
-    MX_MESSAGE = 51,
-    MX_FILE = 52,
-    MX_SIZE_MSG = 53
+    MX_LOG_IN = 0, //+
+    MX_PASSWORD = 1, //+
+    MX_USER_COUNT = 2,
+    MX_MESSAGE = 3,
+    MX_FILE = 4,
+    MX_SIZE_MSG = 5,
+    MX_ERR_MSG = 6,
+    MX_TOKEN_AUTH = 7,
+    MX_SIGN_UP
 }            t_request_types;
 
 typedef struct s_pds { // Protocol Data Short view
@@ -93,17 +100,21 @@ typedef struct s_pds { // Protocol Data Short view
 }              t_pds;
 
 typedef struct s_pdl { // Protocol Data Long view
+    int room;
     int type;
     char *data;
     size_t len;
 }              t_pdl;
 
-
+//Utils
+int mx_match_search(char *str, char *regex);
+int mx_get_counts_of_digits(int number);
 
 //SSL
 t_ssl_con *mx_init_ssl(t_app_type type);
 t_pdl *mx_recv(SSL *ssl);
 int mx_send(SSL *ssl, t_pds *data);
+void mx_md5(char *buf, const unsigned char *str, size_t len);
 
 //wrappers
 void *mx_malloc(size_t size);
@@ -142,7 +153,7 @@ void mx_logger(const char *file, t_logtype type, const char *fmt, ...);
 void mx_elogger(const char *file, t_logtype type, const char *fmt, ...);
 
 //Protocol
-t_pds *mx_request_creation(int req_type, char *request);
+t_pds *mx_request_creation(int room, t_request_types req_type, char *req_body);
 t_pdl *mx_request_decode(char *request);
 void mx_free_request_struct(t_pds **request);
 void mx_free_decode_struct(t_pdl **decode_req);
@@ -153,9 +164,11 @@ json_value *mx_open_config();
 char *mx_get_config_val(char *key);
 
 //sqlite3
-void mx_creat_table_user(sqlite3 *db_user);
+void mx_create_table_user(sqlite3 *db_user);
 sqlite3 *mx_server_data_open(char *name_db);
 void mx_close_database(sqlite3 *database);
-t_user *mx_get_user(char *login, sqlite3 *db_user);
-t_user *mx_insert_user(sqlite3 *db_user, char *login, char *password, char *token);
+t_user *mx_get_user_on_login(char *login, sqlite3 *db_user);
+t_user *mx_insert_user(char *login, char *password, char *token, sqlite3 *db_user);
 void mx_delete_user(t_user **user);
+t_user *mx_get_user_on_token(char *token, sqlite3 *db_user);
+
