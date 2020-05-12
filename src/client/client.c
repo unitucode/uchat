@@ -82,6 +82,9 @@ void str_cli(FILE *fp_arg, SSL *ssl) {
     mx_pthread_create(&tid, NULL, copyto, ssl);
     while (SSL_read(ssl, buf, sizeof(buf))) {
         t_pdl *pdl = mx_request_decode(buf);
+
+        if (!pdl)
+            break;
         if (pdl->type == MX_ERR_MSG)
             printf("ERROR: %s\n", pdl->data);
         if (pdl->type == MX_TOKEN_AUTH)
