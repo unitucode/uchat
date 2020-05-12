@@ -16,7 +16,7 @@
 
 static void str_echo(t_client *client) {
     t_pdl *pdl = NULL;
-    system("leaks -q uchat_server");
+    // system("leaks -q uchat_server");
 
     while ((pdl = mx_recv(client->ssl))) {
         if (!mx_authorization(client, pdl)) {

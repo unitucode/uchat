@@ -12,6 +12,7 @@ t_user *mx_insert_user(char *login, char *password, char *token, sqlite3 *db_use
     if ((returnvalue = sqlite3_exec(db_user, sqlstr, 0, 0, 0)) != SQLITE_OK) {
         //  mx_elogger(MX_LOG_FILE, LOGWAR, "error insert database table");
     }
+    printf("thread_safe = %d\n", sqlite3_threadsafe());
     new = sqlite3_str_new(db_user);
     sqlite3_str_appendf(new, "SELECT ID from USER WHERE login = \'%s\'", login);
     sqlstr  = sqlite3_str_finish(new);

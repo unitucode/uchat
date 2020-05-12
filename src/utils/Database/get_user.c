@@ -10,6 +10,7 @@ t_user *mx_get_user(char *login, sqlite3 *db_user) {
     sqlite3_str_appendf(new, "SELECT * from USER WHERE login = \'%s\'", login);
     sqlstr = sqlite3_str_finish(new);
     sqlite3_prepare(db_user, sqlstr, -1, &stmt, NULL);
+    printf("SQL request = %s\n", sqlstr);
     if ((returnvalue = sqlite3_step(stmt)) != SQLITE_ROW) {
         printf("користувача з таким логіном не існує\n");
         return NULL;
