@@ -17,7 +17,7 @@ static void correct_data(t_client *client) {
 }
 
 static void sign_up(t_pdl *login, char *pass, t_client *client) {
-    t_user *user = mx_get_user_by_token(login->data, client->chat->database);
+    t_user *user = mx_get_user_by_login(login->data, client->chat->database);
     char token[MX_MD5_BUF_SIZE + 1];
     char seed[login->len + strlen(pass) + 1];
 

@@ -61,6 +61,11 @@ void *copyto(void *arg) {
         else if (!strcmp(sendline, "signup\n")) {
             signup(ssl);
         }
+        else if (!strcmp(sendline, "token\n")) {
+            t_pds *token_requset = mx_request_creation(-1, MX_TOKEN_AUTH, "57da73a7ab2b2b40e33f134d22274bd7");
+            mx_send(ssl, token_requset);
+            mx_free_request_struct(&token_requset);
+        }
         else {
             request = mx_request_creation(/*Room id*/1, MX_USER_COUNT, sendline); // Protocol creation
             mx_send(ssl, request);
@@ -95,10 +100,22 @@ void str_cli(FILE *fp_arg, SSL *ssl) {
         exit(1);
 }
 
+void mx_change_working_dir(void) {
+    #ifdef MX_CLIENT
+    if (chdir(MX_CLIENT)) {
+        mx_elogger(NULL, LOGERR,
+                   "No working directory %s\n", MX_CLIENT);
+    }
+    #else
+    mx_elogger(NULL, LOGERR, "No working directory");
+    #endif
+}
+
 int main(int argc, char **argv) {
     int sockfd;
     t_ssl_con *ssl = NULL;
 
+    mx_change_working_dir();
     if (argc != 3) {
         printf("usage\n");
         exit(1);

@@ -13,6 +13,17 @@ int callback(void *message, int argc, char** argv, char **data_parametr) {
     return 0;
 }
 
+void mx_change_working_dir(void) {
+    #ifdef MX_SERVER
+    if (chdir(MX_SERVER)) {
+        mx_elogger(NULL, LOGERR,
+                   "No working directory %s\n", MX_SERVER);
+    }
+    #else
+    mx_elogger(NULL, LOGERR, "No working directory");
+    #endif
+}
+
 int main(int argc, char **argv) {
     // sqlite3 *database = mx_server_data_open(MX_DB_USER);
     // mx_create_table_user(database);
@@ -48,11 +59,15 @@ int main(int argc, char **argv) {
     // printf("token -> %s\n", user->token);
     // printf("permssion -> %d\n", user->permission);
     // exit(1);
-    t_chat *chat = mx_init_chat(argc, argv);
-    chat->database = mx_server_data_open(MX_DB_USER);
+    t_chat *chat = NULL;
     t_client *client = NULL;
-    t_ssl_con *ssl = mx_init_ssl(SERVER);
+    t_ssl_con *ssl = NULL;
 
+    mx_change_working_dir();
+    chat = mx_init_chat(argc, argv);
+    chat->database = mx_server_data_open(MX_DB_USER);
+    client = NULL;
+    ssl = mx_init_ssl(SERVER);
     mx_create_table_user(chat->database);
     mx_logger(MX_LOG_FILE, LOGMSG,"started server pid[%d]: %s %s\n", getpid(), argv[0], argv[1]);
     while (1) {

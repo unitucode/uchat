@@ -20,7 +20,6 @@ static void inccorect_data(t_client *client) {
 static void log_in(t_pdl *login, char *pass, t_client *client) {
     t_user *user = mx_get_user_by_login(login->data, client->chat->database);
 
-    printf("pass == %s user->password == %s\n", pass, user->password);
     if (!user) {
         inccorect_data(client);
         mx_logger(MX_LOG_FILE, LOGMSG, "Non-existent user %s\n", login->data);
