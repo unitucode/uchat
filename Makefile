@@ -1,6 +1,9 @@
 CLIENT = uchat
 SERVER = uchat_server
 
+CLIENTD = $(CLIENT)_work
+SERVERD = $(SERVER)_work
+
 EMPTY = 
 SPACE = $(EMPTY) $(EMPTY)
 VPATH = $(subst $(SPACE), :, $(SRCD_UTILS) $(SRCD_SERVER) $(SRCD_CLIENT))
@@ -37,8 +40,8 @@ CC = clang
 
 all: $(CLIENT) $(SERVER)
 
-$(CLIENT): CPPFLAGS += -I$(INCD_CLIENT)
-$(SERVER): CPPFLAGS += -I$(INCD_SERVER)
+$(CLIENT): CPPFLAGS += -I$(INCD_CLIENT) -DMX_CLIENT='"$(CLIENTD)"'
+$(SERVER): CPPFLAGS += -I$(INCD_SERVER) -DMX_SERVER='"$(SERVERD)"'
 
 $(CLIENT): $(OBJS_CLIENT) $(OBJS_UTILS)
 $(SERVER): $(OBJS_SERVER) $(OBJS_UTILS)
@@ -47,12 +50,14 @@ $(SERVER) $(CLIENT):
 	@$(CC) -o $@ $^ $(LDLIBS)
 	@printf "\x1b[32;1m$@ created\x1b[0m\n"
 
+
 $(OBJS_CLIENT) $(OBJS_UTILS) $(OBJS_SERVER): obj/%.o: %.c | $(OBJD)
 	@$(CC) $(CPPFLAGS) $(CFLAGS) -c -o $@ $<
 	@printf "\x1b[32mcompiled: \x1b[0m$(notdir $<)\n"
 
 $(OBJD):
 	@mkdir -p $@
+	@printf "\x1b[32;1m$@ created\x1b[0m\n"
 
 uninstall: clean
 	@rm -rf $(CLIENT)
@@ -65,3 +70,5 @@ clean:
 	@printf "\x1b[34;1mdeleted $(OBJD)\x1b[0m\n"
 
 reinstall: uninstall all
+
+.PHONY: all uninstall clean reinstall
