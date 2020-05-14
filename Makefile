@@ -38,7 +38,7 @@ CPPFLAGS += -I$(INCD_UTILS) -I/usr/local/opt/openssl/include -D_GNU_SOURCE
 LDLIBS += -lssl -lcrypto -lsqlite3 -lpthread -L/usr/local/opt/openssl/lib
 CC = clang
 
-all: $(WORKD) $(CLIENT) $(SERVER)
+all: $(CLIENT) $(SERVER)
 
 $(CLIENT): CPPFLAGS += -I$(INCD_CLIENT) -DMX_CLIENT='"$(CLIENTD)"'
 $(SERVER): CPPFLAGS += -I$(INCD_SERVER) -DMX_SERVER='"$(SERVERD)"'
@@ -70,3 +70,5 @@ clean:
 	@printf "\x1b[34;1mdeleted $(OBJD)\x1b[0m\n"
 
 reinstall: uninstall all
+
+.PHONY: all uninstall clean reinstall
