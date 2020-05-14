@@ -19,7 +19,6 @@ static void correct_data(t_client *client) {
 static void sign_up(t_pdl *login, char *pass, t_client *client) {
     t_user *user = mx_get_user_by_login(login->data, client->chat->database);
     char token[MX_MD5_BUF_SIZE + 1];
-    char seed[login->len + strlen(pass) + 1];
 
     if (user) {
         inccorect_data(client);
@@ -28,10 +27,7 @@ static void sign_up(t_pdl *login, char *pass, t_client *client) {
                   login->data);
         return;
     }
-    bzero(seed, sizeof(seed));
-    strcpy(seed, login->data);
-    strcat(seed, pass);
-    mx_md5(token, (const unsigned char*)seed, sizeof(seed));
+    mx_create_token(token, login->data);
     client->user = mx_insert_user(login->data, pass, token,
                                   client->chat->database);
     correct_data(client);

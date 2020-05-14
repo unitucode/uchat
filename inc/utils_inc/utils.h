@@ -16,11 +16,12 @@
 #include <stdarg.h>
 #include <time.h>
 #include <sys/stat.h>
-#include "json.h"
+#include "frozen.h"
 #include <openssl/ssl.h>
 #include <openssl/err.h>
-#include <sqlite3.h>
 #include <openssl/md5.h>
+#include <openssl/rand.h>
+#include <sqlite3.h>
 #include <regex.h>
 
 #define MX_DB_USER "users.db"
@@ -112,6 +113,7 @@ typedef struct s_pdl { // Protocol Data Long view
 //Utils
 int mx_match_search(char *str, char *regex);
 int mx_get_counts_of_digits(int number);
+void mx_randomize_str(char *str, size_t count);
 
 //SSL
 t_ssl_con *mx_init_ssl(t_app_type type);
@@ -121,6 +123,7 @@ void mx_md5(char *buf, const unsigned char *str, size_t len);
 bool mx_isvalid_hash(char *hash);
 bool mx_isvalid_login(char *login);
 bool mx_isvalid_token(char *token);
+void mx_create_token(char *token, char *login);
 
 //wrappers
 void *mx_malloc(size_t size);
@@ -164,10 +167,6 @@ t_pdl *mx_request_decode(char *request);
 void mx_free_request_struct(t_pds **request);
 void mx_free_decode_struct(t_pdl **decode_req);
 char *mx_itoa(int number);
-
-//room_config
-json_value *mx_open_config();
-char *mx_get_config_val(char *key);
 
 //sqlite3
 void mx_create_table_user(sqlite3 *db_user);
