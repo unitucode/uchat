@@ -19,14 +19,6 @@ t_user *mx_insert_user(char *login, char *password,
     if ((returnvalue = sqlite3_step(stmt)) != SQLITE_DONE) {
         //  mx_elogger(MX_LOG_FILE, LOGERR, "insert database table");
     }
-    printf("thread_safe = %d\n", sqlite3_threadsafe());
-    sqlite3_prepare_v3(db_user, "SELECT ID FROM USERS WHERE \
-                                login = ?1", -1, 0, &stmt, NULL);
-    sqlite3_bind_text(stmt, 1, login, -1, SQLITE_STATIC);
-    if ((returnvalue = sqlite3_step(stmt)) != SQLITE_ROW) {
-        //  mx_elogger(MX_LOG_FILE, LOGERR, "select database table");
-    }
-    user->id = sqlite3_column_int(stmt, 0);
     sqlite3_finalize(stmt);
     user->login = strdup(login);
     user->token = strdup(token);
