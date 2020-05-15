@@ -1,18 +1,18 @@
 #include "server.h"
 
-// static void send_to_all(t_list *list, t_chat *chat, t_client *cur_client, char *buf) {
-    
-//     mx_pthread_mutex_lock(&chat->mutex);
-//     t_dtp *dtp = mx_request_creation(MX_MESSAGE, buf);
-//     for (t_node *cur = list->head; cur; cur = cur->next) {
-//         t_client *client = (t_client*)cur->data;
-//         if (cur_client->socket_fd != client->socket_fd) {
-//             mx_send(client->ssl, dtp);
-//         }
-//     }
-//     mx_free_request_struct(&dtp);
-//     mx_pthread_mutex_unlock(&chat->mutex);
-// }
+static void send_to_all(t_list *list, t_chat *chat, t_client *cur_client, char *buf) {
+
+    mx_pthread_mutex_lock(&chat->mutex);
+    t_dtp *dtp = mx_request_creation(buf);
+    for (t_node *cur = list->head; cur; cur = cur->next) {
+        t_client *client = (t_client*)cur->data;
+        if (cur_client->socket_fd != client->socket_fd) {
+            mx_send(client->ssl, dtp);
+        }
+    }
+    mx_free_request_struct(&dtp);
+    mx_pthread_mutex_unlock(&chat->mutex);
+}
 
 static void str_echo(t_client *client) {
     t_dtp *dtp = NULL;
@@ -20,7 +20,7 @@ static void str_echo(t_client *client) {
 
     while ((dtp = mx_recv(client->ssl))) {
         printf("recv = %s\n", dtp->str);
-        mx_send(client->ssl, dtp);
+        send_to_all(client->chat->clients, client->chat, client, dtp->str);
         mx_free_request_struct(&dtp);
     }
 }
