@@ -29,19 +29,17 @@
                        "NAME_ROOM          TEXT                NOT NULL, " \
                        "CUSTOMER_LOGIN     TEXT                NOT NULL);"
 #define MX_USERS_TABLE "CREATE TABLE USERS(\
-                    LOGIN          TEXT  UNIQUE   NOT NULL,\
-                    PASSWORD       TEXT           NOT NULL,\
-                    TOKEN          TEXT           NOT NULL,\
-                    PERMISSION     INTEGER        NOT NULL);"
+                        LOGIN          TEXT  UNIQUE   NOT NULL,\
+                        PASSWORD       TEXT           NOT NULL,\
+                        TOKEN          TEXT           NOT NULL,\
+                        PERMISSION     INTEGER        NOT NULL);"
 #define MX_MEMBER_TABLE "CREATE TABLE MEMBER("  \
                         "ID_ROOM          INTEGER NOT NULL," \
                         "MEMBER_LOGIN     TEXT    NOT NULL);"
 #define MX_MESSAGE_TABLE "CREATE TABLE MESSAGE("  \
-                         "ID ROOM       INTEGER             NOT NULL" \
-                         "ID MESSAGE    INTEGER PRIMARY KEY NOT NULL" \
+                         "ID_MESSAGE    INTEGER PRIMARY KEY NOT NULL," \
                          "LOGIN         TEXT                NOT NULL," \
-                         "MESSAGE       TEXT                NOT NULL," \
-                         "DATA          TEXT                NOT NULL);"
+                         "JSON          TEXT                NOT NULL);"
 
 #define MX_LIST_BACK 0
 #define MX_LOG_FILE "info.log"
@@ -60,6 +58,17 @@ typedef enum e_app_type {
     CLIENT,
     SERVER
 }            t_app_type;
+
+typedef struct s_message {
+    unsigned int id_message;
+    char *login;
+    char *json;
+}              t_message;
+
+typedef struct s_members_room {
+    char *login;
+    struct s_members_room *next;
+}              t_members_room;
 
 typedef struct s_user {
     const char *token;
@@ -191,13 +200,21 @@ char *mx_get_config_val(char *key);
 //sqlite3
 sqlite3 *mx_server_data_open(char *name_db);
 void mx_close_database(sqlite3 *database);
+void mx_create_table(char *table, sqlite3 *database);
+void mx_free_user(t_user **user);
+void mx_delete_room(int id_room, sqlite3 *database);
+void mx_delete_user(char *login, sqlite3 *database);
+
 t_user *mx_get_user_by_login(char *login, sqlite3 *db_user);
-t_user *mx_insert_user(char *login, char *password, char *token, sqlite3 *db_user);
-void mx_delete_user(t_user **user);
 t_user *mx_get_user_by_token(char *token, sqlite3 *db_user);
-t_user *for_get_user(sqlite3_stmt *stmt);
+t_message *mx_get_message_by_id(int id_message, sqlite3 *database);
+t_message *mx_get_message_by_login(char *login, sqlite3 *database);
+t_room *mx_get_room(char *name_room, sqlite3 *database);
+
 void mx_update_permission_of_user(unsigned int permission, char *login, sqlite3 *database);
 void mx_update_token(char *new_token, char *login, sqlite3 *database);
-t_room *mx_insert_room(char *customer, char *name_room, sqlite3 *db_room);
-void mx_create_table(char *table, sqlite3 *database);
 
+t_user *mx_insert_user(char *login, char *password, char *token, sqlite3 *db_user);
+void mx_insert_message(char *login, char *json, sqlite3 *database);
+void mx_insert_memeber(char *login, int id_room, sqlite3 *database);
+t_room *mx_insert_room(char *customer, char *name_room, sqlite3 *db_room);
