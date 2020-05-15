@@ -15,15 +15,13 @@
 // }
 
 static void str_echo(t_client *client) {
-    t_pdl *pdl = NULL;
+    t_dtp *dtp = NULL;
     // system("leaks -q uchat_server");
 
-    while ((pdl = mx_recv(client->ssl))) {
-        if (!mx_authorization(client, pdl)) {
-            mx_free_decode_struct(&pdl);
+    while ((dtp = mx_recv(client->ssl))) {
+        if (!mx_authorization(client, dtp)) {
             break;
         }
-        mx_free_decode_struct(&pdl);
     }
 }
 

@@ -1,6 +1,6 @@
 #include "server.h"
 
-static void correct_data(t_pdl *login, t_client *client) {
+static void correct_data(t_dtp *login, t_client *client) {
     t_dtp *dtp = mx_request_creation((char*)client->user->token);
 
     mx_send(client->ssl, dtp);
@@ -15,7 +15,7 @@ static void inccorect_data(t_client *client) {
     mx_free_request_struct(&dtp);
 }
 
-static void log_in(t_pdl *login, char *pass, t_client *client) {
+static void log_in(t_dtp *login, char *pass, t_client *client) {
     t_user *user = mx_get_user_by_login(login->data, client->chat->database);
 
     if (!user) {
@@ -34,16 +34,15 @@ static void log_in(t_pdl *login, char *pass, t_client *client) {
     }
 }
 
-bool mx_log_in(t_pdl *login, t_client *client) {
-    t_pdl *pass = NULL;
+bool mx_log_in(t_dtp *login, t_client *client) {
+    t_dtp *pass = NULL;
     char md5_pass[MX_MD5_BUF_SIZE + 1];
 
-    if (login && (login->type != MX_LOG_IN || !mx_isvalid_login(login->data)))
+    if (login && (!mx_isvalid_login(login->data)))
         return false;
     pass = mx_recv(client->ssl);
     if (pass
-        && (pass->type != MX_PASSWORD || !mx_isvalid_hash(pass->data))) {
-        mx_free_decode_struct(&pass);
+        && (!mx_isvalid_hash(pass->data))) {
         mx_logger(MX_LOG_FILE, LOGWAR,
                   "First packet was login(%s), but second wasn`t pass\n",
                   login->data);
@@ -51,6 +50,5 @@ bool mx_log_in(t_pdl *login, t_client *client) {
     }
     mx_md5(md5_pass, (const unsigned char*)pass->data, pass->len);
     log_in(login, md5_pass, client);
-    mx_free_decode_struct(&pass);
     return true;
 }

@@ -1,4 +1,5 @@
 #include "utils.h"
+#include "protocol.h"
 
 static SSL_CTX *init_ctx(t_app_type type) {
     const SSL_METHOD *method;
@@ -7,9 +8,9 @@ static SSL_CTX *init_ctx(t_app_type type) {
     OpenSSL_add_all_algorithms();
     SSL_load_error_strings();
     if (type == CLIENT)
-        method = SSLv3_client_method();
+        method = DTLS_client_method();
     else if (type == SERVER)
-        method = SSLv3_server_method();
+        method = DTLS_server_method();
     ctx = SSL_CTX_new(method);
     if (!ctx) {
         mx_elogger(MX_LOG_FILE, LOGERR, "SSL_CTX\n");

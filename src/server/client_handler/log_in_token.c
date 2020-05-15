@@ -15,12 +15,12 @@ static void inccorect_data(t_client *client) {
     mx_free_request_struct(&dtp);
 }
 
-bool mx_log_in_token(t_pdl *token, t_client *client) {
+bool mx_log_in_token(t_dtp *token, t_client *client) {
     t_user *user = NULL;
     printf("token");
 
     if (token
-        && (token->type != MX_TOKEN_AUTH || !mx_isvalid_hash(token->data))) {
+        && (!mx_isvalid_hash(token->data))) {
         return false;
     }
     user = mx_get_user_by_token(token->data, client->chat->database);
