@@ -8,8 +8,8 @@ void signup(SSL *ssl) {
     char login[1024] = {0};
     char password[1024] = {0};
     char md5_password[MX_MD5_BUF_SIZE + 1];
-    t_pds *pass_request = NULL;
-    t_pds *login_requset = NULL;
+    t_dtp *pass_request = NULL;
+    t_dtp *login_requset = NULL;
 
     printf("Enter your login: ");
     fgets(login, 1024, fp);
@@ -18,8 +18,8 @@ void signup(SSL *ssl) {
     password[strlen(password) - 1] = '\0';
     login[strlen(login) - 1] = '\0';
     mx_md5(md5_password, (const unsigned char*)password, strlen(password));
-    pass_request = mx_request_creation(-1, MX_PASSWORD, md5_password);
-    login_requset = mx_request_creation(-1, MX_SIGN_UP, login);
+    pass_request = mx_request_creation(md5_password);
+    login_requset = mx_request_creation(login);
     mx_send(ssl, login_requset);
     mx_send(ssl, pass_request);
     mx_free_request_struct(&pass_request);
@@ -30,8 +30,8 @@ void login(SSL *ssl) {
     char login[1024] = {0};
     char password[1024] = {0};
     char md5_password[MX_MD5_BUF_SIZE + 1];
-    t_pds *pass_request = NULL;
-    t_pds *login_requset = NULL;
+    t_dtp *pass_request = NULL;
+    t_dtp *login_requset = NULL;
 
     printf("Enter your login: ");
     fgets(login, 1024, fp);
@@ -40,8 +40,8 @@ void login(SSL *ssl) {
     password[strlen(password) - 1] = '\0';
     login[strlen(login) - 1] = '\0';
     mx_md5(md5_password, (const unsigned char*)password, strlen(password));
-    pass_request = mx_request_creation(-1, MX_PASSWORD, md5_password);
-    login_requset = mx_request_creation(-1, MX_LOG_IN, login);
+    pass_request = mx_request_creation(md5_password);
+    login_requset = mx_request_creation(login);
     mx_send(ssl, login_requset);
     mx_send(ssl, pass_request);
     mx_free_request_struct(&pass_request);
@@ -50,7 +50,7 @@ void login(SSL *ssl) {
 
 void *copyto(void *arg) {
     char sendline[1024];
-    t_pds *request = NULL;
+    t_dtp *request = NULL;
     SSL *ssl = (SSL*)arg;
     system("leaks -q uchat");
     
@@ -62,12 +62,12 @@ void *copyto(void *arg) {
             signup(ssl);
         }
         else if (!strcmp(sendline, "token\n")) {
-            t_pds *token_requset = mx_request_creation(-1, MX_TOKEN_AUTH, "57da73a7ab2b2b40e33f134d22274bd7");
+            t_dtp *token_requset = mx_request_creation("57da73a7ab2b2b40e33f134d22274bd7");
             mx_send(ssl, token_requset);
             mx_free_request_struct(&token_requset);
         }
         else {
-            request = mx_request_creation(/*Room id*/1, MX_USER_COUNT, sendline); // Protocol creation
+            request = mx_request_creation(sendline); // Protocol creation
             mx_send(ssl, request);
             mx_free_request_struct(&request);
         }

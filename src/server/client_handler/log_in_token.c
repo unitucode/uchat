@@ -1,19 +1,18 @@
 #include "server.h"
 
 static void correct_data(const char *login, t_client *client) {
-    t_pds *pds = mx_request_creation(-1, MX_TOKEN_AUTH,
-                                     (char*)client->user->token);
+    t_dtp *dtp = mx_request_creation((char*)client->user->token);
 
-    mx_send(client->ssl, pds);
+    mx_send(client->ssl, dtp);
     mx_logger(MX_LOG_FILE, LOGMSG, "Logged in: %s\n", login);
-    mx_free_request_struct(&pds);
+    mx_free_request_struct(&dtp);
 }
 
 static void inccorect_data(t_client *client) {
-    t_pds *pds = mx_request_creation(-1, MX_ERR_MSG, "The token inccorect");
+    t_dtp *dtp = mx_request_creation("The token inccorect");
 
-    mx_send(client->ssl, pds);
-    mx_free_request_struct(&pds);
+    mx_send(client->ssl, dtp);
+    mx_free_request_struct(&dtp);
 }
 
 bool mx_log_in_token(t_pdl *token, t_client *client) {

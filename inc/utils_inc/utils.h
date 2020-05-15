@@ -98,27 +98,21 @@ typedef enum e_request_types {
     MX_SIGN_UP
 }            t_request_types;
 
-typedef struct s_pds { // Protocol Data Short view
+typedef struct s_dtp { // Data Transfer Protocol view
     char *data;
-    char *len;
-}              t_pds;
-
-typedef struct s_pdl { // Protocol Data Long view
-    int room;
-    int type;
-    char *data;
+    char *str;
     size_t len;
-}              t_pdl;
+}              t_dtp;
 
 //Utils
 int mx_match_search(char *str, char *regex);
-int mx_get_counts_of_digits(int number);
 void mx_randomize_str(char *str, size_t count);
+void *mx_memdup(const void *mem, size_t size);
 
 //SSL
 t_ssl_con *mx_init_ssl(t_app_type type);
 t_pdl *mx_recv(SSL *ssl);
-int mx_send(SSL *ssl, t_pds *data);
+int mx_send(SSL *ssl, t_dtp *data);
 void mx_md5(char *buf, const unsigned char *str, size_t len);
 bool mx_isvalid_hash(char *hash);
 bool mx_isvalid_login(char *login);
@@ -162,11 +156,9 @@ void mx_logger(const char *file, t_logtype type, const char *fmt, ...);
 void mx_elogger(const char *file, t_logtype type, const char *fmt, ...);
 
 //Protocol
-t_pds *mx_request_creation(int room, t_request_types req_type, char *req_body);
-t_pdl *mx_request_decode(char *request);
-void mx_free_request_struct(t_pds **request);
+t_dtp *mx_request_creation(char *req_body);
+void mx_free_request_struct(t_pdp **request);
 void mx_free_decode_struct(t_pdl **decode_req);
-char *mx_itoa(int number);
 
 //sqlite3
 void mx_create_table_user(sqlite3 *db_user);
