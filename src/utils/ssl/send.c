@@ -7,7 +7,7 @@
 int mx_send(SSL *ssl, t_dtp *dtp) {
     bool result = true;
 
-    if (!SSL_write(ssl, dtp->data, strlen(dtp->data))) {
+    if (!SSL_write(ssl, dtp->data, dtp->len)) {
         mx_logger(MX_LOG_FILE, LOGWAR, "SSL_write data failed\n");
         result = false;
     }

@@ -11,7 +11,7 @@ void *copyto(void *arg) {
     SSL *ssl = (SSL*)arg;
     system("leaks -q uchat");
     
-    while (fgets(sendline, 1024, fp) != NULL) {
+    while (fgets(sendline, 1024, fp)) {
         request = mx_request_creation(sendline); // Protocol creation
         mx_send(ssl, request);
         mx_free_request_struct(&request);
@@ -31,7 +31,8 @@ void str_cli(FILE *fp_arg, SSL *ssl) {
     fp = fp_arg;
     mx_pthread_create(&tid, NULL, copyto, ssl);
     while ((dtp = mx_recv(ssl))) {
-        printf("%s\n", dtp->data);
+        printf("%s\n", dtp->str);
+        mx_free_request_struct(&dtp);
     }
 
     if (done == 0)

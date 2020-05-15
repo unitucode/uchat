@@ -4,7 +4,6 @@
 void mx_free_request_struct(t_dtp **request) {
     if (request && *request) {
         mx_free((void **)(&(*request)->data));
-        mx_free((void **)(&(*request)->len));
         mx_free((void**)request);
     }
 }

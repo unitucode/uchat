@@ -19,9 +19,9 @@ static void str_echo(t_client *client) {
     // system("leaks -q uchat_server");
 
     while ((dtp = mx_recv(client->ssl))) {
-        if (!mx_authorization(client, dtp)) {
-            break;
-        }
+        printf("recv = %s\n", dtp->str);
+        mx_send(client->ssl, dtp);
+        mx_free_request_struct(&dtp);
     }
 }
 

@@ -34,7 +34,7 @@ OBJS_SERVER = $(addprefix $(OBJD)/, $(notdir $(SRC_SERVER:%.c=%.o)))
 OBJS_UTILS = $(addprefix $(OBJD)/, $(notdir $(SRC_UTILS:%.c=%.o)))
 
 CFLAGS = -std=c11 $(addprefix -W, all extra error pedantic)
-CPPFLAGS += $(INCD_UTILS) -I/usr/local/opt/openssl/include -D_GNU_SOURCE
+CPPFLAGS += $(INCD_UTILS) -I/usr/local/opt/openssl/include -D_GNU_SOURCE -g
 LDLIBS += -lssl -lcrypto -lsqlite3 -lpthread -L/usr/local/opt/openssl/lib
 CC = clang
 
