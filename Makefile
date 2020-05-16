@@ -48,26 +48,26 @@ $(SERVER): $(OBJS_SERVER) $(OBJS_UTILS)
 
 $(SERVER) $(CLIENT):
 	@$(CC) -o $@ $^ $(LDLIBS)
-	@printf "\x1b[32;1m$@ created\x1b[0m\n"
+	@printf "\033[32;1m$@ created\033[0m\n"
 
 
 $(OBJS_CLIENT) $(OBJS_UTILS) $(OBJS_SERVER): obj/%.o: %.c | $(OBJD)
 	@$(CC) $(CPPFLAGS) $(CFLAGS) -c -o $@ $<
-	@printf "\x1b[32mcompiled: \x1b[0m$(notdir $<)\n"
+	@printf "\033[32mcompiled: \033[0m$(notdir $<)\n"
 
 $(OBJD):
 	@mkdir -p $@
-	@printf "\x1b[32;1m$@ created\x1b[0m\n"
+	@printf "\033[32;1m$@ created\033[0m\n"
 
 uninstall: clean
 	@rm -rf $(CLIENT)
-	@printf "\x1b[34;1mdeleted $(CLIENT)\x1b[0m\n"
+	@printf "\033[34;1mdeleted $(CLIENT)\033[0m\n"
 	@rm -rf $(SERVER)
-	@printf "\x1b[34;1mdeleted $(SERVER)\x1b[0m\n"
+	@printf "\033[34;1mdeleted $(SERVER)\033[0m\n"
 
 clean:
 	@rm -rf $(OBJD)
-	@printf "\x1b[34;1mdeleted $(OBJD)\x1b[0m\n"
+	@printf "\033[34;1mdeleted $(OBJD)\033[0m\n"
 
 reinstall: uninstall all
 

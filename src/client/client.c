@@ -12,7 +12,7 @@ void *copyto(void *arg) {
     system("leaks -q uchat");
     
     while (fgets(sendline, 1024, fp)) {
-        request = mx_request_creation(sendline); // Protocol creation
+        request = mx_request_json(MX_TP_MSG, "sanya", sendline); // Protocol creation
         mx_send(ssl, request);
         mx_free_request_struct(&request);
         bzero(sendline, sizeof(sendline));

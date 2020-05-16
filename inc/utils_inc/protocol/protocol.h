@@ -2,6 +2,13 @@
 
 #include "utils.h"
 
+#define MX_TP_LOG_IN "{type: "MX_LOG_IN", login: %s, pass: %s}"
+#define MX_TP_SIGN_UP "{type: "MX_SIGN_UP", login: %s, pass: %s}"
+#define MX_TP_MSG "{type: "MX_MSG", from: %s, msg: %s}"
+
+#define MX_LOG_IN "0"
+#define MX_SIGN_UP "1"
+#define MX_MSG "2"
 
 typedef struct s_ssl_con {
     SSL_CTX *ctx;
@@ -10,18 +17,6 @@ typedef struct s_ssl_con {
     char *key_file;
     char *password;
 }              t_ssl_con;
-
-typedef enum e_request_types {
-    MX_LOG_IN = 0, //+
-    MX_PASSWORD = 1, //+
-    MX_USER_COUNT = 2,
-    MX_MESSAGE = 3,
-    MX_FILE = 4,
-    MX_SIZE_MSG = 5,
-    MX_ERR_MSG = 6,
-    MX_TOKEN_AUTH = 7,
-    MX_SIGN_UP
-}            t_request_types;
 
 typedef struct s_dtp { // Data Transfer Protocol view
     char *data;
@@ -40,5 +35,6 @@ bool mx_isvalid_token(char *token);
 void mx_create_token(char *token, char *login);
 
 //Protocol
+t_dtp *mx_request_json(const char *fmt, ...);
 t_dtp *mx_request_creation(char *req_body);
 void mx_free_request_struct(t_dtp **request);
