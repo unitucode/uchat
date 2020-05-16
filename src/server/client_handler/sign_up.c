@@ -21,7 +21,7 @@ static void sign_up(t_dtp *login, char *pass, t_client *client) {
 
     if (user) {
         inccorect_data(client);
-        mx_delete_user(&user);
+        mx_free_user(&user);
         mx_logger(MX_LOG_FILE, LOGMSG, "Already exist user %s\n",
                   login->data);
         return;

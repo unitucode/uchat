@@ -26,7 +26,7 @@ static void log_in(t_dtp *login, char *pass, t_client *client) {
         inccorect_data(client);
         mx_logger(MX_LOG_FILE, LOGMSG, "Inccorect password %s\n",
                   login->data);
-        mx_delete_user(&user);
+        mx_free_user(&user);
     }
     else {
         client->user = user;
