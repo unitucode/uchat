@@ -10,7 +10,7 @@ SRCD = src
 INCD = inc
 
 
-SRCD_CLIENT = $(addprefix $(SRCD)/, client)
+SRCD_CLIENT = $(addprefix $(SRCD)/, client client/gui)
 SRCD_SERVER = $(addprefix $(SRCD)/, server server/client_handler)
 SRCD_UTILS = $(addprefix $(SRCD)/, utils utils/wrappers utils/list \
 utils/config /utils/logger utils/protocol utils/ssl)
@@ -35,6 +35,12 @@ CFLAGS = -std=c11 $(addprefix -W, all extra error pedantic)
 CPPFLAGS += -I$(INCD_UTILS) -I/usr/local/opt/openssl/include -D_GNU_SOURCE
 LIBS += -L/usr/local/opt/openssl/lib -lssl -lcrypto -lsqlite3 -lpthread
 CC = clang
+
+# DELETE V
+GTKFLAGS = -rdynamic `pkg-config --cflags --libs gtk+-3.0` -rdynamic
+guic:
+	$(CC) -o gui src/client/gui/*.c $(GTKFLAGS) -I$(INCD_CLIENT) $(CPPFLAGS) $(LIBS)
+# DELETE A
 
 all: $(CLIENT) $(SERVER)
 

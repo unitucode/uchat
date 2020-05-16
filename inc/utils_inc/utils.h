@@ -20,6 +20,7 @@
 #include <openssl/ssl.h>
 #include <openssl/err.h>
 #include <openssl/md5.h>
+#include <gtk/gtk.h>
 
 
 #define MX_LIST_BACK 0
