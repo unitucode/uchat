@@ -2,7 +2,6 @@
 #include <sqlite3.h>
 
 int callback(void *message, int argc, char** argv, char **data_parametr) {
-
     for (int i = 0; i < argc; i++) {
         printf("%s -> %s\n", data_parametr[i], argv[i]);
         if (strcmp("MESSAGE", data_parametr[i]) == 0 && argv[i] != NULL) {
@@ -14,61 +13,10 @@ int callback(void *message, int argc, char** argv, char **data_parametr) {
 }
 
 int main(int argc, char **argv) {
-    sqlite3 *database = mx_server_data_open(MX_DB_USER);
-    mx_create_table(MX_MESSAGE_TABLE, database);
-    mx_insert_message("vlad", "json", database);
-    mx_insert_message("sasha", "json", database);
-    mx_insert_message("ura", "json", database);
-    mx_insert_message("pasha", "json", database);
-    t_message *user = mx_get_message_by_login("vlad", database);
-    printf("LOGIN -> \t%s\n", user->login);
-    printf("ID -> \t%d\n", user->id_message);
-    printf("JSON -> \t%s\n", user->json);
-    user = mx_get_message_by_login("sasha", database);
-    printf("LOGIN -> \t%s\n", user->login);
-    printf("ID -> \t\t%d\n", user->id_message);
-    printf("JSON -> \t%s\n", user->json);    
-    user = mx_get_message_by_login("pasha", database);
-    printf("LOGIN -> \t%s\n", user->login);
-    printf("ID -> \t%d\n", user->id_message);
-    printf("JSON -> \t%s\n", user->json);    
-    user = mx_get_message_by_login("ura", database);
-    printf("LOGIN -> \t%s\n", user->login);
-    printf("ID -> \t%d\n", user->id_message);
-    printf("JSON -> \t%s\n", user->json);
-    sqlite3_stmt *stmt;
-
-    sqlite3_prepare_v3(database, "SELECT data(now)", -1, 0, &stmt, NULL);
-    sqlite3_step(stmt);
-    long long vlad = (long long)sqlite3_column_int(stmt, 0);
-    sqlite3_finalize(stmt);
-    printf("%lld\n", vlad);
-    // t_user *user = mx_insert_user("admin1", "123", "token", database);
-    // printf("login -> %s\n", user->login);
-    // printf("pass -> %s\n", user->password);
-    // printf("token -> %s\n", user->token);
-    // printf("permssion -> %d\n", user->permission);
-    // user = mx_insert_user("admin2", "1234", "token", database);
-    // printf("login -> %s\n", user->login);
-    // printf("pass -> %s\n", user->password);
-    // printf("token -> %s\n", user->token);
-    // printf("permssion -> %d\n", user->permission);
-    // user = mx_insert_user("admin3", "12345", "token", database);
-    // printf("login -> %s\n", user->login);
-    // printf("pass -> %s\n", user->password);
-    // printf("token -> %s\n", user->token);
-    // printf("permssion -> %d\n", user->permission);
-    // user = mx_get_user_by_login("admin3", database);
-    // printf("login -> %s\n", user->login);
-    // printf("pass -> %s\n", user->password);
-    // printf("token -> %s\n", user->token);
-    // printf("permssion -> %d\n", user->permission);
-    // mx_update_permission_of_user(5, "admin3", database);
-    // user = mx_get_user_by_login("admin3", database);
-    // printf("login -> %s\n", user->login);
-    // printf("pass -> %s\n", user->password);
-    // printf("token -> %s\n", user->token);
-    // printf("permssion -> %d\n", user->permission);
+    // mx_test_room();
+    // mx_test_users();
+    // mx_test_message();
+    // mx_test_member();
     exit(1);
     t_chat *chat = mx_init_chat(argc, argv);
     chat->database = mx_server_data_open(MX_DB_USER);

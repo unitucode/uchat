@@ -33,12 +33,13 @@
                         PASSWORD       TEXT           NOT NULL,\
                         TOKEN          TEXT           NOT NULL,\
                         PERMISSION     INTEGER        NOT NULL);"
-#define MX_MEMBER_TABLE "CREATE TABLE MEMBER("  \
-                        "ID_ROOM          INTEGER NOT NULL," \
-                        "MEMBER_LOGIN     TEXT    NOT NULL);"
+#define MX_MEMBER_TABLE "CREATE TABLE MEMBER("\
+                        "ID_ROOM          INTEGER NOT NULL,"\
+                        "LOGIN            TEXT    NOT NULL);"
 #define MX_MESSAGE_TABLE "CREATE TABLE MESSAGE("  \
                          "ID_MESSAGE    INTEGER PRIMARY KEY NOT NULL," \
                          "LOGIN         TEXT                NOT NULL," \
+                         "DATE          INTEGER             NOT NULL," \
                          "JSON          TEXT                NOT NULL);"
 
 #define MX_LIST_BACK 0
@@ -61,6 +62,7 @@ typedef enum e_app_type {
 
 typedef struct s_message {
     unsigned int id_message;
+    long long date;
     char *login;
     char *json;
 }              t_message;
@@ -215,6 +217,11 @@ void mx_update_permission_of_user(unsigned int permission, char *login, sqlite3 
 void mx_update_token(char *new_token, char *login, sqlite3 *database);
 
 t_user *mx_insert_user(char *login, char *password, char *token, sqlite3 *db_user);
-void mx_insert_message(char *login, char *json, sqlite3 *database);
-void mx_insert_memeber(char *login, int id_room, sqlite3 *database);
+void mx_insert_message(char *login, long long date, char *json, sqlite3 *database);
+void mx_insert_memeber(int id_room, char *login, sqlite3 *database);
 t_room *mx_insert_room(char *customer, char *name_room, sqlite3 *db_room);
+
+void mx_test_room();
+void mx_test_member();
+void mx_test_users();
+void mx_test_message();
