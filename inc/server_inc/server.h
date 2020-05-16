@@ -1,6 +1,7 @@
 #pragma once
 
 #include "utils.h"
+#include "protocol.h"
 #include <sqlite3.h>
 
 #define MX_LISTENQ 1024
@@ -28,10 +29,10 @@ typedef struct s_client {
 }              t_client;
 
 //data protocol handler functions
-bool mx_log_in(t_pdl *login, t_client *client);
-bool mx_sign_up(t_pdl *login, t_client *client);
-bool mx_log_in_token(t_pdl *token, t_client *client);
-bool mx_authorization(t_client *client, t_pdl *data);
+bool mx_log_in(t_dtp *login, t_client *client);
+bool mx_sign_up(t_dtp *login, t_client *client);
+bool mx_log_in_token(t_dtp *token, t_client *client);
+bool mx_authorization(t_client *client, t_dtp *data);
 
 int mx_tcp_listen(const char *serv, socklen_t *addr_len);
 void mx_get_client_info(t_client *client);

@@ -1,22 +1,21 @@
 #include "server.h"
+#include "protocol.h"
 
 static void inccorect_data(t_client *client) {
-    t_pds *pds = mx_request_creation(-1, MX_ERR_MSG,
-                                     "User with this name is already exist");
+    t_dtp *dtp = mx_request_creation("User with this name is already exist");
 
-    mx_send(client->ssl, pds);
-    mx_free_request_struct(&pds);
+    mx_send(client->ssl, dtp);
+    mx_free_request_struct(&dtp);
 }
 
 static void correct_data(t_client *client) {
-    t_pds *pds = mx_request_creation(-1, MX_TOKEN_AUTH,
-                                     (char*)client->user->token);
+    t_dtp *dtp = mx_request_creation((char*)client->user->token);
 
-    mx_send(client->ssl, pds);
-    mx_free_request_struct(&pds);
+    mx_send(client->ssl, dtp);
+    mx_free_request_struct(&dtp);
 }
 
-static void sign_up(t_pdl *login, char *pass, t_client *client) {
+static void sign_up(t_dtp *login, char *pass, t_client *client) {
     t_user *user = mx_get_user_by_login(login->data, client->chat->database);
     char token[MX_MD5_BUF_SIZE + 1];
 
@@ -33,17 +32,16 @@ static void sign_up(t_pdl *login, char *pass, t_client *client) {
     correct_data(client);
 }
 
-bool mx_sign_up(t_pdl *login, t_client *client) {
-    t_pdl *pass = NULL;
+bool mx_sign_up(t_dtp *login, t_client *client) {
+    t_dtp *pass = NULL;
     char md5_pass[MX_MD5_BUF_SIZE + 1];
 
     if (login
-        && (login->type != MX_SIGN_UP || !mx_isvalid_login(login->data))) {
+        && (!mx_isvalid_login(login->data))) {
         return false;
     }
     pass = mx_recv(client->ssl);
-    if (pass && (pass->type != MX_PASSWORD || !mx_isvalid_hash(pass->data))) {
-        mx_free_decode_struct(&pass);
+    if (pass && (!mx_isvalid_hash(pass->data))) {
         mx_logger(MX_LOG_FILE, LOGWAR,
                   "First packet was login(%s), but second wasn`t pass\n",
                   login->data);

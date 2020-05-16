@@ -1,76 +1,20 @@
 #include "client.h"
+#include "protocol.h"
+
 static int sockfd;
 static FILE *fp;
 static int done;
 
-
-void signup(SSL *ssl) {
-    char login[1024] = {0};
-    char password[1024] = {0};
-    char md5_password[MX_MD5_BUF_SIZE + 1];
-    t_pds *pass_request = NULL;
-    t_pds *login_requset = NULL;
-
-    printf("Enter your login: ");
-    fgets(login, 1024, fp);
-    printf("Enter your password: ");
-    fgets(password, 1024, fp);
-    password[strlen(password) - 1] = '\0';
-    login[strlen(login) - 1] = '\0';
-    mx_md5(md5_password, (const unsigned char*)password, strlen(password));
-    pass_request = mx_request_creation(-1, MX_PASSWORD, md5_password);
-    login_requset = mx_request_creation(-1, MX_SIGN_UP, login);
-    mx_send(ssl, login_requset);
-    mx_send(ssl, pass_request);
-    mx_free_request_struct(&pass_request);
-    mx_free_request_struct(&login_requset);
-}
-
-void login(SSL *ssl) {
-    char login[1024] = {0};
-    char password[1024] = {0};
-    char md5_password[MX_MD5_BUF_SIZE + 1];
-    t_pds *pass_request = NULL;
-    t_pds *login_requset = NULL;
-
-    printf("Enter your login: ");
-    fgets(login, 1024, fp);
-    printf("Enter your password: ");
-    fgets(password, 1024, fp);
-    password[strlen(password) - 1] = '\0';
-    login[strlen(login) - 1] = '\0';
-    mx_md5(md5_password, (const unsigned char*)password, strlen(password));
-    pass_request = mx_request_creation(-1, MX_PASSWORD, md5_password);
-    login_requset = mx_request_creation(-1, MX_LOG_IN, login);
-    mx_send(ssl, login_requset);
-    mx_send(ssl, pass_request);
-    mx_free_request_struct(&pass_request);
-    mx_free_request_struct(&login_requset);
-}
-
 void *copyto(void *arg) {
     char sendline[1024];
-    t_pds *request = NULL;
+    t_dtp *request = NULL;
     SSL *ssl = (SSL*)arg;
     system("leaks -q uchat");
     
-    while (fgets(sendline, 1024, fp) != NULL) {
-        if (!strcmp(sendline, "login\n")) {
-            login(ssl);
-        }
-        else if (!strcmp(sendline, "signup\n")) {
-            signup(ssl);
-        }
-        else if (!strcmp(sendline, "token\n")) {
-            t_pds *token_requset = mx_request_creation(-1, MX_TOKEN_AUTH, "57da73a7ab2b2b40e33f134d22274bd7");
-            mx_send(ssl, token_requset);
-            mx_free_request_struct(&token_requset);
-        }
-        else {
-            request = mx_request_creation(/*Room id*/1, MX_USER_COUNT, sendline); // Protocol creation
-            mx_send(ssl, request);
-            mx_free_request_struct(&request);
-        }
+    while (fgets(sendline, 1024, fp)) {
+        request = mx_request_json(MX_TP_MSG, "sanya", sendline); // Protocol creation
+        mx_send(ssl, request);
+        mx_free_request_struct(&request);
         bzero(sendline, sizeof(sendline));
     }
     shutdown(sockfd, SHUT_WR);
@@ -81,19 +25,14 @@ void *copyto(void *arg) {
 void str_cli(FILE *fp_arg, SSL *ssl) {
     pthread_t tid;
     char buf[1025];
+    t_dtp *dtp = NULL;
 
     bzero(&buf, sizeof(buf));
     fp = fp_arg;
     mx_pthread_create(&tid, NULL, copyto, ssl);
-    while (SSL_read(ssl, buf, sizeof(buf))) {
-        t_pdl *pdl = mx_request_decode(buf);
-
-        if (!pdl)
-            break;
-        if (pdl->type == MX_ERR_MSG)
-            printf("ERROR: %s\n", pdl->data);
-        if (pdl->type == MX_TOKEN_AUTH)
-            printf("token = %s\n", pdl->data);
+    while ((dtp = mx_recv(ssl))) {
+        printf("%s\n", dtp->str);
+        mx_free_request_struct(&dtp);
     }
 
     if (done == 0)

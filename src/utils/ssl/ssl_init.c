@@ -1,4 +1,5 @@
 #include "utils.h"
+#include "protocol.h"
 
 static SSL_CTX *init_ctx(t_app_type type) {
     const SSL_METHOD *method;
