@@ -1,8 +1,8 @@
 #include "utils.h"
 
-void mx_update_message(sqlite3 *database, unsigned int id_message, char message) {
+// void mx_update_message(sqlite3 *database, unsigned int id_message, char message) {
     // json_replace();
-}
+// }
 
 void mx_update_permission_of_user(sqlite3 *database, unsigned int permission, char *login) {
     sqlite3_stmt *stmt;

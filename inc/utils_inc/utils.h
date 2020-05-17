@@ -68,6 +68,7 @@ typedef struct s_message {
     long long date;
     char *login;
     char *json;
+    struct s_message *next;
 }              t_message;
 
 typedef struct s_members_room {
@@ -166,10 +167,14 @@ void mx_elogger(const char *file, t_logtype type, const char *fmt, ...);
 //sqlite3
 sqlite3 *mx_server_data_open(char *name_db);
 void mx_close_database(sqlite3 *database);
-void mx_create_table(sqlite3 *database, char *table);
 void mx_free_user(t_user **user);
 void mx_delete_room(sqlite3 *database, int id_room);
 void mx_delete_user(sqlite3 *database, char *login);
+
+void mx_create_table_users(sqlite3 *database);
+void mx_create_table_message(sqlite3 *database);
+void mx_create_table_rooms(sqlite3 *database);
+void mx_create_table_member(sqlite3 *database);
 
 t_user *mx_get_user_by_login(sqlite3 *database, char *login);
 t_user *mx_get_user_by_token(sqlite3 *database, char *token);
@@ -184,6 +189,9 @@ t_user *mx_insert_user(sqlite3 *database, char *login, char *password, char *tok
 void mx_insert_message(sqlite3 *database, char *login, long long date, char *json);
 void mx_insert_memeber(sqlite3 *database, int id_room, char *login);
 t_room *mx_insert_room(sqlite3 *database, char *customer, char *name_room);
+
+// char *mx_get_last_message(sqlite3 *database, unsigned int id_room);
+t_message *mx_get_last_message(sqlite3 *database);
 
 void mx_test_room();
 void mx_test_member();
