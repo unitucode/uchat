@@ -10,13 +10,13 @@
 #define MX_SIGN_UP "1"
 #define MX_MSG "2"
 
-// typedef struct s_ssl_con {
-//     SSL_CTX *ctx;
-//     SSL *ssl;
-//     char *cert_file;
-//     char *key_file;
-//     char *password;
-// }              t_ssl_con;
+typedef struct s_ssl_con {
+    SSL_CTX *ctx;
+    SSL *ssl;
+    char *cert_file;
+    char *key_file;
+    char *password;
+}              t_ssl_con;
 
 typedef struct s_dtp { // Data Transfer Protocol view
     char *data;
