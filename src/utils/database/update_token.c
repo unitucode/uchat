@@ -1,6 +1,6 @@
 #include "utils.h"
 
-void mx_update_token(char *new_token, char *login, sqlite3 *database) {
+void mx_update_token(sqlite3 *database, char *new_token, char *login) {
     sqlite3_stmt *stmt;
     int returnvalue;
 
