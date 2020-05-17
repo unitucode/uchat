@@ -22,7 +22,7 @@
 #include <openssl/rand.h>
 #include <sqlite3.h>
 #include <regex.h>
-#include "frozen.h"
+#include "cJSON.h"
 
 #define MX_IN_ITOA(m) #m
 #define MX_ITOA(m) MX_IN_ITOA(m)

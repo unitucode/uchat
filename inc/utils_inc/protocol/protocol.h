@@ -2,13 +2,12 @@
 
 #include "utils.h"
 
-#define MX_TP_LOG_IN "{type: "MX_ITOA(MX_LOG_IN)", login: %s, pass: %s}"
-#define MX_TP_SIGN_UP "{type: "MX_ITOA(MX_SIGN_UP)", login: %s, pass: %s}"
-#define MX_TP_MSG "{type: "MX_ITOA(MX_MSG)", from: %s, msg: %s}"
+
 
 #define MX_LOG_IN 0
 #define MX_SIGN_UP 1
-#define MX_MSG 2
+#define MX_TOKEN 2
+#define MX_MSG 3
 
 typedef struct s_ssl_con {
     SSL_CTX *ctx;
@@ -23,6 +22,12 @@ typedef struct s_dtp { // Data Transfer Protocol view
     char *str;
     size_t len;
 }              t_dtp;
+
+//requests
+t_dtp *mx_log_in_request(char *login, char *pass);
+t_dtp *mx_sign_up_request(char *login, char *pass);
+t_dtp *mx_log_in_token_request(char *token);
+t_dtp *mx_msg_request(int id_room, char *from, char *msg);
 
 //SSL
 t_ssl_con *mx_init_ssl(t_app_type type);
