@@ -31,7 +31,7 @@ t_dtp *mx_recv(SSL *ssl) {
 
         buf[size] = '\0';
         if ((bytes = SSL_read(ssl, buf, sizeof(buf))) == size
-            && strlen(buf) == size)
+            && (int)strlen(buf) == size)
             dtp = mx_request_creation(buf);
         else
             mx_logger(MX_LOG_FILE, LOGWAR, "mx_recv\n");
