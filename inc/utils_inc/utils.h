@@ -90,15 +90,6 @@ typedef struct s_room {
     char *customer;
 }              t_room;
 
-
-typedef struct s_ssl_con {
-    SSL_CTX *ctx;
-    SSL *ssl;
-    char *cert_file;
-    char *key_file;
-    char *password;
-}              t_ssl_con;
-
 typedef struct s_node {
     void *data;
     struct s_node *next;
