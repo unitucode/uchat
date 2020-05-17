@@ -1,4 +1,4 @@
-#include <utils.h>
+#include "utils.h"
 
 static t_user *for_get_user(sqlite3_stmt *stmt) {
     t_user *user = mx_malloc(sizeof(t_user));
@@ -17,24 +17,24 @@ static t_user *for_get_user(sqlite3_stmt *stmt) {
     return user;
 }
 
-t_user *mx_get_user_by_login(char *login, sqlite3 *db_user) {
+t_user *mx_get_user_by_login(sqlite3 *database, char *login) {
     sqlite3_stmt *stmt;
 
-    sqlite3_prepare_v3(db_user, "SELECT * FROM USERS WHERE login = ?1", -1, 0, &stmt, NULL);
+    sqlite3_prepare_v3(database, "SELECT * FROM USERS WHERE login = ?1", -1, 0, &stmt, NULL);
     sqlite3_bind_text(stmt, 1, login, -1, SQLITE_STATIC);
     return for_get_user(stmt);
 }
 
-t_user *mx_get_user_by_token(char *token, sqlite3 *db_user) {
+t_user *mx_get_user_by_token(sqlite3 *database, char *token) {
     sqlite3_stmt *stmt;
 
-    sqlite3_prepare_v3(db_user, "SELECT * FROM USERSS WHERE token = ?1", -1, 0, &stmt, NULL);
+    sqlite3_prepare_v3(database, "SELECT * FROM USERSS WHERE token = ?1", -1, 0, &stmt, NULL);
     sqlite3_bind_text(stmt, 1, token, -1, SQLITE_STATIC);
     return for_get_user(stmt);
 }
 
 
-t_room *mx_get_room(char *name_room, sqlite3 *database) {
+t_room *mx_get_room(sqlite3 *database, char *name_room) {
     t_room *room = NULL;
     int returnvalue;
     sqlite3_stmt *stmt;

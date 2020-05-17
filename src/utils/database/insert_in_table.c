@@ -1,6 +1,6 @@
-#include <utils.h>
+#include "utils.h"
 
-t_room *mx_insert_room(char *customer, char *name_room, sqlite3 *database) {
+t_room *mx_insert_room(sqlite3 *database, char *customer, char *name_room) {
     sqlite3_stmt *stmt;
     int returnvalue = 0;
 
@@ -12,11 +12,11 @@ t_room *mx_insert_room(char *customer, char *name_room, sqlite3 *database) {
     if ((returnvalue = sqlite3_step(stmt)) != SQLITE_DONE)
          mx_elogger(MX_LOG_FILE, LOGERR, "insert database table");
     sqlite3_finalize(stmt);
-    return mx_get_room(name_room, database);
+    return mx_get_room(database, name_room);
 }
 
 
-t_user *mx_insert_user(char *login, char *password, char *token, sqlite3 *database) {
+t_user *mx_insert_user(sqlite3 *database, char *login, char *password, char *token) {
     sqlite3_stmt *stmt;
     int returnvalue = 0;
 
@@ -29,10 +29,10 @@ t_user *mx_insert_user(char *login, char *password, char *token, sqlite3 *databa
     if ((returnvalue = sqlite3_step(stmt)) != SQLITE_DONE)
          mx_elogger(MX_LOG_FILE, LOGERR, "insert database table");
     sqlite3_finalize(stmt);
-    return mx_get_user_by_login(login, database);
+    return mx_get_user_by_login(database, login);
 }
 
-void mx_insert_memeber(int id_room, char *login, sqlite3 *database) {
+void mx_insert_memeber(sqlite3 *database, int id_room, char *login) {
     sqlite3_stmt *stmt;
     int returnvalue = 0;
 
@@ -46,7 +46,7 @@ void mx_insert_memeber(int id_room, char *login, sqlite3 *database) {
     sqlite3_finalize(stmt);
 }
 
-void mx_insert_message(char *login, long long date, char *json, sqlite3 *database) {
+void mx_insert_message(sqlite3 *database, char *login, long long date, char *json) {
     sqlite3_stmt *stmt;
     int returnvalue = 0;
 

@@ -1,6 +1,6 @@
-#include <utils.h>
+#include "utils.h"
 
-void mx_create_table(char *table, sqlite3 *database) {
+void mx_create_table(sqlite3 *database, char *table) {
     int tmp = 0;
 
     if ((tmp = sqlite3_exec(database, table, 0, 0, 0)) != SQLITE_OK) {

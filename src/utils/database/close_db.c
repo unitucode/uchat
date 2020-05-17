@@ -1,4 +1,4 @@
-#include <utils.h>
+#include "utils.h"
 
 void mx_close_database(sqlite3 *database) {
     int stan = sqlite3_close(database);
