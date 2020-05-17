@@ -1,4 +1,4 @@
-#include <utils.h>
+#include "utils.h"
 
 void mx_update_permission_of_user(unsigned int permission, char *login, sqlite3 *database) {
     sqlite3_stmt *stmt;
