@@ -2,13 +2,13 @@
 
 #include "utils.h"
 
-#define MX_TP_LOG_IN "{type: "MX_LOG_IN", login: %s, pass: %s}"
-#define MX_TP_SIGN_UP "{type: "MX_SIGN_UP", login: %s, pass: %s}"
-#define MX_TP_MSG "{type: "MX_MSG", from: %s, msg: %s}"
+#define MX_TP_LOG_IN "{type: "MX_ITOA(MX_LOG_IN)", login: %s, pass: %s}"
+#define MX_TP_SIGN_UP "{type: "MX_ITOA(MX_SIGN_UP)", login: %s, pass: %s}"
+#define MX_TP_MSG "{type: "MX_ITOA(MX_MSG)", from: %s, msg: %s}"
 
-#define MX_LOG_IN "0"
-#define MX_SIGN_UP "1"
-#define MX_MSG "2"
+#define MX_LOG_IN 0
+#define MX_SIGN_UP 1
+#define MX_MSG 2
 
 // typedef struct s_ssl_con {
 //     SSL_CTX *ctx;
