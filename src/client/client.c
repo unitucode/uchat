@@ -1,5 +1,6 @@
 #include "client.h"
 #include "protocol.h"
+#include "cJSON.h"
 
 static int sockfd;
 static FILE *fp;
@@ -9,10 +10,10 @@ void *copyto(void *arg) {
     char sendline[1024];
     t_dtp *request = NULL;
     SSL *ssl = (SSL*)arg;
-    system("leaks -q uchat");
     
     while (fgets(sendline, 1024, fp)) {
-        request = mx_request_json(MX_TP_MSG, "sanya", sendline); // Protocol creation
+        // request = mx_msg_request(1, NULL, sendline);
+        request = mx_log_in_request("login", "fdsafjdsafhdsajfhdsja");
         mx_send(ssl, request);
         mx_free_request_struct(&request);
         bzero(sendline, sizeof(sendline));
@@ -53,6 +54,7 @@ void mx_change_working_dir(void) {
 int main(int argc, char **argv) {
     int sockfd;
     t_ssl_con *ssl = NULL;
+
 
     mx_change_working_dir();
     if (argc != 3) {
