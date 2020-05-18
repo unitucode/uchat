@@ -12,7 +12,8 @@ void *copyto(void *arg) {
     SSL *ssl = (SSL*)arg;
     
     while (fgets(sendline, 1024, fp)) {
-        request = mx_msg_request(1, NULL, sendline);
+        // request = mx_msg_request(1, NULL, sendline);
+        request = mx_log_in_request("login", "fdsafjdsafhdsajfhdsja");
         mx_send(ssl, request);
         mx_free_request_struct(&request);
         bzero(sendline, sizeof(sendline));
