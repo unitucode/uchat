@@ -30,7 +30,7 @@ typedef struct s_client {
 
 //data protocol handler functions
 bool mx_log_in(t_dtp *login, t_client *client);
-bool mx_sign_up(t_dtp *login, t_client *client);
+bool mx_sign_up(t_dtp *signup_data, t_client *client);
 bool mx_log_in_token(t_dtp *token, t_client *client);
 bool mx_authorization(t_client *client, t_dtp *data);
 
