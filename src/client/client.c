@@ -1,5 +1,6 @@
 #include "client.h"
 #include "protocol.h"
+#include "cJSON.h"
 
 static int sockfd;
 static FILE *fp;
@@ -51,7 +52,7 @@ void *copyto(void *arg) {
         if (!strcmp(sendline, "signup\n"))
             mx_signup(ssl);
         else {
-            request = mx_request_json(MX_TP_MSG, "yura", sendline); // Protocol creation
+            request = mx_msg_request(1, NULL, "hello guys");
             mx_send(ssl, request);
             mx_free_request_struct(&request);
             bzero(sendline, sizeof(sendline));
@@ -93,6 +94,7 @@ void mx_change_working_dir(void) {
 int main(int argc, char **argv) {
     int sockfd;
     t_ssl_con *ssl = NULL;
+
 
     mx_change_working_dir();
     if (argc != 3) {

@@ -22,7 +22,7 @@
 #include <openssl/rand.h>
 #include <sqlite3.h>
 #include <regex.h>
-#include "frozen.h"
+#include "cJSON.h"
 
 #define MX_IN_ITOA(m) #m
 #define MX_ITOA(m) MX_IN_ITOA(m)
@@ -89,15 +89,6 @@ typedef struct s_room {
     char *name;
     char *customer;
 }              t_room;
-
-
-typedef struct s_ssl_con {
-    SSL_CTX *ctx;
-    SSL *ssl;
-    char *cert_file;
-    char *key_file;
-    char *password;
-}              t_ssl_con;
 
 typedef struct s_node {
     void *data;
