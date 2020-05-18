@@ -3,7 +3,7 @@
 /*
  * Receive first packet with size of next packet
  */
-static size_t message_size(SSL *ssl) {
+static int message_size(SSL *ssl) {
     char buf[sizeof(int)];
     int bytes = 0;
     int size = -1;
@@ -29,8 +29,7 @@ t_dtp *mx_recv(SSL *ssl) {
         char buf[size];
 
         buf[size] = '\0';
-        if ((bytes = SSL_read(ssl, buf, sizeof(buf))) == size
-            && (int)strlen(buf) == size)
+        if ((bytes = SSL_read(ssl, buf, size)) == size)
             dtp = mx_request_creation(buf);
         else
             mx_logger(MX_LOG_FILE, LOGWAR, "mx_recv\n");
