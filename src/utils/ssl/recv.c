@@ -3,7 +3,7 @@
 /*
  * Receive first packet with size of next packet
  */
-static size_t message_size(SSL *ssl) {
+static int message_size(SSL *ssl) {
     char buf[sizeof(int)];
     int bytes = 0;
     int size = -1;

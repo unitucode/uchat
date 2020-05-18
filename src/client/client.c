@@ -49,11 +49,14 @@ void *copyto(void *arg) {
     system("leaks -q uchat");
     
     while (fgets(sendline, 1024, fp)) {
-        // request = mx_msg_request(1, NULL, sendline);
-        request = mx_log_in_request("login", "fdsafjdsafhdsajfhdsja");
-        mx_send(ssl, request);
-        mx_free_request_struct(&request);
-        bzero(sendline, sizeof(sendline));
+        if (!strcmp("signup\n", sendline))
+            mx_signup(ssl);
+        else {
+            request = mx_msg_request(1, NULL, sendline);
+            mx_send(ssl, request);
+            mx_free_request_struct(&request);
+            bzero(sendline, sizeof(sendline));
+        }
     }
     shutdown(sockfd, SHUT_WR);
     done = 1;

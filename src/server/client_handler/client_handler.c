@@ -22,7 +22,7 @@ static void str_echo(t_client *client) {
         if (!mx_authorization(client, dtp)) {
             mx_free_request_struct(&dtp);
             mx_logger(MX_LOG_FILE, LOGERR, "invalid autorization\n");
-            break;
+            continue;
         }
         printf("recv = %s\n", dtp->str);
         send_to_all(client->chat->clients, client->chat, client, dtp->str);
