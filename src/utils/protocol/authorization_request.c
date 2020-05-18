@@ -13,8 +13,7 @@ t_dtp *mx_log_in_request(char *login, char *pass) {
         return NULL;
     json_str = cJSON_Print(json_result);
     dtp = mx_request_creation(json_str);
-    mx_free((void**)json_str);
-    cJSON_Delete(json_result);
+    mx_free((void**)&json_str);
     cJSON_Delete(json_result);
     return dtp;
 }
@@ -32,7 +31,7 @@ t_dtp *mx_sign_up_request(char *login, char *pass) {
         return NULL;
     json_str = cJSON_Print(json_result);
     dtp = mx_request_creation(json_str);
-    mx_free((void**)json_str);
+    mx_free((void**)&json_str);
     cJSON_Delete(json_result);
     return dtp;
 }
@@ -48,7 +47,7 @@ t_dtp *mx_log_in_token_request(char *token) {
         return NULL;
     json_str = cJSON_Print(json_result);
     dtp = mx_request_creation(json_str);
-    mx_free((void**)json_str);
+    mx_free((void**)&json_str);
     cJSON_Delete(json_result);
     return dtp;
 }
