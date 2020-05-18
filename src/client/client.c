@@ -46,9 +46,9 @@ void *copyto(void *arg) {
     char sendline[1024];
     t_dtp *request = NULL;
     SSL *ssl = (SSL*)arg;
-    system("leaks -q uchat");
     
     while (fgets(sendline, 1024, fp)) {
+<<<<<<< HEAD
         if (!strcmp(sendline, "signup\n"))
             mx_signup(ssl);
         else {
@@ -57,6 +57,12 @@ void *copyto(void *arg) {
             mx_free_request_struct(&request);
             bzero(sendline, sizeof(sendline));
         }
+=======
+        request = mx_msg_request(1, NULL, sendline);
+        mx_send(ssl, request);
+        mx_free_request_struct(&request);
+        bzero(sendline, sizeof(sendline));
+>>>>>>> 92709e9a4562ad06731092bfe8a1bc9bd5767a83
     }
     shutdown(sockfd, SHUT_WR);
     done = 1;
