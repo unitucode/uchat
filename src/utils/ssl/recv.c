@@ -4,16 +4,16 @@
  * Receive first packet with size of next packet
  */
 static size_t message_size(SSL *ssl) {
-    char buf[4];
+    char buf[sizeof(int)];
     int bytes = 0;
     int size = -1;
 
     bytes = SSL_read(ssl, buf, sizeof(buf));
-    if (bytes != 4) {
+    if (bytes != sizeof(int)) {
         mx_logger(MX_LOG_FILE, LOGWAR, "Invalid packet\n");
         return -1;
     }
-    memcpy(&size, buf, 4);
+    memcpy(&size, buf, sizeof(int));
     return size;
 }
 

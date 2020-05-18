@@ -1,7 +1,7 @@
 #include "protocol.h"
 
-int mx_get_type_dtp(cJSON *json) {
-    cJSON *type = cJSON_GetObjectItemCaseSensitive(json, "type");
+int mx_get_type_dtp(t_dtp *dtp) {
+    cJSON *type = cJSON_GetObjectItemCaseSensitive(dtp->json, "type");
     int result = -1;
 
     if (!cJSON_IsNumber(type))
