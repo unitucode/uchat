@@ -22,8 +22,10 @@
 #include <openssl/rand.h>
 #include <sqlite3.h>
 #include <regex.h>
-#include "frozen.h"
+#include "cJSON.h"
 
+#define MX_IN_ITOA(m) #m
+#define MX_ITOA(m) MX_IN_ITOA(m)
 #define MX_DB_USER "users.db"
 #define MX_ROOMS_TABLE "CREATE TABLE ROOMS("  \
                        "ID                 INTEGER PRIMARY KEY NOT NULL," \
@@ -157,24 +159,24 @@ void mx_elogger(const char *file, t_logtype type, const char *fmt, ...);
 //sqlite3
 sqlite3 *mx_server_data_open(char *name_db);
 void mx_close_database(sqlite3 *database);
-void mx_create_table(char *table, sqlite3 *database);
+void mx_create_table(sqlite3 *database, char *table);
 void mx_free_user(t_user **user);
-void mx_delete_room(int id_room, sqlite3 *database);
-void mx_delete_user(char *login, sqlite3 *database);
+void mx_delete_room(sqlite3 *database, int id_room);
+void mx_delete_user(sqlite3 *database, char *login);
 
-t_user *mx_get_user_by_login(char *login, sqlite3 *db_user);
-t_user *mx_get_user_by_token(char *token, sqlite3 *db_user);
-t_message *mx_get_message_by_id(int id_message, sqlite3 *database);
-t_message *mx_get_message_by_login(char *login, sqlite3 *database);
-t_room *mx_get_room(char *name_room, sqlite3 *database);
+t_user *mx_get_user_by_login(sqlite3 *database, char *login);
+t_user *mx_get_user_by_token(sqlite3 *database, char *token);
+t_message *mx_get_message_by_id(sqlite3 *database, int id_message);
+t_message *mx_get_message_by_login(sqlite3 *database, char *login);
+t_room *mx_get_room(sqlite3 *database,char *name_room);
 
-void mx_update_permission_of_user(unsigned int permission, char *login, sqlite3 *database);
-void mx_update_token(char *new_token, char *login, sqlite3 *database);
+void mx_update_permission_of_user(sqlite3 *database, unsigned int permission, char *login);
+void mx_update_token(sqlite3 *database, char *new_token, char *login);
 
-t_user *mx_insert_user(char *login, char *password, char *token, sqlite3 *db_user);
-void mx_insert_message(char *login, long long date, char *json, sqlite3 *database);
-void mx_insert_memeber(int id_room, char *login, sqlite3 *database);
-t_room *mx_insert_room(char *customer, char *name_room, sqlite3 *db_room);
+t_user *mx_insert_user(sqlite3 *database, char *login, char *password, char *token);
+void mx_insert_message(sqlite3 *database, char *login, long long date, char *json);
+void mx_insert_memeber(sqlite3 *database, int id_room, char *login);
+t_room *mx_insert_room(sqlite3 *database, char *customer, char *name_room);
 
 void mx_test_room();
 void mx_test_member();

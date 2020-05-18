@@ -1,6 +1,6 @@
-#include <utils.h>
+#include "utils.h"
 
-void mx_delete_room(int id_room, sqlite3 *database) {
+void mx_delete_room(sqlite3 *database, int id_room) {
     int returnvalue = 0;
     sqlite3_stmt *stmt;
 
@@ -13,7 +13,7 @@ void mx_delete_room(int id_room, sqlite3 *database) {
     sqlite3_finalize(stmt);
 }
 
-void mx_delete_user(char *login, sqlite3 *database) {
+void mx_delete_user(sqlite3 *database, char *login) {
     int returnvalue = 0;
     sqlite3_stmt *stmt;
 

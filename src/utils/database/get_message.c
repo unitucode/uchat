@@ -1,4 +1,4 @@
-#include <utils.h>
+#include "utils.h"
 
 static t_message *for_get_message(sqlite3_stmt *stmt) {
     int returnvalue;
@@ -17,7 +17,7 @@ static t_message *for_get_message(sqlite3_stmt *stmt) {
     return message;
 }
 
-t_message *mx_get_message_by_id(int id_message, sqlite3 *database) {
+t_message *mx_get_message_by_id(sqlite3 *database, int id_message) {
     int returnvalue;
     sqlite3_stmt *stmt;
 
@@ -26,7 +26,7 @@ t_message *mx_get_message_by_id(int id_message, sqlite3 *database) {
     return for_get_message(stmt);
 }
 
-t_message *mx_get_message_by_login(char *login, sqlite3 *database) {
+t_message *mx_get_message_by_login(sqlite3 *database, char *login) {
     int returnvalue;
     sqlite3_stmt *stmt;
     
