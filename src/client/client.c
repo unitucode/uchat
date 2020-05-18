@@ -5,6 +5,42 @@ static int sockfd;
 static FILE *fp;
 static int done;
 
+void mx_signup(SSL *ssl) {
+    char login[1024] = {0};
+    char password[1024] = {0};
+    char md5_password[MX_MD5_BUF_SIZE + 1];
+    t_dtp *signup_request = NULL;
+
+    printf("Enter your login: ");
+    fgets(login, 1024, fp);
+    printf("Enter your password: ");
+    fgets(password, 1024, fp);
+    password[strlen(password) - 1] = '\0';
+    login[strlen(login) - 1] = '\0';
+    mx_md5(md5_password, (const unsigned char*)password, strlen(password));
+    signup_request = mx_request_json(MX_TP_SIGN_UP, login, md5_password);
+    mx_send(ssl, signup_request);
+    mx_free_request_struct(&signup_request);
+}
+
+void mx_login(SSL *ssl) {
+    char login[1024] = {0};
+    char password[1024] = {0};
+    char md5_password[MX_MD5_BUF_SIZE + 1];
+    t_dtp *login_request = NULL;
+
+    printf("Enter your login: ");
+    fgets(login, 1024, fp);
+    printf("Enter your password: ");
+    fgets(password, 1024, fp);
+    password[strlen(password) - 1] = '\0';
+    login[strlen(login) - 1] = '\0';
+    mx_md5(md5_password, (const unsigned char*)password, strlen(password));
+    login_request = mx_request_json(MX_TP_LOG_IN, login, md5_password);
+    mx_send(ssl, login_request);
+    mx_free_request_struct(&login_request);
+}
+
 void *copyto(void *arg) {
     char sendline[1024];
     t_dtp *request = NULL;
@@ -12,10 +48,14 @@ void *copyto(void *arg) {
     system("leaks -q uchat");
     
     while (fgets(sendline, 1024, fp)) {
-        request = mx_request_json(MX_TP_MSG, "sanya", sendline); // Protocol creation
-        mx_send(ssl, request);
-        mx_free_request_struct(&request);
-        bzero(sendline, sizeof(sendline));
+        if (!strcmp(sendline, "signup\n"))
+            mx_signup(ssl);
+        else {
+            request = mx_request_json(MX_TP_MSG, "yura", sendline); // Protocol creation
+            mx_send(ssl, request);
+            mx_free_request_struct(&request);
+            bzero(sendline, sizeof(sendline));
+        }
     }
     shutdown(sockfd, SHUT_WR);
     done = 1;
