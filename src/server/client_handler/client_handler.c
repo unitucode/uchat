@@ -21,6 +21,7 @@ static void str_echo(t_client *client) {
     while ((dtp = mx_recv(client->ssl))) {
         if (!mx_authorization(client, dtp)) {
             mx_free_request_struct(&dtp);
+            mx_logger(MX_LOG_FILE, LOGERR, "invalid autorization\n");
             break;
         }
         printf("recv = %s\n", dtp->str);

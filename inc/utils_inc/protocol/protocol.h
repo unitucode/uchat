@@ -24,6 +24,7 @@ typedef struct s_dtp { // Data Transfer Protocol view
     char *str;
     cJSON *json;
     size_t len;
+    int type;
 }              t_dtp;
 
 //requests
