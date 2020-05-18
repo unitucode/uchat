@@ -73,6 +73,12 @@ typedef struct s_message {
     struct s_message *next;
 }              t_message;
 
+typedef struct s_id_room {
+    char *text;
+    int id_room;
+    struct s_id_room *next;
+}              t_id_room;
+
 typedef struct s_members_room {
     char *login;
     struct s_members_room *next;
@@ -85,11 +91,20 @@ typedef struct s_user {
     unsigned int permission;
 }              t_user;
 
-typedef struct s_room {
+typedef struct s_rooms {
     unsigned int id;
     char *name;
     char *customer;
-}              t_room;
+}              t_rooms;
+
+typedef struct s_room_messages {
+    char *name_room;
+    unsigned int id_message;
+    long long date;
+    char *login;
+    char *message;
+    struct s_room_messages *next;
+}              t_room_messages;
 
 typedef struct s_node {
     void *data;
@@ -165,7 +180,7 @@ void mx_delete_room(sqlite3 *database, int id_room);
 void mx_delete_user(sqlite3 *database, char *login);
 
 void mx_create_table_users(sqlite3 *database);
-void mx_create_table_message(sqlite3 *database);
+// void mx_create_table_message(sqlite3 *database);
 void mx_create_table_rooms(sqlite3 *database);
 void mx_create_table_member(sqlite3 *database);
 
@@ -173,7 +188,7 @@ t_user *mx_get_user_by_login(sqlite3 *database, char *login);
 t_user *mx_get_user_by_token(sqlite3 *database, char *token);
 t_message *mx_get_message_by_id(sqlite3 *database, int id_message);
 t_message *mx_get_message_by_login(sqlite3 *database, char *login);
-t_room *mx_get_room(sqlite3 *database,char *name_room);
+t_rooms *mx_get_room(sqlite3 *database,char *name_room);
 
 void mx_update_permission_of_user(sqlite3 *database, unsigned int permission, char *login);
 void mx_update_token(sqlite3 *database, char *new_token, char *login);
@@ -181,12 +196,16 @@ void mx_update_token(sqlite3 *database, char *new_token, char *login);
 t_user *mx_insert_user(sqlite3 *database, char *login, char *password, char *token);
 void mx_insert_message(sqlite3 *database, char *login, long long date, char *json);
 void mx_insert_memeber(sqlite3 *database, int id_room, char *login);
-t_room *mx_insert_room(sqlite3 *database, char *customer, char *name_room);
+t_rooms *mx_insert_room(sqlite3 *database, char *customer, char *name_room);
 
-// char *mx_get_last_message(sqlite3 *database, unsigned int id_room);
 t_message *mx_get_last_message(sqlite3 *database);
+void mx_create_table_room(sqlite3 *database, char *name_room);
+void mx_insert_to_room(sqlite3 *database, t_room_messages *room);
+cJSON *mx_create_json_object(sqlite3 *database, char *user_login);
 
-void mx_test_room();
-void mx_test_member();
-void mx_test_users();
-void mx_test_message();
+void mx_test_json();
+void mx_json();
+// void mx_test_room();
+// void mx_test_member();
+// void mx_test_users();
+// void mx_test_message();

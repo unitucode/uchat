@@ -24,27 +24,21 @@ void mx_create_table_member(sqlite3 *database) {
     }
 }
 
-void mx_create_table_message(sqlite3 *database) {
-    int tmp = 0;
+void mx_create_table_room(sqlite3 *database, char *name_room) {
+    sqlite3_str *str = sqlite3_str_new(database);
+    char *sql = NULL;
 
-    if ((tmp = sqlite3_exec(database, "CREATE TABLE MESSAGE("  \
-                         "ID_MESSAGE    INTEGER PRIMARY KEY NOT NULL," \
-                         "LOGIN         TEXT                NOT NULL," \
-                         "DATE          INTEGER             NOT NULL," \
-                         "JSON          TEXT                NOT NULL);", 0, 0, 0)) != SQLITE_OK) {
-        // printf("tmp create -> %d\n", tmp);
-        // mx_elogger(MX_LOG_FILE, LOGWAR, "error create database table");
-    }
-}
+    sqlite3_str_appendall(str, "CREATE TABLE ");
+    sqlite3_str_appendall(str, name_room);
+    sqlite3_str_appendall(str, "(ID_MESSAGE INTEGER PRIMARY KEY NOT NULL, LOGIN TEXT NOT NULL, DATE INTEGER NOT NULL, MESSAGE TEXT NOT NULL);");
+    sql = sqlite3_str_finish(str);
+    sqlite3_exec(database, sql, 0, 0, 0);
+    sqlite3_free(sql);
+ }
 
 void mx_create_table_rooms(sqlite3 *database) {
-    int tmp = 0;
-
-    if ((tmp = sqlite3_exec(database, "CREATE TABLE ROOMS("  \
+    sqlite3_exec(database, "CREATE TABLE ROOMS("  \
                        "ID                 INTEGER PRIMARY KEY NOT NULL," \
                        "NAME_ROOM          TEXT                NOT NULL, " \
-                       "CUSTOMER_LOGIN     TEXT                NOT NULL);", 0, 0, 0)) != SQLITE_OK) {
-        // printf("tmp create -> %d\n", tmp);
-        // mx_elogger(MX_LOG_FILE, LOGWAR, "error create database table");
-    }
+                       "CUSTOMER_LOGIN     TEXT                NOT NULL);", 0, 0, 0);
 }

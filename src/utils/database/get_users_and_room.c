@@ -34,8 +34,8 @@ t_user *mx_get_user_by_token(sqlite3 *database, char *token) {
 }
 
 
-t_room *mx_get_room(sqlite3 *database, char *name_room) {
-    t_room *room = NULL;
+t_rooms *mx_get_room(sqlite3 *database, char *name_room) {
+    t_rooms *room = NULL;
     int returnvalue;
     sqlite3_stmt *stmt;
 
@@ -47,7 +47,7 @@ t_room *mx_get_room(sqlite3 *database, char *name_room) {
         // mx_free((void**)room);
         return NULL;
     }
-    room = malloc(sizeof(t_room));
+    room = malloc(sizeof(t_rooms));
     room->id = sqlite3_column_int(stmt, 0);
     room->name = strdup((const char*)sqlite3_column_text(stmt, 1));
     room->customer = strdup((const char*)sqlite3_column_text(stmt, 2));
