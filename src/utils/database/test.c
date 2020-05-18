@@ -139,51 +139,64 @@ void mx_test_message() {
 //     mx_insert_memeber(4, "ura", database);
 //     printf("end test member !\n\n");
 // }
+static void insert_room(sqlite3 *database, char *customer, char *name_room) {
+    sqlite3_stmt *stmt;
+    int returnvalue = 0;
 
-// void mx_test_room() {
-//     printf("start test room !\n\n");
-//     sqlite3 *database = mx_server_data_open(MX_DB_USER);
-//     mx_create_table(MX_ROOMS_TABLE, database);
-//     mx_insert_room("vlad", "uchat", database);
-//     mx_insert_room("sasha", "kill", database);
-//     mx_insert_room("ura", "dolli", database);
-//     mx_insert_room("pasha", "Robert", database);
-//     t_room *room = mx_get_room("uchat", database);
-//     if (room == NULL) {
-//         printf("error room\n");
-//         exit(1);
-//     }
-//     printf("ID_ROMM -> \t%d\n", room->id);
-//     printf("NAME_ROOM -> \t%s\n", room->name);
-//     printf("CUSTOMER -> \t%s\n\n", room->customer);
-//     room = mx_get_room("Robert", database);
-//     if (room == NULL) {
-//         printf("error room\n");
-//         exit(1);
-//     }
-//     printf("ID_ROMM -> \t%d\n", room->id);
-//     printf("NAME_ROOM -> \t%s\n", room->name);
-//     printf("CUSTOMER -> \t%s\n\n", room->customer); 
-//     room = mx_get_room("kill", database);
-//     if (room == NULL) {
-//         printf("error\n");
-//         exit(1);
-//     }
-//     printf("ID_ROMM -> \t%d\n", room->id);
-//     printf("NAME_ROOM -> \t%s\n", room->name);
-//     printf("CUSTOMER -> \t%s\n\n", room->customer);
-//     room = mx_get_room("dolli", database);
-//     if (room == NULL) {
-//         printf("error\n");
-//         exit(1);
-//     }
-//     printf("ID_ROMM -> \t%d\n", room->id);
-//     printf("NAME_ROOM -> \t%s\n", room->name);
-//     printf("CUSTOMER -> \t%s\n\n", room->customer);
+    returnvalue = sqlite3_prepare_v3(database, "INSERT INTO VLAD_ROOM(NAME_ROOM, CUSTOMER_LOGIN) VALUES(?1, ?2);", -1, 0, &stmt, NULL);
+    if (returnvalue == SQLITE_ERROR)
+        mx_elogger(MX_LOG_FILE, LOGERR, "insert database table");
+     sqlite3_bind_text(stmt, 1, name_room, -1, SQLITE_STATIC);
+     sqlite3_bind_text(stmt, 2, customer, -1, SQLITE_STATIC);
+    if ((returnvalue = sqlite3_step(stmt)) != SQLITE_DONE)
+         mx_elogger(MX_LOG_FILE, LOGERR, "insert database table");
+    sqlite3_finalize(stmt);
+}
 
-//     printf("end test room !\n\n");
-//     mx_close_database(database);
-// }
+static t_room *get_room(sqlite3 *database, char *name_room) {
+    t_room *room = NULL;
+    int returnvalue;
+    sqlite3_stmt *stmt;
+
+    sqlite3_prepare_v3(database, "SELECT * FROM VLAD_ROOM WHERE name_room = ?1", -1, 0, &stmt, NULL);
+    sqlite3_bind_text(stmt, 1, name_room, -1, SQLITE_STATIC);
+    if ((returnvalue = sqlite3_step(stmt)) != SQLITE_ROW) {
+        printf("error get room\n");
+        sqlite3_finalize(stmt);
+        // mx_free((void**)room);
+        return NULL;
+    }
+    room = malloc(sizeof(t_room));
+    room->id = sqlite3_column_int(stmt, 0);
+    room->name = strdup((const char*)sqlite3_column_text(stmt, 1));
+    room->customer = strdup((const char*)sqlite3_column_text(stmt, 2));
+    sqlite3_finalize(stmt);
+    return room;
+}
+
+void mx_test_room() {
+    printf("start test room !\n\n");
+    sqlite3 *database = mx_server_data_open(MX_DB_USER);
+    int tmp = 0;
+    sqlite3_stmt *stmt;
+
+    tmp = sqlite3_prepare_v3(database, "CREATE TABLE :f("  \
+                       "ID                 INTEGER PRIMARY KEY NOT NULL," \
+                       "NAME_ROOM          TEXT                NOT NULL, " \
+                       "CUSTOMER_LOGIN     TEXT                NOT NULL);", -1, 0, &stmt, NULL);
+    sqlite3_bind_text(stmt, 'f', "VLAD_ROOM", -1, SQLITE_STATIC);
+    printf("tmp -> %d\n", tmp);
+    tmp = sqlite3_step(stmt);
+    printf("tmp -> %d\n", tmp);
+    sqlite3_finalize(stmt);
+    insert_room(database, "vlad", "room_of_vlad");
+    t_room *room = get_room(database, "room_of_vlad");
+    printf("ID -> \t%d\n", room->id);
+    printf("NAME -> \t%s\n", room->name);
+    printf("CUST -> \t%s\n", room->customer);
+    printf("end test room\n");
+    exit(1);
+}
 
     // int returnvalue = 0;
     // sqlite3_stmt *stmt;

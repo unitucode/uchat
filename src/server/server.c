@@ -24,9 +24,9 @@ void mx_change_working_dir(void) {
 }
 
 int main(int argc, char **argv) {
-    // mx_test_room();
+    mx_test_room();
     // mx_test_users();
-    mx_test_message();
+    // mx_test_message();
     // mx_test_member();
     exit(1);
     t_chat *chat = mx_init_chat(argc, argv);
