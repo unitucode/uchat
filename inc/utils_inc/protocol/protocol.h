@@ -49,3 +49,8 @@ void mx_create_token(char *token, char *login);
 int mx_get_type_dtp(t_dtp *dtp);
 t_dtp *mx_request_creation(char *req_body);
 void mx_free_request_struct(t_dtp **request);
+
+//Authorization
+bool mx_valid_authorization_data(t_dtp *data, char **login_str, char **pass_str);
+char *get_pass_str(t_dtp *signup_data);
+char *get_login_str(t_dtp *signup_data);
