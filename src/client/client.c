@@ -41,13 +41,17 @@ void mx_login(SSL *ssl) {
     char password[1024] = {0};
     char md5_password[MX_MD5_BUF_SIZE + 1];
     t_dtp *login_request = NULL;
+    bool valid = false;
 
-    printf("Enter your login: ");
-    fgets(login, 1024, fp);
-    printf("Enter your password: ");
-    fgets(password, 1024, fp);
-    password[strlen(password) - 1] = '\0';
-    login[strlen(login) - 1] = '\0';
+    while (!valid) {
+        printf("Enter your login: ");
+        fgets(login, 1024, fp);
+        printf("Enter your password: ");
+        fgets(password, 1024, fp);
+        password[strlen(password) - 1] = '\0';
+        login[strlen(login) - 1] = '\0';
+        valid = is_valid_login(login);
+    }
     mx_md5(md5_password, (const unsigned char*)password, strlen(password));
     login_request = mx_log_in_request(login, md5_password);
     mx_send(ssl, login_request);
@@ -63,6 +67,8 @@ void *copyto(void *arg) {
     while (fgets(sendline, 1024, fp)) {
         if (!strcmp("signup\n", sendline))
             mx_signup(ssl);
+        else if (!strcmp("login\n", sendline))
+            mx_login(ssl);
         else {
             request = mx_msg_request(1, NULL, sendline);
             // printf("req = %s len = %zu len = %zu\n", request->str, strlen(request->str), request->len);
