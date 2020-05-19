@@ -7,7 +7,6 @@ static void sign_up(char *login, char *pass, t_client *client) {
 
     if (user) {
         // inccorect_data
-        mx_delete_user(client->chat->database, login);
         mx_logger(MX_LOG_FILE, LOGMSG, "Already exist user %s\n", login);
         return;
     }
@@ -48,7 +47,7 @@ bool mx_sign_up(t_dtp *signup_data, t_client *client) {
         return false;
     if (!(pass_str = get_pass_str(signup_data)))
         return false;
-    mx_md5(md5_pass, (const unsigned char *)pass_str, strlen(pass_str));
+    mx_md5(md5_pass, (const unsigned char*)pass_str, strlen(pass_str));
     sign_up(login_str, md5_pass, client);
     return true;
 }
