@@ -16,7 +16,7 @@ static void sign_up(char *login, char *pass, t_client *client) {
     // correct_data
 }
 
-char *get_login_str(t_dtp *signup_data) {
+static char *get_login_str(t_dtp *signup_data) {
     cJSON *data_obj = cJSON_GetObjectItemCaseSensitive(signup_data->json,
                                                        "login");
     if (!cJSON_IsString(data_obj))
@@ -26,7 +26,7 @@ char *get_login_str(t_dtp *signup_data) {
     return data_obj->valuestring;
 }
 
-char *get_pass_str(t_dtp *signup_data) {
+static char *get_pass_str(t_dtp *signup_data) {
     cJSON *data_obj = cJSON_GetObjectItemCaseSensitive(signup_data->json,
                                                        "pass");
     if (!cJSON_IsString(data_obj))
