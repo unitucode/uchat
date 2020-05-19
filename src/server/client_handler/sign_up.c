@@ -21,8 +21,10 @@ bool mx_sign_up(t_dtp *signup_data, t_client *client) {
     char *login_str;
     char *pass_str;
 
-    if (!mx_valid_authorization_data(signup_data, &login_str, &pass_str))
+    if (!mx_valid_authorization_data(signup_data, &login_str,
+                                     &pass_str, MX_SIGN_UP)) {
         return false;
+    }
     mx_md5(md5_pass, (const unsigned char*)pass_str, strlen(pass_str));
     sign_up(login_str, md5_pass, client);
     return true;

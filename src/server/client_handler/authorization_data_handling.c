@@ -21,8 +21,9 @@ static char *get_pass_str(t_dtp *data) {
     return data_obj->valuestring;
 }
 
-bool mx_valid_authorization_data(t_dtp *data, char **login, char **pass) {
-    if (!data || data->type != MX_SIGN_UP)
+bool mx_valid_authorization_data(t_dtp *data, char **login,
+                                 char **pass, int type) {
+    if (!data || data->type != type)
         return false;
     if (!(*login = get_login_str(data)))
         return false;

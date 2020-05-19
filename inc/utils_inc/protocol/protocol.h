@@ -54,4 +54,5 @@ t_dtp *mx_request_creation(char *req_body);
 void mx_free_request_struct(t_dtp **request);
 
 //Authorization
-bool mx_valid_authorization_data(t_dtp *data, char **login, char **pass);
+bool mx_valid_authorization_data(t_dtp *data, char **login,
+                                 char **pass, int type);
