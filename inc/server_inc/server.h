@@ -42,3 +42,8 @@ void mx_deinit_chat(t_chat **chat);
 void mx_connect_client(t_client *client);
 void mx_delete_client_list(t_list *list, t_client *client);
 void mx_delete_client(t_client **client);
+
+//Authorization
+bool mx_valid_authorization_data(t_dtp *data, char **login,
+                                 char **pass, int type);
+void mx_correct_data(char *login, t_client *client);

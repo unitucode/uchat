@@ -1,5 +1,12 @@
 #include "server.h"
-#include "protocol.h"
+
+void mx_correct_data(char *login, t_client *client) {
+    t_dtp *dtp = mx_log_in_token_request((char*)client->user->token);
+
+    mx_send(client->ssl, dtp);
+    mx_logger(MX_LOG_FILE, LOGMSG, "Logged in: %s\n", login);
+    mx_free_request_struct(&dtp);
+}
 
 static char *get_login_str(t_dtp *data) {
     cJSON *data_obj = cJSON_GetObjectItemCaseSensitive(data->json, "login");
