@@ -7,7 +7,6 @@ bool mx_match_nsearch(char *str, char *regex, size_t size) {
 
     buf[size] = 0;
     strncpy(buf, str, size);
-    printf("Bufer - %s\n", buf);
     regcomp(&reg, regex, REG_EXTENDED);
     res = regexec(&reg, buf, 0, NULL, 0);
     regfree(&reg);
