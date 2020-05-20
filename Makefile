@@ -6,6 +6,7 @@ SERVERD = $(SERVER)_work
 
 LIBRARIES = libraries
 LIBRARIESD = $(LIBRARIES)/$(LIBRARIES)/
+LIBSD = $(addprefix $(LIBRARIES)/, lib include)
 
 CJSOND = $(LIBRARIESD)cjson
 CJSON = libcjson
@@ -53,8 +54,11 @@ $(LIBRARIES): $(CJSON)
 	
 $(CJSON): $(CJSON_LIB)
 
-$(CJSON_LIB):
+$(CJSON_LIB): | $(LIBSD)
 	@make -sC $(CJSOND)
+
+$(LIBSD):
+	@mkdir -p $(LIBSD)
 
 $(CLIENT): CPPFLAGS += $(INCD_CLIENT) -DMX_CLIENT='"$(CLIENTD)"'
 $(SERVER): CPPFLAGS += $(INCD_SERVER) -DMX_SERVER='"$(SERVERD)"'
@@ -86,6 +90,7 @@ clean:
 	@rm -rf $(OBJD)
 	@printf "\033[34;1mdeleted $(OBJD)\033[0m\n"
 	@make -sC $(CJSOND) $@
+	@rm -rf $(LIBSD)
 
 reinstall: uninstall all
 

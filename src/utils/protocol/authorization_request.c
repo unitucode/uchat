@@ -36,12 +36,12 @@ t_dtp *mx_sign_up_request(char *login, char *pass) {
     return dtp;
 }
 
-t_dtp *mx_log_in_token_request(char *token) {
+t_dtp *mx_token_request(char *token) {
     t_dtp *dtp = NULL;
     cJSON *json_result = cJSON_CreateObject();
     char *json_str = NULL;
 
-    if (!cJSON_AddNumberToObject(json_result, "type", MX_SIGN_UP))
+    if (!cJSON_AddNumberToObject(json_result, "type", MX_TOKEN))
         return NULL;
     if (!cJSON_AddStringToObject(json_result, "token", MX_J_STR(token)))
         return NULL;
