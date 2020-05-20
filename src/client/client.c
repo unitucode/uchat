@@ -63,6 +63,10 @@ void *copyto(void *arg) {
     t_dtp *request = NULL;
     SSL *ssl = (SSL*)arg;
     system("leaks -q uchat");
+    if (mx_match_nsearch("78632984fdghsdkjksjg", "[0-9]+", 6))
+        puts("TRUE");
+    else
+        puts("FALSE");
     
     while (fgets(sendline, 1024, fp)) {
         if (!strcmp("signup\n", sendline))
