@@ -24,14 +24,16 @@ void mx_change_working_dir(void) {
 }
 
 int main(int argc, char **argv) {
-    sqlite3 *database =  mx_server_data_open(MX_DB_USER);
+    // sqlite3 *database =  mx_server_data_open(MX_DB_USER);
     // mx_test_json();
     // mx_json();
     // mx_test_room();
     // mx_test_users();
     // mx_test_message();
     // mx_test_member();
-    cJSON_Print(mx_create_json_object(database, "vlad"));
+    // char *string = cJSON_Print(mx_create_json_object(database, "vlad"));
+    // printf("%s\n", string);
+    // mx_parse_json(string);
     printf("Ok\n");
     exit(1);
     t_chat *chat = mx_init_chat(argc, argv);

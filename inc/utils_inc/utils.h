@@ -27,23 +27,6 @@
 #define MX_IN_ITOA(m) #m
 #define MX_ITOA(m) MX_IN_ITOA(m)
 #define MX_DB_USER "users.db"
-#define MX_ROOMS_TABLE "CREATE TABLE ROOMS("  \
-                       "ID                 INTEGER PRIMARY KEY NOT NULL," \
-                       "NAME_ROOM          TEXT                NOT NULL, " \
-                       "CUSTOMER_LOGIN     TEXT                NOT NULL);"
-#define MX_USERS_TABLE "CREATE TABLE USERS(\
-                        LOGIN          TEXT  UNIQUE   NOT NULL,\
-                        PASSWORD       TEXT           NOT NULL,\
-                        TOKEN          TEXT           NOT NULL,\
-                        PERMISSION     INTEGER        NOT NULL);"
-#define MX_MEMBER_TABLE "CREATE TABLE MEMBER("\
-                        "ID_ROOM          INTEGER NOT NULL,"\
-                        "LOGIN            TEXT    NOT NULL);"
-#define MX_MESSAGE_TABLE "CREATE TABLE MESSAGE("  \
-                         "ID_MESSAGE    INTEGER PRIMARY KEY NOT NULL," \
-                         "LOGIN         TEXT                NOT NULL," \
-                         "DATE          INTEGER             NOT NULL," \
-                         "JSON          TEXT                NOT NULL);"
 
 #define MX_LIST_BACK 0
 #define MX_LOG_FILE "info.log"
@@ -65,14 +48,6 @@ typedef enum e_app_type {
     SERVER
 }            t_app_type;
 
-typedef struct s_message {
-    unsigned int id_message;
-    long long date;
-    char *login;
-    char *json;
-    struct s_message *next;
-}              t_message;
-
 typedef struct s_id_room {
     char *text;
     int id_room;
@@ -89,6 +64,7 @@ typedef struct s_user {
     const char *login;
     const char *password;
     unsigned int permission;
+    int on_off;
 }              t_user;
 
 typedef struct s_rooms {
@@ -99,12 +75,21 @@ typedef struct s_rooms {
 
 typedef struct s_room_messages {
     char *name_room;
+    unsigned int id_room;
     unsigned int id_message;
     long long date;
     char *login;
     char *message;
+    // char *json;
     struct s_room_messages *next;
 }              t_room_messages;
+
+typedef struct s_room_data {
+    unsigned int id;
+    char *name;
+    char *customer;
+    t_room_messages *data;
+}              t_room_data;
 
 typedef struct s_node {
     void *data;
@@ -186,8 +171,6 @@ void mx_create_table_member(sqlite3 *database);
 
 t_user *mx_get_user_by_login(sqlite3 *database, char *login);
 t_user *mx_get_user_by_token(sqlite3 *database, char *token);
-t_message *mx_get_message_by_id(sqlite3 *database, int id_message);
-t_message *mx_get_message_by_login(sqlite3 *database, char *login);
 t_rooms *mx_get_room(sqlite3 *database,char *name_room);
 
 void mx_update_permission_of_user(sqlite3 *database, unsigned int permission, char *login);
@@ -198,11 +181,11 @@ void mx_insert_message(sqlite3 *database, char *login, long long date, char *jso
 void mx_insert_memeber(sqlite3 *database, int id_room, char *login);
 t_rooms *mx_insert_room(sqlite3 *database, char *customer, char *name_room);
 
-t_message *mx_get_last_message(sqlite3 *database);
 void mx_create_table_room(sqlite3 *database, char *name_room);
 void mx_insert_to_room(sqlite3 *database, t_room_messages *room);
 cJSON *mx_create_json_object(sqlite3 *database, char *user_login);
 
+void mx_parse_json();
 void mx_test_json();
 void mx_json();
 // void mx_test_room();

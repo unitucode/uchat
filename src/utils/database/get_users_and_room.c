@@ -13,6 +13,7 @@ static t_user *for_get_user(sqlite3_stmt *stmt) {
     user->password = strdup((const char*)sqlite3_column_text(stmt, 1));
     user->token = strdup((const char*)sqlite3_column_text(stmt, 2));
     user->permission = sqlite3_column_int(stmt, 3);
+    user->on_off = sqlite3_column_int(stmt, 4);
     sqlite3_finalize(stmt);
     return user;
 }

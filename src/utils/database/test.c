@@ -6,7 +6,7 @@ void mx_test_json() {
     mx_create_table_member(database);
     mx_insert_room(database, "vlad", "chat_of_vlad");
     mx_create_table_room(database, "chat_of_vlad");
-    mx_insert_memeber(database, 3, "vlad");
+    mx_insert_memeber(database, 1, "vlad");
     mx_close_database(database);
     printf("Ok\n");
 }
@@ -15,6 +15,7 @@ void mx_json() {
     sqlite3 *database =  mx_server_data_open(MX_DB_USER);
     t_room_messages *room = malloc(sizeof(t_room_messages));
 
+    room->id_room = 1;
     room->name_room = "chat_of_vlad";
     room->login = "vlad";
     room->date = 54;

@@ -7,7 +7,8 @@ void mx_create_table_users(sqlite3 *database) {
                         LOGIN          TEXT  UNIQUE   NOT NULL,\
                         PASSWORD       TEXT           NOT NULL,\
                         TOKEN          TEXT           NOT NULL,\
-                        PERMISSION     INTEGER        NOT NULL);", 0, 0, 0)) != SQLITE_OK) {
+                        PERMISSION     INTEGER        NOT NULL,\
+                        ON_OFF         INTEGER        NOT NULL);", 0, 0, 0)) != SQLITE_OK) {
         // printf("tmp create -> %d\n", tmp);
         // mx_elogger(MX_LOG_FILE, LOGWAR, "error create database table");
     }
@@ -30,11 +31,11 @@ void mx_create_table_room(sqlite3 *database, char *name_room) {
 
     sqlite3_str_appendall(str, "CREATE TABLE ");
     sqlite3_str_appendall(str, name_room);
-    sqlite3_str_appendall(str, "(ID_MESSAGE INTEGER PRIMARY KEY NOT NULL, LOGIN TEXT NOT NULL, DATE INTEGER NOT NULL, MESSAGE TEXT NOT NULL);");
+    sqlite3_str_appendall(str, "(ID_MESSAGE INTEGER PRIMARY KEY NOT NULL, ID_ROOM INTEGER NOT NULL, LOGIN TEXT NOT NULL, DATE INTEGER NOT NULL, MESSAGE TEXT NOT NULL);");
     sql = sqlite3_str_finish(str);
     sqlite3_exec(database, sql, 0, 0, 0);
     sqlite3_free(sql);
- }
+}
 
 void mx_create_table_rooms(sqlite3 *database) {
     sqlite3_exec(database, "CREATE TABLE ROOMS("  \
