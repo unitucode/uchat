@@ -48,7 +48,7 @@ void mx_delete_node(t_dl_list *list, t_node **node) {
         del_node->next->prev = del_node->prev;
     else
         list->front = del_node->prev;
-    list->delete_node(del_node->data);
+    list->delete_node(&del_node->data);
     list->size--;
     *node = NULL;
     free(*node);
