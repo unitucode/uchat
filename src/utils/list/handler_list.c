@@ -1,27 +1,35 @@
 #include "utils.h"
+#include "list.h"
 
 /*
  * Pushs a node to list
  * Set MX_LIST_BACK to index to push in back of list
  * Set list->size to index to push in front of list
  */
-void mx_push_node(t_list *list, void *data, size_t index) {
-    t_node *current = list->head;
-    t_node *tmp = NULL;
-    size_t cur_index = 0;
+t_node *mx_push_back(t_dl_list *list, void *data) {
+    t_node *new_node = mx_new_node(data);
 
+    if (list->back)
+        list->back->prev = new_node;
+    else
+        list->front = new_node;
+    new_node->next = list->back;
+    list->back = new_node;
     list->size++;
-    if (!index || !current) {
-        tmp = mx_new_node(data);
-        tmp->next = current;
-        list->head = tmp;
-        return;
-    }
-    while (++cur_index < index && current->next)
-        current = current->next;
-    tmp = mx_new_node(data);
-    tmp->next = current->next;
-    current->next = tmp;
+    return new_node;
+}
+
+t_node *mx_push_front(t_dl_list *list, void *data) {
+    t_node *new_node = mx_new_node(data);
+
+    if (list->front)
+        list->front->next = new_node;
+    else
+        list->back = new_node;
+    new_node->prev = list->front;
+    list->front = new_node;
+    list->size++;
+    return new_node;
 }
 
 /*
@@ -29,35 +37,19 @@ void mx_push_node(t_list *list, void *data, size_t index) {
  * Set MX_LIST_BACK to index to remove back node from list
  * Set list->size to index to remove front node from list
  */
-void mx_remove_node(t_list *list, size_t index) {
-    t_node *current = list->head;
-    t_node *tmp = NULL;
-    size_t cur_index = 0;
+void mx_delete_node(t_dl_list *list, t_node **node) {
+    t_node *del_node = *node;
 
-    if (!list->size)
-        return;
-    if (list->size == 1) {
-        list->size--;
-        free(list->head->data);
-        free(list->head);
-        list->head = NULL;
-        return;
-    }
+    if (del_node->prev)
+        del_node->prev->next = del_node->next;
+    else
+        list->back = del_node->next;
+    if (del_node->next)
+        del_node->next->prev = del_node->prev;
+    else
+        list->front = del_node->prev;
+    list->delete_node(del_node->data);
     list->size--;
-    while (++cur_index < index && current->next && current->next->next)
-        current = current->next;
-    tmp = current->next;
-    current->next = tmp->next;
-    free(tmp->data);
-    free(tmp);
-}
-
-/*
- * Deletes list of nodes
- */
-void mx_delete_list(t_list **list) {
-    while ((*list)->size)
-        mx_remove_node(*list, MX_LIST_BACK);
-    free(*list);
-    *list = NULL;
+    *node = NULL;
+    free(*node);
 }

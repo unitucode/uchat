@@ -34,7 +34,7 @@ static void mx_disconnect_client(t_client *client) {
     mx_pthread_mutex_lock(&client->chat->mutex);
     mx_logger(MX_LOG_FILE, LOGMSG, "disconnected: IP[%s] port[%s]\n",
               client->ip, client->port);
-    mx_delete_client_list(client->chat->clients, client);
+    mx_delete_node(client->chat->clients, &client->node);
     mx_pthread_mutex_unlock(&client->chat->mutex);
 }
 
@@ -49,7 +49,7 @@ static void *client_handler(void *arg) {
 
 void mx_connect_client(t_client *client) {
     mx_get_client_info(client);
-    mx_push_node(client->chat->clients, client, MX_LIST_BACK);
+    client->node = mx_push_front(client->chat->clients, client);
     mx_logger(MX_LOG_FILE, LOGMSG, "connected: IP[%s] port[%s]\n",
               client->ip, client->port);
     mx_pthread_create(&client->tid, NULL, &client_handler, client);
