@@ -6,17 +6,75 @@ static int sockfd;
 static FILE *fp;
 static int done;
 
+bool is_valid_login(char *login) {
+    if (!mx_match_search(login, MX_LOGIN_REGEX)) {
+        printf("Login must countain \'-\' and \'_\'chars and have 3-22 length\n");
+        return false;
+    }
+    return true;
+}
+
+void mx_signup(SSL *ssl) {
+    char login[1024] = {0};
+    char password[1024] = {0};
+    char md5_password[MX_MD5_BUF_SIZE + 1];
+    t_dtp *signup_request = NULL;
+    bool valid = false;
+
+    while (!valid) {
+        printf("Enter your login: ");
+        fgets(login, 1024, fp);
+        printf("Enter your password: ");
+        fgets(password, 1024, fp);
+        password[strlen(password) - 1] = '\0';
+        login[strlen(login) - 1] = '\0';
+        valid = is_valid_login(login);
+    }
+    mx_md5(md5_password, (const unsigned char*)password, strlen(password));
+    signup_request = mx_sign_up_request(login, md5_password);
+    mx_send(ssl, signup_request);
+    mx_free_request_struct(&signup_request);
+}
+
+void mx_login(SSL *ssl) {
+    char login[1024] = {0};
+    char password[1024] = {0};
+    char md5_password[MX_MD5_BUF_SIZE + 1];
+    t_dtp *login_request = NULL;
+    bool valid = false;
+
+    while (!valid) {
+        printf("Enter your login: ");
+        fgets(login, 1024, fp);
+        printf("Enter your password: ");
+        fgets(password, 1024, fp);
+        password[strlen(password) - 1] = '\0';
+        login[strlen(login) - 1] = '\0';
+        valid = is_valid_login(login);
+    }
+    mx_md5(md5_password, (const unsigned char*)password, strlen(password));
+    login_request = mx_log_in_request(login, md5_password);
+    mx_send(ssl, login_request);
+    mx_free_request_struct(&login_request);
+}
+
 void *copyto(void *arg) {
     char sendline[1024];
     t_dtp *request = NULL;
     SSL *ssl = (SSL*)arg;
-    
+    system("leaks -q uchat");
     while (fgets(sendline, 1024, fp)) {
-        // request = mx_msg_request(1, NULL, sendline);
-        request = mx_log_in_request("login", "fdsafjdsafhdsajfhdsja");
-        mx_send(ssl, request);
-        mx_free_request_struct(&request);
-        bzero(sendline, sizeof(sendline));
+        if (!strcmp("signup\n", sendline))
+            mx_signup(ssl);
+        else if (!strcmp("login\n", sendline))
+            mx_login(ssl);
+        else {
+            request = mx_msg_request(1, NULL, sendline);
+            // printf("req = %s len = %zu len = %zu\n", request->str, strlen(request->str), request->len);
+            mx_send(ssl, request);
+            mx_free_request_struct(&request);
+            bzero(sendline, sizeof(sendline));
+        }
     }
     shutdown(sockfd, SHUT_WR);
     done = 1;

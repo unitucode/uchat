@@ -12,7 +12,7 @@ void mx_create_token(char *token, char *login) {
 
 bool mx_authorization(t_client *client, t_dtp *data) {
     return client->user
-           || mx_log_in(data, client)
            || mx_sign_up(data, client)
+           || mx_log_in(data, client)
            || mx_log_in_token(data, client);
 }

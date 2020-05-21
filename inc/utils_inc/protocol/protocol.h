@@ -10,6 +10,7 @@
 #define MX_MSG 3
 #define MX_NEW_ROOM 4
 #define MX_DELETE_ROOM 5
+#define MX_ERROR_MSG 6
 
 typedef struct s_ssl_con {
     SSL_CTX *ctx;
@@ -24,6 +25,7 @@ typedef struct s_dtp { // Data Transfer Protocol view
     char *str;
     cJSON *json;
     size_t len;
+    int type;
 }              t_dtp;
 
 //requests
@@ -33,6 +35,8 @@ t_dtp *mx_log_in_token_request(char *token);
 t_dtp *mx_msg_request(int id_room, char *from, char *msg);
 t_dtp *mx_new_room_request(char *room_name, bool is_private);
 t_dtp *mx_delete_room_request(char *room_name);
+t_dtp *mx_error_msg_request(int error_code, char *msg);
+t_dtp *mx_token_request(char *token);
 
 //SSL
 t_ssl_con *mx_init_ssl(t_app_type type);

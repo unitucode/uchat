@@ -12,3 +12,6 @@ a.out
 users.db
 uchat_server_work/info.log
 uchat_work/info.log
+libraries/include
+libraries/lib
+libraries/**/*.o
