@@ -2,12 +2,73 @@
 <!-- Generated with glade 3.36.0 -->
 <interface>
   <requires lib="gtk+" version="3.22"/>
+  <object class="GtkWindow">
+    <property name="can_focus">False</property>
+    <child>
+      <object class="GtkBox">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <child>
+          <object class="GtkLabel">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="label" translatable="yes">Hello gays</property>
+            <property name="selectable">True</property>
+          </object>
+          <packing>
+            <property name="expand">True</property>
+            <property name="fill">True</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkBox">
+            <property name="width_request">150</property>
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="orientation">vertical</property>
+            <child>
+              <object class="GtkLabel">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">Name</property>
+              </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">15:00</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">1</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+    <child type="titlebar">
+      <placeholder/>
+    </child>
+  </object>
   <object class="GtkTextBuffer" id="buffer_message"/>
   <object class="GtkApplicationWindow" id="wnd_main">
     <property name="width_request">640</property>
     <property name="height_request">420</property>
     <property name="can_focus">False</property>
-    <property name="title" translatable="yes">UChat</property>
     <property name="window_position">center</property>
     <property name="default_width">1280</property>
     <property name="default_height">720</property>
@@ -36,41 +97,6 @@
                       <object class="GtkListBox" id="listbox_rooms">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <signal name="row-activated" handler="mx_swap_room" swapped="no"/>
-                        <child type="placeholder">
-                          <placeholder/>
-                        </child>
-                        <child>
-                          <object class="GtkListBoxRow" id="row_1">
-                            <property name="width_request">100</property>
-                            <property name="height_request">80</property>
-                            <property name="visible">True</property>
-                            <property name="can_focus">True</property>
-                            <signal name="activate" handler="mx_swap" swapped="no"/>
-                            <child>
-                              <object class="GtkLabel">
-                                <property name="visible">True</property>
-                                <property name="can_focus">False</property>
-                                <property name="label" translatable="yes">label</property>
-                              </object>
-                            </child>
-                          </object>
-                        </child>
-                        <child>
-                          <object class="GtkListBoxRow" id="row_2">
-                            <property name="width_request">100</property>
-                            <property name="height_request">80</property>
-                            <property name="visible">True</property>
-                            <property name="can_focus">True</property>
-                            <child>
-                              <object class="GtkLabel">
-                                <property name="visible">True</property>
-                                <property name="can_focus">False</property>
-                                <property name="label" translatable="yes">label</property>
-                              </object>
-                            </child>
-                          </object>
-                        </child>
                       </object>
                     </child>
                   </object>
@@ -112,7 +138,7 @@
             <property name="can_focus">False</property>
             <property name="orientation">vertical</property>
             <child>
-              <object class="GtkBox" id="box_entry_field">
+              <object class="GtkBox" id="box_entry_fields">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <child>
@@ -122,7 +148,6 @@
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
-                    <property name="events"/>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -180,35 +205,32 @@
               </packing>
             </child>
             <child>
-              <object class="GtkStack" id="stack_messege_rooms">
+              <object class="GtkStack" id="stack_rooms">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="transition_duration">300</property>
+                <property name="transition_duration">400</property>
                 <property name="transition_type">crossfade</property>
                 <child>
-                  <object class="GtkImage" id="msg_1">
+                  <object class="GtkScrolledWindow" id="scrlldwnd_room">
                     <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <property name="events"/>
-                    <property name="pixel_size">180</property>
-                    <property name="icon_name">emblem-favorite</property>
+                    <property name="can_focus">True</property>
+                    <property name="shadow_type">in</property>
+                    <child>
+                      <object class="GtkViewport">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <child>
+                          <object class="GtkListBox" id="listbox_messages">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
                   </object>
                   <packing>
                     <property name="name">page1</property>
                     <property name="title" translatable="yes">page1</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkImage" id="msg_2">
-                    <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <property name="pixel_size">180</property>
-                    <property name="icon_name">emblem-photos</property>
-                  </object>
-                  <packing>
-                    <property name="name">page0</property>
-                    <property name="title" translatable="yes">page0</property>
-                    <property name="position">1</property>
                   </packing>
                 </child>
               </object>
@@ -226,23 +248,13 @@
           </packing>
         </child>
         <child>
-          <object class="GtkStack" id="stack_rooms_prefs">
+          <object class="GtkListBox">
             <property name="width_request">240</property>
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <child>
-              <object class="GtkListBox">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-              </object>
-              <packing>
-                <property name="name">page0</property>
-                <property name="title" translatable="yes">page0</property>
-              </packing>
-            </child>
           </object>
           <packing>
-            <property name="expand">False</property>
+            <property name="expand">True</property>
             <property name="fill">True</property>
             <property name="position">2</property>
           </packing>
@@ -284,7 +296,7 @@
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
-                <signal name="clicked" handler="mx_create_room" swapped="no"/>
+                <signal name="clicked" handler="mx_create_row_room" swapped="no"/>
                 <signal name="clicked" handler="mx_widget_switch_visibility" object="dialog_addroom" swapped="no"/>
               </object>
               <packing>
@@ -397,12 +409,12 @@
                 </child>
                 <child>
                   <object class="GtkEntry" id="entry_roompass">
-                    <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="margin_left">40</property>
                     <property name="margin_right">40</property>
                     <property name="margin_bottom">15</property>
                     <property name="buffer">buffer_roompass</property>
+                    <property name="editable">False</property>
                     <property name="max_length">20</property>
                     <property name="placeholder_text" translatable="yes">Password</property>
                   </object>
@@ -425,135 +437,6 @@
             <property name="fill">True</property>
             <property name="position">1</property>
           </packing>
-        </child>
-      </object>
-    </child>
-    <child type="titlebar">
-      <placeholder/>
-    </child>
-  </object>
-  <object class="GtkWindow" id="pattern_message">
-    <property name="can_focus">False</property>
-    <child>
-      <object class="GtkBox">
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <child>
-          <object class="GtkImage">
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <property name="valign">start</property>
-            <property name="margin_end">5</property>
-            <property name="pixel_size">60</property>
-            <property name="icon_name">image-x-generic</property>
-            <property name="icon_size">6</property>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">0</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkBox">
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <property name="orientation">vertical</property>
-            <child>
-              <object class="GtkBox">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="margin_bottom">5</property>
-                <child>
-                  <object class="GtkLabel">
-                    <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <property name="label" translatable="yes">NickName</property>
-                    <property name="xalign">0</property>
-                    <attributes>
-                      <attribute name="weight" value="ultraheavy"/>
-                      <attribute name="gravity" value="west"/>
-                    </attributes>
-                  </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">True</property>
-                    <property name="position">0</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkLabel">
-                    <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <property name="margin_end">5</property>
-                    <property name="label" translatable="yes">24.05.19	15:00</property>
-                    <attributes>
-                      <attribute name="underline" value="True"/>
-                    </attributes>
-                  </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">True</property>
-                    <property name="pack_type">end</property>
-                    <property name="position">1</property>
-                  </packing>
-                </child>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">0</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkLabel">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="margin_start">5</property>
-                <property name="margin_end">5</property>
-                <property name="label" translatable="yes">Message sample</property>
-                <property name="wrap">True</property>
-                <property name="wrap_mode">word-char</property>
-                <property name="xalign">0</property>
-              </object>
-              <packing>
-                <property name="expand">True</property>
-                <property name="fill">True</property>
-                <property name="position">1</property>
-              </packing>
-            </child>
-          </object>
-          <packing>
-            <property name="expand">True</property>
-            <property name="fill">True</property>
-            <property name="position">1</property>
-          </packing>
-        </child>
-      </object>
-    </child>
-    <child type="titlebar">
-      <placeholder/>
-    </child>
-  </object>
-  <object class="GtkWindow" id="pattern_message_room">
-    <property name="can_focus">False</property>
-    <child>
-      <object class="GtkScrolledWindow" id="scrlldwnd_room">
-        <property name="visible">True</property>
-        <property name="can_focus">True</property>
-        <property name="hscrollbar_policy">never</property>
-        <property name="shadow_type">in</property>
-        <child>
-          <object class="GtkViewport">
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <child>
-              <object class="GtkListBox" id="listbox_messages">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-              </object>
-            </child>
-          </object>
         </child>
       </object>
     </child>
