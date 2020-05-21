@@ -23,6 +23,7 @@
 #include <sqlite3.h>
 #include <regex.h>
 #include "cJSON.h"
+#include "list.h"
 
 #define MX_IN_ITOA(m) #m
 #define MX_ITOA(m) MX_IN_ITOA(m)
@@ -73,23 +74,22 @@ typedef struct s_rooms {
     char *customer;
 }              t_rooms;
 
-typedef struct s_room_messages {
-    char *name_room;
+typedef struct s_message_client {
     unsigned int id_room;
     unsigned int id_message;
     long long date;
     char *login;
     char *message;
-    // char *json;
-    struct s_room_messages *next;
-}              t_room_messages;
+    // cJSON *message;
+    struct s_messages_client *next;
+}              t_messages_client;
 
-typedef struct s_room_data {
+typedef struct s_room_client {
     unsigned int id;
     char *name;
     char *customer;
-    t_room_messages *data;
-}              t_room_data;
+    t_messages_client *data;
+}              t_room_client;
 
 typedef struct s_sockopt {
     int socket;
@@ -166,10 +166,10 @@ void mx_insert_memeber(sqlite3 *database, int id_room, char *login);
 t_rooms *mx_insert_room(sqlite3 *database, char *customer, char *name_room);
 
 void mx_create_table_room(sqlite3 *database, char *name_room);
-void mx_insert_to_room(sqlite3 *database, t_room_messages *room);
+void mx_insert_to_room(sqlite3 *database, t_messages_client *room, char *name_room);
 cJSON *mx_create_json_object(sqlite3 *database, char *user_login);
 
-void mx_parse_json();
+t_dl_list *mx_parse_json(char *rooms_json);
 void mx_test_json();
 void mx_json();
 // void mx_test_room();

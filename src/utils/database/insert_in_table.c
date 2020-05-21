@@ -50,14 +50,14 @@ void mx_insert_memeber(sqlite3 *database, int id_room, char *login) {
     sqlite3_finalize(stmt);
 }
 
-void mx_insert_to_room(sqlite3 *database, t_room_messages *room) {
+void mx_insert_to_room(sqlite3 *database, t_messages_client *room, char *name_room) {
     sqlite3_stmt *stmt;
     int returnvalue = 0;
     char *sql = NULL;
     sqlite3_str *str = sqlite3_str_new(database);
 
     sqlite3_str_appendall(str, "INSERT INTO ");
-    sqlite3_str_appendall(str, room->name_room);
+    sqlite3_str_appendall(str, name_room);
     sqlite3_str_appendall(str, "(ID_ROOM, LOGIN, DATE, MESSAGE)VALUES(?1, ?2, ?3, ?4);");
     sql = sqlite3_str_finish(str);
     returnvalue = sqlite3_prepare_v3(database, sql, -1, 0, &stmt, NULL);

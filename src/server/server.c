@@ -1,4 +1,5 @@
 #include "server.h"
+#include "list.h"
 #include <sqlite3.h>
 
 int callback(void *message, int argc, char** argv, char **data_parametr) {
@@ -24,16 +25,18 @@ void mx_change_working_dir(void) {
 }
 
 int main(int argc, char **argv) {
-    // sqlite3 *database =  mx_server_data_open(MX_DB_USER);
+    sqlite3 *database =  mx_server_data_open(MX_DB_USER);
     // mx_test_json();
     // mx_json();
     // mx_test_room();
     // mx_test_users();
     // mx_test_message();
     // mx_test_member();
-    // char *string = cJSON_Print(mx_create_json_object(database, "vlad"));
-    // printf("%s\n", string);
-    // mx_parse_json(string);
+    char *string = cJSON_Print(mx_create_json_object(database, "vlad"));
+    printf("%s\n", string);
+    t_dl_list *list = mx_parse_json(string);
+    t_room_client *room = (t_room_client*)list->front->data;
+    printf("room_customer -> %s\n", room->customer);
     printf("Ok\n");
     exit(1);
     t_chat *chat = mx_init_chat(argc, argv);
