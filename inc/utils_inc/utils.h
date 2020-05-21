@@ -91,16 +91,6 @@ typedef struct s_room_data {
     t_room_messages *data;
 }              t_room_data;
 
-typedef struct s_node {
-    void *data;
-    struct s_node *next;
-}              t_node;
-
-typedef struct s_list {
-    size_t size;
-    t_node *head;
-}              t_list;
-
 typedef struct s_sockopt {
     int socket;
     int level;
@@ -142,13 +132,6 @@ int mx_pthread_mutex_lock(pthread_mutex_t *mutex);
 int mx_pthread_mutex_unlock(pthread_mutex_t *mutex);
 FILE *mx_fopen(const char * restrict path, const char * restrict mode);
 int mx_fclose(FILE *stream);
-
-//list
-void mx_push_node(t_list *list, void *data, size_t index);
-void mx_remove_node(t_list *list, size_t index);
-t_node *mx_new_node(void *data);
-t_list *mx_new_list();
-void mx_delete_list(t_list **list);
 
 //logs
 void mx_log_id(FILE *fd);

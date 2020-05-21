@@ -72,7 +72,7 @@ $(SERVER) $(CLIENT):
 
 
 $(OBJS_CLIENT) $(OBJS_UTILS) $(OBJS_SERVER): obj/%.o: %.c | $(OBJD)
-	@$(CC) $(CPPFLAGS) $(CFLAGS) -c -o $@ $<
+	@$(CC) $(CPPFLAGS) $(CFLAGS) -g -c -o $@ $<
 	@printf "\033[32mcompiled: \033[0m$(notdir $<)\n"
 
 $(OBJD):
