@@ -13,7 +13,7 @@ void mx_test_json() {
 
 void mx_json() {
     sqlite3 *database =  mx_server_data_open(MX_DB_USER);
-    t_messages_client *room = malloc(sizeof(t_messages_client));
+    t_messages *room = malloc(sizeof(t_messages));
 
     room->id_room = 1;
     room->login = "vlad";

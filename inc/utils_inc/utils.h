@@ -68,28 +68,22 @@ typedef struct s_user {
     int on_off;
 }              t_user;
 
-typedef struct s_rooms {
-    unsigned int id;
-    char *name;
-    char *customer;
-}              t_rooms;
-
-typedef struct s_message_client {
+typedef struct s_messages {
     unsigned int id_room;
     unsigned int id_message;
     long long date;
     char *login;
     char *message;
     // cJSON *message;
-    struct s_messages_client *next;
-}              t_messages_client;
+    struct s_messages *next;
+}              t_messages;
 
-typedef struct s_room_client {
+typedef struct s_room {
     unsigned int id;
     char *name;
     char *customer;
-    t_messages_client *data;
-}              t_room_client;
+    t_messages *data;
+}              t_room;
 
 typedef struct s_sockopt {
     int socket;
@@ -149,13 +143,12 @@ void mx_delete_room(sqlite3 *database, int id_room);
 void mx_delete_user(sqlite3 *database, char *login);
 
 void mx_create_table_users(sqlite3 *database);
-// void mx_create_table_message(sqlite3 *database);
 void mx_create_table_rooms(sqlite3 *database);
 void mx_create_table_member(sqlite3 *database);
 
 t_user *mx_get_user_by_login(sqlite3 *database, char *login);
 t_user *mx_get_user_by_token(sqlite3 *database, char *token);
-t_rooms *mx_get_room(sqlite3 *database,char *name_room);
+t_room *mx_get_room(sqlite3 *database,char *name_room);
 
 void mx_update_permission_of_user(sqlite3 *database, unsigned int permission, char *login);
 void mx_update_token(sqlite3 *database, char *new_token, char *login);
@@ -163,12 +156,14 @@ void mx_update_token(sqlite3 *database, char *new_token, char *login);
 t_user *mx_insert_user(sqlite3 *database, char *login, char *password, char *token);
 void mx_insert_message(sqlite3 *database, char *login, long long date, char *json);
 void mx_insert_memeber(sqlite3 *database, int id_room, char *login);
-t_rooms *mx_insert_room(sqlite3 *database, char *customer, char *name_room);
+t_room *mx_insert_room(sqlite3 *database, char *customer, char *name_room);
 
 void mx_create_table_room(sqlite3 *database, char *name_room);
-void mx_insert_to_room(sqlite3 *database, t_messages_client *room, char *name_room);
+void mx_insert_to_room(sqlite3 *database, t_messages *room, char *name_room);
+
 cJSON *mx_create_json_object(sqlite3 *database, char *user_login);
 
+void mx_parse_message(cJSON *room_mss, t_dl_list *list);
 t_dl_list *mx_parse_json(char *rooms_json);
 void mx_test_json();
 void mx_json();
