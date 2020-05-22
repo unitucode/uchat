@@ -1,6 +1,6 @@
 #include "protocol.h"
 
-t_dtp *mx_new_room_request(char *room_name, bool is_private) {
+t_dtp *mx_new_room_request(char *room_name, bool is_private, char *pass) {
     t_dtp *dtp = NULL;
     cJSON *json_result = cJSON_CreateObject();
     char *json_str = NULL;
@@ -10,6 +10,8 @@ t_dtp *mx_new_room_request(char *room_name, bool is_private) {
     if (!cJSON_AddBoolToObject(json_result, "is_private", is_private))
         return NULL;
     if (!cJSON_AddStringToObject(json_result, "room_name", MX_J_STR(room_name)))
+        return NULL;
+    if (!cJSON_AddStringToObject(json_result, "pass", MX_J_STR(pass)))
         return NULL;
     json_str = cJSON_Print(json_result);
     dtp = mx_request_creation(json_str);

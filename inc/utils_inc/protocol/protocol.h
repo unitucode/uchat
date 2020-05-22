@@ -33,7 +33,7 @@ t_dtp *mx_log_in_request(char *login, char *pass);
 t_dtp *mx_sign_up_request(char *login, char *pass);
 t_dtp *mx_log_in_token_request(char *token);
 t_dtp *mx_msg_request(int id_room, char *from, char *msg);
-t_dtp *mx_new_room_request(char *room_name, bool is_private);
+t_dtp *mx_new_room_request(char *room_name, bool is_private, char *pass);
 t_dtp *mx_delete_room_request(char *room_name);
 t_dtp *mx_error_msg_request(int error_code, char *msg);
 t_dtp *mx_token_request(char *token);
