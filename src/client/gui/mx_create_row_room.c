@@ -2,11 +2,16 @@
 
 void mx_swap_room(GtkListBox *box, GtkListBoxRow *row, GtkBuilder *builder) {
     puts("Fuck this shit!");
+    box++;
+    row++;
+    builder++;
     // gtk_stack_set_visible_child_name(stack, "msg_2");
 }
 
 void mx_swap(GtkListBoxRow *row, GtkBuilder *builder) {
     puts("WOOOOORK!");
+    row++;
+    builder++;
 }
 
 static void add_room_row(GtkBuilder *builder) {
@@ -31,6 +36,7 @@ static void add_messege_room(GtkBuilder *builder) {
 }
 
 void mx_create_room(GtkButton *btn, GtkBuilder *builder) {
+    btn++;
     add_room_row(builder);
     add_messege_room(builder);
 }

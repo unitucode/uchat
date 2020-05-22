@@ -1,36 +1,39 @@
-#include "utils.h"
+#include "protocol.h"
 
+/*
+ * Receive first packet with size of next packet
+ */
 static int message_size(SSL *ssl) {
-    t_pdl *pdl = NULL;
-    char buf[MX_BUF_SIZE];
-    size_t bytes = 0;
+    char buf[sizeof(int)];
+    int bytes = 0;
     int size = -1;
 
-    while ((bytes = SSL_read(ssl, buf, sizeof(buf))) > 0) {
-        pdl = mx_request_decode(buf);
-        if (pdl->type == MX_SIZE_MSG) {
-            size = atoi(pdl->data);
-            break;
-        }
-        mx_free_decode_struct(&pdl);
+    bytes = SSL_read(ssl, buf, sizeof(buf));
+    if (bytes != sizeof(int)) {
+        mx_logger(MX_LOG_FILE, LOGWAR, "Invalid packet\n");
+        return -1;
     }
-    if (pdl)
-        mx_free_decode_struct(&pdl);
+    memcpy(&size, buf, sizeof(int));
     return size;
 }
 
-t_pdl *mx_recv(SSL *ssl) {
-    t_pdl *pdl = NULL;
+/*
+ * Receive message from ssl socket
+ */
+t_dtp *mx_recv(SSL *ssl) {
+    t_dtp *dtp = NULL;
     int size = 0;
+    int bytes = 0;
 
-    if ((size = message_size(ssl)) != -1) {
+    if ((size = message_size(ssl)) > 0) {
         char buf[size + 1];
 
-        buf[size + 1] = '\0';
-        if (SSL_read(ssl, buf, sizeof(buf)) > 0)
-            pdl = mx_request_decode(buf);
+        if ((bytes = SSL_read(ssl, buf, size)) == size) {
+            buf[bytes] = '\0';
+            dtp = mx_request_creation(buf);
+        }
         else
             mx_logger(MX_LOG_FILE, LOGWAR, "mx_recv\n");
     }
-    return pdl;
+    return dtp;
 }

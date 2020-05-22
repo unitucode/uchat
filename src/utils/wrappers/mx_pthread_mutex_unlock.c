@@ -1,5 +1,8 @@
 #include "utils.h"
 
+/*
+ * Wrapper of standart function pthread_mutex_unlock
+ */
 int mx_pthread_mutex_unlock(pthread_mutex_t *mutex) {
     int result = pthread_mutex_unlock(mutex);
 

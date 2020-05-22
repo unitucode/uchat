@@ -1,16 +1,14 @@
 #include "utils.h"
+#include "protocol.h"
 
-int mx_send(SSL *ssl, t_pds *data) {
+/*
+ * Send message by ssl
+ */
+int mx_send(SSL *ssl, t_dtp *dtp) {
     bool result = true;
-    t_pds *pds = mx_request_creation(/*Room id*/1, MX_SIZE_MSG, data->len);
 
-    if (!SSL_write(ssl, pds->data, strlen(pds->data))) {
-        mx_logger(MX_LOG_FILE, LOGWAR, "SSL_write len failed\n");
-        result = false;
-    }
-    mx_free_request_struct(&pds);
-    if (!SSL_write(ssl, data->data, strlen(data->data))) {
-        mx_logger(MX_LOG_FILE, LOGWAR, "SSL_write data failded\n");
+    if (!SSL_write(ssl, dtp->data, dtp->len)) {
+        mx_logger(MX_LOG_FILE, LOGWAR, "SSL_write data failed\n");
         result = false;
     }
     return result;
