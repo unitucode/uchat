@@ -1,6 +1,7 @@
 #pragma once
 
-#include "../utils_inc/utils.h"
+#include "utils.h"
+#include <sqlite3.h>
 #include <gtk/gtk.h>
 
 #define MX_GUI_PATH "src/client/gui/gui.glade"
@@ -11,6 +12,8 @@ typedef struct s_room {
 }       t_room;
 
 int mx_tcp_connect(const char *host, const char *serv);
+void mx_signup(SSL *ssl);
+void mx_login(SSL *ssl);
 
 //gui
 int mx_window_main(int argc, char **argv);
