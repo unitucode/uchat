@@ -47,7 +47,18 @@ CFLAGS = -std=c11 $(addprefix -W, all extra error pedantic)
 CPPFLAGS += $(INCD_UTILS) -I$(INCD_LIBS) -I/usr/local/opt/openssl/include -D_GNU_SOURCE
 LDLIBS += -lssl -lcjson -lcrypto -lsqlite3 -lpthread -L/usr/local/opt/openssl/lib -L$(LIBS)
 CC = clang
-
+GTK_INC = -I/usr/include/gtk-3.0 -I/usr/include/at-spi2-atk/2.0 \
+-I/usr/include/at-spi-2.0 -I/usr/include/dbus-1.0 \
+-I/usr/lib/x86_64-linux-gnu/dbus-1.0/include -I/usr/include/gtk-3.0 \
+-I/usr/include/gio-unix-2.0 -I/usr/include/cairo -I/usr/include/pango-1.0 \
+-I/usr/include/fribidi -I/usr/include/harfbuzz -I/usr/include/atk-1.0 \
+-I/usr/include/cairo -I/usr/include/pixman-1 -I/usr/include/uuid \
+-I/usr/include/freetype2 -I/usr/include/libpng16 -I/usr/include/gdk-pixbuf-2.0 \
+-I/usr/include/libmount -I/usr/include/blkid -I/usr/include/glib-2.0 \
+-I/usr/lib/x86_64-linux-gnu/glib-2.0/include
+GTK_LIBS = -lgtk-3 -lgdk-3 -lpangocairo-1.0 -lpango-1.0 -lharfbuzz -latk-1.0 \
+-lcairo-gobject -lcairo -lgdk_pixbuf-2.0 -lgio-2.0 -lgobject-2.0 -lglib-2.0 \
+-rdynamic
 
 all: $(LIBRARIES) $(SERVER) $(CLIENT)
 
@@ -61,7 +72,8 @@ $(CJSON_LIB): | $(LIBSD)
 $(LIBSD):
 	@mkdir -p $(LIBSD)
 
-$(CLIENT): CPPFLAGS += $(INCD_CLIENT) -DMX_CLIENT='"$(CLIENTD)"'
+$(CLIENT): CPPFLAGS += $(INCD_CLIENT) $(GTK_INC) -DMX_CLIENT='"$(CLIENTD)"'
+$(CLIENT): LDLIBS += $(GTK_LIBS)
 $(SERVER): CPPFLAGS += $(INCD_SERVER) -DMX_SERVER='"$(SERVERD)"'
 
 $(CLIENT): $(OBJS_CLIENT) $(OBJS_UTILS)
@@ -96,9 +108,3 @@ clean:
 reinstall: uninstall all
 
 .PHONY: all uninstall clean reinstall
-
-# DELETE V
-GTKFLAGS = -rdynamic `pkg-config --cflags --libs gtk+-3.0` -rdynamic
-guic:
-	$(CC) -o gui src/client/gui/*.c $(GTKFLAGS) $(INCD_CLIENT) $(LIBS)
-# DELETE A

@@ -108,12 +108,12 @@ void mx_change_working_dir(void) {
     mx_elogger(NULL, LOGERR, "No working directory");
     #endif
 }
-// 
+
 // int main(int argc, char **argv) {
 //     int sockfd;
 //     t_ssl_con *ssl = NULL;
 // 
-// 
+//     mx_window_main(argc, argv);
 //     mx_change_working_dir();
 //     if (argc != 3) {
 //         printf("usage\n");
@@ -129,4 +129,3 @@ void mx_change_working_dir(void) {
 //     }
 //     str_cli(stdin, ssl->ssl);
 // }
-// 

@@ -15,6 +15,7 @@ gchar *mx_get_buffer_text(char *buff_name, GtkBuilder *builder) {
 }
 
 void mx_widget_switch_visibility(void *usr_ctrl, void *widget) {
+    (void)usr_ctrl;
     if (gtk_widget_is_visible(GTK_WIDGET(widget)))
         gtk_widget_hide(GTK_WIDGET(widget));
     else
