@@ -1,11 +1,7 @@
 #include "client.h"
 
-void mx_swap_room(GtkListBox *box, GtkListBoxRow *row, GtkBuilder *builder) {
-    puts("Fuck this shit!");
-    // gtk_stack_set_visible_child_name(stack, "msg_2");
-}
-
-void mx_swap(GtkListBoxRow *row, GtkBuilder *builder) {
+void check(GtkWidget *widget, GdkEventButton *event, t_room *data) {
+    gtk_list_box_select_row(data->box, data->row);
     puts("WOOOOORK!");
 }
 
@@ -13,8 +9,15 @@ static void add_room_row(GtkBuilder *builder) {
     GtkListBox *box = GTK_LIST_BOX(gtk_builder_get_object(builder, "listbox_rooms"));
     GtkWidget *row = gtk_list_box_row_new();
     GtkWidget *label = gtk_label_new(mx_get_buffer_text("buffer_roomname", builder));
+    GtkWidget *event = gtk_event_box_new();
 
-    gtk_container_add(GTK_CONTAINER(row), label);
+    t_room *data = malloc(sizeof(t_room));
+    data->box = GTK_LIST_BOX(box);
+    data->row = GTK_LIST_BOX_ROW(row);
+    g_signal_connect(event, "button_press_event", G_CALLBACK(check), data);
+
+    gtk_container_add(GTK_CONTAINER(event), label);
+    gtk_container_add(GTK_CONTAINER(row), event);
     gtk_widget_set_size_request(row, -1, 80);
 
     gtk_list_box_insert(box, row, -1);
@@ -22,15 +25,7 @@ static void add_room_row(GtkBuilder *builder) {
     mx_scrlldwnd_connect("scrlldwnd_rooms", builder);
 }
 
-static void add_messege_room(GtkBuilder *builder) {
-    GtkWidget *stack = GTK_WIDGET(gtk_builder_get_object(builder, "stack_messege_rooms"));
-    GtkWidget *label = gtk_label_new("MESSAGES SHOULD BE HERE");
-
-    gtk_stack_add_named(GTK_STACK(stack), label, "msg_room_1");
-    gtk_widget_show_all(GTK_WIDGET(stack));
-}
-
 void mx_create_room(GtkButton *btn, GtkBuilder *builder) {
     add_room_row(builder);
-    add_messege_room(builder);
+    // add_messege_room(builder);
 }
