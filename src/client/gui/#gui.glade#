@@ -148,7 +148,6 @@
               <object class="GtkStack" id="stack_messege_rooms">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="transition_duration">300</property>
                 <property name="transition_type">crossfade</property>
                 <child>
                   <placeholder/>
@@ -234,7 +233,6 @@
               <object class="GtkButton" id="btn_add_apply">
                 <property name="label" translatable="yes">apply</property>
                 <property name="visible">True</property>
-                <property name="sensitive">False</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
                 <signal name="clicked" handler="mx_create_room" swapped="no"/>
@@ -480,32 +478,6 @@
             <property name="fill">True</property>
             <property name="position">1</property>
           </packing>
-        </child>
-      </object>
-    </child>
-    <child type="titlebar">
-      <placeholder/>
-    </child>
-  </object>
-  <object class="GtkWindow" id="pattern_message_room">
-    <property name="can_focus">False</property>
-    <child>
-      <object class="GtkScrolledWindow" id="scrlldwnd_room">
-        <property name="visible">True</property>
-        <property name="can_focus">True</property>
-        <property name="hscrollbar_policy">never</property>
-        <property name="shadow_type">in</property>
-        <child>
-          <object class="GtkViewport">
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <child>
-              <object class="GtkListBox" id="listbox_messages">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-              </object>
-            </child>
-          </object>
         </child>
       </object>
     </child>

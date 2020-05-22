@@ -10,7 +10,7 @@ int mx_window_main(int argc, char **argv) {
     gtk_builder_connect_signals(builder, builder);
     g_object_ref(builder);
     g_object_unref(builder);
-    wnd_main = gtk_builder_get_object (builder, "wnd_main");
+    wnd_main = gtk_builder_get_object(builder, "wnd_main");
     gtk_widget_show_all(GTK_WIDGET(wnd_main));
     gtk_main();
     return 0;
