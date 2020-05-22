@@ -4,7 +4,7 @@
 #include <sqlite3.h>
 #include <gtk/gtk.h>
 
-#define MX_GUI_PATH "src/client/gui/gui.glade"
+#define MX_GUI_PATH "../src/client/gui/gui.glade"
 
 typedef struct s_groom {
     GtkListBox *box;
