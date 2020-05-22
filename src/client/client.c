@@ -108,24 +108,25 @@ void mx_change_working_dir(void) {
     mx_elogger(NULL, LOGERR, "No working directory");
     #endif
 }
-
-int main(int argc, char **argv) {
-    int sockfd;
-    t_ssl_con *ssl = NULL;
-
-
-    mx_change_working_dir();
-    if (argc != 3) {
-        printf("usage\n");
-        exit(1);
-    }
-    ssl = mx_init_ssl(CLIENT);
-    mx_logger(MX_LOG_FILE, LOGMSG, "started client: %s %s %s\n", argv[0], argv[1], argv[2]);
-    sockfd = mx_tcp_connect(argv[1], argv[2]);
-    ssl->ssl = SSL_new(ssl->ctx);
-    SSL_set_fd(ssl->ssl, sockfd);
-    if (SSL_connect(ssl->ssl) == -1) {
-        mx_elogger(MX_LOG_FILE, LOGERR, "SSL_connect failded\n");
-    }
-    str_cli(stdin, ssl->ssl);
-}
+// 
+// int main(int argc, char **argv) {
+//     int sockfd;
+//     t_ssl_con *ssl = NULL;
+// 
+// 
+//     mx_change_working_dir();
+//     if (argc != 3) {
+//         printf("usage\n");
+//         exit(1);
+//     }
+//     ssl = mx_init_ssl(CLIENT);
+//     mx_logger(MX_LOG_FILE, LOGMSG, "started client: %s %s %s\n", argv[0], argv[1], argv[2]);
+//     sockfd = mx_tcp_connect(argv[1], argv[2]);
+//     ssl->ssl = SSL_new(ssl->ctx);
+//     SSL_set_fd(ssl->ssl, sockfd);
+//     if (SSL_connect(ssl->ssl) == -1) {
+//         mx_elogger(MX_LOG_FILE, LOGERR, "SSL_connect failded\n");
+//     }
+//     str_cli(stdin, ssl->ssl);
+// }
+// 
