@@ -1,6 +1,6 @@
 #include "client.h"
 
-void check(GtkWidget *widget, GdkEventButton *event, t_room *data) {
+void check(GtkWidget *widget, GdkEventButton *event, t_lbroom *data) {
     gtk_list_box_select_row(data->box, data->row);
     puts("WOOOOORK!");
 }
@@ -11,7 +11,7 @@ static void add_room_row(GtkBuilder *builder) {
     GtkWidget *label = gtk_label_new(mx_get_buffer_text("buffer_roomname", builder));
     GtkWidget *event = gtk_event_box_new();
 
-    t_room *data = malloc(sizeof(t_room));
+    t_lbroom *data = malloc(sizeof(t_lbroom));
     data->box = GTK_LIST_BOX(box);
     data->row = GTK_LIST_BOX_ROW(row);
     g_signal_connect(event, "button_press_event", G_CALLBACK(check), data);
@@ -26,6 +26,6 @@ static void add_room_row(GtkBuilder *builder) {
 }
 
 void mx_create_room(GtkButton *btn, GtkBuilder *builder) {
-    add_room_row(builder);
+    // add_room_row(builder);
     // add_messege_room(builder);
 }

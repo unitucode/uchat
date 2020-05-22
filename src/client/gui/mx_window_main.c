@@ -1,5 +1,4 @@
 #include "client.h"
-// #include <gtk/gtk.h>
 
 int mx_window_main(int argc, char **argv) {
     GObject *wnd_main;
@@ -17,7 +16,7 @@ int mx_window_main(int argc, char **argv) {
     return 0;
 }
 
-int main(int argc, char **argv) {
-    mx_window_main(argc, argv);
-    return 0;
-}
+// int main(int argc, char **argv) {
+//     mx_window_main(argc, argv);
+//     return 0;
+// }

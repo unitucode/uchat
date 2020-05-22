@@ -6,10 +6,10 @@
 
 #define MX_GUI_PATH "src/client/gui/gui.glade"
 
-typedef struct s_room {
+typedef struct s_lbroom {
     GtkListBox *box;
     GtkListBoxRow *row;
-}       t_room;
+}       t_lbroom;
 
 int mx_tcp_connect(const char *host, const char *serv);
 void mx_signup(SSL *ssl);
