@@ -82,13 +82,13 @@ void *copyto(void *arg) {
 }
 
 void str_cli(FILE *fp_arg, SSL *ssl) {
-    pthread_t tid;
+    // pthread_t tid;
     char buf[1025];
     t_dtp *dtp = NULL;
 
     bzero(&buf, sizeof(buf));
     fp = fp_arg;
-    mx_pthread_create(&tid, NULL, copyto, ssl);
+    // mx_pthread_create(&tid, NULL, copyto, ssl);
     while ((dtp = mx_recv(ssl))) {
         printf("%s\n", dtp->str);
         mx_free_request_struct(&dtp);
@@ -113,7 +113,6 @@ int main(int argc, char **argv) {
     int sockfd;
     t_ssl_con *ssl = NULL;
 
-
     mx_change_working_dir();
     if (argc != 3) {
         printf("usage\n");
@@ -127,5 +126,6 @@ int main(int argc, char **argv) {
     if (SSL_connect(ssl->ssl) == -1) {
         mx_elogger(MX_LOG_FILE, LOGERR, "SSL_connect failded\n");
     }
+    mx_window_main(argc, argv);
     str_cli(stdin, ssl->ssl);
 }
