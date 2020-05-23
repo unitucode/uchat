@@ -22,8 +22,10 @@
 #include <openssl/rand.h>
 #include <sqlite3.h>
 #include <regex.h>
-#include "frozen.h"
+#include "cJSON.h"
 
+#define MX_IN_ITOA(m) #m
+#define MX_ITOA(m) MX_IN_ITOA(m)
 #define MX_DB_USER "users.db"
 #define MX_ROOMS_TABLE "CREATE TABLE ROOMS("  \
                        "ID                 INTEGER PRIMARY KEY NOT NULL," \
@@ -88,25 +90,6 @@ typedef struct s_room {
     char *customer;
 }              t_room;
 
-
-typedef struct s_ssl_con {
-    SSL_CTX *ctx;
-    SSL *ssl;
-    char *cert_file;
-    char *key_file;
-    char *password;
-}              t_ssl_con;
-
-typedef struct s_node {
-    void *data;
-    struct s_node *next;
-}              t_node;
-
-typedef struct s_list {
-    size_t size;
-    t_node *head;
-}              t_list;
-
 typedef struct s_sockopt {
     int socket;
     int level;
@@ -122,7 +105,8 @@ typedef enum e_logtype {
 }            t_logtype;
 
 //Utils
-int mx_match_search(char *str, char *regex);
+bool mx_match_search(char *str, char *regex);
+bool mx_match_nsearch(char *str, char *regex, size_t size);
 void mx_randomize_str(char *str, size_t count);
 void *mx_memdup(const void *mem, size_t size);
 
@@ -147,13 +131,6 @@ int mx_pthread_mutex_lock(pthread_mutex_t *mutex);
 int mx_pthread_mutex_unlock(pthread_mutex_t *mutex);
 FILE *mx_fopen(const char * restrict path, const char * restrict mode);
 int mx_fclose(FILE *stream);
-
-//list
-void mx_push_node(t_list *list, void *data, size_t index);
-void mx_remove_node(t_list *list, size_t index);
-t_node *mx_new_node(void *data);
-t_list *mx_new_list();
-void mx_delete_list(t_list **list);
 
 //logs
 void mx_log_id(FILE *fd);
