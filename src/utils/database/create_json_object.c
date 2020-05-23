@@ -27,7 +27,6 @@ static cJSON *get_message_arr(char *name_room, sqlite3 *database) {
     sqlite3_str_appendall(str, name_room);
     sql = sqlite3_str_finish(str);
     rv = sqlite3_prepare_v3(database, sql, -1, 0, &stmt, NULL);
-    sqlite3_bind_int(stmt, 1, id_room);
     for (int i = 0; i < 30 && 
                     (rv = sqlite3_step(stmt)) == SQLITE_ROW; i++) {
         cJSON_AddItemToArray(arr_object, get_object_message(stmt));
@@ -66,7 +65,7 @@ static cJSON *get_json(sqlite3 *database, t_id_room *id) {
         rv = sqlite3_step(stmt);
         if (rv == SQLITE_ROW) {
             cJSON_AddItemToArray(rooms,
-                get_data_room(id->id_room, database, stmt));
+                get_data_room(database, stmt));
         }
         id = id->next;
     }
@@ -103,7 +102,27 @@ cJSON *mx_create_json_message(sqlite3 *database,
                               char *name_room, long long date) {
     cJSON *room = cJSON_CreateObject();
     cJSON *message = cJSON_CreateArray();
+    sqlite3_str *str = sqlite3_str_new(database);
+    sqlite3_stmt *stmt;
+    char *sql = NULL;
+    int rv = 0;
 
     cJSON_AddItemToObject(room, "name_room", cJSON_CreateString(name_room));
-
+    sqlite3_str_appendall(str, "SELECT * FROM ");
+    sqlite3_str_appendall(str, name_room);
+    sqlite3_str_appendall(str, " WHERE DATE < ");
+    sqlite3_str_appendall(str, "?1");
+    sqlite3_str_appendall(str, "ORDER BY DATE");
+    sql = sqlite3_str_finish(str);
+    rv = sqlite3_prepare_v3(database, sql, -1, 0, &stmt, NULL);
+    sqlite3_bind_int(stmt, 1, date);
+    for (int i = 0; i < 30 && 
+                    (rv = sqlite3_step(stmt)) == SQLITE_ROW; i++) {
+    printf("%d\n", rv);
+        cJSON_AddItemToArray(message, get_object_message(stmt));
+    }
+    sqlite3_free(sql);
+    sqlite3_finalize(stmt);
+    cJSON_AddItemToObject(room, "message", message);
+    return room;
 }
