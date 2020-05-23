@@ -126,6 +126,6 @@ int main(int argc, char **argv) {
     if (SSL_connect(ssl->ssl) == -1) {
         mx_elogger(MX_LOG_FILE, LOGERR, "SSL_connect failded\n");
     }
-    mx_window_main(argc, argv);
+    // mx_window_main(argc, argv);
     str_cli(stdin, ssl->ssl);
 }

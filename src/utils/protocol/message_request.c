@@ -7,7 +7,7 @@ t_dtp *mx_get_transport_data(cJSON *json_result) { // returns request structure
     json_str = cJSON_Print(json_result);
     dtp = mx_request_creation(json_str);
     mx_free((void**)&json_str);
-    // cJSON_Delete(json_result);
+    cJSON_Delete(json_result);
     return dtp;
 }
 
