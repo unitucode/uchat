@@ -101,3 +101,4 @@ cJSON *mx_create_json_object(sqlite3 *database, char *user_login) {
     sqlite3_finalize(stmt);
     return get_json(database, save);
 }
+
