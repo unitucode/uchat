@@ -12,7 +12,7 @@ static void add_messages_box(t_groom *room, GtkBuilder *builder) {
                                                        "stack_messege_rooms"));
     GtkWidget *box = gtk_list_box_new();
 
-    gtk_stack_add_named(stack, box, NULL);
+    gtk_stack_add_named(stack, box, mx_get_buffer_text("buffer_roomname", builder));
     room->stack_msg = stack;
     room->box_msg = GTK_LIST_BOX(box);
     gtk_widget_show_all(box);

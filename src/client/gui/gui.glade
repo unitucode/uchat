@@ -3,6 +3,45 @@
 <interface>
   <requires lib="gtk+" version="3.22"/>
   <object class="GtkTextBuffer" id="buffer_message"/>
+  <object class="GtkEntryBuffer" id="buffer_roomname">
+    <property name="max_length">20</property>
+  </object>
+  <object class="GtkEntryBuffer" id="buffer_roompass">
+    <property name="max_length">20</property>
+  </object>
+  <object class="GtkImage" id="image1">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="pixel_size">20</property>
+    <property name="icon_name">format-text-strikethrough</property>
+  </object>
+  <object class="GtkImage" id="image2">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="pixel_size">20</property>
+    <property name="icon_name">edit-delete</property>
+  </object>
+  <object class="GtkImage" id="image3">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="margin_start">5</property>
+    <property name="margin_end">5</property>
+    <property name="pixel_size">30</property>
+    <property name="icon_name">mail-send</property>
+    <property name="icon_size">6</property>
+  </object>
+  <object class="GtkImage" id="image4">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="pixel_size">25</property>
+    <property name="icon_name">face-smile-symbolic</property>
+  </object>
+  <object class="GtkImage" id="image5">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="pixel_size">30</property>
+    <property name="icon_name">window-new</property>
+  </object>
   <object class="GtkApplicationWindow" id="wnd_main">
     <property name="width_request">640</property>
     <property name="height_request">420</property>
@@ -49,11 +88,11 @@
             </child>
             <child>
               <object class="GtkButton" id="btn_add_room">
-                <property name="label" translatable="yes">Add Room +</property>
                 <property name="height_request">48</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
+                <property name="image">image5</property>
                 <signal name="clicked" handler="mx_widget_switch_visibility" object="dialog_addroom" swapped="no"/>
               </object>
               <packing>
@@ -82,12 +121,12 @@
                 <property name="can_focus">False</property>
                 <child>
                   <object class="GtkButton" id="bnt_stikers">
-                    <property name="label" translatable="yes">Stikers?</property>
                     <property name="width_request">36</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
                     <property name="events"/>
+                    <property name="image">image4</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -124,10 +163,10 @@
                 </child>
                 <child>
                   <object class="GtkButton" id="btn_send">
-                    <property name="label" translatable="yes">Send &gt;&gt;</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
+                    <property name="image">image3</property>
                     <signal name="clicked" handler="mx_send_message" swapped="no"/>
                   </object>
                   <packing>
@@ -145,12 +184,63 @@
               </packing>
             </child>
             <child>
-              <object class="GtkStack" id="stack_messege_rooms">
+              <object class="GtkBox">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="transition_type">crossfade</property>
+                <property name="orientation">vertical</property>
                 <child>
-                  <placeholder/>
+                  <object class="GtkButtonBox">
+                    <property name="height_request">30</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="layout_style">center</property>
+                    <child>
+                      <object class="GtkButton">
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">True</property>
+                        <property name="image">image1</property>
+                      </object>
+                      <packing>
+                        <property name="expand">True</property>
+                        <property name="fill">True</property>
+                        <property name="position">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkButton">
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">True</property>
+                        <property name="image">image2</property>
+                      </object>
+                      <packing>
+                        <property name="expand">True</property>
+                        <property name="fill">True</property>
+                        <property name="position">1</property>
+                      </packing>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkStack" id="stack_messege_rooms">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="transition_type">crossfade</property>
+                    <child>
+                      <placeholder/>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="expand">True</property>
+                    <property name="fill">True</property>
+                    <property name="position">1</property>
+                  </packing>
                 </child>
               </object>
               <packing>
@@ -203,12 +293,6 @@
     <child type="titlebar">
       <placeholder/>
     </child>
-  </object>
-  <object class="GtkEntryBuffer" id="buffer_roomname">
-    <property name="max_length">20</property>
-  </object>
-  <object class="GtkEntryBuffer" id="buffer_roompass">
-    <property name="max_length">20</property>
   </object>
   <object class="GtkDialog" id="dialog_addroom">
     <property name="can_focus">False</property>

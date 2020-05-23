@@ -12,7 +12,7 @@ static void add_message_row(gchar *msg, GtkBuilder *builder) {
     gtk_list_box_insert(GTK_LIST_BOX(box), row, -1);
     gtk_widget_show_all(GTK_WIDGET(box));
 
-    mx_scrlldwnd_connect("scrlldwnd_room", builder);
+    // mx_scrlldwnd_connect("scrlldwnd_room", builder);
 }
 
 void mx_send_message(GtkButton *btn, GtkBuilder *builder) {
