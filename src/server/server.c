@@ -25,14 +25,14 @@ void mx_change_working_dir(void) {
 }
 
 int main(int argc, char **argv) {
-    sqlite3 *database =  mx_server_data_open(MX_DB_USER);
-    char *string = cJSON_Print(mx_create_json_object(database, "vlad"));
-    printf("%s\n", string);
-    t_dl_list *list = mx_parse_json(string);
-    t_room *room = (t_room*)list->front->data;
-    printf("room_customer -> %s\n", room->customer);
-    printf("Ok\n");
-    exit(1);
+    // sqlite3 *database =  mx_server_data_open(MX_DB_USER);
+    // char *string = cJSON_Print(mx_create_json_object(database, "vlad"));
+    // printf("%s\n", string);
+    // t_dl_list *list = mx_parse_json(string);
+    // t_room *room = (t_room*)list->front->data;
+    // printf("room_customer -> %s\n", room->customer);
+    // printf("Ok\n");
+    // exit(1);
     t_chat *chat = mx_init_chat(argc, argv);
     chat->database = mx_server_data_open(MX_DB_USER);
     t_client *client = NULL;
