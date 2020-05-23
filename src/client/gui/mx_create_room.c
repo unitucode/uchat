@@ -39,6 +39,7 @@ static void add_messages_box(t_groom *room, GtkBuilder *builder) {
     room->stack_msg = stack;
     room->page = GTK_SCROLLED_WINDOW(scroll);
     gtk_widget_show_all(scroll);
+    mx_scrlldwnd_connect(NULL, scroll, builder);
 }
 
 static void add_room_row(t_groom *room, GtkBuilder *builder) {
@@ -58,7 +59,7 @@ static void add_room_row(t_groom *room, GtkBuilder *builder) {
 
     gtk_list_box_insert(box, row, -1);
     gtk_widget_show_all(GTK_WIDGET(box));
-    mx_scrlldwnd_connect("scrlldwnd_rooms", builder);
+    mx_scrlldwnd_connect("scrlldwnd_rooms", NULL, builder);
 }
 
 void mx_create_room(GtkButton *btn, GtkBuilder *builder) {

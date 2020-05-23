@@ -21,7 +21,7 @@ void mx_login(SSL *ssl);
 int mx_window_main(int argc, char **argv);
 
 // gui utils
-void mx_scrlldwnd_connect(char *wnd_name, GtkBuilder *builder);
+void mx_scrlldwnd_connect(char *name, GtkWidget *scroll, GtkBuilder *builder);
 gchar *mx_get_buffer_text(char *buff_name, GtkBuilder *builder);
 void mx_clear_buffer_text(char *buff_name, GtkBuilder *builder);
 void mx_widget_switch_visibility(GtkWidget *usr_ctrl, void *widget);
