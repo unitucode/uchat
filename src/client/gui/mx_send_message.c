@@ -17,7 +17,8 @@ static void add_message_row(gchar *msg, GtkBuilder *builder) {
 
 void mx_send_message(GtkButton *btn, GtkBuilder *builder) {
     gchar *message_text = mx_get_buffer_text("buffer_message", builder);
-
+    
+    mx_clear_buffer_text("buffer_message", builder);
     add_message_row(message_text, builder);
     (void)btn;
 }

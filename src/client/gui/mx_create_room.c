@@ -32,6 +32,7 @@ static void add_room_row(t_groom *room, GtkBuilder *builder) {
     gtk_container_add(GTK_CONTAINER(event), label);
     gtk_container_add(GTK_CONTAINER(row), event);
     gtk_widget_set_size_request(row, -1, 80);
+    mx_clear_buffer_text("buffer_roomname", builder);
 
     gtk_list_box_insert(box, row, -1);
     gtk_widget_show_all(GTK_WIDGET(box));

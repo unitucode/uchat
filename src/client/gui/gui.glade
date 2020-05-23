@@ -66,6 +66,7 @@
               <object class="GtkScrolledWindow" id="scrlldwnd_rooms">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
+                <property name="hscrollbar_policy">never</property>
                 <property name="shadow_type">in</property>
                 <child>
                   <object class="GtkViewport">
@@ -189,7 +190,7 @@
                 <property name="can_focus">False</property>
                 <property name="orientation">vertical</property>
                 <child>
-                  <object class="GtkButtonBox">
+                  <object class="GtkButtonBox" id="btnbox_msg_ctrl">
                     <property name="height_request">30</property>
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
@@ -197,6 +198,7 @@
                     <child>
                       <object class="GtkButton">
                         <property name="visible">True</property>
+                        <property name="sensitive">False</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">True</property>
                         <property name="image">image1</property>
@@ -210,6 +212,7 @@
                     <child>
                       <object class="GtkButton">
                         <property name="visible">True</property>
+                        <property name="sensitive">False</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">True</property>
                         <property name="image">image2</property>

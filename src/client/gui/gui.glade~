@@ -26,7 +26,7 @@
     <property name="can_focus">False</property>
     <property name="margin_start">5</property>
     <property name="margin_end">5</property>
-    <property name="pixel_size">35</property>
+    <property name="pixel_size">30</property>
     <property name="icon_name">mail-send</property>
     <property name="icon_size">6</property>
   </object>
@@ -35,6 +35,12 @@
     <property name="can_focus">False</property>
     <property name="pixel_size">25</property>
     <property name="icon_name">face-smile-symbolic</property>
+  </object>
+  <object class="GtkImage" id="image5">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="pixel_size">30</property>
+    <property name="icon_name">window-new</property>
   </object>
   <object class="GtkApplicationWindow" id="wnd_main">
     <property name="width_request">640</property>
@@ -60,6 +66,7 @@
               <object class="GtkScrolledWindow" id="scrlldwnd_rooms">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
+                <property name="hscrollbar_policy">never</property>
                 <property name="shadow_type">in</property>
                 <child>
                   <object class="GtkViewport">
@@ -82,11 +89,11 @@
             </child>
             <child>
               <object class="GtkButton" id="btn_add_room">
-                <property name="label" translatable="yes">Add Room +</property>
                 <property name="height_request">48</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
+                <property name="image">image5</property>
                 <signal name="clicked" handler="mx_widget_switch_visibility" object="dialog_addroom" swapped="no"/>
               </object>
               <packing>
@@ -183,7 +190,7 @@
                 <property name="can_focus">False</property>
                 <property name="orientation">vertical</property>
                 <child>
-                  <object class="GtkButtonBox">
+                  <object class="GtkButtonBox" id="btnbox_msg_ctrl">
                     <property name="height_request">30</property>
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
