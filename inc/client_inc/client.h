@@ -8,7 +8,7 @@
 
 typedef struct s_groom {
     GtkListBox *box_rooms;
-    GtkListBox *box_msg;
+    GtkScrolledWindow *page;
     GtkListBoxRow *row_room;
     GtkStack *stack_msg;
 }       t_groom;

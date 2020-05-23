@@ -306,6 +306,7 @@
     <property name="default_height">230</property>
     <property name="type_hint">dialog</property>
     <property name="urgency_hint">True</property>
+    <property name="deletable">False</property>
     <property name="transient_for">wnd_main</property>
     <child internal-child="vbox">
       <object class="GtkBox">
@@ -323,6 +324,7 @@
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
                 <signal name="clicked" handler="mx_create_room" swapped="no"/>
+                <signal name="clicked" handler="mx_reset_addroom" swapped="no"/>
                 <signal name="clicked" handler="mx_widget_switch_visibility" object="dialog_addroom" swapped="no"/>
               </object>
               <packing>
@@ -337,6 +339,7 @@
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
+                <signal name="clicked" handler="mx_reset_addroom" swapped="no"/>
                 <signal name="clicked" handler="mx_widget_switch_visibility" object="dialog_addroom" swapped="no"/>
               </object>
               <packing>
@@ -405,14 +408,15 @@
                 <property name="can_focus">False</property>
                 <property name="orientation">vertical</property>
                 <child>
-                  <object class="GtkCheckButton">
-                    <property name="label" translatable="yes">Privat</property>
+                  <object class="GtkCheckButton" id="checkbtn_private">
+                    <property name="label" translatable="yes">Private</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>
                     <property name="halign">center</property>
                     <property name="margin_bottom">15</property>
                     <property name="draw_indicator">True</property>
+                    <signal name="toggled" handler="mx_make_private" object="entry_roompass" swapped="no"/>
                   </object>
                   <packing>
                     <property name="expand">True</property>
@@ -436,7 +440,8 @@
                 <child>
                   <object class="GtkEntry" id="entry_roompass">
                     <property name="visible">True</property>
-                    <property name="can_focus">False</property>
+                    <property name="sensitive">False</property>
+                    <property name="can_focus">True</property>
                     <property name="margin_left">40</property>
                     <property name="margin_right">40</property>
                     <property name="margin_bottom">15</property>
@@ -473,7 +478,7 @@
   <object class="GtkWindow" id="pattern_message">
     <property name="can_focus">False</property>
     <child>
-      <object class="GtkBox" id="pattern_messag">
+      <object class="GtkBox" id="sample_message">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <child>
@@ -509,7 +514,6 @@
                     <property name="label" translatable="yes">NickName</property>
                     <attributes>
                       <attribute name="weight" value="ultraheavy"/>
-                      <attribute name="gravity" value="west"/>
                     </attributes>
                   </object>
                   <packing>
