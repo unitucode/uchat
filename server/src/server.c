@@ -30,7 +30,6 @@ int main(int argc, char **argv) {
     // mx_test_member();
     // exit(1);
     t_chat *chat = mx_init_chat(argc, argv);
-    chat->database = mx_server_data_open(MX_DB_USER);
     t_client *client = NULL;
     t_ssl_con *ssl = NULL;
 

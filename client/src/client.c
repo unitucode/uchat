@@ -99,19 +99,19 @@ void mx_login(SSL *ssl) {
 // }
 
 static void *receiver(void *arg) {
-    SSL *ssl = (SSL*)arg;
+    t_chat *chat = (t_chat*)arg;
     t_dtp *dtp = NULL;
 
-    while ((dtp = mx_recv(ssl))) {
+    while ((dtp = mx_recv(chat->ssl))) {
         printf("%s\n", dtp->str);
         mx_free_request_struct(&dtp);
     }
     return NULL;
 }
 
-static void init_receiver(SSL *ssl) {
+static void init_receiver(t_chat *chat) {
     pthread_t tid;
-    mx_pthread_create(&tid, NULL, receiver, ssl);
+    mx_pthread_create(&tid, NULL, receiver, chat);
 }
 
 static void change_working_dir(void) {
@@ -128,6 +128,7 @@ static void change_working_dir(void) {
 int main(int argc, char **argv) {
     int sockfd;
     t_ssl_con *ssl = NULL;
+    t_chat *chat = mx_init_chat();
 
     change_working_dir();
     if (argc != 3) {
@@ -138,11 +139,12 @@ int main(int argc, char **argv) {
     mx_logger(MX_LOG_FILE, LOGMSG, "started client: %s %s\n", argv[1], argv[2]);
     sockfd = mx_tcp_connect(argv[1], argv[2]);
     ssl->ssl = SSL_new(ssl->ctx);
+    chat->ssl = ssl->ssl;
     SSL_set_fd(ssl->ssl, sockfd);
     if (SSL_connect(ssl->ssl) == -1) {
         mx_elogger(MX_LOG_FILE, LOGERR, "SSL_connect failded\n");
     }
-    // str_cli(stdin, ssl->ssl);
-    init_receiver(ssl->ssl);
-    mx_window_main(argc, argv);
+    chat->builder = mx_init_window(argc, argv);
+    init_receiver(chat);
+    mx_start_window(chat);
 }
