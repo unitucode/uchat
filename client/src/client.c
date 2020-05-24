@@ -2,9 +2,9 @@
 #include "protocol.h"
 #include "cJSON.h"
 
-static int sockfd;
+// static int sockfd;
 static FILE *fp;
-static int done;
+// static int done;
 
 bool is_valid_login(char *login) {
     if (!mx_match_search(login, MX_LOGIN_REGEX)) {
@@ -58,47 +58,63 @@ void mx_login(SSL *ssl) {
     mx_free_request_struct(&login_request);
 }
 
-void *copyto(void *arg) {
-    char sendline[1024];
-    t_dtp *request = NULL;
-    SSL *ssl = (SSL*)arg;
-    system("leaks -q uchat");
-    while (fgets(sendline, 1024, fp)) {
-        if (!strcmp("signup\n", sendline))
-            mx_signup(ssl);
-        else if (!strcmp("login\n", sendline))
-            mx_login(ssl);
-        else {
-            request = mx_msg_request(1, NULL, sendline);
-            // printf("req = %s len = %zu len = %zu\n", request->str, strlen(request->str), request->len);
-            mx_send(ssl, request);
-            mx_free_request_struct(&request);
-            bzero(sendline, sizeof(sendline));
-        }
-    }
-    shutdown(sockfd, SHUT_WR);
-    done = 1;
-    return NULL;
-}
+// void *copyto(void *arg) {
+//     char sendline[1024];
+//     t_dtp *request = NULL;
+//     SSL *ssl = (SSL*)arg;
+//     system("leaks -q uchat");
+//     while (fgets(sendline, 1024, fp)) {
+//         if (!strcmp("signup\n", sendline))
+//             mx_signup(ssl);
+//         else if (!strcmp("login\n", sendline))
+//             mx_login(ssl);
+//         else {
+//             request = mx_msg_request(1, NULL, sendline);
+//             // printf("req = %s len = %zu len = %zu\n", request->str, strlen(request->str), request->len);
+//             mx_send(ssl, request);
+//             mx_free_request_struct(&request);
+//             bzero(sendline, sizeof(sendline));
+//         }
+//     }
+//     shutdown(sockfd, SHUT_WR);
+//     done = 1;
+//     return NULL;
+// }
 
-void str_cli(FILE *fp_arg, SSL *ssl) {
-    // pthread_t tid;
-    char buf[1025];
+// void str_cli(FILE *fp_arg, SSL *ssl) {
+//     // pthread_t tid;
+//     char buf[1025];
+//     t_dtp *dtp = NULL;
+
+//     bzero(&buf, sizeof(buf));
+//     fp = fp_arg;
+//     // mx_pthread_create(&tid, NULL, copyto, ssl);
+//     while ((dtp = mx_recv(ssl))) {
+//         printf("%s\n", dtp->str);
+//         mx_free_request_struct(&dtp);
+//     }
+
+//     if (done == 0)
+//         exit(1);
+// }
+
+static void *receiver(void *arg) {
+    t_chat *chat = (t_chat*)arg;
     t_dtp *dtp = NULL;
 
-    bzero(&buf, sizeof(buf));
-    fp = fp_arg;
-    // mx_pthread_create(&tid, NULL, copyto, ssl);
-    while ((dtp = mx_recv(ssl))) {
+    while ((dtp = mx_recv(chat->ssl))) {
         printf("%s\n", dtp->str);
         mx_free_request_struct(&dtp);
     }
-
-    if (done == 0)
-        exit(1);
+    return NULL;
 }
 
-void mx_change_working_dir(void) {
+static void init_receiver(t_chat *chat) {
+    pthread_t tid;
+    mx_pthread_create(&tid, NULL, receiver, chat);
+}
+
+static void change_working_dir(void) {
     #ifdef MX_CLIENT
     if (chdir(MX_CLIENT)) {
         mx_elogger(NULL, LOGERR,
@@ -112,20 +128,23 @@ void mx_change_working_dir(void) {
 int main(int argc, char **argv) {
     int sockfd;
     t_ssl_con *ssl = NULL;
+    t_chat *chat = mx_init_chat();
 
-    mx_change_working_dir();
+    change_working_dir();
     if (argc != 3) {
         printf("usage\n");
         exit(1);
     }
     ssl = mx_init_ssl(CLIENT);
-    mx_logger(MX_LOG_FILE, LOGMSG, "started client: %s %s %s\n", argv[0], argv[1], argv[2]);
+    mx_logger(MX_LOG_FILE, LOGMSG, "started client: %s %s\n", argv[1], argv[2]);
     sockfd = mx_tcp_connect(argv[1], argv[2]);
     ssl->ssl = SSL_new(ssl->ctx);
+    chat->ssl = ssl->ssl;
     SSL_set_fd(ssl->ssl, sockfd);
     if (SSL_connect(ssl->ssl) == -1) {
         mx_elogger(MX_LOG_FILE, LOGERR, "SSL_connect failded\n");
     }
-    // mx_window_main(argc, argv);
-    str_cli(stdin, ssl->ssl);
+    chat->builder = mx_init_window(argc, argv);
+    init_receiver(chat);
+    mx_start_window(chat);
 }

@@ -4,19 +4,26 @@
 #include <sqlite3.h>
 #include <gtk/gtk.h>
 
-#define MX_GUI_PATH "../src/client/gui/gui.glade"
+#define MX_GUI_PATH "../src/gui/gui.glade"
 
 typedef struct s_groom {
     GtkListBox *box;
     GtkListBoxRow *row;
 }       t_groom;
 
+typedef struct s_chat {
+    SSL *ssl;
+    GtkBuilder *builder;
+}              t_chat;
+
 int mx_tcp_connect(const char *host, const char *serv);
+t_chat *mx_init_chat(void);
 void mx_signup(SSL *ssl);
 void mx_login(SSL *ssl);
 
 //gui
-int mx_window_main(int argc, char **argv);
+GtkBuilder *mx_init_window(int argc, char **argv);
+int mx_start_window(t_chat *chat);
 void mx_add_room(GtkButton *btn, GtkBuilder *builder);
 
 // gui utils
