@@ -1,6 +1,4 @@
 #include "client.h"
-#include "protocol.h"
-#include "cJSON.h"
 
 // static int sockfd;
 static FILE *fp;
@@ -98,22 +96,6 @@ void mx_login(SSL *ssl) {
 //         exit(1);
 // }
 
-static void *receiver(void *arg) {
-    t_chat *chat = (t_chat*)arg;
-    t_dtp *dtp = NULL;
-
-    while ((dtp = mx_recv(chat->ssl))) {
-        printf("%s\n", dtp->str);
-        mx_free_request_struct(&dtp);
-    }
-    return NULL;
-}
-
-static void init_receiver(t_chat *chat) {
-    pthread_t tid;
-    mx_pthread_create(&tid, NULL, receiver, chat);
-}
-
 static void change_working_dir(void) {
     #ifdef MX_CLIENT
     if (chdir(MX_CLIENT)) {
@@ -145,6 +127,6 @@ int main(int argc, char **argv) {
         mx_elogger(MX_LOG_FILE, LOGERR, "SSL_connect failded\n");
     }
     chat->builder = mx_init_window(argc, argv);
-    init_receiver(chat);
+    mx_init_receiver(chat);
     mx_start_window(chat);
 }

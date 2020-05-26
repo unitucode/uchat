@@ -4,6 +4,7 @@
 
 #define MX_J_STR(m) (m) ? (m) : "(null)"
 
+#define MX_COUNT_REQUEST 7
 #define MX_LOG_IN 0
 #define MX_SIGN_UP 1
 #define MX_TOKEN 2

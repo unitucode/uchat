@@ -17,7 +17,6 @@ int mx_start_window(t_chat *chat) {
     GObject *wnd_main;
 
     wnd_main = gtk_builder_get_object(chat->builder, "wnd_main");
-    printf("chdir = %d\n", chdir(MX_GUI_PATH));
     gtk_widget_show_all(GTK_WIDGET(wnd_main));
     gtk_main();
     return 0;
