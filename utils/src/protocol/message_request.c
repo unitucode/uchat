@@ -1,9 +1,18 @@
 #include "protocol.h"
 
-t_dtp *mx_msg_request(int id_room, char *from, char *msg) {
+t_dtp *mx_get_transport_data(cJSON *json_result) { // returns request structure
     t_dtp *dtp = NULL;
-    cJSON *json_result = cJSON_CreateObject();
     char *json_str = NULL;
+
+    json_str = cJSON_Print(json_result);
+    dtp = mx_request_creation(json_str);
+    mx_free((void**)&json_str);
+    cJSON_Delete(json_result);
+    return dtp;
+}
+
+t_dtp *mx_msg_request(int id_room, char *from, char *msg) {  
+    cJSON *json_result = cJSON_CreateObject();
 
     if (!cJSON_AddNumberToObject(json_result, "type", MX_MSG))
         return NULL;
@@ -13,17 +22,11 @@ t_dtp *mx_msg_request(int id_room, char *from, char *msg) {
         return NULL;
     if (!cJSON_AddStringToObject(json_result, "msg", MX_J_STR(msg)))
         return NULL;
-    json_str = cJSON_Print(json_result);
-    dtp = mx_request_creation(json_str);
-    mx_free((void**)&json_str);
-    cJSON_Delete(json_result);
-    return dtp;
+    return mx_get_transport_data(json_result);
 }
 
 t_dtp *mx_error_msg_request(int error_code, char *msg) {
-    t_dtp *dtp = NULL;
     cJSON *json_result = cJSON_CreateObject();
-    char *json_str = NULL;
 
     if (!cJSON_AddNumberToObject(json_result, "type", MX_ERROR_MSG))
         return NULL;
@@ -31,9 +34,5 @@ t_dtp *mx_error_msg_request(int error_code, char *msg) {
         return NULL;
     if (!cJSON_AddStringToObject(json_result, "msg", MX_J_STR(msg)))
         return NULL;
-    json_str = cJSON_Print(json_result);
-    dtp = mx_request_creation(json_str);
-    mx_free((void**)&json_str);
-    cJSON_Delete(json_result);
-    return dtp;
+    return mx_get_transport_data(json_result);
 }

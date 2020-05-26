@@ -38,6 +38,7 @@ t_dtp *mx_new_room_request(char *room_name, bool is_private, char *pass);
 t_dtp *mx_delete_room_request(char *room_name);
 t_dtp *mx_error_msg_request(int error_code, char *msg);
 t_dtp *mx_token_request(char *token);
+t_dtp *mx_get_transport_data(cJSON *json_result);
 
 //SSL
 t_ssl_con *mx_init_ssl(t_app_type type);
