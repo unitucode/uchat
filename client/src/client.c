@@ -1,6 +1,4 @@
 #include "client.h"
-#include "protocol.h"
-#include "cJSON.h"
 
 // static int sockfd;
 static FILE *fp;
@@ -33,7 +31,7 @@ void mx_signup(SSL *ssl) {
     mx_md5(md5_password, (const unsigned char*)password, strlen(password));
     signup_request = mx_sign_up_request(login, md5_password);
     mx_send(ssl, signup_request);
-    mx_free_request_struct(&signup_request);
+    mx_free_request(&signup_request);
 }
 
 void mx_login(SSL *ssl) {
@@ -55,7 +53,7 @@ void mx_login(SSL *ssl) {
     mx_md5(md5_password, (const unsigned char*)password, strlen(password));
     login_request = mx_log_in_request(login, md5_password);
     mx_send(ssl, login_request);
-    mx_free_request_struct(&login_request);
+    mx_free_request(&login_request);
 }
 
 // void *copyto(void *arg) {
@@ -72,7 +70,7 @@ void mx_login(SSL *ssl) {
 //             request = mx_msg_request(1, NULL, sendline);
 //             // printf("req = %s len = %zu len = %zu\n", request->str, strlen(request->str), request->len);
 //             mx_send(ssl, request);
-//             mx_free_request_struct(&request);
+//             mx_free_request(&request);
 //             bzero(sendline, sizeof(sendline));
 //         }
 //     }
@@ -91,28 +89,12 @@ void mx_login(SSL *ssl) {
 //     // mx_pthread_create(&tid, NULL, copyto, ssl);
 //     while ((dtp = mx_recv(ssl))) {
 //         printf("%s\n", dtp->str);
-//         mx_free_request_struct(&dtp);
+//         mx_free_request(&dtp);
 //     }
 
 //     if (done == 0)
 //         exit(1);
 // }
-
-static void *receiver(void *arg) {
-    t_chat *chat = (t_chat*)arg;
-    t_dtp *dtp = NULL;
-
-    while ((dtp = mx_recv(chat->ssl))) {
-        printf("%s\n", dtp->str);
-        mx_free_request_struct(&dtp);
-    }
-    return NULL;
-}
-
-static void init_receiver(t_chat *chat) {
-    pthread_t tid;
-    mx_pthread_create(&tid, NULL, receiver, chat);
-}
 
 static void change_working_dir(void) {
     #ifdef MX_CLIENT
@@ -146,6 +128,6 @@ int main(int argc, char **argv) {
     }
     chat->builder = mx_init_window(argc, argv);
     mx_init_gui(chat);
-    init_receiver(chat);
+    mx_init_receiver(chat);
     mx_start_window(chat);
 }

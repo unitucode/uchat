@@ -15,7 +15,7 @@ INCD_SERVER = -Iinc/
 UTILS_INC = -I../utils/inc
 UTILS_LIB = ../utils/libutils.a
 
-SRCD := src src/client_handler
+SRCD := src src/client_handler src/client_handler/receiver
 SRCS = $(foreach dir, $(SRCD), $(wildcard $(dir)/*.c))
 OBJS = $(addprefix $(OBJD)/, $(notdir $(SRCS:%.c=%.o)))
 
@@ -26,7 +26,7 @@ CFLAGS = -std=c11 $(addprefix -W, all extra error pedantic)
 CPPFLAGS = -DMX_SERVER='"$(SERVER_WD)"' $(UTILS_INC) \
 $(INCD_SERVER) -D_GNU_SOURCE $(INCD_LIBS) -I/usr/local/opt/openssl/include
 LIBS = $(LIBD_LIBS) -L/usr/local/opt/openssl/lib \
--lssl -lcjson -lcrypto -lsqlite3 -lpthread
+-lssl -lcjson -lcrypto -lsqlite3 -lpthread -ldl
 
 all: $(SERVER)
 

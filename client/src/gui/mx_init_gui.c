@@ -5,7 +5,7 @@ void mx_req_addroom(GtkButton *btn, t_chat *chat) {
     t_dtp *dtp = mx_new_room_request(room_name, 0, NULL);
 
     mx_send(chat->ssl, dtp);
-    mx_free_request_struct(&dtp);
+    mx_free_request(&dtp);
     (void)btn;
 }
 

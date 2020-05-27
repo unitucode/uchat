@@ -10,27 +10,27 @@
 //             mx_send(client->ssl, dtp);
 //         }
 //     }
-//     mx_free_request_struct(&dtp);
+//     mx_free_request(&dtp);
 //     mx_pthread_mutex_unlock(&chat->mutex);
 // }
 
-static void str_echo(t_client *client) {
-    t_dtp *dtp = NULL;
-    // system("leaks -q uchat_server");
+// static void receiver(t_client *client) {
+//     t_dtp *dtp = NULL;
+//     // system("leaks -q uchat_server");
 
-    while ((dtp = mx_recv(client->ssl))) {
-        if (!mx_authorization(client, dtp)) {
-            mx_free_request_struct(&dtp);
-            mx_logger(MX_LOG_FILE, LOGERR, "invalid autorization packet\n");
-            break;
-        }
-        printf("recv = %s\n", dtp->str);
-        // send_to_all(client->chat->clients, client->chat, client, dtp->str);
-        mx_free_request_struct(&dtp);
-    }
-}
+//     while ((dtp = mx_recv(client->ssl))) {
+//         if (!mx_authorization(client, dtp)) {
+//             mx_free_request(&dtp);
+//             mx_logger(MX_LOG_FILE, LOGERR, "invalid autorization packet\n");
+//             break;
+//         }
+//         printf("recv = %s\n", dtp->str);
+//         // send_to_all(client->chat->clients, client->chat, client, dtp->str);
+//         mx_free_request(&dtp);
+//     }
+// }
 
-static void mx_disconnect_client(t_client *client) {
+void mx_disconnect_client(t_client *client) {
     mx_pthread_mutex_lock(&client->chat->mutex);
     mx_logger(MX_LOG_FILE, LOGMSG, "disconnected: IP[%s] port[%s]\n",
               client->ip, client->port);
@@ -38,19 +38,10 @@ static void mx_disconnect_client(t_client *client) {
     mx_pthread_mutex_unlock(&client->chat->mutex);
 }
 
-static void *client_handler(void *arg) {
-    t_client *client = (t_client*)arg;
-
-    pthread_detach(pthread_self());
-    str_echo(client);
-    mx_disconnect_client(client);
-    return NULL;
-}
-
 void mx_connect_client(t_client *client) {
     mx_get_client_info(client);
     client->node = mx_push_front(client->chat->clients, client);
     mx_logger(MX_LOG_FILE, LOGMSG, "connected: IP[%s] port[%s]\n",
               client->ip, client->port);
-    mx_pthread_create(&client->tid, NULL, &client_handler, client);
+    mx_pthread_create(&client->tid, NULL, mx_receiver, client);
 }

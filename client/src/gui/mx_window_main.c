@@ -13,12 +13,11 @@ GtkBuilder *mx_init_window(int argc, char **argv) {
 }
 
 int mx_start_window(t_chat *chat) {
-    // GObject *wnd_main = gtk_builder_get_object(chat->builder, "wnd_main");
+    GObject *wnd_main = gtk_builder_get_object(chat->builder, "wnd_main");
     GObject *wnd_authorization = gtk_builder_get_object(chat->builder,
                                                         "wnd_authorization");
 
-    printf("chdir = %d\n", chdir(MX_GUI_PATH));
-    // gtk_widget_show_all(GTK_WIDGET(wnd_main));
+    gtk_widget_show_all(GTK_WIDGET(wnd_main));
     gtk_widget_show_all(GTK_WIDGET(wnd_authorization));
     gtk_main();
     return 0;

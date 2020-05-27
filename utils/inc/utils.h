@@ -20,7 +20,7 @@
 #include <openssl/err.h>
 #include <openssl/md5.h>
 #include <openssl/rand.h>
-#include <sqlite3.h>
+#include "sqlite3.h"
 #include <regex.h>
 #include "cJSON.h"
 

@@ -551,7 +551,7 @@
           </packing>
         </child>
         <child>
-          <object class="GtkButton">
+          <object class="GtkButton" id="btn_login">
             <property name="label" translatable="yes">Log In</property>
             <property name="visible">True</property>
             <property name="can_focus">True</property>
@@ -565,7 +565,7 @@
           </packing>
         </child>
         <child>
-          <object class="GtkButton">
+          <object class="GtkButton" id="btn_signup">
             <property name="label" translatable="yes">Sign Up</property>
             <property name="visible">True</property>
             <property name="can_focus">True</property>
