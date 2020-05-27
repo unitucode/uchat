@@ -13,6 +13,6 @@ bool mx_authorization(t_dtp *token, t_chat *chat) {
         || !mx_isvalid_token(auth_token->valuestring)) {
             return false;
     }
-    chat->auth_token = auth_token->valuestring;
+    chat->auth_token = strdup(auth_token->valuestring);
     return true;
 }
