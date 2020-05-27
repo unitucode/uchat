@@ -1,60 +1,7 @@
 #include "client.h"
 
 // static int sockfd;
-static FILE *fp;
 // static int done;
-
-bool is_valid_login(char *login) {
-    if (!mx_match_search(login, MX_LOGIN_REGEX)) {
-        printf("Login must countain \'-\' and \'_\'chars and have 3-22 length\n");
-        return false;
-    }
-    return true;
-}
-
-void mx_signup(SSL *ssl) {
-    char login[1024] = {0};
-    char password[1024] = {0};
-    char md5_password[MX_MD5_BUF_SIZE + 1];
-    t_dtp *signup_request = NULL;
-    bool valid = false;
-
-    while (!valid) {
-        printf("Enter your login: ");
-        fgets(login, 1024, fp);
-        printf("Enter your password: ");
-        fgets(password, 1024, fp);
-        password[strlen(password) - 1] = '\0';
-        login[strlen(login) - 1] = '\0';
-        valid = is_valid_login(login);
-    }
-    mx_md5(md5_password, (const unsigned char*)password, strlen(password));
-    signup_request = mx_sign_up_request(login, md5_password);
-    mx_send(ssl, signup_request);
-    mx_free_request(&signup_request);
-}
-
-void mx_login(SSL *ssl) {
-    char login[1024] = {0};
-    char password[1024] = {0};
-    char md5_password[MX_MD5_BUF_SIZE + 1];
-    t_dtp *login_request = NULL;
-    bool valid = false;
-
-    while (!valid) {
-        printf("Enter your login: ");
-        fgets(login, 1024, fp);
-        printf("Enter your password: ");
-        fgets(password, 1024, fp);
-        password[strlen(password) - 1] = '\0';
-        login[strlen(login) - 1] = '\0';
-        valid = is_valid_login(login);
-    }
-    mx_md5(md5_password, (const unsigned char*)password, strlen(password));
-    login_request = mx_log_in_request(login, md5_password);
-    mx_send(ssl, login_request);
-    mx_free_request(&login_request);
-}
 
 // void *copyto(void *arg) {
 //     char sendline[1024];
@@ -107,6 +54,17 @@ static void change_working_dir(void) {
     #endif
 }
 
+void test(t_chat *chat) {
+    char *login = "admin4";
+    char pass[33];
+
+    pass[32] = '\0';
+    mx_md5(pass, (const unsigned char*)"admin", 5);
+    t_dtp *signup = mx_log_in_request(login, pass);
+    mx_send(chat->ssl, signup);
+    mx_free_request(&signup);
+}
+
 int main(int argc, char **argv) {
     int sockfd;
     t_ssl_con *ssl = NULL;
@@ -128,5 +86,6 @@ int main(int argc, char **argv) {
     }
     chat->builder = mx_init_window(argc, argv);
     mx_init_receiver(chat);
+    test(chat);
     mx_start_window(chat);
 }

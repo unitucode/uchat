@@ -33,10 +33,15 @@ struct s_client {
     SSL *ssl;
 };
 
+//api
+t_dtp *mx_token_request(char *token);
+t_dtp *mx_error_msg_request(int error_code, char *msg);
+
 //data protocol handler functions
 bool mx_log_in(t_dtp *login, t_client *client);
 bool mx_sign_up(t_dtp *signup_data, t_client *client);
 bool mx_log_in_token(t_dtp *token, t_client *client);
+bool mx_new_room(t_dtp *data, t_client *client);
 
 int mx_tcp_listen(const char *serv, socklen_t *addr_len);
 void mx_get_client_info(t_client *client);

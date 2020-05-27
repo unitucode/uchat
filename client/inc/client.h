@@ -21,12 +21,21 @@ typedef struct s_chat {
 
 int mx_tcp_connect(const char *host, const char *serv);
 t_chat *mx_init_chat(void);
-bool mx_authorization(t_dtp *token, t_chat *chat);
-bool mx_error_handle(t_dtp *data, t_chat *chat);
 void mx_signup(SSL *ssl);
 void mx_login(SSL *ssl);
 void *mx_receiver(void *arg);
 void mx_init_receiver(t_chat *chat);
+
+//handlers
+bool mx_error_handle(t_dtp *data, t_chat *chat);
+bool mx_authorization(t_dtp *token, t_chat *chat);
+bool mx_new_room(t_dtp *data, t_chat *chat);
+
+//api
+t_dtp *mx_new_room_request(char *room_name, bool is_private, char *pass);
+t_dtp *mx_token_request(char *token);
+t_dtp *mx_log_in_request(char *login, char *pass);
+t_dtp *mx_sign_up_request(char *login, char *pass);
 
 //gui
 GtkBuilder *mx_init_window(int argc, char **argv);
