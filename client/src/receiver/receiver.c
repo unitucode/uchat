@@ -4,6 +4,7 @@ void mx_init_receiver(t_chat *chat) {
     pthread_t tid;
     chat->request_handler[RQ_TOKEN] = mx_authorization;
     chat->request_handler[RQ_ERROR_MSG] = mx_error_handle;
+    chat->request_handler[RQ_NEW_ROOM] = mx_new_room;
     mx_pthread_create(&tid, NULL, mx_receiver, chat);
 }
 

@@ -29,6 +29,7 @@ void mx_init_receiver(t_chat *chat);
 //handlers
 bool mx_error_handle(t_dtp *data, t_chat *chat);
 bool mx_authorization(t_dtp *token, t_chat *chat);
+bool mx_new_room(t_dtp *data, t_chat *chat);
 
 //api
 t_dtp *mx_new_room_request(char *room_name, bool is_private, char *pass);
