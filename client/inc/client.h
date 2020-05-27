@@ -16,7 +16,7 @@ typedef struct s_chat {
     char *auth_token;
     SSL *ssl;
     GtkBuilder *builder;
-    bool (*request_handler[MX_COUNT_REQUEST])(t_dtp *dtp, struct s_chat *chat);
+    bool (*request_handler[RQ_COUNT_REQUEST])(t_dtp *dtp, struct s_chat *chat);
 }              t_chat;
 
 int mx_tcp_connect(const char *host, const char *serv);

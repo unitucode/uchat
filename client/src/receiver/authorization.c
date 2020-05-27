@@ -4,7 +4,7 @@ bool mx_authorization(t_dtp *token, t_chat *chat) {
     cJSON *json = NULL;
     cJSON *auth_token = NULL;
 
-    if (token->type != MX_TOKEN && !chat->auth_token) {
+    if (chat->auth_token) {
         return false;
     }
     json = cJSON_Parse(token->str);
