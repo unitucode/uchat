@@ -26,7 +26,7 @@ CFLAGS = -std=c11 $(addprefix -W, all extra error pedantic)
 CPPFLAGS = -DMX_SERVER='"$(SERVER_WD)"' $(UTILS_INC) \
 $(INCD_SERVER) -D_GNU_SOURCE $(INCD_LIBS) -I/usr/local/opt/openssl/include
 LIBS = $(LIBD_LIBS) -L/usr/local/opt/openssl/lib \
--lssl -lcjson -lcrypto -lsqlite3 -lpthread
+-lssl -lcjson -lcrypto -lsqlite3 -lpthread -ldl
 
 all: $(SERVER)
 
