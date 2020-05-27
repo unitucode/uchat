@@ -1,0 +1,31 @@
+#include "client.h"
+
+void mx_create_message(GtkButton *btn, GtkBuilder *builder) {
+    GtkWidget *list_box = GTK_WIDGET(gtk_builder_get_object(builder, "box_test"));
+    GtkWidget *row = gtk_list_box_row_new();
+
+    GtkWidget *label_txt = gtk_label_new("Message Text");
+    gtk_label_set_xalign(GTK_LABEL(label_txt), 0.03);
+    GtkWidget *main_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+    gtk_box_pack_end(GTK_BOX(main_box), label_txt, true, true, 0);
+
+    PangoAttrList *attr_list = pango_attr_list_new();
+    PangoAttribute *attr = pango_attr_weight_new(PANGO_WEIGHT_ULTRAHEAVY);
+    pango_attr_list_insert(attr_list, attr);
+    GtkWidget *label_name = gtk_label_new("User Name");
+    gtk_label_set_xalign(GTK_LABEL(label_name), 0.03);
+    GtkWidget *label_time = gtk_label_new("15:05");
+    gtk_label_set_xalign(GTK_LABEL(label_time), 0.97);
+    gtk_label_set_attributes(GTK_LABEL(label_name), attr_list);
+    pango_attr_list_unref(attr_list);
+    gtk_widget_set_tooltip_text(label_time, "24.05.2020    15:05");
+    GtkWidget *info_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
+    gtk_box_pack_start(GTK_BOX(info_box), label_name, true, true, 0);
+    gtk_box_pack_end(GTK_BOX(info_box), label_time, true, true, 0);
+    gtk_box_pack_start(GTK_BOX(main_box), info_box, true, true, 0);
+
+    gtk_container_add(GTK_CONTAINER(row), GTK_WIDGET(main_box));
+    gtk_list_box_insert(GTK_LIST_BOX(list_box), row, -1);
+    gtk_widget_show_all(GTK_WIDGET(list_box));
+    (void)btn;
+}
