@@ -10,15 +10,31 @@ void mx_req_addroom(GtkButton *btn, t_chat *chat) {
 }
 
 void mx_req_signup(GtkButton *btn, t_chat *chat) {
+    char *login = mx_get_buffer_text("buffer_login", chat->builder);
+    char *password = mx_get_buffer_text("buffer_password", chat->builder);
+    char pass[33];
+
+    pass[32] = '\0';
+    mx_md5(pass, (const unsigned char*)password, 5);
+    t_dtp *dtp = mx_sign_up_request(login, pass);
+
+    mx_send(chat->ssl, dtp);
+    mx_free_request(&dtp);
     (void)btn;
-    (void)chat;
-    puts("signup");
 }
 
 void mx_req_login(GtkButton *btn, t_chat *chat) {
+    char *login = mx_get_buffer_text("buffer_login", chat->builder);
+    char *password = mx_get_buffer_text("buffer_password", chat->builder);
+    char pass[33];
+
+    pass[32] = '\0';
+    mx_md5(pass, (const unsigned char*)password, 5);
+    t_dtp *dtp = mx_log_in_request(login, pass);
+
+    mx_send(chat->ssl, dtp);
+    mx_free_request(&dtp);
     (void)btn;
-    (void)chat;
-    puts("login");
 }
 
 static void connect_addroom(t_chat *chat) {

@@ -87,6 +87,6 @@ int main(int argc, char **argv) {
     chat->builder = mx_init_window(argc, argv);
     mx_init_gui(chat);
     mx_init_receiver(chat);
-    test(chat);
+    // test(chat);
     mx_start_window(chat);
 }
