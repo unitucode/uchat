@@ -30,7 +30,7 @@ static t_dtp *get_filled_dtp(char *str, size_t buf_size) {
     req->str = req->data + 4;
     req->len = buf_size - 1;
     req->json = cJSON_Parse(req->str);
-    if ((type = mx_get_type_dtp(req)) < 0 || type > RQ_COUNT_REQUEST) {
+    if ((type = mx_get_type_dtp(req)) < 0 || type >= RQ_COUNT_REQUEST) {
         mx_logger(MX_LOG_FILE, LOGWAR, "Invalid message type\n");
         mx_free_request(&req);
         return NULL;
