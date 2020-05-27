@@ -8,3 +8,7 @@ t_chat *mx_init_chat(void) {
     chat->auth_token = NULL;
     return chat;
 }
+
+// void mx_deinit_chat(t_chat **chat) {
+//     mx_free
+// }
