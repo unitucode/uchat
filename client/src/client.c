@@ -55,12 +55,12 @@ static void change_working_dir(void) {
 }
 
 void test(t_chat *chat) {
-    char *login = "admin4";
+    // char *login = "admin4";
     char pass[33];
 
     pass[32] = '\0';
     mx_md5(pass, (const unsigned char*)"admin", 5);
-    t_dtp *signup = mx_log_in_request(login, pass);
+    t_dtp *signup = mx_token_request("89f234ad6490edeec3f09057afc2dbaf123456789");
     mx_send(chat->ssl, signup);
     mx_free_request(&signup);
 }
@@ -87,6 +87,6 @@ int main(int argc, char **argv) {
     chat->builder = mx_init_window(argc, argv);
     mx_init_gui(chat);
     mx_init_receiver(chat);
-    // test(chat);
+    test(chat);
     mx_start_window(chat);
 }

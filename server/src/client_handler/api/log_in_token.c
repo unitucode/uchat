@@ -11,7 +11,20 @@ t_dtp *mx_token_request(char *token) {
 }
 
 bool mx_log_in_token(t_dtp *token, t_client *client) { // TODO!!!!!!
-    token++;
-    client++;
+    cJSON *json = cJSON_Parse(token->str);
+    cJSON *user_token = cJSON_GetObjectItemCaseSensitive(json, "token");
+
+    if (user_token && cJSON_IsString(user_token)
+        && mx_isvalid_token(user_token->valuestring)) {
+        client->user = mx_get_user_by_token(client->chat->database,
+                                            user_token->valuestring);
+    }
+    if (!client->user) {
+        mx_logger(MX_LOG_FILE, LOGWAR, "Inccorect token\n");
+        cJSON_Delete(json);
+        return false;
+    }
+    cJSON_Delete(json);
+    mx_logger(MX_LOG_FILE, LOGMSG, "Logged by token %s\n", client->user->login);
     return true;
 }
