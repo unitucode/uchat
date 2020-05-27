@@ -2,7 +2,7 @@
 
 #include "utils.h"
 #include "protocol.h"
-#include <sqlite3.h>
+#include "sqlite3.h"
 #include <gtk/gtk.h>
 
 #define MX_GUI_PATH "../src/gui/gui.glade"

@@ -10,7 +10,7 @@
 //             mx_send(client->ssl, dtp);
 //         }
 //     }
-//     mx_free_request_struct(&dtp);
+//     mx_free_request(&dtp);
 //     mx_pthread_mutex_unlock(&chat->mutex);
 // }
 
@@ -20,13 +20,13 @@
 
 //     while ((dtp = mx_recv(client->ssl))) {
 //         if (!mx_authorization(client, dtp)) {
-//             mx_free_request_struct(&dtp);
+//             mx_free_request(&dtp);
 //             mx_logger(MX_LOG_FILE, LOGERR, "invalid autorization packet\n");
 //             break;
 //         }
 //         printf("recv = %s\n", dtp->str);
 //         // send_to_all(client->chat->clients, client->chat, client, dtp->str);
-//         mx_free_request_struct(&dtp);
+//         mx_free_request(&dtp);
 //     }
 // }
 
