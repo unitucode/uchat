@@ -30,7 +30,7 @@ static char *get_pass_str(t_dtp *data) {
 
 bool mx_valid_authorization_data(t_dtp *data, char **login,
                                  char **pass, t_client *client) {
-    if (!data || client->user != NULL)
+    if (client->user != NULL)
         return false;
     if (!(*login = get_login_str(data)))
         return false;

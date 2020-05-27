@@ -152,7 +152,7 @@ t_user *mx_get_user_by_login(sqlite3 *database, char *login);
 t_user *mx_get_user_by_token(sqlite3 *database, char *token);
 t_message *mx_get_message_by_id(sqlite3 *database, int id_message);
 t_message *mx_get_message_by_login(sqlite3 *database, char *login);
-t_room *mx_get_room(sqlite3 *database,char *name_room);
+t_room *mx_get_room(sqlite3 *database, char *name_room);
 
 void mx_update_permission_of_user(sqlite3 *database, unsigned int permission, char *login);
 void mx_update_token(sqlite3 *database, char *new_token, char *login);

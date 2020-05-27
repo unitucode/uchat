@@ -19,6 +19,7 @@ static void log_in(char *login, char *pass, t_client *client) {
         printf("%s\n%s\n", user->password, pass);
         incorrect_data(client);
         mx_logger(MX_LOG_FILE, LOGMSG, "Inccorect password %s\n", login);
+        mx_free_user(&user);
     }
     else {
         client->user = user;
