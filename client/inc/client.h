@@ -33,6 +33,9 @@ bool mx_new_room(t_dtp *data, t_chat *chat);
 
 //api
 t_dtp *mx_new_room_request(char *room_name, bool is_private, char *pass);
+t_dtp *mx_token_request(char *token);
+t_dtp *mx_log_in_request(char *login, char *pass);
+t_dtp *mx_sign_up_request(char *login, char *pass);
 
 //gui
 GtkBuilder *mx_init_window(int argc, char **argv);
