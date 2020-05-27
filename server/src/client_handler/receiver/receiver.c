@@ -21,9 +21,9 @@ void *mx_receiver(void *arg) {
         }
         printf("recv = %s\n", data->str);
         // send_to_all(client->chat->clients, client->chat, client, dtp->str);
-        mx_free_request_struct(&data);
+        mx_free_request(&data);
     }
-    mx_free_request_struct(&data);
+    mx_free_request(&data);
     mx_disconnect_client(client);
     return NULL;
 }

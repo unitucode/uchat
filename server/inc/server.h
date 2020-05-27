@@ -3,7 +3,7 @@
 #include "utils.h"
 #include "protocol.h"
 #include "list.h"
-#include <sqlite3.h>
+#include "sqlite3.h"
 
 #define MX_LISTENQ 1024
 #define MX_PORT_LEN 8
@@ -51,5 +51,5 @@ void *mx_receiver(void *arg);
 
 //Authorization
 bool mx_valid_authorization_data(t_dtp *data, char **login,
-                                 char **pass, int type);
+                                 char **pass, t_client *client);
 void mx_correct_data(char *login, t_client *client);

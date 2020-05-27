@@ -22,8 +22,8 @@ void *mx_receiver(void *arg) {
                 break;
             }
         }
-        mx_free_request_struct(&data);
+        mx_free_request(&data);
     }
-    mx_free_request_struct(&data);
+    mx_free_request(&data);
     return NULL;
 }

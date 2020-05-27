@@ -31,7 +31,7 @@ void mx_signup(SSL *ssl) {
     mx_md5(md5_password, (const unsigned char*)password, strlen(password));
     signup_request = mx_sign_up_request(login, md5_password);
     mx_send(ssl, signup_request);
-    mx_free_request_struct(&signup_request);
+    mx_free_request(&signup_request);
 }
 
 void mx_login(SSL *ssl) {
@@ -53,7 +53,7 @@ void mx_login(SSL *ssl) {
     mx_md5(md5_password, (const unsigned char*)password, strlen(password));
     login_request = mx_log_in_request(login, md5_password);
     mx_send(ssl, login_request);
-    mx_free_request_struct(&login_request);
+    mx_free_request(&login_request);
 }
 
 // void *copyto(void *arg) {
@@ -70,7 +70,7 @@ void mx_login(SSL *ssl) {
 //             request = mx_msg_request(1, NULL, sendline);
 //             // printf("req = %s len = %zu len = %zu\n", request->str, strlen(request->str), request->len);
 //             mx_send(ssl, request);
-//             mx_free_request_struct(&request);
+//             mx_free_request(&request);
 //             bzero(sendline, sizeof(sendline));
 //         }
 //     }
@@ -89,7 +89,7 @@ void mx_login(SSL *ssl) {
 //     // mx_pthread_create(&tid, NULL, copyto, ssl);
 //     while ((dtp = mx_recv(ssl))) {
 //         printf("%s\n", dtp->str);
-//         mx_free_request_struct(&dtp);
+//         mx_free_request(&dtp);
 //     }
 
 //     if (done == 0)

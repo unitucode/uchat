@@ -55,4 +55,4 @@ void mx_create_token(char *token, char *login);
 //Protocol
 int mx_get_type_dtp(t_dtp *dtp);
 t_dtp *mx_request_creation(char *req_body);
-void mx_free_request_struct(t_dtp **request);
+void mx_free_request(t_dtp **request);
