@@ -4,13 +4,16 @@
 
 #define MX_J_STR(m) (m) ? (m) : "(null)"
 
-#define MX_LOG_IN 0
-#define MX_SIGN_UP 1
-#define MX_TOKEN 2
-#define MX_MSG 3
-#define MX_NEW_ROOM 4
-#define MX_DELETE_ROOM 5
-#define MX_ERROR_MSG 6
+typedef enum s_request_type {
+    RQ_LOG_IN = 0,
+    RQ_SIGN_UP,
+    RQ_TOKEN,
+    RQ_MSG,
+    RQ_NEW_ROOM,
+    RQ_DELETE_ROOM,
+    RQ_ERROR_MSG,
+    RQ_COUNT_REQUEST
+}            t_request_type;
 
 typedef struct s_ssl_con {
     SSL_CTX *ctx;

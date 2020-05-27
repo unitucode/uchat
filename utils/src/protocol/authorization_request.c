@@ -3,7 +3,7 @@
 t_dtp *mx_log_in_request(char *login, char *pass) {
     cJSON *json_result = cJSON_CreateObject();
 
-    if (!cJSON_AddNumberToObject(json_result, "type", MX_LOG_IN))
+    if (!cJSON_AddNumberToObject(json_result, "type", RQ_LOG_IN))
         return NULL;
     if (!cJSON_AddStringToObject(json_result, "login", MX_J_STR(login)))
         return NULL;
@@ -15,7 +15,7 @@ t_dtp *mx_log_in_request(char *login, char *pass) {
 t_dtp *mx_sign_up_request(char *login, char *pass) {
     cJSON *json_result = cJSON_CreateObject();
 
-    if (!cJSON_AddNumberToObject(json_result, "type", MX_SIGN_UP))
+    if (!cJSON_AddNumberToObject(json_result, "type", RQ_SIGN_UP))
         return NULL;
     if (!cJSON_AddStringToObject(json_result, "login", MX_J_STR(login)))
         return NULL;
@@ -27,7 +27,7 @@ t_dtp *mx_sign_up_request(char *login, char *pass) {
 t_dtp *mx_token_request(char *token) {
     cJSON *json_result = cJSON_CreateObject();
 
-    if (!cJSON_AddNumberToObject(json_result, "type", MX_TOKEN))
+    if (!cJSON_AddNumberToObject(json_result, "type", RQ_TOKEN))
         return NULL;
     if (!cJSON_AddStringToObject(json_result, "token", MX_J_STR(token)))
         return NULL;

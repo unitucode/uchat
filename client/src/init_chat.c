@@ -5,5 +5,6 @@ t_chat *mx_init_chat(void) {
 
     chat->builder = NULL;
     chat->ssl = NULL;
+    chat->auth_token = NULL;
     return chat;
 }

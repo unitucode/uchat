@@ -14,7 +14,7 @@ t_dtp *mx_get_transport_data(cJSON *json_result) { // returns request structure
 t_dtp *mx_msg_request(int id_room, char *from, char *msg) {  
     cJSON *json_result = cJSON_CreateObject();
 
-    if (!cJSON_AddNumberToObject(json_result, "type", MX_MSG))
+    if (!cJSON_AddNumberToObject(json_result, "type", RQ_MSG))
         return NULL;
     if (!cJSON_AddNumberToObject(json_result, "id_room", id_room))
         return NULL;
@@ -28,7 +28,7 @@ t_dtp *mx_msg_request(int id_room, char *from, char *msg) {
 t_dtp *mx_error_msg_request(int error_code, char *msg) {
     cJSON *json_result = cJSON_CreateObject();
 
-    if (!cJSON_AddNumberToObject(json_result, "type", MX_ERROR_MSG))
+    if (!cJSON_AddNumberToObject(json_result, "type", RQ_ERROR_MSG))
         return NULL;
     if (!cJSON_AddNumberToObject(json_result, "error_code", error_code))
         return NULL;

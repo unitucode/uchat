@@ -13,3 +13,4 @@ libraries/lib
 libraries/**/*.o
 client/uchat_wd/info.log
 server/uchat_server_wd/info.log
+utils/libutils.a

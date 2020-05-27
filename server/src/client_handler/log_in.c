@@ -32,7 +32,7 @@ bool mx_log_in(t_dtp *login_data, t_client *client) {
     char *pass_str;
 
     if (!mx_valid_authorization_data(login_data, &login_str,
-                                     &pass_str, MX_LOG_IN)) {
+                                     &pass_str, RQ_LOG_IN)) {
         return false;
     }
     mx_md5(md5_pass, (const unsigned char*)pass_str, strlen(pass_str));
