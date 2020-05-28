@@ -26,5 +26,6 @@ bool mx_log_in_token(t_dtp *token, t_client *client) { // TODO!!!!!!
     }
     cJSON_Delete(json);
     mx_logger(MX_LOG_FILE, LOGMSG, "Logged by token %s\n", client->user->login);
+    mx_send(client->ssl, token);
     return true;
 }

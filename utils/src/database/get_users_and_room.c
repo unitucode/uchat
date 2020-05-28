@@ -28,7 +28,7 @@ t_user *mx_get_user_by_login(sqlite3 *database, char *login) {
 t_user *mx_get_user_by_token(sqlite3 *database, char *token) {
     sqlite3_stmt *stmt;
 
-    sqlite3_prepare_v3(database, "SELECT * FROM USERSS WHERE token = ?1", -1, 0, &stmt, NULL);
+    sqlite3_prepare_v3(database, "SELECT * FROM USERS WHERE token = ?1", -1, 0, &stmt, NULL);
     sqlite3_bind_text(stmt, 1, token, -1, SQLITE_STATIC);
     return for_get_user(stmt);
 }
