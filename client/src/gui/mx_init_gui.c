@@ -2,10 +2,15 @@
 
 void mx_req_addroom(GtkButton *btn, t_chat *chat) {
     char *room_name = mx_get_buffer_text("buffer_roomname", chat->builder);
-    t_dtp *dtp = mx_new_room_request(room_name, 0, NULL);
+    char *room_pass = mx_get_buffer_text("buffer_roompass", chat->builder);
+    bool is_private = false;
+    t_dtp *dtp = NULL;
 
+    is_private = strcmp(room_pass, "");
+    dtp = mx_new_room_request(room_name, is_private, room_pass);
     mx_send(chat->ssl, dtp);
     mx_free_request(&dtp);
+    mx_reset_addroom(NULL, chat->builder);
     (void)btn;
 }
 
@@ -15,7 +20,7 @@ void mx_req_signup(GtkButton *btn, t_chat *chat) {
     char pass[33];
 
     pass[32] = '\0';
-    mx_md5(pass, (const unsigned char*)password, 5);
+    mx_md5(pass, (const unsigned char*)password, strlen(password));
     t_dtp *dtp = mx_sign_up_request(login, pass);
 
     mx_send(chat->ssl, dtp);
@@ -29,7 +34,7 @@ void mx_req_login(GtkButton *btn, t_chat *chat) {
     char pass[33];
 
     pass[32] = '\0';
-    mx_md5(pass, (const unsigned char*)password, 5);
+    mx_md5(pass, (const unsigned char*)password, strlen(password));
     t_dtp *dtp = mx_log_in_request(login, pass);
 
     mx_send(chat->ssl, dtp);
@@ -55,6 +60,7 @@ static void connect_authorization(t_chat *chat) {
 }
 
 void mx_init_gui(t_chat *chat) {
-    connect_addroom(chat);
+    g_idle_add((GSourceFunc)connect_authorization, chat);
     connect_authorization(chat);
+    connect_addroom(chat);
 }

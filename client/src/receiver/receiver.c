@@ -15,7 +15,7 @@ void *mx_receiver(void *arg) {
     t_dtp *data = NULL;
 
     while ((data = mx_recv(chat->ssl))) {
-        printf("recv = %s\n", data->str);
+        printf("recv = %s", data->str);
         if (chat->auth_token
             || data->type == RQ_ERROR_MSG
             || data->type == RQ_TOKEN) {
@@ -27,5 +27,6 @@ void *mx_receiver(void *arg) {
         mx_free_request(&data);
     }
     mx_free_request(&data);
+    printf("Closed receiver\n");
     return NULL;
 }

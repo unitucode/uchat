@@ -88,5 +88,5 @@ int main(int argc, char **argv) {
     mx_init_gui(chat);
     mx_init_receiver(chat);
     // test(chat);
-    mx_start_window(chat);
+    mx_start_gui(chat);
 }

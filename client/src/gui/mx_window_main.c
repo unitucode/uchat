@@ -12,13 +12,24 @@ GtkBuilder *mx_init_window(int argc, char **argv) {
     return builder;
 }
 
-int mx_start_window(t_chat *chat) {
-    // GObject *wnd_main = gtk_builder_get_object(chat->builder, "wnd_main");
-    GObject *wnd_authorization = gtk_builder_get_object(chat->builder,
-                                                        "wnd_authorization");
+int mx_start_gui(t_chat *chat) {
+    GObject *wnd_main = gtk_builder_get_object(chat->builder, "wnd_main");
+    GObject *dialog_auth = gtk_builder_get_object(chat->builder,
+                                                  "dialog_auth");
 
-    // gtk_widget_show_all(GTK_WIDGET(wnd_main));
-    gtk_widget_show_all(GTK_WIDGET(wnd_authorization));
+    mx_widget_switch_visibility(NULL, GTK_WIDGET(wnd_main));
+    mx_widget_switch_visibility(NULL, GTK_WIDGET(dialog_auth));
     gtk_main();
+    // (void)chat;
     return 0;
+}
+
+void mx_start_main_window(t_chat *chat) {
+    // GObject *wnd_main = gtk_builder_get_object(chat->builder, "wnd_main");
+    GObject *dialog_auth = gtk_builder_get_object(chat->builder,
+                                                        "dialog_auth");
+
+    gtk_widget_destroy(GTK_WIDGET(dialog_auth));
+    // mx_widget_switch_visibility(NULL, GTK_WIDGET(dialog_auth));
+    // mx_widget_switch_visibility(NULL, GTK_WIDGET(wnd_main));
 }
