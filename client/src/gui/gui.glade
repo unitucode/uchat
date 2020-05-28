@@ -47,11 +47,13 @@
   <object class="GtkApplicationWindow" id="wnd_main">
     <property name="width_request">640</property>
     <property name="height_request">420</property>
+    <property name="visible">True</property>
     <property name="can_focus">False</property>
     <property name="title" translatable="yes">UChat</property>
     <property name="window_position">center</property>
     <property name="default_width">1280</property>
     <property name="default_height">720</property>
+    <property name="destroy_with_parent">True</property>
     <property name="show_menubar">False</property>
     <signal name="destroy" handler="gtk_main_quit" swapped="no"/>
     <child>
@@ -314,6 +316,7 @@
     <property name="window_position">center-on-parent</property>
     <property name="type_hint">dialog</property>
     <property name="urgency_hint">True</property>
+    <property name="deletable">False</property>
     <property name="transient_for">wnd_main</property>
     <child internal-child="vbox">
       <object class="GtkBox">
@@ -345,8 +348,6 @@
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
-                <property name="tooltip_text" translatable="yes">ти хуй</property>
-                <signal name="clicked" handler="mx_reset_addroom" swapped="no"/>
                 <signal name="clicked" handler="mx_widget_switch_visibility" object="dialog_addroom" swapped="no"/>
               </object>
               <packing>
@@ -488,10 +489,10 @@
     <property name="can_focus">False</property>
     <property name="resizable">False</property>
     <property name="modal">True</property>
-    <property name="window_position">center</property>
-    <property name="destroy_with_parent">True</property>
+    <property name="window_position">center-on-parent</property>
+    <property name="urgency_hint">True</property>
+    <property name="gravity">center</property>
     <property name="transient_for">wnd_main</property>
-    <signal name="destroy" handler="gtk_main_quit" swapped="no"/>
     <child>
       <object class="GtkBox">
         <property name="visible">True</property>

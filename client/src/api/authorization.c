@@ -51,5 +51,6 @@ bool mx_authorization(t_dtp *token, t_chat *chat) {
     chat->auth_token = strdup(auth_token->valuestring);
     cJSON_Delete(json);
     printf("token = %s\n", chat->auth_token);
+    mx_start_main_window(chat);
     return true;
 }

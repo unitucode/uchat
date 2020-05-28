@@ -15,7 +15,6 @@ void *mx_receiver(void *arg) {
     t_dtp *data = NULL;
 
     while ((data = mx_recv(chat->ssl))) {
-        printf("recv = %s\n", data->str);
         if (chat->auth_token
             || data->type == RQ_ERROR_MSG
             || data->type == RQ_TOKEN) {

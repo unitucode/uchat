@@ -43,7 +43,8 @@ t_dtp *mx_sign_up_request(char *login, char *pass);
 //gui
 GtkBuilder *mx_init_window(int argc, char **argv);
 void mx_init_gui(t_chat *chat);
-int mx_start_window(t_chat *chat);
+int mx_start_gui(t_chat *chat);
+void mx_start_main_window(t_chat *chat);
 void mx_add_room(GtkButton *btn, GtkBuilder *builder);
 
 // gui utils
@@ -51,3 +52,4 @@ void mx_scrlldwnd_connect(char *name, GtkWidget *scroll, GtkBuilder *builder);
 gchar *mx_get_buffer_text(char *buff_name, GtkBuilder *builder);
 void mx_clear_buffer_text(char *buff_name, GtkBuilder *builder);
 void mx_widget_switch_visibility(GtkWidget *usr_ctrl, void *widget);
+void mx_reset_addroom(GtkButton *btn, GtkBuilder *builder);
