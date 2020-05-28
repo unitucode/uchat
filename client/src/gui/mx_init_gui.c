@@ -60,6 +60,7 @@ static void connect_authorization(t_chat *chat) {
 }
 
 void mx_init_gui(t_chat *chat) {
+    g_idle_add((GSourceFunc)connect_authorization, chat);
     connect_authorization(chat);
     connect_addroom(chat);
 }
