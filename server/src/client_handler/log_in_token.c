@@ -4,7 +4,7 @@ bool mx_log_in_token(t_dtp *token, t_client *client) {
     cJSON *obj = NULL;
     t_user *user = NULL;
 
-    if (!token || token->type != RQ_TOKEN)
+    if (!token || client->user != NULL)
         return false;
     obj = cJSON_GetObjectItemCaseSensitive(token->json, "token");
     if (!cJSON_IsString(obj))

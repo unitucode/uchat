@@ -1,13 +1,11 @@
 #include "client.h"
 
-t_dtp *mx_msg_request(int id_room, char *from, char *msg) {  
+t_dtp *mx_msg_request(int id_room, char *msg) {  
     cJSON *json_result = cJSON_CreateObject();
 
     if (!cJSON_AddNumberToObject(json_result, "type", RQ_MSG))
         return NULL;
     if (!cJSON_AddNumberToObject(json_result, "id_room", id_room))
-        return NULL;
-    if (!cJSON_AddStringToObject(json_result, "login", MX_J_STR(from)))
         return NULL;
     if (!cJSON_AddStringToObject(json_result, "msg", MX_J_STR(msg)))
         return NULL;

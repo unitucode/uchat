@@ -31,15 +31,13 @@ bool mx_error_handle(t_dtp *data, t_chat *chat);
 bool mx_authorization(t_dtp *token, t_chat *chat);
 bool mx_new_room(t_dtp *data, t_chat *chat);
 bool mx_msg_req_handle(t_dtp *data, t_chat *chat);
-bool mx_error_req_msg_handle(t_dtp *data, t_chat *chat);
 
 //api
 t_dtp *mx_new_room_request(char *room_name, bool is_private, char *pass);
 t_dtp *mx_token_request(char *token);
 t_dtp *mx_log_in_request(char *login, char *pass);
 t_dtp *mx_sign_up_request(char *login, char *pass);
-t_dtp *mx_msg_request(int id_room, char *from, char *msg);
-t_dtp *mx_error_msg_request(int error_code, char *msg);
+t_dtp *mx_msg_request(int id_room, char *msg);
 
 //gui
 GtkBuilder *mx_init_window(int argc, char **argv);

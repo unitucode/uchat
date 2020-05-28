@@ -5,7 +5,7 @@ static void incorrect_data(t_client *client) {
     t_dtp *dtp = mx_error_msg_request(40, "User already exist");
 
     mx_send(client->ssl, dtp);
-    mx_free_request_struct(&dtp);
+    mx_free_request(&dtp);
 }
 
 static void sign_up(char *login, char *pass, t_client *client) {
@@ -29,8 +29,9 @@ bool mx_sign_up(t_dtp *signup_data, t_client *client) {
     char *pass_str;
 
     if (!mx_valid_authorization_data(signup_data, &login_str,
-                                     &pass_str, RQ_SIGN_UP))
+                                     &pass_str, client)) {
         return false;
+    }
     mx_md5(md5_pass, (const unsigned char*)pass_str, strlen(pass_str));
     sign_up(login_str, md5_pass, client);
     return true;
