@@ -55,12 +55,20 @@ static void connect_authorization(t_chat *chat) {
     GtkButton *btn_login = GTK_BUTTON(gtk_builder_get_object(chat->builder,
                                                        "btn_login"));
 
+
     g_signal_connect(btn_signup, "clicked", G_CALLBACK(mx_req_signup), chat);
     g_signal_connect(btn_login, "clicked", G_CALLBACK(mx_req_login), chat);
 }
 
+static void check_connection(t_chat *chat) {
+    if (chat->auth_token) {
+        mx_start_main_window(chat);
+        g_idle_remove_by_data(chat);
+    }
+}
+
 void mx_init_gui(t_chat *chat) {
-    g_idle_add((GSourceFunc)connect_authorization, chat);
+    g_idle_add((GSourceFunc)check_connection, chat);
     connect_authorization(chat);
     connect_addroom(chat);
 }
