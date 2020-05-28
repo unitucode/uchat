@@ -1,5 +1,5 @@
 #include "server.h"
-#include <sqlite3.h>
+#include "sqlite3.h"
 
 int callback(void *message, int argc, char** argv, char **data_parametr) {
     for (int i = 0; i < argc; i++) {

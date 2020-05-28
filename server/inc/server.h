@@ -3,7 +3,7 @@
 #include "utils.h"
 #include "protocol.h"
 #include "list.h"
-#include <sqlite3.h>
+#include "sqlite3.h"
 
 #define MX_LISTENQ 1024
 #define MX_PORT_LEN 8
@@ -34,6 +34,18 @@ bool mx_log_in(t_dtp *login, t_client *client);
 bool mx_sign_up(t_dtp *signup_data, t_client *client);
 bool mx_log_in_token(t_dtp *token, t_client *client);
 bool mx_authorization(t_client *client, t_dtp *data);
+
+
+bool mx_msg_req_handle(t_dtp *data, t_chat *chat);
+bool mx_error_req_msg_handle(t_dtp *data, t_chat *chat);
+
+//api
+t_dtp *mx_new_room_request(char *room_name, bool is_private, char *pass);
+t_dtp *mx_token_request(char *token);
+t_dtp *mx_log_in_request(char *login, char *pass);
+t_dtp *mx_sign_up_request(char *login, char *pass);
+t_dtp *mx_msg_request(int id_room, char *from, char *msg);
+t_dtp *mx_error_msg_request(int error_code, char *msg);
 
 int mx_tcp_listen(const char *serv, socklen_t *addr_len);
 void mx_get_client_info(t_client *client);

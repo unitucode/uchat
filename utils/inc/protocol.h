@@ -31,12 +31,6 @@ typedef struct s_dtp { // Data Transfer Protocol view
     int type;
 }              t_dtp;
 
-//requests
-t_dtp *mx_msg_request(int id_room, char *from, char *msg);
-t_dtp *mx_delete_room_request(char *room_name);
-t_dtp *mx_error_msg_request(int error_code, char *msg);
-t_dtp *mx_get_transport_data(cJSON *json_result);
-
 //SSL
 t_ssl_con *mx_init_ssl(t_app_type type);
 t_dtp *mx_recv(SSL *ssl);
@@ -51,3 +45,4 @@ void mx_create_token(char *token, char *login);
 int mx_get_type_dtp(t_dtp *dtp);
 t_dtp *mx_request_creation(char *req_body);
 void mx_free_request_struct(t_dtp **request);
+t_dtp *mx_get_transport_data(cJSON *json_result);
