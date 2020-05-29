@@ -1,10 +1,21 @@
 #include "client.h"
 
+void mx_show_password(GtkToggleButton *btn, GtkEntry *entry) {
+    gtk_entry_set_visibility(entry, gtk_toggle_button_get_active(btn));
+}
+
 void mx_errmsg_wrong_authdata(GtkBuilder *builder) {
     GtkLabel *label = GTK_LABEL(gtk_builder_get_object(builder,
                                                        "label_autherror"));
 
     gtk_label_set_text(label, "The email or password inccorect");
+}
+
+void mx_errmsg_user_exist(GtkBuilder *builder) {
+    GtkLabel *label = GTK_LABEL(gtk_builder_get_object(builder,
+                                                       "label_autherror"));
+
+    gtk_label_set_text(label, "User already exist");
 }
 
 static bool is_valid_auth_data(char *login, char *pass, GtkBuilder *builder) {

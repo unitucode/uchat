@@ -56,3 +56,4 @@ void mx_widget_switch_visibility(GtkWidget *usr_ctrl, void *widget);
 void mx_reset_addroom(GtkButton *btn, GtkBuilder *builder);
 void mx_connect_authorization(t_chat *chat);
 void mx_errmsg_wrong_authdata(GtkBuilder *builder);
+void mx_errmsg_user_exist(GtkBuilder *builder);

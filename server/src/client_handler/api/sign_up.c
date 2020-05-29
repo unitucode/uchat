@@ -2,7 +2,7 @@
 #include "protocol.h"
 
 static void incorrect_data(t_client *client) {
-    t_dtp *dtp = mx_error_msg_request(40, "User already exist");
+    t_dtp *dtp = mx_error_msg_request(11, "User already exist");
 
     mx_send(client->ssl, dtp);
     mx_free_request(&dtp);
