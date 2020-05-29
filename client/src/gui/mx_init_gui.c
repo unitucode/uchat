@@ -61,16 +61,9 @@ static void connect_authorization(t_chat *chat) {
 }
 
 static bool check_connection(t_chat *chat) {
-    if (chat->data) {
-        if (chat->auth_token
-            || chat->data->type == RQ_ERROR_MSG
-            || chat->data->type == RQ_TOKEN) {
-            if (!chat->request_handler[chat->data->type]
-                ||!chat->request_handler[chat->data->type](chat->data, chat)) {
-                return false;
-            }
-        }
-        mx_free_request(&chat->data);
+    if (chat->auth_token) {
+        mx_start_main_window(chat);
+        return false;
     }
     return true;
 }
