@@ -21,16 +21,27 @@ static void connect_addroom(t_chat *chat) {
     g_signal_connect(btn, "clicked", G_CALLBACK(mx_req_addroom), chat);
 }
 
-static bool check_connection(t_chat *chat) {
-    if (chat->auth_token) {
-        mx_start_main_window(chat);
-        return false;
+static gboolean check_data(t_chat *chat) {
+    gpointer queue_data = g_async_queue_try_pop(chat->queue);
+    t_queue_data *r_d = NULL;
+    gboolean result = G_SOURCE_CONTINUE;
+
+    if (queue_data) {
+        r_d = (t_queue_data*)queue_data;
+        if (chat->request_handler[r_d->data->type]) {
+            if (!chat->request_handler[r_d->data->type](r_d->data, chat)) {
+                shutdown(SSL_get_fd(chat->ssl), SHUT_WR);
+                //error packet
+                result = G_SOURCE_REMOVE;
+            }
+        }
+        mx_delete_queue_data(&r_d);
     }
-    return true;
+    return result;
 }
 
 void mx_init_gui(t_chat *chat) {
-    g_idle_add((GSourceFunc)check_connection, chat);
+    g_idle_add((GSourceFunc)check_data, chat);
     mx_connect_authorization(chat);
     connect_addroom(chat);
 }
