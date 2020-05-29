@@ -60,11 +60,19 @@ static void connect_authorization(t_chat *chat) {
     g_signal_connect(btn_login, "clicked", G_CALLBACK(mx_req_login), chat);
 }
 
-static void check_connection(t_chat *chat) {
-    if (chat->auth_token) {
-        mx_start_main_window(chat);
-        g_idle_remove_by_data(chat);
+static bool check_connection(t_chat *chat) {
+    if (chat->data) {
+        if (chat->auth_token
+            || chat->data->type == RQ_ERROR_MSG
+            || chat->data->type == RQ_TOKEN) {
+            if (!chat->request_handler[chat->data->type]
+                ||!chat->request_handler[chat->data->type](chat->data, chat)) {
+                return false;
+            }
+        }
+        mx_free_request(&chat->data);
     }
+    return true;
 }
 
 void mx_init_gui(t_chat *chat) {

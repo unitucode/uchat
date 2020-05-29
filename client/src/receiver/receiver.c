@@ -12,21 +12,20 @@ void mx_init_receiver(t_chat *chat) {
 
 void *mx_receiver(void *arg) {
     t_chat *chat = (t_chat*)arg;
-    t_dtp *data = NULL;
 
-    while ((data = mx_recv(chat->ssl))) {
-        printf("recv = %s", data->str);
-        if (chat->auth_token
-            || data->type == RQ_ERROR_MSG
-            || data->type == RQ_TOKEN) {
-            if (!chat->request_handler[data->type]
-                ||!chat->request_handler[data->type](data, chat)) {
-                break;
-            }
-        }
-        mx_free_request(&data);
+    while ((chat->data = mx_recv(chat->ssl))) {
+        printf("recv = %s", chat->data->str);
+        // if (chat->auth_token
+        //     || chat->data->type == RQ_ERROR_MSG
+        //     || chat->data->type == RQ_TOKEN) {
+        //     if (!chat->request_handler[chat->data->type]
+        //         ||!chat->request_handler[chat->data->type](chat->data, chat)) {
+        //         break;
+        //     }
+        // }
+        // mx_free_request(&chat->data);
     }
-    mx_free_request(&data);
+    mx_free_request(&chat->data);
     printf("Closed receiver\n");
     return NULL;
 }
