@@ -23,19 +23,19 @@ static void connect_addroom(t_chat *chat) {
 
 static gboolean check_data(t_chat *chat) {
     gpointer queue_data = g_async_queue_try_pop(chat->queue);
-    t_queue_data *r_d = NULL;
+    t_dtp *dtp = NULL;
     gboolean result = G_SOURCE_CONTINUE;
 
     if (queue_data) {
-        r_d = (t_queue_data*)queue_data;
-        if (chat->request_handler[r_d->data->type]) {
-            if (!chat->request_handler[r_d->data->type](r_d->data, chat)) {
+        dtp = (t_dtp*)queue_data;
+        if (chat->request_handler[dtp->type]) {
+            if (!chat->request_handler[dtp->type](dtp, chat)) {
                 shutdown(SSL_get_fd(chat->ssl), SHUT_WR);
                 //error packet
                 result = G_SOURCE_REMOVE;
             }
         }
-        mx_delete_queue_data(&r_d);
+        mx_free_request(&dtp);
     }
     return result;
 }

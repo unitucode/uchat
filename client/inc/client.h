@@ -24,21 +24,12 @@ typedef struct s_chat {
     bool (*request_handler[RQ_COUNT_REQUEST])(t_dtp *dtp, struct s_chat *chat);
 }              t_chat;
 
-typedef struct s_queue_data {
-    t_dtp *data;
-    t_chat *chat;
-}              t_queue_data;
-
 int mx_tcp_connect(const char *host, const char *serv);
 t_chat *mx_init_chat(void);
 void mx_signup(SSL *ssl);
 void mx_login(SSL *ssl);
 void *mx_receiver(void *arg);
 void mx_init_receiver(t_chat *chat);
-
-//queue data
-void mx_delete_queue_data(t_queue_data **data);
-t_queue_data *mx_new_queue_data(t_dtp *data, t_chat *chat);
 
 //handlers
 bool mx_error_handle(t_dtp *data, t_chat *chat);
