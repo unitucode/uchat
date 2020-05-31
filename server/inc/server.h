@@ -36,12 +36,14 @@ struct s_client {
 //api
 t_dtp *mx_token_request(char *token);
 t_dtp *mx_error_msg_request(int error_code, char *msg);
+t_dtp *mx_msg_request(char *msg, char *from, long long date, char *room_name);
 
 //data protocol handler functions
 bool mx_log_in(t_dtp *login, t_client *client);
 bool mx_sign_up(t_dtp *signup_data, t_client *client);
 bool mx_log_in_token(t_dtp *token, t_client *client);
 bool mx_new_room(t_dtp *data, t_client *client);
+bool mx_msg(t_dtp *data, t_client *client);
 
 int mx_tcp_listen(const char *serv, socklen_t *addr_len);
 void mx_get_client_info(t_client *client);
@@ -53,6 +55,7 @@ void mx_disconnect_client(t_client *client);
 void mx_delete_client(void **client);
 void mx_init_receiver(t_chat *chat);
 void *mx_receiver(void *arg);
+void mx_send_to_all(t_dtp *data, t_client *client);
 
 //Authorization
 bool mx_valid_authorization_data(t_dtp *data, char **login,

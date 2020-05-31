@@ -20,8 +20,9 @@
 #include <openssl/err.h>
 #include <openssl/md5.h>
 #include <openssl/rand.h>
-#include "sqlite3.h"
 #include <regex.h>
+#include <time.h>
+#include "sqlite3.h"
 #include "cJSON.h"
 
 #define MX_IN_ITOA(m) #m
@@ -109,6 +110,7 @@ bool mx_match_search(char *str, char *regex);
 bool mx_match_nsearch(char *str, char *regex, size_t size);
 void mx_randomize_str(char *str, size_t count);
 void *mx_memdup(const void *mem, size_t size);
+long long mx_get_current_time(void);
 
 
 //wrappers

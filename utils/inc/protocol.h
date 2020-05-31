@@ -32,9 +32,7 @@ typedef struct s_dtp { // Data Transfer Protocol view
 }              t_dtp;
 
 //requests
-t_dtp *mx_msg_request(int id_room, char *from, char *msg);
 t_dtp *mx_delete_room_request(char *room_name);
-t_dtp *mx_error_msg_request(int error_code, char *msg);
 t_dtp *mx_get_transport_data(cJSON *json_result);
 
 //SSL
