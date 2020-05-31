@@ -28,12 +28,19 @@ static gboolean check_data(t_chat *chat) {
 
     if (queue_data) {
         dtp = (t_dtp*)queue_data;
-        if (chat->request_handler[dtp->type]) {
-            if (!chat->request_handler[dtp->type](dtp, chat)) {
-                shutdown(SSL_get_fd(chat->ssl), SHUT_WR);
-                //error packet
-                result = G_SOURCE_REMOVE;
+        if (chat->auth_token
+            || dtp->type == RQ_ERROR_MSG
+            || dtp->type == RQ_TOKEN) {
+            if (chat->request_handler[dtp->type]) {
+                if (!chat->request_handler[dtp->type](dtp, chat)) {
+                    shutdown(SSL_get_fd(chat->ssl), SHUT_WR);
+                    //error packet
+                    result = G_SOURCE_REMOVE;
+                }
             }
+        }
+        else {
+            result = G_SOURCE_REMOVE;
         }
         mx_free_request(&dtp);
     }

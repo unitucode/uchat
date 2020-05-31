@@ -36,7 +36,7 @@ struct s_client {
 //api
 t_dtp *mx_token_request(char *token);
 t_dtp *mx_error_msg_request(int error_code, char *msg);
-t_dtp *mx_msg_request(char *msg, char *from, long long date, char *room_name);
+t_dtp *mx_online_users_request(int count);
 
 //data protocol handler functions
 bool mx_log_in(t_dtp *login, t_client *client);
@@ -56,6 +56,7 @@ void mx_delete_client(void **client);
 void mx_init_receiver(t_chat *chat);
 void *mx_receiver(void *arg);
 void mx_send_to_all(t_dtp *data, t_client *client);
+void mx_update_online(int count, t_client *client);
 
 //Authorization
 bool mx_valid_authorization_data(t_dtp *data, char **login,
