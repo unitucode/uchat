@@ -16,7 +16,7 @@ struct s_chat {
     t_dl_list *clients;
     socklen_t len;
     pthread_mutex_t mutex;
-    bool (*request_handler[RQ_COUNT_REQUEST])(t_dtp *dtp, t_client *chat);
+    bool (*request_handler[RQ_COUNT_REQUEST])(t_dtp *dtp, t_client *client);
     sqlite3* database;
 };
 
