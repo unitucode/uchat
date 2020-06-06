@@ -71,7 +71,7 @@ typedef struct s_user {
 typedef struct s_message {
     unsigned int id_room;
     unsigned int id_message;
-    long long date;
+    long int date;
     char *login;
     char *message;
     // cJSON *message;
@@ -178,7 +178,7 @@ cJSON *mx_create_json_message(sqlite3 * database, char *name_room,
 cJSON *mx_get_message_arr(char *name_room, sqlite3 *database);
 cJSON *mx_get_object_message(sqlite3_stmt * stmt);
 cJSON *mx_get_last_message(sqlite3 * database,
-                               char *name_room, long long date);
+                               char *name_room, long int date);
 
 void mx_parse_message(cJSON * room_mss, t_dl_list * list);
 

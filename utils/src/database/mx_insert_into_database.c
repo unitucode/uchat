@@ -74,7 +74,7 @@ t_user *mx_insert_user_into_db(sqlite3 *database, char *login,
     return mx_get_user_by_login(database, login);
 }
 
-void mx_insert_into_member(sqlite3 *database, 
+void mx_insert_member_into_db(sqlite3 *database, 
                            char *login, char *name_room) {
     sqlite3_stmt *stmt;
     int rv = 0;

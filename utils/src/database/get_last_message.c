@@ -2,7 +2,7 @@
 #include "utils.h"
 
 cJSON *mx_get_last_message(sqlite3 *database, 
-                         char *name_room, long long date) {
+                         char *name_room, long int date) {
     cJSON *room = cJSON_CreateObject();
     cJSON *message = cJSON_CreateArray();
     sqlite3_str *str = sqlite3_str_new(database);
@@ -18,7 +18,7 @@ cJSON *mx_get_last_message(sqlite3 *database,
     sqlite3_str_appendall(str, "ORDER BY DATE");
     sql = sqlite3_str_finish(str);
     rv = sqlite3_prepare_v3(database, sql, -1, 0, &stmt, NULL);
-    sqlite3_bind_int(stmt, 1, date);
+    sqlite3_bind_int(stmt, 100, date);
     for (int i = 0; i < 30 && 
                     (rv = sqlite3_step(stmt)) == SQLITE_ROW; i++) {
         printf("%d\n", rv);
