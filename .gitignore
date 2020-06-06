@@ -1,4 +1,3 @@
-chat_server
 uchat_server
 uchat
 .DS_Store
@@ -9,9 +8,9 @@ info.log
 a.out
 .vscode/settings.json
 .vscode
-users.db
-uchat_server_work/info.log
-uchat_work/info.log
 libraries/include
 libraries/lib
 libraries/**/*.o
+client/uchat_wd/info.log
+server/uchat_server_wd/info.log
+utils/libutils.a
