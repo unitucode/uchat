@@ -24,11 +24,16 @@ void mx_change_working_dir(void) {
 }
 
 int main(int argc, char **argv) {
-    // mx_test_room();
-    // mx_test_users();
-    // mx_test_message();
-    // mx_test_member();
-    // exit(1);
+    sqlite3 *database =  mx_server_data_open(MX_DB_USER);
+    // char *string = cJSON_Print(mx_create_json_object(database, "vlad"));
+    char *string = cJSON_Print(mx_get_last_message(database, "chat_of_vlad", 50));
+    printf("%s\n", string);
+    // mx_json();
+    // t_dl_list *list = mx_parse_json(string);
+    // t_room *room = (t_room*)list->front->data;
+    // printf("room_customer -> %s\n", room->customer);
+    printf("Ok\n");
+    exit(1);
     t_chat *chat = mx_init_chat(argc, argv);
     t_client *client = NULL;
     t_ssl_con *ssl = NULL;
@@ -37,7 +42,7 @@ int main(int argc, char **argv) {
     chat->database = mx_server_data_open(MX_DB_USER);
     client = NULL;
     ssl = mx_init_ssl(SERVER);
-    mx_create_table(chat->database, MX_USERS_TABLE);
+    mx_create_table_users(chat->database);
     mx_logger(MX_LOG_FILE, LOGMSG,"started server pid[%d]: %s %s\n", getpid(), argv[0], argv[1]);
     while (1) {
         client = mx_new_client(chat->len);

@@ -12,7 +12,7 @@ static t_message *for_get_message(sqlite3_stmt *stmt) {
     message->id_message = sqlite3_column_int(stmt, 0);
     message->login = strdup((const char*)sqlite3_column_text(stmt, 1));
     message->date = sqlite3_column_int(stmt, 2);
-    message->json = strdup((const char*)sqlite3_column_text(stmt, 3));
+    message->message = strdup((const char*)sqlite3_column_text(stmt, 3));
     sqlite3_finalize(stmt);;
     return message;
 }
