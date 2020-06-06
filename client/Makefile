@@ -29,11 +29,9 @@ OBJS = $(addprefix $(OBJD)/, $(notdir $(SRCS:%.c=%.o)))
 # -I/usr/include/freetype2 -I/usr/include/libpng16 -I/usr/include/gdk-pixbuf-2.0 \
 # -I/usr/include/libmount -I/usr/include/blkid -I/usr/include/glib-2.0 \
 # -I/usr/lib/x86_64-linux-gnu/glib-2.0/include
-GTK_LIBS = -lgtk-3 -lgdk-3 -lpangocairo-1.0 -lpango-1.0 -lharfbuzz -latk-1.0 \
--lcairo-gobject -lcairo -lgdk_pixbuf-2.0 -lgio-2.0 -lgobject-2.0 -lglib-2.0 \
--rdynamic
+GTK_LIBS = -rdynamic `pkg-config --cflags --libs gtk+-3.0`
 
-GTK_INC = -I/Users/okhomin/.brew/opt/icu4c/include
+GTK_INC = `pkg-config --cflags gtk+-3.0`
 # GTK_LIBS = -L/Users/okhomin/.brew/opt/icu4c/lib
 
 #compilier
