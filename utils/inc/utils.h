@@ -150,28 +150,37 @@ t_user *mx_get_user_by_login(sqlite3 *database, char *login);
 t_user *mx_get_user_by_token(sqlite3 *database, char *token);
 t_room *mx_get_room(sqlite3 *database,char *name_room);
 
-void mx_update_permission_of_user(sqlite3 *database, unsigned int permission, char *login);
+void mx_update_permission_of_user(sqlite3 *database, 
+                                  unsigned int permission, char *login);
 void mx_update_token(sqlite3 *database, char *new_token, char *login);
 
-t_user *mx_insert_user(sqlite3 *database, char *login, char *password, char *token);
-void mx_insert_message(sqlite3 *database, char *login, long long date, char *json);
-void mx_insert_memeber(sqlite3 *database, int id_room, char *login);
-t_room *mx_insert_room(sqlite3 *database, char *customer, char *name_room);
+// t_user *mx_insert_user(sqlite3 *database, char *login, char *password, char *token);
+// void mx_insert_message(sqlite3 *database, char *login, long long date, char *json);
+// void mx_insert_memeber(sqlite3 *database, int id_room, char *login);
+// t_room *mx_insert_room(sqlite3 *database, char *customer, char *name_room);
 
 void mx_create_table_room(sqlite3 *database, char *name_room);
 void mx_insert_to_room(sqlite3 *database, t_message *room, char *name_room);
 
+t_message *mx_insert_message_into_db(sqlite3 *database, char *message_str,
+                                     char *login, char *name_room);
+t_room *mx_insert_room_into_db(sqlite3 *database, char *name_room,
+                               char *customer);
+t_user *mx_insert_user_into_db(sqlite3 *database, char *login,
+                               char *pass, char *token);
+void mx_insert_into_member(sqlite3 *database,
+                           char *login, char *name_room);
+
+
 cJSON *mx_create_json_object(sqlite3 *database, char *user_login);
-cJSON *mx_create_json_message(sqlite3 *database, char *name_room, long long date);
+cJSON *mx_create_json_message(sqlite3 * database, char *name_room,
+                              long long date);
 cJSON *mx_get_message_arr(char *name_room, sqlite3 *database);
-cJSON *mx_get_object_message(sqlite3_stmt *stmt);
-cJSON *mx_get_last_message(sqlite3 *database, 
-                           char *name_room, long long date);
+cJSON *mx_get_object_message(sqlite3_stmt * stmt);
+cJSON *mx_get_last_message(sqlite3 * database,
+                               char *name_room, long long date);
 
-
-
-void mx_parse_message(cJSON *room_mss, t_dl_list *list);
-
+void mx_parse_message(cJSON * room_mss, t_dl_list * list);
 
 t_dl_list *mx_parse_json(char *rooms_json);
 void mx_test_json();

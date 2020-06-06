@@ -13,13 +13,12 @@ void mx_test_json() {
 
 void mx_json() {
     sqlite3 *database =  mx_server_data_open(MX_DB_USER);
-    t_message *room = malloc(sizeof(t_message));
+    t_message *message = malloc(sizeof(t_message));
 
-    room->id_room = 1;
-    room->login = "vlad";
-    room->date = 54;
-    room->message = "hello world";
-    mx_insert_to_room(database, room, "chat_of_vlad");
+    message->id_room = 1;
+    message->login = "vlad";
+    message->message = "hello world";
+    mx_insert_to_room(database, message, "chat_of_vlad");
     mx_close_database(database);
     printf("Ok\n");
 }

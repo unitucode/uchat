@@ -52,7 +52,7 @@ void mx_insert_memeber(sqlite3 *database, int id_room, char *login) {
     sqlite3_finalize(stmt);
 }
 
-void mx_insert_to_room(sqlite3 *db, t_message *room, char *name_room) {
+void mx_insert_to_room(sqlite3 *db, t_message *message, char *name_room) {
     sqlite3_stmt *stmt;
     int rv = 0;
     char *sql = NULL;
@@ -64,13 +64,13 @@ void mx_insert_to_room(sqlite3 *db, t_message *room, char *name_room) {
         "(ID_ROOM, LOGIN, DATE, MESSAGE)VALUES(?1, ?2, ?3, ?4);");
     sql = sqlite3_str_finish(str);
     if ((rv = sqlite3_prepare_v3(db, sql, -1, 0, &stmt, NULL)) == SQLITE_ERROR)
-        mx_elogger(MX_LOG_FILE, LOGERR, "insert database table");
-    sqlite3_bind_int(stmt, 1, room->id_room);
-    sqlite3_bind_text(stmt, 2, room->login, -1, SQLITE_STATIC);
-    sqlite3_bind_int(stmt, 3, room->date);
-    sqlite3_bind_text(stmt, 4, room->message, -1, SQLITE_STATIC);
+        mx_elogger(MX_LOG_FILE, LOGERR, "insert message into database");
+    sqlite3_bind_int(stmt, 1, message->id_room);
+    sqlite3_bind_text(stmt, 2, message->login, -1, SQLITE_STATIC);
+    sqlite3_bind_int(stmt, 3, (long int)time(NULL));
+    sqlite3_bind_text(stmt, 4, message->message, -1, SQLITE_STATIC);
     if ((rv = sqlite3_step(stmt)) != SQLITE_DONE)
-         mx_elogger(MX_LOG_FILE, LOGERR, "insert database table");
+         mx_elogger(MX_LOG_FILE, LOGERR, "insert message into database");
     sqlite3_free(sql);
     sqlite3_finalize(stmt);
 }
