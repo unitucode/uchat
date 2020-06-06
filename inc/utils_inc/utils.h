@@ -163,8 +163,15 @@ void mx_insert_to_room(sqlite3 *database, t_messages *room, char *name_room);
 
 cJSON *mx_create_json_object(sqlite3 *database, char *user_login);
 cJSON *mx_create_json_message(sqlite3 *database, char *name_room, long long date);
+cJSON *mx_get_message_arr(char *name_room, sqlite3 *database);
+cJSON *mx_get_object_message(sqlite3_stmt *stmt);
+cJSON *mx_get_last_message(sqlite3 *database, 
+                         char *name_room, long long date);
+
+
 
 void mx_parse_message(cJSON *room_mss, t_dl_list *list);
+
 
 t_dl_list *mx_parse_json(char *rooms_json);
 void mx_test_json();

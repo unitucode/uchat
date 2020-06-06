@@ -7,7 +7,7 @@ void mx_create_table_users(sqlite3 *database) {
                         TOKEN          TEXT           NOT NULL,\
                         PERMISSION     INTEGER        NOT NULL,\
                         ON_OFF         INTEGER        NOT NULL);",
-                         0, 0, 0);
+                         0, 0, 0)   ;
 }
 
 void mx_create_table_member(sqlite3 *database) {

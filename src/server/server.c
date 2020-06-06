@@ -27,7 +27,7 @@ void mx_change_working_dir(void) {
 int main(int argc, char **argv) {
     sqlite3 *database =  mx_server_data_open(MX_DB_USER);
     // char *string = cJSON_Print(mx_create_json_object(database, "vlad"));
-    char *string = cJSON_Print(mx_create_json_message(database, "chat_of_vlad", 60));
+    char *string = cJSON_Print(mx_get_last_message(database, "chat_of_vlad", 55));
     printf("%s\n", string);
     // t_dl_list *list = mx_parse_json(string);
     // t_room *room = (t_room*)list->front->data;

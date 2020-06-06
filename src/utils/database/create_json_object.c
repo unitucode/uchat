@@ -1,6 +1,6 @@
 #include "utils.h"
 
-static cJSON *get_object_message(sqlite3_stmt *stmt) {
+cJSON *mx_get_object_message(sqlite3_stmt *stmt) {
     cJSON *object_message = cJSON_CreateObject();
 
     cJSON_AddItemToObject(object_message, "id_message",
@@ -16,7 +16,7 @@ static cJSON *get_object_message(sqlite3_stmt *stmt) {
     return object_message;
 }
 
-static cJSON *get_message_arr(char *name_room, sqlite3 *database) {
+cJSON *mx_get_message_arr(char *name_room, sqlite3 *database) {
     cJSON *arr_object = cJSON_CreateArray();
     sqlite3_str *str = sqlite3_str_new(database);
     sqlite3_stmt *stmt;
@@ -29,7 +29,7 @@ static cJSON *get_message_arr(char *name_room, sqlite3 *database) {
     rv = sqlite3_prepare_v3(database, sql, -1, 0, &stmt, NULL);
     for (int i = 0; i < 30 && 
                     (rv = sqlite3_step(stmt)) == SQLITE_ROW; i++) {
-        cJSON_AddItemToArray(arr_object, get_object_message(stmt));
+        cJSON_AddItemToArray(arr_object, mx_get_object_message(stmt));
     }
     sqlite3_free(sql);
     sqlite3_finalize(stmt);
@@ -48,7 +48,7 @@ static cJSON *get_data_room(sqlite3 *database, sqlite3_stmt *stmt) {
     cJSON_AddItemToObject(object_tmp, "customer_login",
         cJSON_CreateString((char*)sqlite3_column_text(stmt, 2)));
     cJSON_AddItemToObject(object_tmp, "message",
-        get_message_arr(name_room, database));
+        mx_get_message_arr(name_room, database));
     return object_tmp;
 }
 
@@ -118,8 +118,7 @@ cJSON *mx_create_json_message(sqlite3 *database,
     sqlite3_bind_int(stmt, 1, date);
     for (int i = 0; i < 30 && 
                     (rv = sqlite3_step(stmt)) == SQLITE_ROW; i++) {
-    printf("%d\n", rv);
-        cJSON_AddItemToArray(message, get_object_message(stmt));
+        cJSON_AddItemToArray(message, mx_   get_object_message(stmt));
     }
     sqlite3_free(sql);
     sqlite3_finalize(stmt);
