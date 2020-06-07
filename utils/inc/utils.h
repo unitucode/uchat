@@ -152,6 +152,7 @@ void mx_create_table_member(sqlite3 *database);
 t_user *mx_get_user_by_login(sqlite3 *database, char *login);
 t_user *mx_get_user_by_token(sqlite3 *database, char *token);
 t_room *mx_get_room(sqlite3 *database,char *name_room);
+void mx_free_room(t_room **room);
 
 void mx_update_permission_of_user(sqlite3 *database, 
                                   unsigned int permission, char *login);

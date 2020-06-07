@@ -50,8 +50,6 @@ bool mx_authorization(t_dtp *token, t_chat *chat) {
     }
     chat->auth_token = strdup(auth_token->valuestring);
     cJSON_Delete(json);
-    t_dtp *new_room = mx_new_room_request("room!", false, "0");
-    mx_send(chat->ssl, new_room);
     mx_start_main_window(chat);
     return true;
 }

@@ -22,6 +22,14 @@ bool mx_new_room(t_dtp *data, t_client *client) { //TODO leaks
 
     if (!room || !cJSON_IsString(room))
         return false;
+    new_room = mx_get_room(client->chat->database, room->valuestring);
+    if (new_room) {
+        resend = mx_error_msg_request(20, "already exist");
+        mx_send(client->ssl, resend);
+        mx_free_request(&resend);
+        mx_free_room(&new_room);
+        return true;
+    }
     new_room = mx_insert_room_into_db(client->chat->database,
                                       room->valuestring,
                                       (char*)client->user->login);

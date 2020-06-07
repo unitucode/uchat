@@ -13,6 +13,9 @@ typedef struct s_groom {
     GtkScrolledWindow *page;
     GtkListBoxRow *row_room;
     GtkStack *stack_msg;
+    int id;
+    char *room_name;
+    char *customer;
 }       t_groom;
 
 
@@ -20,6 +23,7 @@ typedef struct s_chat {
     char *auth_token;
     SSL *ssl;
     GtkBuilder *builder;
+    t_dtp *data;
     GAsyncQueue *queue;
     bool (*request_handler[RQ_COUNT_REQUEST])(t_dtp *dtp, struct s_chat *chat);
 }              t_chat;
@@ -48,7 +52,9 @@ GtkBuilder *mx_init_window(int argc, char **argv);
 void mx_init_gui(t_chat *chat);
 int mx_start_gui(t_chat *chat);
 void mx_start_main_window(t_chat *chat);
-void mx_add_room(GtkButton *btn, GtkBuilder *builder);
+void mx_add_groom(t_groom *room, GtkBuilder *builder);
+void mx_delete_groom(t_groom **room);
+t_groom *mx_create_groom(char *room_name, char *customer, int id);
 
 // gui utils
 void mx_scrlldwnd_connect(char *name, GtkWidget *scroll, GtkBuilder *builder);
@@ -59,3 +65,9 @@ void mx_reset_addroom(GtkButton *btn, GtkBuilder *builder);
 void mx_connect_authorization(t_chat *chat);
 void mx_errmsg_wrong_authdata(GtkBuilder *builder);
 void mx_errmsg_user_exist(GtkBuilder *builder);
+
+//gui wrappers
+// void mx_widget_show_all(GtkWidget *widget);
+// void mx_widget_destroy(GtkWidget *widget);
+// void mx_widget_show(GtkWidget *widget);
+void mx_handle_request(t_chat *chat);

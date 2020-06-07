@@ -32,7 +32,7 @@ LIBS = $(LIBD_LIBS) -L/usr/local/opt/openssl/lib \
 all: $(SERVER)
 
 $(SERVER): $(OBJS)
-	@$(CC) -g -o $@ $^ $(UTILS_LIB) $(LIBS)
+	@$(CC) -o $@ $^ $(UTILS_LIB) $(LIBS)
 	@printf "\033[32;1m$@ created\033[0m\n"
 
 $(OBJS): obj/%.o: %.c | $(OBJD)
