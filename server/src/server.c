@@ -1,17 +1,6 @@
 #include "server.h"
 #include "sqlite3.h"
 
-int callback(void *message, int argc, char** argv, char **data_parametr) {
-    for (int i = 0; i < argc; i++) {
-        printf("%s -> %s\n", data_parametr[i], argv[i]);
-        if (strcmp("MESSAGE", data_parametr[i]) == 0 && argv[i] != NULL) {
-            message = strdup(argv[i]);
-        }
-    }
-    printf("Ok\n");
-    return 0;
-}
-
 void mx_change_working_dir(void) {
     #ifdef MX_SERVER
     if (chdir(MX_SERVER)) {
@@ -24,8 +13,20 @@ void mx_change_working_dir(void) {
 }
 
 int main(int argc, char **argv) {
-    sqlite3 *database =  mx_server_data_open(MX_DB_USER);
-    mx_insert_room_into_db(database, "name_room", "admin");
+    sqlite3 *database = mx_server_data_open(MX_DB_USER);
+    // printf("%s\n", mx_create_request_message(database, "name_room", 1));
+    // t_gmp *pr = malloc(sizeof(t_gmp));
+    // pr->count = 20;
+    // pr->date = 60;
+    // pr->db = database;
+    // pr->flag = MX_NEW_MESSAGE;
+    // pr->name_room = "chat_of_vlad";
+    // char *string = cJSON_Print(mx_get_room_all(database));
+    char *vlad[] = {"vlados", "valik", "baby", "pasha", "admin1", "summer", "winter", "sasha", "katya", "yura"};
+    for (int i = 0; i < 10; i++) {
+        mx_insert_room_into_db(database, "name_room", vlad[i]);
+    }
+    printf("vlad\n");
     // char *string = cJSON_Print(mx_create_json_object(database, "vlad"));
     // char *string = cJSON_Print(mx_get_last_message(database, "chat_of_vlad", 1591449397, 100));
     // printf("%s\n", string);
@@ -33,6 +34,7 @@ int main(int argc, char **argv) {
     // t_dl_list *list = mx_parse_json(string);
     // t_room *room = (t_room*)list->front->data;
     // printf("room_customer -> %s\n", room->customer);
+    mx_close_database(database);
     printf("Ok\n");
     exit(1);
     t_chat *chat = mx_init_chat(argc, argv);

@@ -44,16 +44,14 @@
 #define MX_BUF_SIZE 1024
 #define MX_MD5_BUF_SIZE 32
 
+#define MX_OLD_MESSAGE 2
+#define MX_NEW_MESSAGE 1
+#define MX_CURR_MESSAGE 0
+
 typedef enum e_app_type {
     CLIENT,
     SERVER
 }            t_app_type;
-
-typedef struct s_id_room {
-    char *text;
-    int id_room;
-    struct s_id_room *next;
-}              t_id_room;
 
 typedef struct s_members_room {
     char *login;
@@ -68,6 +66,14 @@ typedef struct s_user {
     int on_off;
 }              t_user;
 
+typedef struct s_gmp {
+    long int date;
+    int count;
+    char *name_room;
+    sqlite3 *db;
+    int flag;
+}              t_gmp;
+
 typedef struct s_message {
     unsigned int id_room;
     unsigned int id_message;
@@ -77,7 +83,7 @@ typedef struct s_message {
     char *message;
     // cJSON *message;
     struct s_messages *next;
-}              t_message;
+} t_message;
 
 typedef struct s_room {
     unsigned int id;
@@ -155,11 +161,6 @@ void mx_update_permission_of_user(sqlite3 *database,
                                   unsigned int permission, char *login);
 void mx_update_token(sqlite3 *database, char *new_token, char *login);
 
-// t_user *mx_insert_user(sqlite3 *database, char *login, char *password, char *token);
-// void mx_insert_message(sqlite3 *database, char *login, long long date, char *json);
-// void mx_insert_memeber(sqlite3 *database, int id_room, char *login);
-// t_room *mx_insert_room(sqlite3 *database, char *customer, char *name_room);
-
 void mx_create_table_room(sqlite3 *database, char *name_room);
 void mx_insert_to_room(sqlite3 *database, t_message *room, char *name_room);
 
@@ -174,16 +175,14 @@ void mx_insert_member_into_db(sqlite3 *database,
 
 
 cJSON *mx_create_json_object(sqlite3 *database, char *user_login);
-cJSON *mx_create_json_message(sqlite3 * database, char *name_room,
-                              long long date);
 cJSON *mx_get_message_arr(sqlite3 *database, char *name_room, int count);
-cJSON *mx_get_object_message(sqlite3_stmt * stmt);
-cJSON *mx_get_last_message(sqlite3 * database,
-                               char *name_room, long int date, int count);
+void mx_parse_message(cJSON *room_mss, t_dl_list *list);
 
-void mx_parse_message(cJSON * room_mss, t_dl_list * list);
+char *mx_create_request_message(t_gmp *pr);
+cJSON *mx_get_messages(t_gmp *pr);
+cJSON *mx_get_room_all(sqlite3 *database);
 
-t_dl_list *mx_parse_json(char *rooms_json);
+    t_dl_list *mx_parse_json(char *rooms_json);
 void mx_test_json();
 void mx_json();
 // void mx_test_room();

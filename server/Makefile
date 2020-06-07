@@ -15,7 +15,7 @@ INCD_SERVER = -Iinc/
 UTILS_INC = -I../utils/inc
 UTILS_LIB = ../utils/libutils.a
 
-SRCD := src src/client_handler src/client_handler/receiver
+SRCD := src src/client_handler src/client_handler/receiver src/database
 SRCS = $(foreach dir, $(SRCD), $(wildcard $(dir)/*.c))
 OBJS = $(addprefix $(OBJD)/, $(notdir $(SRCS:%.c=%.o)))
 
