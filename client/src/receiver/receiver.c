@@ -18,16 +18,8 @@ void *mx_receiver(void *arg) {
 
     while ((data = mx_recv(chat->ssl))) {
         printf("recv = %s", data->str);
-        if (chat->auth_token
-            || data->type == RQ_ERROR_MSG
-            || data->type == RQ_TOKEN) {
-            g_queue_push_head(chat->queue, data);
-            mx_handle_request(chat);
-        }
-        else {
-            break;
-        }
-        mx_free_request(&data);
+        g_async_queue_push(chat->queue, data);
+        mx_handle_request(chat);
     }
     printf("Closed receiver\n");
     return NULL;
