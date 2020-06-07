@@ -37,9 +37,9 @@ static void write_one_node_to_list(cJSON *rooms, t_dl_list *list, int i) {
 
     msg_cl->message = NULL;
     msg_cl->next = NULL;
-    room->id =   
-    cJSON_GetObjectItemCaseSensitive(room_json, "id_room")->valueint;
-    room->name = 
+    // room->id =   
+    // cJSON_GetObjectItemCaseSensitive(room_json, "id_room")->valueint;
+    room->name_room = 
     cJSON_GetObjectItemCaseSensitive(room_json, "name_room")->valuestring;
     room->customer = 
     cJSON_GetObjectItemCaseSensitive(room_json, "customer_login")->valuestring;
