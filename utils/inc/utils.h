@@ -81,7 +81,7 @@ typedef struct s_message {
 
 typedef struct s_room {
     unsigned int id;
-    char *name;
+    char *name_room;
     char *customer;
     t_message *data;
 }              t_room;
@@ -176,7 +176,7 @@ void mx_insert_member_into_db(sqlite3 *database,
 cJSON *mx_create_json_object(sqlite3 *database, char *user_login);
 cJSON *mx_create_json_message(sqlite3 * database, char *name_room,
                               long long date);
-cJSON *mx_get_message_arr(char *name_room, sqlite3 *database);
+cJSON *mx_get_message_arr(sqlite3 *database, char *name_room, int count);
 cJSON *mx_get_object_message(sqlite3_stmt * stmt);
 cJSON *mx_get_last_message(sqlite3 * database,
                                char *name_room, long int date, int count);
