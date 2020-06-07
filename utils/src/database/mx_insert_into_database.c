@@ -28,8 +28,9 @@ t_message *mx_insert_message_into_db(sqlite3 *database, char *message_str,
                           "VALUES(?1, ?2, ?3);");
     request = sqlite3_str_finish(str);
     message->date = (long int)time(NULL);
-    message->login = login;
-    message->message = message_str;
+    message->login = strdup(login);
+    message->message = strdup(message_str);
+    message->name_room = strdup(name_room);
     insert_to_room(database, message, request);
     sqlite3_free(request);
     return message;
