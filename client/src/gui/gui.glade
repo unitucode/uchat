@@ -4,7 +4,10 @@
   <requires lib="gtk+" version="3.22"/>
   <object class="GtkEntryBuffer" id="buffer_login"/>
   <object class="GtkTextBuffer" id="buffer_message"/>
-  <object class="GtkEntryBuffer" id="buffer_password"/>
+  <object class="GtkEntryBuffer" id="buffer_password">
+    <signal name="deleted-text" handler="mx_set_unsensetive_confirm" object="entry_signup_confirm" swapped="no"/>
+    <signal name="inserted-text" handler="mx_set_sensetive_confirm" object="entry_signup_confirm" swapped="no"/>
+  </object>
   <object class="GtkEntryBuffer" id="buffer_password_confirm"/>
   <object class="GtkEntryBuffer" id="buffer_roomname">
     <property name="max_length">20</property>
@@ -850,6 +853,7 @@
                 <child>
                   <object class="GtkEntry" id="entry_signup_confirm">
                     <property name="visible">True</property>
+                    <property name="sensitive">False</property>
                     <property name="can_focus">True</property>
                     <property name="margin_left">25</property>
                     <property name="margin_right">25</property>
