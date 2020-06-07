@@ -16,8 +16,15 @@ typedef struct s_groom {
     int id;
     char *room_name;
     char *customer;
-}       t_groom;
+}              t_groom;
 
+typedef struct s_gmsg {
+    char *msg;
+    char *login;
+    long int date;
+    char *room_name;
+    int id_message;
+}              t_gmsg;
 
 typedef struct s_chat {
     char *auth_token;
@@ -25,6 +32,7 @@ typedef struct s_chat {
     GtkBuilder *builder;
     t_dtp *data;
     GAsyncQueue *queue;
+    bool valid;
     bool (*request_handler[RQ_COUNT_REQUEST])(t_dtp *dtp, struct s_chat *chat);
 }              t_chat;
 
@@ -40,6 +48,7 @@ bool mx_error_handle(t_dtp *data, t_chat *chat);
 bool mx_authorization(t_dtp *token, t_chat *chat);
 bool mx_new_room(t_dtp *data, t_chat *chat);
 bool mx_update_users(t_dtp *data, t_chat *chat);
+bool mx_msg(t_dtp *data, t_chat *chat);
 
 //api
 t_dtp *mx_new_room_request(char *room_name, bool is_private, char *pass);
@@ -55,6 +64,8 @@ void mx_start_main_window(t_chat *chat);
 void mx_add_groom(t_groom *room, GtkBuilder *builder);
 void mx_delete_groom(t_groom **room);
 t_groom *mx_create_groom(char *room_name, char *customer, int id);
+t_gmsg *mx_create_gmsg(cJSON *msg);
+void mx_delete_gmsg(t_gmsg **gmsg);
 
 // gui utils
 void mx_scrlldwnd_connect(char *name, GtkWidget *scroll, GtkBuilder *builder);

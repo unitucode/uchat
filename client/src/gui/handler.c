@@ -4,7 +4,8 @@ static gboolean handle(t_chat *chat) {
     t_dtp *dtp = NULL;
     gboolean result = G_SOURCE_REMOVE;
 
-    while ((dtp = (t_dtp*)g_async_queue_try_pop(chat->queue))) {
+    while ((dtp = (t_dtp*)g_async_queue_try_pop(chat->queue))
+           && chat->valid) {
         puts("handle");
         if (chat->auth_token
             || dtp->type == RQ_ERROR_MSG
@@ -12,7 +13,7 @@ static gboolean handle(t_chat *chat) {
             if (chat->request_handler[dtp->type]) {
                 if (!chat->request_handler[dtp->type](dtp, chat)) {
                     shutdown(SSL_get_fd(chat->ssl), SHUT_WR);
-                    //error packet
+                    chat->valid = false;
                     result = G_SOURCE_REMOVE;
                 }
             }
