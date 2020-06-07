@@ -48,8 +48,10 @@ t_room *mx_insert_room_into_db(sqlite3 *database, char *name_room,
         mx_elogger(MX_LOG_FILE, LOGERR, "insert room into database");
     sqlite3_bind_text(stmt, 1, name_room, -1, SQLITE_STATIC);
     sqlite3_bind_text(stmt, 2, customer, -1, SQLITE_STATIC);
-    if ((rv = sqlite3_step(stmt)) != SQLITE_DONE)
+    if ((rv = sqlite3_step(stmt)) != SQLITE_DONE) {
+        printf("%d\n", rv);
         mx_elogger(MX_LOG_FILE, LOGERR, "insert room into database");
+    }
     sqlite3_finalize(stmt);
     mx_create_table_room(database, name_room);
     return mx_get_room(database, name_room);

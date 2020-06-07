@@ -5,18 +5,18 @@ cJSON *mx_get_object_message(sqlite3_stmt *stmt) {
 
     cJSON_AddItemToObject(object_message, "id_message",
         cJSON_CreateNumber(sqlite3_column_int(stmt, 0)));
-    cJSON_AddItemToObject(object_message, "id_room",
-        cJSON_CreateNumber(sqlite3_column_int(stmt, 1)));
+    // cJSON_AddItemToObject(object_message, "id_room",
+    //     cJSON_CreateNumber(sqlite3_column_int(stmt, 1)));
     cJSON_AddItemToObject(object_message, "login",
-        cJSON_CreateString((char*)sqlite3_column_text(stmt, 2)));
+        cJSON_CreateString((char*)sqlite3_column_text(stmt, 1)));
     cJSON_AddItemToObject(object_message, "date",
-        cJSON_CreateNumber(sqlite3_column_int(stmt, 3)));
+        cJSON_CreateNumber(sqlite3_column_int(stmt, 2)));
     cJSON_AddItemToObject(object_message, "message",
-        cJSON_CreateString((char*)sqlite3_column_text(stmt, 4)));
+        cJSON_CreateString((char*)sqlite3_column_text(stmt, 3)));
     return object_message;
 }
 
-cJSON *mx_get_message_arr(char *name_room, sqlite3 *database) {
+cJSON *mx_get_message_arr(sqlite3 *database, char *name_room, int count) {
     cJSON *arr_object = cJSON_CreateArray();
     sqlite3_str *str = sqlite3_str_new(database);
     sqlite3_stmt *stmt;
@@ -25,9 +25,10 @@ cJSON *mx_get_message_arr(char *name_room, sqlite3 *database) {
     
     sqlite3_str_appendall(str, "SELECT * FROM ");
     sqlite3_str_appendall(str, name_room);
+    sqlite3_str_appendall(str, "ORDER BY DATE");
     sql = sqlite3_str_finish(str);
     rv = sqlite3_prepare_v3(database, sql, -1, 0, &stmt, NULL);
-    for (int i = 0; i < 30 && 
+    for (int i = 0; i < count && 
                     (rv = sqlite3_step(stmt)) == SQLITE_ROW; i++) {
         cJSON_AddItemToArray(arr_object, mx_get_object_message(stmt));
     }
@@ -48,7 +49,7 @@ static cJSON *get_data_room(sqlite3 *database, sqlite3_stmt *stmt) {
     cJSON_AddItemToObject(object_tmp, "customer_login",
         cJSON_CreateString((char*)sqlite3_column_text(stmt, 2)));
     cJSON_AddItemToObject(object_tmp, "message",
-        mx_get_message_arr(name_room, database));
+        mx_get_message_arr(database, name_room, 30));
     return object_tmp;
 }
 
