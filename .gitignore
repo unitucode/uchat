@@ -6,6 +6,7 @@ README.md
 obj
 info.log
 a.out
+.db
 .vscode/settings.json
 .vscode
 libraries/include
