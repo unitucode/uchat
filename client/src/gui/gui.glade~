@@ -5,7 +5,7 @@
   <object class="GtkEntryBuffer" id="buffer_login"/>
   <object class="GtkTextBuffer" id="buffer_message"/>
   <object class="GtkEntryBuffer" id="buffer_password">
-    <signal name="deleted-text" handler="mx_set_usensetive_confirm" object="entry_signup_confirm" swapped="no"/>
+    <signal name="deleted-text" handler="mx_set_unsensetive_confirm" object="entry_signup_confirm" swapped="no"/>
     <signal name="inserted-text" handler="mx_set_sensetive_confirm" object="entry_signup_confirm" swapped="no"/>
   </object>
   <object class="GtkEntryBuffer" id="buffer_password_confirm"/>
@@ -452,6 +452,8 @@
                   <object class="GtkEntry" id="entry_roomname">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
+                    <property name="margin_left">25</property>
+                    <property name="margin_right">25</property>
                     <property name="buffer">buffer_roomname</property>
                     <property name="max_length">20</property>
                     <property name="placeholder_text" translatable="yes">Name</property>
@@ -509,6 +511,8 @@
                     <property name="visible">True</property>
                     <property name="sensitive">False</property>
                     <property name="can_focus">True</property>
+                    <property name="margin_left">25</property>
+                    <property name="margin_right">25</property>
                     <property name="margin_bottom">15</property>
                     <property name="buffer">buffer_roompass</property>
                     <property name="max_length">20</property>
@@ -639,7 +643,7 @@
                   </object>
                   <packing>
                     <property name="expand">False</property>
-                    <property name="fill">True</property>
+                    <property name="fill">False</property>
                     <property name="position">1</property>
                   </packing>
                 </child>
@@ -698,7 +702,7 @@
                   </object>
                   <packing>
                     <property name="expand">False</property>
-                    <property name="fill">True</property>
+                    <property name="fill">False</property>
                     <property name="position">3</property>
                   </packing>
                 </child>
@@ -725,6 +729,7 @@
             </child>
             <child type="tab">
               <object class="GtkLabel">
+                <property name="width_request">120</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="label" translatable="yes">Login</property>
@@ -783,6 +788,7 @@
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">Password</property>
+                        <property name="xalign">0.41999998688697815</property>
                       </object>
                       <packing>
                         <property name="expand">True</property>
@@ -898,6 +904,7 @@
             </child>
             <child type="tab">
               <object class="GtkLabel">
+                <property name="width_request">120</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="label" translatable="yes">Signup</property>
