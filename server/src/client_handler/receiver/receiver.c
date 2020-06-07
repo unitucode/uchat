@@ -15,7 +15,8 @@ void *mx_receiver(void *arg) {
 
     while ((data = mx_recv(client->ssl))) {
         printf("recv = %s\n", data->str);
-        if (client->user || data->type == RQ_LOG_IN || data->type == RQ_SIGN_UP
+        if (client->user || data->type == RQ_LOG_IN
+            || data->type == RQ_SIGN_UP
             || data->type == RQ_TOKEN) {
             if (!client->chat->request_handler[data->type]
                 || !client->chat->request_handler[data->type](data, client)) {

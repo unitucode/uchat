@@ -18,6 +18,7 @@ struct s_chat {
     pthread_mutex_t mutex;
     bool (*request_handler[RQ_COUNT_REQUEST])(t_dtp *dtp, t_client *client);
     sqlite3* database;
+    int online_users;
 };
 
 struct s_client {

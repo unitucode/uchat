@@ -1,30 +1,36 @@
 #include "list.h"
 #include "utils.h"
 
-cJSON *mx_get_last_message(sqlite3 *database, 
-                         char *name_room, long int date) {
-    cJSON *room = cJSON_CreateObject();
-    cJSON *message = cJSON_CreateArray();
+static char *create_request(sqlite3 *database, char *name_room) {
     sqlite3_str *str = sqlite3_str_new(database);
-    sqlite3_stmt *stmt;
-    char *sql = NULL;
-    int rv = 0;
+    char *request = NULL;
 
-    cJSON_AddItemToObject(room, "name_room", cJSON_CreateString(name_room));
     sqlite3_str_appendall(str, "SELECT * FROM ");
     sqlite3_str_appendall(str, name_room);
     sqlite3_str_appendall(str, " WHERE DATE > ");
     sqlite3_str_appendall(str, "?1");
     sqlite3_str_appendall(str, "ORDER BY DATE");
-    sql = sqlite3_str_finish(str);
-    rv = sqlite3_prepare_v3(database, sql, -1, 0, &stmt, NULL);
-    sqlite3_bind_int(stmt, 100, date);
-    for (int i = 0; i < 30 && 
+    request = sqlite3_str_finish(str);
+    return request;
+}
+
+cJSON *mx_get_last_message(sqlite3 *database, 
+                         char *name_room, long int date, int count) {
+    cJSON *room = cJSON_CreateObject();
+    cJSON *message = cJSON_CreateArray();
+    sqlite3_stmt *stmt;
+    int rv = 0;
+    char *request = create_request(database, name_room);
+
+    cJSON_AddItemToObject(room, "name_room", cJSON_CreateString(name_room));
+    rv = sqlite3_prepare_v3(database, request, -1, 0, &stmt, NULL);
+    sqlite3_bind_int(stmt, 1, date);
+    for (int i = 0; i < count && 
                     (rv = sqlite3_step(stmt)) == SQLITE_ROW; i++) {
-        printf("%d\n", rv);
         cJSON_AddItemToArray(message, mx_get_object_message(stmt));
     }
-    sqlite3_free(sql);
+    printf("%d\n", rv);
+    sqlite3_free(request);
     sqlite3_finalize(stmt);
     cJSON_AddItemToObject(room, "message", message);
     return room;

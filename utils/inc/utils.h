@@ -73,6 +73,7 @@ typedef struct s_message {
     unsigned int id_room;
     unsigned int id_message;
     long int date;
+    char *name_room;
     char *login;
     char *message;
     // cJSON *message;
@@ -170,7 +171,7 @@ t_room *mx_insert_room_into_db(sqlite3 *database, char *name_room,
                                char *customer);
 t_user *mx_insert_user_into_db(sqlite3 *database, char *login,
                                char *pass, char *token);
-void mx_insert_into_member(sqlite3 *database,
+void mx_insert_member_into_db(sqlite3 *database,
                            char *login, char *name_room);
 
 
@@ -180,7 +181,7 @@ cJSON *mx_create_json_message(sqlite3 * database, char *name_room,
 cJSON *mx_get_message_arr(char *name_room, sqlite3 *database);
 cJSON *mx_get_object_message(sqlite3_stmt * stmt);
 cJSON *mx_get_last_message(sqlite3 * database,
-                               char *name_room, long int date);
+                               char *name_room, long int date, int count);
 
 void mx_parse_message(cJSON * room_mss, t_dl_list * list);
 

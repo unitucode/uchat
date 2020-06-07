@@ -32,7 +32,7 @@
 
 void mx_disconnect_client(t_client *client) {
     if (client->user)
-        mx_update_online(client->chat->clients->size - 1, client);
+        mx_update_online(--client->chat->online_users, client);
     mx_pthread_mutex_lock(&client->chat->mutex);
     mx_logger(MX_LOG_FILE, LOGMSG, "disconnected: IP[%s] port[%s]\n",
               client->ip, client->port);

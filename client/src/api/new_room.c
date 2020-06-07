@@ -15,6 +15,7 @@ t_dtp *mx_new_room_request(char *room_name, bool is_private, char *pass) {
 }
 
 bool mx_new_room(t_dtp *data, t_chat *chat) {
+    printf("created room\n");
     data++;
     chat++;
     return true;
