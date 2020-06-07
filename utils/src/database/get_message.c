@@ -18,19 +18,19 @@ static t_message *for_get_message(sqlite3_stmt *stmt) {
 }
 
 t_message *mx_get_message_by_id(sqlite3 *database, int id_message) {
-    int returnvalue;
+    int rv = 0;
     sqlite3_stmt *stmt;
 
-    returnvalue = sqlite3_prepare_v3(database, "SELECT * FROM MESSAGE WHERE ID_MESSAGE = ?1", -1, 0, &stmt, NULL);
+    rv = sqlite3_prepare_v3(database, "SELECT * FROM MESSAGE WHERE ID_MESSAGE = ?1", -1, 0, &stmt, NULL);
     sqlite3_bind_int(stmt, 1, id_message);
     return for_get_message(stmt);
 }
 
 t_message *mx_get_message_by_login(sqlite3 *database, char *login) {
-    int returnvalue;
+    int rv;
     sqlite3_stmt *stmt;
     
-    returnvalue = sqlite3_prepare_v3(database, "SELECT * FROM MESSAGE WHERE LOGIN = ?1", -1, 0, &stmt, NULL);
+    rv = sqlite3_prepare_v3(database, "SELECT * FROM MESSAGE WHERE LOGIN = ?1", -1, 0, &stmt, NULL);
     sqlite3_bind_text(stmt, 1, login, -1, SQLITE_STATIC);
     return for_get_message(stmt);
 }

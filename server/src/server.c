@@ -24,9 +24,10 @@ void mx_change_working_dir(void) {
 }
 
 int main(int argc, char **argv) {
-    // sqlite3 *database =  mx_server_data_open(MX_DB_USER);
+    sqlite3 *database =  mx_server_data_open(MX_DB_USER);
+    mx_insert_room_into_db(database, "name_room", "admin");
     // char *string = cJSON_Print(mx_create_json_object(database, "vlad"));
-    // char *string = cJSON_Print(mx_get_last_message(database, "chat_of_vlad", 1, 31));
+    // char *string = cJSON_Print(mx_get_last_message(database, "chat_of_vlad", 1591449397, 100));
     // printf("%s\n", string);
     // mx_json();
     // t_dl_list *list = mx_parse_json(string);
