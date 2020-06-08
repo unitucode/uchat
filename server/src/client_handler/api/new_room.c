@@ -22,7 +22,6 @@ bool mx_new_room(t_dtp *data, t_client *client) { //TODO leaks
     t_db_room *new_room = NULL;
     t_dtp *resend = NULL;
 
-    printf("data = %s\n", data->str);
     if (!room || !cJSON_IsString(room))
         return false;
     new_room = mx_get_room(client->chat->database, room->valuestring);

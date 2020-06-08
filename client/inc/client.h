@@ -58,6 +58,7 @@ bool mx_new_room(t_dtp *data, t_chat *chat);
 bool mx_update_users(t_dtp *data, t_chat *chat);
 bool mx_msg(t_dtp *data, t_chat *chat);
 bool mx_rooms_hanlder(t_dtp *data, t_chat *chat);
+bool mx_log_out(t_dtp *token, t_chat *chat);
 
 //api
 t_dtp *mx_new_room_request(char *room_name, bool is_private, char *pass);
@@ -66,6 +67,7 @@ t_dtp *mx_token_request(char *token);
 t_dtp *mx_log_in_request(char *login, char *pass);
 t_dtp *mx_sign_up_request(char *login, char *pass);
 t_dtp *mx_get_rooms_request(long int date);
+t_dtp *mx_log_out_request(char *token);
 
 //gui
 GtkBuilder *mx_init_window(int argc, char **argv);
@@ -73,7 +75,7 @@ void mx_init_gui(t_chat *chat);
 int mx_start_gui(t_chat *chat);
 void mx_start_main_window(t_chat *chat);
 void mx_add_groom(t_groom *room, GtkBuilder *builder);
-void mx_delete_groom(t_groom **room);
+void mx_delete_groom(t_groom *room);
 t_groom *mx_create_groom(char *room_name, char *customer, int id,
                          long int date);
 t_gmsg *mx_create_gmsg(cJSON *msg);
