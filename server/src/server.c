@@ -13,6 +13,11 @@ void mx_change_working_dir(void) {
 }
 
 int main(int argc, char **argv) {
+    // sqlite3 *database = mx_server_data_open(MX_DB);
+    // t_db_user *user = mx_insert_user_into_db(database, "login1", "password", "token");
+    // printf("%s\n", user->login);
+    // printf("%s\n", user->token);
+    // printf("%s\n", user->password);
     // sqlite3 *database =  mx_server_data_open(MX_DB_USER);
     // // char *string = cJSON_Print(mx_create_json_object(database, "vlad"));
     // char *string = cJSON_Print(mx_get_last_message(database, "chat_of_vlad", 50));
@@ -21,6 +26,7 @@ int main(int argc, char **argv) {
     // // t_dl_list *list = mx_parse_json(string);
     // // t_room *room = (t_room*)list->front->data;
     // // printf("room_customer -> %s\n", room->customer);
+    // mx_close_database(database);
     // printf("Ok\n");
     // exit(1);
     t_chat *chat = mx_init_chat(argc, argv);

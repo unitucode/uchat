@@ -70,7 +70,7 @@ t_dtp *mx_log_in_request(char *login, char *pass);
 t_dtp *mx_sign_up_request(char *login, char *pass);
 t_dtp *mx_get_rooms_request(long int date);
 t_dtp *mx_log_out_request(char *token);
-t_dtp *mx_get_new_msgs_request(long int date);
+t_dtp *mx_get_new_msgs_request(long int date, char *room_name);
 
 //gui
 GtkBuilder *mx_init_window(int argc, char **argv);
