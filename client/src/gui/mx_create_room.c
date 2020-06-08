@@ -48,6 +48,7 @@ static void add_room_row(t_groom *room, GtkBuilder *builder) {
     GtkWidget *label = gtk_label_new(room->room_name);
     GtkWidget *event = gtk_event_box_new();
 
+    g_object_set_data_full(row, "groom", room, mx_delete_room);
     room->box_rooms = box;
     room->row_room = GTK_LIST_BOX_ROW(row);
     g_signal_connect(event, "button_press_event",
@@ -78,9 +79,9 @@ t_groom *mx_create_groom(char *room_name, char *customer, int id,
     return room;
 }
 
-void mx_delete_groom(t_groom **room) {
-    if (room && *room) {
-        mx_free((void**)&(*room)->room_name);
-        mx_free((void**)&(*room)->customer);
+void mx_delete_groom(t_groom *room) {
+    if (room) {
+        mx_free((void**)&room->room_name);
+        mx_free((void**)&room->customer);
     }
 }
