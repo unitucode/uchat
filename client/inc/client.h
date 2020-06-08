@@ -8,6 +8,12 @@
 
 #define MX_GUI_PATH "../src/gui/gui.glade"
 
+#define MX_ERRMSG_INVALID_LOGIN "Login can be minimum 3 symbol of a-z, 0-9, -"
+#define MX_ERRMSG_NODATA "Please, enter login and password"
+#define MX_ERRMSG_DIFPASS "Passwords must match"
+#define MX_ERRMSG_INCCRDATA "The email or password inccorect"
+#define MX_ERRMSG_USEREXIST "User already exist"
+
 typedef struct s_groom {
     GtkListBox *box_rooms;
     GtkScrolledWindow *page;
@@ -71,6 +77,7 @@ void mx_delete_gmsg(t_gmsg **gmsg);
 void mx_scrlldwnd_connect(char *name, GtkWidget *scroll, GtkBuilder *builder);
 gchar *mx_get_buffer_text(char *buff_name, GtkBuilder *builder);
 void mx_clear_buffer_text(char *buff_name, GtkBuilder *builder);
+void mx_clear_label_by_name(char *label_name, GtkBuilder *builder);
 void mx_widget_switch_visibility(GtkWidget *usr_ctrl, void *widget);
 void mx_reset_addroom(GtkButton *btn, GtkBuilder *builder);
 void mx_connect_authorization(t_chat *chat);
@@ -82,3 +89,5 @@ void mx_errmsg_user_exist(GtkBuilder *builder);
 // void mx_widget_destroy(GtkWidget *widget);
 // void mx_widget_show(GtkWidget *widget);
 void mx_handle_request(t_chat *chat);
+void mx_send_auth_request(char *login, char *password,
+                          SSL *ssl, t_request_type request_type);
