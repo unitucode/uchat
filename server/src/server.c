@@ -27,8 +27,14 @@ int main(int argc, char **argv) {
     // }
     // printf("vlad\n");
     // mx_insert_message_into_db(database, "hello", "login", "name1");
-    t_db_room *room = mx_insert_room_into_db(database, "name  2", "gorila");
-    mx_free_room(&room);
+    // t_db_room *room = mx_insert_room_into_db(database, "name  2", "gorila");
+    t_db_message *message = mx_insert_message_into_db(database, "hello", "admin", "name  2");
+    printf("%s\n", message->name_room);
+    printf("%s\n", message->message);
+    printf("%s\n", message->login);
+    printf("%d\n", message->id_message);
+    printf("%ld\n", message->date);
+    // mx_free_room(&room);
     // mx_delete_room(database, "name2");
     // char *error = malloc(100);
     // printf("%d\n", sqlite3_exec(database, "DELETE FROM ROOMS WHERE NAME_ROOM = 'name2'; DROP TABLE 'name2'", 0, 0, &error));

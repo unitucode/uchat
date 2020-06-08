@@ -123,9 +123,10 @@ t_db_user *mx_get_user_by_login(sqlite3 *database, char *login);
 t_db_user *mx_get_user_by_token(sqlite3 *database, char *token);
 t_db_room *mx_get_room(sqlite3 *database, char *name_room);
 void mx_free_room(t_db_room **room);
+void mx_free_message(t_db_message **message);
 
-void mx_update_permission_of_user(sqlite3 *database,
-                                  unsigned int permission, char *login);
+    void mx_update_permission_of_user(sqlite3 *database,
+                                      unsigned int permission, char *login);
 void mx_update_token(sqlite3 *database, char *new_token, char *login);
 
 void mx_create_table_room(sqlite3 *database, char *name_room);
@@ -145,6 +146,7 @@ cJSON *mx_get_message_arr(sqlite3 *database, char *name_room, int count);
 void mx_parse_message(cJSON *room_mss, t_dl_list *list);
 
 char *mx_create_request_message(t_db_gmp *pr);
+t_db_message *mx_get_last_message(sqlite3 *database, char *name_room);
 cJSON *mx_get_messages(t_db_gmp *pr);
 cJSON *mx_get_rooms(sqlite3 *database, long int date);
 

@@ -1,7 +1,7 @@
 #include "server.h"
 
 static void insert_to_room(sqlite3 *database, t_db_message *message, 
-                              char *request) {
+                           char *request) {
     sqlite3_stmt *stmt;
     int rv = 0;
  
@@ -21,10 +21,10 @@ t_db_message *mx_insert_message_into_db(sqlite3 *database, char *message_str,
     char *request = NULL;
     sqlite3_str *str = sqlite3_str_new(database);
 
-    sqlite3_str_appendall(str, "INSERT INTO " );
+    sqlite3_str_appendall(str, "INSERT INTO '" );
     sqlite3_str_appendall(str, name_room);
     sqlite3_str_appendall(str,
-                          "(LOGIN, DATE, MESSAGE)" 
+                          "' (LOGIN, DATE, MESSAGE)" 
                           "VALUES(?1, ?2, ?3);");
     request = sqlite3_str_finish(str);
     message->date = (long int)time(NULL);
@@ -33,7 +33,8 @@ t_db_message *mx_insert_message_into_db(sqlite3 *database, char *message_str,
     message->name_room = strdup(name_room);
     insert_to_room(database, message, request);
     sqlite3_free(request);
-    return message;
+    mx_free_message(&message);
+    return mx_get_last_message(database, name_room);
 }
 
 t_db_room *mx_insert_room_into_db(sqlite3 *database, char *name_room, 
