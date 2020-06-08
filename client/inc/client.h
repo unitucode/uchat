@@ -74,7 +74,7 @@ void mx_init_gui(t_chat *chat);
 int mx_start_gui(t_chat *chat);
 void mx_start_main_window(t_chat *chat);
 void mx_add_groom(t_groom *room, GtkBuilder *builder);
-void mx_delete_groom(t_groom **room);
+void mx_delete_groom(t_groom *room);
 t_groom *mx_create_groom(char *room_name, char *customer, int id,
                          long int date);
 t_gmsg *mx_create_gmsg(cJSON *msg);
