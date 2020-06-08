@@ -1,4 +1,4 @@
-#include "utils.h"
+#include "server.h"
 
 sqlite3 *mx_server_data_open(char *name_db) {
     sqlite3 *database;
@@ -9,6 +9,5 @@ sqlite3 *mx_server_data_open(char *name_db) {
     }
     mx_create_table_rooms(database);
     mx_create_table_users(database);
-    mx_create_table_member(database);
     return database;
 }

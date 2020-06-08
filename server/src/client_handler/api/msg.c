@@ -1,6 +1,6 @@
 #include "server.h"
 
-static t_dtp *get_resend_msg(t_message *msg) {
+static t_dtp *get_resend_msg(t_db_message *msg) {
     cJSON *send_msg = cJSON_CreateObject();
 
     if (!cJSON_AddNumberToObject(send_msg, "type", RQ_MSG))
@@ -22,7 +22,7 @@ bool mx_msg(t_dtp *data, t_client *client) { // TODO leaks
     cJSON *msg = cJSON_GetObjectItemCaseSensitive(data->json, "msg");
     cJSON *room_name = cJSON_GetObjectItemCaseSensitive(data->json,
                                                         "room_name");
-    t_message *message = NULL;
+    t_db_message *message = NULL;
     t_dtp *resend = NULL;
 
     if (!msg || !cJSON_IsString(msg))

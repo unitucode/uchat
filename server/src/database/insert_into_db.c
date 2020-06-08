@@ -1,6 +1,6 @@
-#include "utils.h"
+#include "server.h"
 
-static void insert_to_room(sqlite3 *database, t_message *message, 
+static void insert_to_room(sqlite3 *database, t_db_message *message, 
                               char *request) {
     sqlite3_stmt *stmt;
     int rv = 0;
@@ -15,16 +15,16 @@ static void insert_to_room(sqlite3 *database, t_message *message,
     sqlite3_finalize(stmt);
 }
 
-t_message *mx_insert_message_into_db(sqlite3 *database, char *message_str,
+t_db_message *mx_insert_message_into_db(sqlite3 *database, char *message_str,
                                      char *login, char *name_room) {
-    t_message *message = malloc(sizeof(t_message));
+    t_db_message *message = malloc(sizeof(t_db_message));
     char *request = NULL;
     sqlite3_str *str = sqlite3_str_new(database);
 
-    sqlite3_str_appendall(str, "INSERT INTO ");
+    sqlite3_str_appendall(str, "INSERT INTO " );
     sqlite3_str_appendall(str, name_room);
     sqlite3_str_appendall(str,
-                          "(ID_ROOM, LOGIN, DATE, MESSAGE)" 
+                          "(LOGIN, DATE, MESSAGE)" 
                           "VALUES(?1, ?2, ?3);");
     request = sqlite3_str_finish(str);
     message->date = (long int)time(NULL);
@@ -36,7 +36,7 @@ t_message *mx_insert_message_into_db(sqlite3 *database, char *message_str,
     return message;
 }
 
-t_room *mx_insert_room_into_db(sqlite3 *database, char *name_room, 
+t_db_room *mx_insert_room_into_db(sqlite3 *database, char *name_room, 
                             char *customer) {
     sqlite3_stmt *stmt;
     int rv = 0;
@@ -59,7 +59,7 @@ t_room *mx_insert_room_into_db(sqlite3 *database, char *name_room,
     return mx_get_room(database, name_room);
 }
 
-t_user *mx_insert_user_into_db(sqlite3 *database, char *login,
+t_db_user *mx_insert_user_into_db(sqlite3 *database, char *login,
                             char *pass, char *token) {
     sqlite3_stmt *stmt;
     int rv = 0;
