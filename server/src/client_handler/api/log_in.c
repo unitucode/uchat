@@ -9,7 +9,7 @@ static void incorrect_data(t_client *client) {
 }
 
 static void log_in(char *login, char *pass, t_client *client) {
-    t_user *user = mx_get_user_by_login(client->chat->database, login);
+    t_db_user *user = mx_get_user_by_login(client->chat->database, login);
 
     if (!user) {
         incorrect_data(client);

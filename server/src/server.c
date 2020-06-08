@@ -26,9 +26,9 @@ int main(int argc, char **argv) {
     t_chat *chat = mx_init_chat(argc, argv);
     t_client *client = NULL;
     t_ssl_con *ssl = NULL;
-
+    
     mx_change_working_dir();
-    chat->database = mx_server_data_open(MX_DB_USER);
+    chat->database = mx_server_data_open(MX_DB);
     client = NULL;
     ssl = mx_init_ssl(SERVER);
     mx_create_table_users(chat->database);

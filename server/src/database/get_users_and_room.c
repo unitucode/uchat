@@ -1,7 +1,7 @@
-#include "utils.h"
+#include "server.h"
 
-static t_user *for_get_user(sqlite3_stmt *stmt) {
-    t_user *user = NULL;
+static t_db_user *for_get_user(sqlite3_stmt *stmt) {
+    t_db_user *user = NULL;
     int rv;
     
     if ((rv = sqlite3_step(stmt)) != SQLITE_ROW) {
@@ -10,7 +10,7 @@ static t_user *for_get_user(sqlite3_stmt *stmt) {
         sqlite3_finalize(stmt);
         return NULL;
     }
-    user = mx_malloc(sizeof(t_user));
+    user = mx_malloc(sizeof(t_db_user));
     user->login = strdup((const char*)sqlite3_column_text(stmt, 0));
     user->password = strdup((const char*)sqlite3_column_text(stmt, 1));
     user->token = strdup((const char*)sqlite3_column_text(stmt, 2));
@@ -20,7 +20,7 @@ static t_user *for_get_user(sqlite3_stmt *stmt) {
     return user;
 }
 
-t_user *mx_get_user_by_login(sqlite3 *database, char *login) {
+t_db_user *mx_get_user_by_login(sqlite3 *database, char *login) {
     sqlite3_stmt *stmt;
     int rv = 0;
 
@@ -32,7 +32,7 @@ t_user *mx_get_user_by_login(sqlite3 *database, char *login) {
     return for_get_user(stmt);
 }
 
-t_user *mx_get_user_by_token(sqlite3 *database, char *token) {
+t_db_user *mx_get_user_by_token(sqlite3 *database, char *token) {
     sqlite3_stmt *stmt;
     int rv = 0;
 
@@ -45,8 +45,8 @@ t_user *mx_get_user_by_token(sqlite3 *database, char *token) {
 }
 
 
-t_room *mx_get_room(sqlite3 *database, char *name_room) {
-    t_room *room = NULL;
+t_db_room *mx_get_room(sqlite3 *database, char *name_room) {
+    t_db_room *room = NULL;
     int rv;
     sqlite3_stmt *stmt;
 
@@ -59,7 +59,7 @@ t_room *mx_get_room(sqlite3 *database, char *name_room) {
         sqlite3_finalize(stmt);
         return NULL;
     }
-    room = malloc(sizeof(t_room));
+    room = malloc(sizeof(t_db_room));
     room->id = sqlite3_column_int(stmt, 0);
     room->name_room = strdup((const char*)sqlite3_column_text(stmt, 1));
     room->customer = strdup((const char*)sqlite3_column_text(stmt, 2));

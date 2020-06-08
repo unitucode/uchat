@@ -28,7 +28,6 @@
 
 #define MX_IN_ITOA(m) #m
 #define MX_ITOA(m) MX_IN_ITOA(m)
-#define MX_DB_USER "users.db"
 
 #define MX_LIST_BACK 0
 #define MX_LOG_FILE "info.log"
@@ -45,55 +44,10 @@
 #define MX_BUF_SIZE 1024
 #define MX_MD5_BUF_SIZE 32
 
-#define MX_OLD_MESSAGE 2
-#define MX_NEW_MESSAGE 1
-#define MX_CURR_MESSAGE 0
-#define MX_ALL_ROOM "SELECT * FROM ROOMS ORDER BY DATE"
-#define MX_NEW_ROOM "SELECT * FROM ROOMS WHERE DATE > ?1 ORDER BY DATE"
-
 typedef enum e_app_type {
     CLIENT,
     SERVER
 }            t_app_type;
-
-typedef struct s_members_room {
-    char *login;
-    struct s_members_room *next;
-}              t_members_room;
-
-typedef struct s_user {
-    const char *token;
-    const char *login;
-    const char *password;
-    unsigned int permission;
-    int on_off;
-}              t_user;
-
-typedef struct s_gmp {
-    long int date;
-    int count;
-    char *name_room;
-    sqlite3 *db;
-    int flag;
-}              t_gmp;
-
-typedef struct s_message {
-    unsigned int id_room;
-    unsigned int id_message;
-    long int date;
-    char *name_room;
-    char *login;
-    char *message;
-    // cJSON *message;
-    struct s_messages *next;
-} t_message;
-
-typedef struct s_room {
-    long int date;
-    unsigned int id;
-    char *name_room;
-    char *customer;
-}              t_room;
 
 typedef struct s_sockopt {
     int socket;
@@ -146,51 +100,3 @@ void mx_log_type(FILE *fd, t_logtype type);
 void mx_logger(const char *file, t_logtype type, const char *fmt, ...);
 void mx_elogger(const char *file, t_logtype type, const char *fmt, ...);
 
-//sqlite3
-sqlite3 *mx_server_data_open(char *name_db);
-void mx_close_database(sqlite3 *database);
-void mx_free_user(t_user **user);
-void mx_delete_room(sqlite3 *database, char *name_room);
-void mx_delete_user(sqlite3 *database, char *login);
-
-void mx_create_table_users(sqlite3 *database);
-void mx_create_table_rooms(sqlite3 *database);
-void mx_create_table_member(sqlite3 *database);
-
-t_user *mx_get_user_by_login(sqlite3 *database, char *login);
-t_user *mx_get_user_by_token(sqlite3 *database, char *token);
-t_room *mx_get_room(sqlite3 *database,char *name_room);
-void mx_free_room(t_room **room);
-
-void mx_update_permission_of_user(sqlite3 *database, 
-                                  unsigned int permission, char *login);
-void mx_update_token(sqlite3 *database, char *new_token, char *login);
-
-void mx_create_table_room(sqlite3 *database, char *name_room);
-void mx_insert_to_room(sqlite3 *database, t_message *room, char *name_room);
-
-t_message *mx_insert_message_into_db(sqlite3 *database, char *message_str,
-                                     char *login, char *name_room);
-t_room *mx_insert_room_into_db(sqlite3 *database, char *name_room,
-                               char *customer);
-t_user *mx_insert_user_into_db(sqlite3 *database, char *login,
-                               char *pass, char *token);
-void mx_insert_member_into_db(sqlite3 *database,
-                           char *login, char *name_room);
-
-
-cJSON *mx_create_json_object(sqlite3 *database, char *user_login);
-cJSON *mx_get_message_arr(sqlite3 *database, char *name_room, int count);
-void mx_parse_message(cJSON *room_mss, t_dl_list *list);
-
-char *mx_create_request_message(t_gmp *pr);
-cJSON *mx_get_messages(t_gmp *pr);
-cJSON *mx_get_rooms(sqlite3 *database, long int date);
-
-t_dl_list *mx_parse_json(char *rooms_json);
-void mx_test_json();
-void mx_json();
-// void mx_test_room();
-// void mx_test_member();
-// void mx_test_users();
-// void mx_test_message();

@@ -1,4 +1,4 @@
-#include "utils.h"
+#include "server.h"
 
 /*request func flag:
 * 0 -> curr_message
@@ -19,7 +19,7 @@ static cJSON *get_object_message(sqlite3_stmt *stmt) {
     return object_message;
 }
 
-cJSON *mx_get_messages(t_gmp *pr) {
+cJSON *mx_get_messages(t_db_gmp *pr) {
     cJSON *room = cJSON_CreateObject();
     cJSON *message = cJSON_CreateArray();
     sqlite3_stmt *stmt;

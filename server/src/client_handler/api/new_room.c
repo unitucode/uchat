@@ -1,6 +1,6 @@
 #include "server.h"
 
-static t_dtp *get_resend_room(t_room *room) {
+static t_dtp *get_resend_room(t_db_room *room) {
     cJSON *send = cJSON_CreateObject();
 
     if (!cJSON_AddNumberToObject(send, "type", RQ_NEW_ROOM))
@@ -19,7 +19,7 @@ static t_dtp *get_resend_room(t_room *room) {
 bool mx_new_room(t_dtp *data, t_client *client) { //TODO leaks
     cJSON *room = cJSON_GetObjectItemCaseSensitive(data->json,
                                                         "room_name");
-    t_room *new_room = NULL;
+    t_db_room *new_room = NULL;
     t_dtp *resend = NULL;
 
     printf("data = %s\n", data->str);
