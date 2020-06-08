@@ -47,6 +47,8 @@
 #define MX_OLD_MESSAGE 2
 #define MX_NEW_MESSAGE 1
 #define MX_CURR_MESSAGE 0
+#define MX_ALL_ROOM "SELECT * FROM ROOMS ORDER BY DATE"
+#define MX_NEW_ROOM "SELECT * FROM ROOMS WHERE DATE > ?1 ORDER BY DATE"
 
 typedef enum e_app_type {
     CLIENT,
@@ -155,7 +157,7 @@ void mx_create_table_member(sqlite3 *database);
 
 t_user *mx_get_user_by_login(sqlite3 *database, char *login);
 t_user *mx_get_user_by_token(sqlite3 *database, char *token);
-t_room *mx_get_room(sqlite3 *database,char *name_room);
+t_room *mx_get_room(sqlite3 *database, char *name_room);
 
 void mx_update_permission_of_user(sqlite3 *database, 
                                   unsigned int permission, char *login);
@@ -180,9 +182,9 @@ void mx_parse_message(cJSON *room_mss, t_dl_list *list);
 
 char *mx_create_request_message(t_gmp *pr);
 cJSON *mx_get_messages(t_gmp *pr);
-cJSON *mx_get_room_all(sqlite3 *database);
+cJSON *mx_get_rooms(sqlite3 *database, long int date);
 
-    t_dl_list *mx_parse_json(char *rooms_json);
+t_dl_list *mx_parse_json(char *rooms_json);
 void mx_test_json();
 void mx_json();
 // void mx_test_room();

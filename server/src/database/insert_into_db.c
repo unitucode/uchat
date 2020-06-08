@@ -42,7 +42,7 @@ t_room *mx_insert_room_into_db(sqlite3 *database, char *name_room,
     int rv = 0;
 
     rv = sqlite3_prepare_v3(database,
-                 "INSERT INTO ROOMS(NAME_ROOM, CUSTOMER_LOGIN, DATE)"
+                 "INSERT INTO ROOMS(NAME_ROOM, CUSTOMER_LOGIN, DATE) "
                  "VALUES(?1, ?2, ?3);",
                  -1, 0, &stmt, NULL);
     if (rv == SQLITE_ERROR)
