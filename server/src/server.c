@@ -14,26 +14,25 @@ void mx_change_working_dir(void) {
 
 int main(int argc, char **argv) {
     // mx_change_working_dir();
-    sqlite3 *database = mx_server_data_open(MX_DB);
+    // sqlite3 *database = mx_server_data_open(MX_DB);
     // printf("%s\n", mx_create_request_message(database, "name_room", 1));
-    // t_gmp *pr = malloc(sizeof(t_gmp));
-    // pr->count = 20;
-    // pr->date = 60;q
-    // pr->db = database;
-    // pr->flag = MX_NEW_MESSAGE;.
-    // pr->name_room = "chat_of_vlad";
+    // cJSON *message = mx_get_new_messages(database, "name  2", 1591633200, 1);
+    // char *string = cJSON_Print(message);
+    // printf("%s\n", string);
+    // mx_delete_message(database, "name  2", 1);
+    // t_db_message *message = mx_insert_message_into_db(database, "hello guys", "vlad", "name  2");
+    // mx_free_message(&message);
     // for (int i = 0; i < 2; i++) {
     //     printf("%s\n%s\n", room->name_room, room->customer);
     // }
     // printf("vlad\n");
     // mx_insert_message_into_db(database, "hello", "login", "name1");
     // t_db_room *room = mx_insert_room_into_db(database, "name  2", "gorila");
-    t_db_message *message = mx_insert_message_into_db(database, "hello", "admin", "name  2");
-    printf("%s\n", message->name_room);
-    printf("%s\n", message->message);
-    printf("%s\n", message->login);
-    printf("%d\n", message->id_message);
-    printf("%ld\n", message->date);
+    // printf("%s\n", message->name_room);
+    // printf("%s\n", message->message);
+    // printf("%s\n", message->login);
+    // printf("%d\n", message->id_message);
+    // printf("%ld\n", message->date);
     // mx_free_room(&room);
     // mx_delete_room(database, "name2");
     // char *error = malloc(100);
@@ -43,7 +42,6 @@ int main(int argc, char **argv) {
     // char *string = cJSON_Print(rooms);
     // system("leaks -q uchat_server");
     // printf("%s\n", string);
-    // system("leaks -q uchat_server");
     // mx_json();
     // t_dl_list *list = mx_parse_json(string);
     // t_room *room = (t_room*)list->front->data;

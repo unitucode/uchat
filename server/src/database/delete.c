@@ -32,3 +32,23 @@ void mx_delete_user(sqlite3 *database, char *login) {
         mx_elogger(MX_LOG_FILE, LOGERR, "delete user");
     sqlite3_finalize(stmt);
 }
+
+void mx_delete_message(sqlite3 *database, char *name_room, int id_message) {
+    char *request = NULL;
+    sqlite3_stmt *stmt;
+    sqlite3_str *str = sqlite3_str_new(database);
+    int rv = SQLITE_OK;
+
+    sqlite3_str_appendall(str, "DELETE FROM '");
+    sqlite3_str_appendall(str, name_room);
+    sqlite3_str_appendall(str, "' WHERE ID_MESSAGE = ?1");
+    request = sqlite3_str_finish(str);
+    rv = sqlite3_prepare_v3(database, request, -1, 0, &stmt, NULL);
+    sqlite3_bind_int(stmt, 1, id_message);
+    if (rv != SQLITE_OK) 
+        mx_logger(MX_LOG_FILE, LOGWAR, "delete message");
+    if ((rv = sqlite3_step(stmt)) != SQLITE_DONE)
+        mx_logger(MX_LOG_FILE, LOGWAR, "delete message");
+    sqlite3_free(request);
+    sqlite3_finalize(stmt);
+}
