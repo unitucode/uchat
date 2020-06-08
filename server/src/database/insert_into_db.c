@@ -1,40 +1,25 @@
 #include "server.h"
 
-static void insert_to_room(sqlite3 *database, t_db_message *message, 
-                           char *request) {
-    sqlite3_stmt *stmt;
-    int rv = 0;
- 
-    printf("%s\n", request);
-    if ((rv = sqlite3_prepare_v3(database, request, -1, 0, &stmt, NULL)) == SQLITE_ERROR)
-        mx_elogger(MX_LOG_FILE, LOGERR, "insert message into database one");
-    sqlite3_bind_text(stmt, 1, message->login, -1, SQLITE_STATIC);
-    sqlite3_bind_int(stmt, 2, message->date);
-    sqlite3_bind_text(stmt, 3, message->message, -1, SQLITE_STATIC);
-    if ((rv = sqlite3_step(stmt)) != SQLITE_DONE)
-        mx_elogger(MX_LOG_FILE, LOGERR, "insert message into database");
-    sqlite3_finalize(stmt);
-}
-
 t_db_message *mx_insert_message_into_db(sqlite3 *database, char *message_str,
                                      char *login, char *name_room) {
-    t_db_message *message = malloc(sizeof(t_db_message));
+    sqlite3_stmt *stmt;
     char *request = NULL;
+    int rv = 0;
     sqlite3_str *str = sqlite3_str_new(database);
 
     sqlite3_str_appendall(str, "INSERT INTO '" );
     sqlite3_str_appendall(str, name_room);
-    sqlite3_str_appendall(str,
-                          "' (LOGIN, DATE, MESSAGE)" 
-                          "VALUES(?1, ?2, ?3);");
+    sqlite3_str_appendall(str, "' (LOGIN, DATE, MESSAGE) VALUES(?1, ?2, ?3);");
     request = sqlite3_str_finish(str);
-    message->date = (long int)time(NULL);
-    message->login = strdup(login);
-    message->message = strdup(message_str);
-    message->name_room = strdup(name_room);
-    insert_to_room(database, message, request);
+    if ((rv = sqlite3_prepare_v3(database, request, -1, 0, &stmt, NULL)) == SQLITE_ERROR)
+        mx_elogger(MX_LOG_FILE, LOGERR, "insert message into database");
+    sqlite3_bind_text(stmt, 1, login, -1, SQLITE_STATIC);
+    sqlite3_bind_int(stmt, 2, (long int)time(NULL));
+    sqlite3_bind_text(stmt, 3, message_str, -1, SQLITE_STATIC);
+    if ((rv = sqlite3_step(stmt)) != SQLITE_DONE)
+        mx_elogger(MX_LOG_FILE, LOGERR, "insert message into database");
+    sqlite3_finalize(stmt);
     sqlite3_free(request);
-    mx_free_message(&message);
     return mx_get_last_message(database, name_room);
 }
 

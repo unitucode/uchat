@@ -47,7 +47,8 @@ static void add_room_row(t_groom *room, GtkBuilder *builder) {
     GtkWidget *label = gtk_label_new(room->room_name);
     GtkWidget *event = gtk_event_box_new();
 
-    g_object_set_data_full(G_OBJECT(row), "groom", room, (GDestroyNotify)mx_delete_groom);
+    g_object_set_data_full(G_OBJECT(row), "groom", room,
+                    (GDestroyNotify)mx_delete_groom);
     room->box_rooms = box;
     room->row_room = GTK_LIST_BOX_ROW(row);
     g_signal_connect(event, "button_press_event",

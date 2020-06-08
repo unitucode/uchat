@@ -9,7 +9,7 @@ t_db_message *mx_get_last_message(sqlite3 *database, char *name_room) {
 
     sqlite3_str_appendall(str, "SELECT * FROM '");
     sqlite3_str_appendall(str, name_room);
-    sqlite3_str_appendall(str, "' ORDER BY DATE");
+    sqlite3_str_appendall(str, "' ORDER BY DATE DESC");
     request = sqlite3_str_finish(str);
     rv = sqlite3_prepare_v3(database, request, -1, 0, &stmt, NULL);
     if (rv == SQLITE_ERROR)

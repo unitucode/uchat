@@ -95,6 +95,7 @@ void mx_connect_addroom(t_chat *chat);
 void mx_connect_send_message(t_chat *chat);
 void mx_errmsg_wrong_authdata(GtkBuilder *builder);
 void mx_errmsg_user_exist(GtkBuilder *builder);
+t_groom *mx_get_selected_groom(GtkBuilder *builder);
 
 //gui wrappers
 // void mx_widget_show_all(GtkWidget *widget);
