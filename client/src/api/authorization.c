@@ -43,11 +43,9 @@ bool mx_authorization(t_dtp *token, t_chat *chat) {
     auth_token = cJSON_GetObjectItemCaseSensitive(token->json, "token");
     if (!auth_token || !cJSON_IsString(auth_token)
         || !mx_isvalid_token(auth_token->valuestring)) {
-        cJSON_Delete(auth_token);
         return false;
     }
     chat->auth_token = strdup(auth_token->valuestring);
-    cJSON_Delete(auth_token);
     mx_start_main_window(chat);
     return true;
 }
