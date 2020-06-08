@@ -66,3 +66,4 @@ void mx_errmsg_wrong_authdata(GtkBuilder *builder);
 void mx_errmsg_user_exist(GtkBuilder *builder);
 void mx_send_auth_request(char *login, char *password,
                           SSL *ssl, t_request_type request_type);
+void css_connect();
