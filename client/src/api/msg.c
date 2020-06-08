@@ -17,6 +17,6 @@ bool mx_msg(t_dtp *data, t_chat *chat) { // TODO
 
     if (!gmsg)
         return false;
-    chat++;
+    mx_add_message_to_room(gmsg, chat->builder);
     return true;
 }

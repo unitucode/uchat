@@ -35,7 +35,6 @@ typedef struct s_gmsg {
 
 typedef struct s_chat {
     char *auth_token;
-    t_groom *selected_room;
     SSL *ssl;
     GtkBuilder *builder;
     t_dtp *data;
@@ -73,13 +72,14 @@ GtkBuilder *mx_init_window(int argc, char **argv);
 void mx_init_gui(t_chat *chat);
 int mx_start_gui(t_chat *chat);
 void mx_start_main_window(t_chat *chat);
-void mx_add_groom(t_groom *room, t_chat *chat);
+void mx_add_groom(t_groom *room, GtkBuilder *builder);
 void mx_delete_groom(t_groom **room);
 t_groom *mx_create_groom(char *room_name, char *customer, int id,
                          long int date);
 t_gmsg *mx_create_gmsg(cJSON *msg);
 void mx_delete_gmsg(t_gmsg **gmsg);
-GtkWidget *mx_create_message_row(gchar *message_text);
+GtkWidget *mx_create_message_row(t_gmsg *msg);
+void mx_add_message_to_room(t_gmsg *msg, GtkBuilder *builder);
 
 // gui utils
 void mx_scrlldwnd_connect(char *name, GtkWidget *scroll, GtkBuilder *builder);

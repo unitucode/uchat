@@ -1,9 +1,9 @@
 #include "client.h"
 
-GtkWidget *mx_create_message_row(gchar *message_text) {
+GtkWidget *mx_create_message_row(t_gmsg *msg) {
     GtkWidget *row = gtk_list_box_row_new();
 
-    GtkWidget *label_txt = gtk_label_new(message_text);
+    GtkWidget *label_txt = gtk_label_new(msg->msg);
     gtk_label_set_xalign(GTK_LABEL(label_txt), 0.03);
     GtkWidget *main_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
     gtk_box_pack_end(GTK_BOX(main_box), label_txt, true, true, 0);
@@ -11,7 +11,7 @@ GtkWidget *mx_create_message_row(gchar *message_text) {
     PangoAttrList *attr_list = pango_attr_list_new();
     PangoAttribute *attr = pango_attr_weight_new(PANGO_WEIGHT_ULTRAHEAVY);
     pango_attr_list_insert(attr_list, attr);
-    GtkWidget *label_name = gtk_label_new("User Name");
+    GtkWidget *label_name = gtk_label_new(msg->login);
     gtk_label_set_xalign(GTK_LABEL(label_name), 0.03);
     GtkWidget *label_time = gtk_label_new("15:05");
     gtk_label_set_xalign(GTK_LABEL(label_time), 0.97);

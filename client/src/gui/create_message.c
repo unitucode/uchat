@@ -1,8 +1,6 @@
 #include "client.h"
 
 static bool get_data(cJSON *msg, cJSON **data, char *field) {
-    if (*data)
-        cJSON_Delete(*data);
     *data = cJSON_GetObjectItemCaseSensitive(msg, field);
     if (!*data)
         return false;
@@ -24,8 +22,6 @@ t_gmsg *mx_create_gmsg(cJSON *msg) {
         gmsg->date = data->valueint;
     if ((valid = get_data(msg, &data, "id_message")) && cJSON_IsNumber(data))
         gmsg->id_message = data->valueint;
-    if (data)
-        cJSON_Delete(data);
     if (!valid) {
         mx_delete_gmsg(&gmsg);
         return NULL;

@@ -9,7 +9,7 @@ static GtkWidget *get_current_msgbox(GtkBuilder *builder) {
     return GTK_WIDGET(list_view->data);
 }
 
-static void add_message_row(gchar *msg, GtkBuilder *builder) {
+static void add_message_row(t_gmsg *msg, GtkBuilder *builder) {
     GtkWidget *row = mx_create_message_row(msg);
     GtkWidget *box = get_current_msgbox(builder);
 
@@ -17,10 +17,7 @@ static void add_message_row(gchar *msg, GtkBuilder *builder) {
     gtk_widget_show_all(GTK_WIDGET(box));
 }
 
-void mx_send_message(GtkButton *btn, GtkBuilder *builder) {
-    gchar *message_text = mx_get_buffer_text("buffer_message", builder);
-
+void mx_add_message_to_room(t_gmsg *msg, GtkBuilder *builder) {
     mx_clear_buffer_text("buffer_message", builder);
-    add_message_row(message_text, builder);
-    (void)btn;
+    add_message_row(msg, builder);
 }

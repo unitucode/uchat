@@ -31,6 +31,6 @@ bool mx_new_room(t_dtp *data, t_chat *chat) {
     if (!date || !cJSON_IsNumber(date))
         return false;
     room = mx_create_groom(room_name->valuestring, customer->valuestring, id->valueint, date->valueint);
-    mx_add_groom(room, chat);
+    mx_add_groom(room, chat->builder);
     return true;
 }

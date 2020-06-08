@@ -15,10 +15,8 @@ void mx_make_private(GtkToggleButton *btn, GtkWidget *widget) {
 }
 
 void mx_swap_room(GtkWidget *widget, GdkEventButton *event, t_groom *room) {
-    gtk_stack_set_visible_child(room->stack_msg,
-                                GTK_WIDGET(room->page));
-    gtk_list_box_select_row(room->box_rooms,
-                            room->row_room);
+    gtk_stack_set_visible_child(room->stack_msg, GTK_WIDGET(room->page));
+    gtk_list_box_select_row(room->box_rooms, room->row_room);
     (void)widget;
     (void)event;
 }
@@ -42,8 +40,8 @@ static void add_messages_box(t_groom *room, GtkBuilder *builder) {
     mx_scrlldwnd_connect(NULL, scroll, builder);
 }
 
-static void add_room_row(t_groom *room, t_chat *chat) {
-    GtkListBox *box = GTK_LIST_BOX(gtk_builder_get_object(chat->builder,
+static void add_room_row(t_groom *room, GtkBuilder *builder) {
+    GtkListBox *box = GTK_LIST_BOX(gtk_builder_get_object(builder,
                                                           "listbox_rooms"));
     GtkWidget *row = gtk_list_box_row_new();
     GtkWidget *label = gtk_label_new(room->room_name);
@@ -51,22 +49,19 @@ static void add_room_row(t_groom *room, t_chat *chat) {
 
     room->box_rooms = box;
     room->row_room = GTK_LIST_BOX_ROW(row);
-    chat->selected_room = room;
     g_signal_connect(event, "button_press_event",
                      G_CALLBACK(mx_swap_room), room);
-
     gtk_container_add(GTK_CONTAINER(event), label);
     gtk_container_add(GTK_CONTAINER(row), event);
     gtk_widget_set_size_request(row, -1, 80);
 
     gtk_list_box_insert(box, row, -1);
     gtk_widget_show_all(GTK_WIDGET(box));
-    mx_scrlldwnd_connect("scrlldwnd_rooms", NULL, chat->builder);
 }
 
-void mx_add_groom(t_groom *room, t_chat *chat) {
-    add_messages_box(room, chat->builder);
-    add_room_row(room, chat);
+void mx_add_groom(t_groom *room, GtkBuilder *builder) {
+    add_messages_box(room, builder);
+    add_room_row(room, builder);
 }
 
 t_groom *mx_create_groom(char *room_name, char *customer, int id,
