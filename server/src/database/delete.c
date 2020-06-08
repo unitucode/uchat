@@ -1,29 +1,40 @@
 #include "utils.h"
 
-void mx_delete_room(sqlite3 *database, int id_room) {
+// "DELETE FROM ROOMS WHERE NAME_ROOM = ?1"
+
+void mx_delete_room(sqlite3 *database, char *name_room) {
     sqlite3_stmt *stmt;
+    sqlite3_str *str = sqlite3_str_new(database);
+    char *request = NULL;
     int rv = 0;
 
-    rv = sqlite3_prepare_v3(database, "DELETE FROM ROOMS WHERE ID_ROOM = 1;",
-        -1, 0, &stmt, NULL);
-    sqlite3_bind_int(stmt, 1, id_room);
-    if (rv == SQLITE_ERROR)
-        mx_elogger(MX_LOG_FILE, LOGERR, "delete room one\n");
-    if ((rv = sqlite3_step(stmt)) != SQLITE_DONE)
-        mx_elogger(MX_LOG_FILE, LOGERR, "delete room\n");
+    sqlite3_str_appendall(str, "DROP TABLE ");
+    sqlite3_str_appendall(str, name_room);
+    request = sqlite3_str_finish(str);
+    rv = sqlite3_prepare_v3(database, request,
+                            -1, 0, &stmt, NULL);
+    sqlite3_bind_text(stmt, 1, name_room, -1, SQLITE_STATIC);
+    if (rv == SQLITE_ERROR) {
+        mx_logger(MX_LOG_FILE, LOGWAR, "delete room prepare\n");
+    }
+    else {
+        if ((rv = sqlite3_step(stmt)) != SQLITE_DONE)
+        mx_logger(MX_LOG_FILE, LOGWAR, "delete room step\n");
+    }
+    sqlite3_free(request);
     sqlite3_finalize(stmt);
 }
 
 void mx_delete_user(sqlite3 *database, char *login) {
-    int rv = 0;
     sqlite3_stmt *stmt;
+    int rv = 0;
 
-    rv = sqlite3_prepare_v3(database, "DELETE FROM USERS WHERE LOGIN = ?1;\
-    DELETE FROM MEMBER WHERE LOGIN = ?1", -1, 0, &stmt, NULL);
+    rv = sqlite3_prepare_v3(database, "DELETE FROM USERS WHERE LOGIN = ?1",
+        -1, 0, &stmt, NULL);
     sqlite3_bind_text(stmt, 1, login, -1, SQLITE_STATIC);
     if (rv == SQLITE_ERROR)
-        mx_elogger(MX_LOG_FILE, LOGERR, "delete room");
+        mx_elogger(MX_LOG_FILE, LOGERR, "delete user one");
     if ((rv = sqlite3_step(stmt)) != SQLITE_DONE)
-        mx_elogger(MX_LOG_FILE, LOGERR, "delete room");
+        mx_elogger(MX_LOG_FILE, LOGERR, "delete user");
     sqlite3_finalize(stmt);
 }

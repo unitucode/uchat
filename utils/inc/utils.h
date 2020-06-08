@@ -89,10 +89,10 @@ typedef struct s_message {
 } t_message;
 
 typedef struct s_room {
+    long int date;
     unsigned int id;
     char *name_room;
     char *customer;
-    t_message *data;
 }              t_room;
 
 typedef struct s_sockopt {
@@ -150,7 +150,7 @@ void mx_elogger(const char *file, t_logtype type, const char *fmt, ...);
 sqlite3 *mx_server_data_open(char *name_db);
 void mx_close_database(sqlite3 *database);
 void mx_free_user(t_user **user);
-void mx_delete_room(sqlite3 *database, int id_room);
+void mx_delete_room(sqlite3 *database, char *name_room);
 void mx_delete_user(sqlite3 *database, char *login);
 
 void mx_create_table_users(sqlite3 *database);
