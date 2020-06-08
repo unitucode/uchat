@@ -2,7 +2,7 @@
 #include "protocol.h"
 
 static void incorrect_data(t_client *client) {
-    t_dtp *dtp = mx_error_msg_request(40, "User already exist");
+    t_dtp *dtp = mx_error_msg_request(11, "User already exist");
 
     mx_send(client->ssl, dtp);
     mx_free_request(&dtp);
@@ -10,7 +10,7 @@ static void incorrect_data(t_client *client) {
 
 static void sign_up(char *login, char *pass, t_client *client) {
     t_user *user = mx_get_user_by_login(client->chat->database, login);
-    char token[MX_MD5_BUF_SIZE + 1];
+    char token[MX_MD5_BUF_SIZE + 1 + strlen(login)];
 
     if (user) {
         incorrect_data(client);

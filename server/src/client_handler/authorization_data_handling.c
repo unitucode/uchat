@@ -6,6 +6,8 @@ void mx_correct_data(char *login, t_client *client) {
     mx_send(client->ssl, dtp);
     mx_logger(MX_LOG_FILE, LOGMSG, "Logged in: %s\n", login);
     mx_free_request(&dtp);
+    client->chat->online_users++;
+    mx_update_online(client->chat->online_users, client);
 }
 
 static char *get_login_str(t_dtp *data) {
@@ -30,7 +32,7 @@ static char *get_pass_str(t_dtp *data) {
 
 bool mx_valid_authorization_data(t_dtp *data, char **login,
                                  char **pass, t_client *client) {
-    if (!data || client->user != NULL)
+    if (client->user != NULL)
         return false;
     if (!(*login = get_login_str(data)))
         return false;

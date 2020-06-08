@@ -15,7 +15,8 @@ INCD_SERVER = -Iinc/
 UTILS_INC = -I../utils/inc
 UTILS_LIB = ../utils/libutils.a
 
-SRCD := src src/client_handler src/client_handler/receiver src/database
+SRCD = src src/client_handler src/client_handler/receiver \
+src/client_handler/api src/database
 SRCS = $(foreach dir, $(SRCD), $(wildcard $(dir)/*.c))
 OBJS = $(addprefix $(OBJD)/, $(notdir $(SRCS:%.c=%.o)))
 
@@ -31,7 +32,7 @@ LIBS = $(LIBD_LIBS) -L/usr/local/opt/openssl/lib \
 all: $(SERVER)
 
 $(SERVER): $(OBJS)
-	@$(CC) -g -o $@ $^ $(UTILS_LIB) $(LIBS)
+	@$(CC) -o $@ $^ $(UTILS_LIB) $(LIBS)
 	@printf "\033[32;1m$@ created\033[0m\n"
 
 $(OBJS): obj/%.o: %.c | $(OBJD)

@@ -1,23 +1,30 @@
 #include "client.h"
 
-// static void add_message_field(gchar *msg, GtkBuilder *builder) {
-//     GtkWidget *row = gtk_list_box_row_new();
-//     GtkWidget *label = gtk_label_new(msg);
-//     GtkWidget *box = GTK_WIDGET(gtk_builder_get_object(builder, "listbox_messages"));
+static GtkWidget *get_current_msgbox(GtkBuilder *builder) {
+    GtkStack *stack = GTK_STACK(gtk_builder_get_object(builder,
+                                                       "stack_messege_rooms"));
+    GtkWidget *page = gtk_stack_get_visible_child(stack);
+    GList *list_page = gtk_container_get_children(GTK_CONTAINER(page));
+    GList *list_view = gtk_container_get_children(GTK_CONTAINER(list_page->data));
+    return GTK_WIDGET(list_view->data);
+}
 
-//     gtk_container_add(GTK_CONTAINER(row), label);
-//     gtk_widget_set_size_request(row, -1, 60);
+static void add_message_row(gchar *msg, GtkBuilder *builder) {
+    GtkWidget *row = gtk_list_box_row_new();
+    GtkWidget *label = gtk_label_new(msg);
+    GtkWidget *box = get_current_msgbox(builder);
 
-//     gtk_list_box_insert(GTK_LIST_BOX(box), row, -1);
-//     gtk_widget_show_all(GTK_WIDGET(box));
+    gtk_container_add(GTK_CONTAINER(row), label);
+    gtk_widget_set_size_request(row, -1, 60);
 
-//     mx_scrlldwnd_connect("scrlldwnd_room", builder);
-// }
+    gtk_list_box_insert(GTK_LIST_BOX(box), row, -1);
+    gtk_widget_show_all(GTK_WIDGET(box));
+}
 
 void mx_send_message(GtkButton *btn, GtkBuilder *builder) {
     gchar *message_text = mx_get_buffer_text("buffer_message", builder);
-    GtkWidget *lbl = GTK_WIDGET(gtk_builder_get_object(builder, "message"));
-    gtk_label_set_text(GTK_LABEL(lbl), message_text);
-    btn++;
-    // add_message_field(message_text, builder);
+    
+    mx_clear_buffer_text("buffer_message", builder);
+    add_message_row(message_text, builder);
+    (void)btn;
 }

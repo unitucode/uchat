@@ -13,7 +13,7 @@ void mx_change_working_dir(void) {
 }
 
 int main(int argc, char **argv) {
-    // sqlite3 *database = mx_server_data_open(MX_DB_USER);
+    sqlite3 *database = mx_server_data_open(MX_DB_USER);
     // printf("%s\n", mx_create_request_message(database, "name_room", 1));
     // t_gmp *pr = malloc(sizeof(t_gmp));
     // pr->count = 20;
@@ -21,28 +21,31 @@ int main(int argc, char **argv) {
     // pr->db = database;
     // pr->flag = MX_NEW_MESSAGE;
     // pr->name_room = "chat_of_vlad";
-    // for (int i = 0; i < 1000; i++) {
-    //     mx_insert_room_into_db(database, "name_room", "gorila");
+    // for (int i = 0; i < 2; i++) {
+    //     printf("%s\n%s\n", room->name_room, room->customer);
     // }
     // printf("vlad\n");
-    // for (int i = 1; i < 1011; i++) {
-    //     mx_delete_room(database, i);
-    // }
-    // char *string = cJSON_Print(mx_get_rooms(database, 1591607865));
+    // t_room *room = mx_insert_room_into_db(database, "name1", "gorila");
+    // mx_free_room(&room);
+    // mx_delete_room(database, "name");
+    // cJSON *rooms = mx_get_rooms(database, 0);
+    // system("leaks -q uchat_server");
+    // char *string = cJSON_Print(rooms);
     // system("leaks -q uchat_server");
     // printf("%s\n", string);
+    // system("leaks -q uchat_server");
     // mx_json();
     // t_dl_list *list = mx_parse_json(string);
     // t_room *room = (t_room*)list->front->data; 
     // printf("room_customer -> %s\n", room->customer);
-    // mx_close_database(database);
-    // printf("Ok\n");
-    // exit(1);
+    mx_close_database(database);
+    printf("Ok\n");
+    exit(1);
+    mx_change_working_dir();
     t_chat *chat = mx_init_chat(argc, argv);
     t_client *client = NULL;
     t_ssl_con *ssl = NULL;
 
-    mx_change_working_dir();
     chat->database = mx_server_data_open(MX_DB_USER);
     client = NULL;
     ssl = mx_init_ssl(SERVER);

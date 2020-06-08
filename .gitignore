@@ -9,9 +9,10 @@ a.out
 .db
 .vscode/settings.json
 .vscode
-libraries/include
-libraries/lib
 libraries/**/*.o
+libraries/lib/*
+libraries/include/*
 client/uchat_wd/info.log
 server/uchat_server_wd/info.log
 utils/libutils.a
+users.db

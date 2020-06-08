@@ -2,7 +2,7 @@
 #include "protocol.h"
 
 static void incorrect_data(t_client *client) {
-    t_dtp *dtp = mx_error_msg_request(20, "The email or password inccorect");
+    t_dtp *dtp = mx_error_msg_request(10, "The email or password inccorect");
 
     mx_send(client->ssl, dtp);
     mx_free_request(&dtp);
@@ -19,6 +19,7 @@ static void log_in(char *login, char *pass, t_client *client) {
         printf("%s\n%s\n", user->password, pass);
         incorrect_data(client);
         mx_logger(MX_LOG_FILE, LOGMSG, "Inccorect password %s\n", login);
+        mx_free_user(&user);
     }
     else {
         client->user = user;

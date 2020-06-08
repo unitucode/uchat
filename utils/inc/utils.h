@@ -20,8 +20,9 @@
 #include <openssl/err.h>
 #include <openssl/md5.h>
 #include <openssl/rand.h>
-#include "sqlite3.h"
 #include <regex.h>
+#include <time.h>
+#include "sqlite3.h"
 #include "cJSON.h"
 #include "list.h"
 
@@ -88,10 +89,10 @@ typedef struct s_message {
 } t_message;
 
 typedef struct s_room {
+    long int date;
     unsigned int id;
     char *name_room;
     char *customer;
-    t_message *data;
 }              t_room;
 
 typedef struct s_sockopt {
@@ -113,6 +114,7 @@ bool mx_match_search(char *str, char *regex);
 bool mx_match_nsearch(char *str, char *regex, size_t size);
 void mx_randomize_str(char *str, size_t count);
 void *mx_memdup(const void *mem, size_t size);
+long long mx_get_current_time(void);
 
 
 //wrappers
@@ -148,7 +150,7 @@ void mx_elogger(const char *file, t_logtype type, const char *fmt, ...);
 sqlite3 *mx_server_data_open(char *name_db);
 void mx_close_database(sqlite3 *database);
 void mx_free_user(t_user **user);
-void mx_delete_room(sqlite3 *database, int id_room);
+void mx_delete_room(sqlite3 *database, char *name_room);
 void mx_delete_user(sqlite3 *database, char *login);
 
 void mx_create_table_users(sqlite3 *database);
@@ -157,7 +159,8 @@ void mx_create_table_member(sqlite3 *database);
 
 t_user *mx_get_user_by_login(sqlite3 *database, char *login);
 t_user *mx_get_user_by_token(sqlite3 *database, char *token);
-t_room *mx_get_room(sqlite3 *database, char *name_room);
+t_room *mx_get_room(sqlite3 *database,char *name_room);
+void mx_free_room(t_room **room);
 
 void mx_update_permission_of_user(sqlite3 *database, 
                                   unsigned int permission, char *login);

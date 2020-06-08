@@ -9,6 +9,7 @@ SERVERD = server
 UTILSD = utils
 CJSOND = libraries/libraries/cjson
 SQLITED = libraries/libraries/sqlite3
+LIB_DIR = libraries/include libraries/lib
 
 CLIENTO = $(CLIENTD)/$(CLIENT)
 SERVERO = $(SERVERD)/$(SERVER)
@@ -34,8 +35,11 @@ $(CLIENTO) $(SERVERO):
 	@make -sC $<
 	@cp $@ .
 
-$(SQLITEO) $(CJSONO) $(UTILSO):
+$(SQLITEO) $(CJSONO) $(UTILSO): | $(LIB_DIR)
 	@make -sC $<
+
+$(LIB_DIR):
+	@mkdir -p $(LIB_DIR)
 
 uninstall: clean
 	@make -sC $(SQLITED) $@
@@ -43,6 +47,7 @@ uninstall: clean
 	@make -sC $(UTILSD) $@
 	@make -sC $(CLIENTD) $@
 	@make -sC $(SERVERD) $@
+	@rm -rf $(LIB_DIR)
 
 clean:
 	@rm -rf $(CLIENT)
