@@ -15,8 +15,10 @@ void mx_make_private(GtkToggleButton *btn, GtkWidget *widget) {
 }
 
 void mx_swap_room(GtkWidget *widget, GdkEventButton *event, t_groom *room) {
-    gtk_stack_set_visible_child(room->stack_msg, GTK_WIDGET(room->page));
-    gtk_list_box_select_row(room->box_rooms, room->row_room);
+    gtk_stack_set_visible_child(room->stack_msg,
+                                GTK_WIDGET(room->page));
+    gtk_list_box_select_row(room->box_rooms,
+                            room->row_room);
     (void)widget;
     (void)event;
 }
@@ -40,8 +42,8 @@ static void add_messages_box(t_groom *room, GtkBuilder *builder) {
     mx_scrlldwnd_connect(NULL, scroll, builder);
 }
 
-static void add_room_row(t_groom *room, GtkBuilder *builder) {
-    GtkListBox *box = GTK_LIST_BOX(gtk_builder_get_object(builder,
+static void add_room_row(t_groom *room, t_chat *chat) {
+    GtkListBox *box = GTK_LIST_BOX(gtk_builder_get_object(chat->builder,
                                                           "listbox_rooms"));
     GtkWidget *row = gtk_list_box_row_new();
     GtkWidget *label = gtk_label_new(room->room_name);
@@ -49,6 +51,7 @@ static void add_room_row(t_groom *room, GtkBuilder *builder) {
 
     room->box_rooms = box;
     room->row_room = GTK_LIST_BOX_ROW(row);
+    chat->selected_room = room;
     g_signal_connect(event, "button_press_event",
                      G_CALLBACK(mx_swap_room), room);
 
@@ -58,21 +61,22 @@ static void add_room_row(t_groom *room, GtkBuilder *builder) {
 
     gtk_list_box_insert(box, row, -1);
     gtk_widget_show_all(GTK_WIDGET(box));
-    mx_swap_room(NULL, NULL, room);
-    mx_scrlldwnd_connect("scrlldwnd_rooms", NULL, builder);
+    mx_scrlldwnd_connect("scrlldwnd_rooms", NULL, chat->builder);
 }
 
-void mx_add_groom(t_groom *room, GtkBuilder *builder) {
-    add_messages_box(room, builder);
-    add_room_row(room, builder);
+void mx_add_groom(t_groom *room, t_chat *chat) {
+    add_messages_box(room, chat->builder);
+    add_room_row(room, chat);
 }
 
-t_groom *mx_create_groom(char *room_name, char *customer, int id) {
+t_groom *mx_create_groom(char *room_name, char *customer, int id,
+                         long int date) {
     t_groom *room = mx_malloc(sizeof(t_groom));
 
     room->room_name = strdup(room_name);
-    room->id = id;
     room->customer = strdup(customer);
+    room->id = id;
+    room->date = date;
     return room;
 }
 

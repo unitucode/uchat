@@ -1,11 +1,13 @@
 #include "client.h"
 
 static void req_send_message(GtkButton *btn, t_chat *chat) {
-    // gchar *message_text = mx_get_buffer_text("buffer_message", chat->builder);
+    gchar *message_text = mx_get_buffer_text("buffer_message", chat->builder);
+    t_dtp *dtp = mx_msg_request(message_text, chat->selected_room->room_name);
 
-    // mx_clear_buffer_text("buffer_message", chat->builder);
+    mx_send(chat->ssl, dtp);
+    mx_free_request(&dtp);
+    mx_clear_buffer_text("buffer_message", chat->builder);
     (void)btn;
-    (void)chat;
 }
 
 void mx_connect_send_message(t_chat *chat) {

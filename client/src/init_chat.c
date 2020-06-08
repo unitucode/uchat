@@ -6,7 +6,7 @@ t_chat *mx_init_chat(void) {
     chat->builder = NULL;
     chat->ssl = NULL;
     chat->auth_token = NULL;
-    chat->curr_room_name = NULL;
+    chat->selected_room = NULL;
     chat->queue = g_async_queue_new();
     chat->valid = true;
     return chat;

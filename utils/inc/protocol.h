@@ -13,6 +13,8 @@ typedef enum s_request_type {
     RQ_DELETE_ROOM,
     RQ_ERROR_MSG,
     RQ_USERS_ONLINE,
+    RQ_GET_ROOMS,
+    RQ_GET_MSGS,
     RQ_COUNT_REQUEST
 }            t_request_type;
 

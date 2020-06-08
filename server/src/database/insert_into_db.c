@@ -5,8 +5,9 @@ static void insert_to_room(sqlite3 *database, t_message *message,
     sqlite3_stmt *stmt;
     int rv = 0;
  
+    printf("%s\n", request);
     if ((rv = sqlite3_prepare_v3(database, request, -1, 0, &stmt, NULL)) == SQLITE_ERROR)
-        mx_elogger(MX_LOG_FILE, LOGERR, "insert message into database");
+        mx_elogger(MX_LOG_FILE, LOGERR, "insert message into database one");
     sqlite3_bind_text(stmt, 1, message->login, -1, SQLITE_STATIC);
     sqlite3_bind_int(stmt, 2, message->date);
     sqlite3_bind_text(stmt, 3, message->message, -1, SQLITE_STATIC);
@@ -24,7 +25,7 @@ t_message *mx_insert_message_into_db(sqlite3 *database, char *message_str,
     sqlite3_str_appendall(str, "INSERT INTO ");
     sqlite3_str_appendall(str, name_room);
     sqlite3_str_appendall(str,
-                          "(ID_ROOM, LOGIN, DATE, MESSAGE)" 
+                          "(LOGIN, DATE, MESSAGE)" 
                           "VALUES(?1, ?2, ?3);");
     request = sqlite3_str_finish(str);
     message->date = (long int)time(NULL);
@@ -42,15 +43,17 @@ t_room *mx_insert_room_into_db(sqlite3 *database, char *name_room,
     int rv = 0;
 
     rv = sqlite3_prepare_v3(database,
-                 "INSERT INTO ROOMS(NAME_ROOM, CUSTOMER_LOGIN) VALUES(?1, ?2);",
+                 "INSERT INTO ROOMS(NAME_ROOM, CUSTOMER_LOGIN, DATE) "
+                 "VALUES(?1, ?2, ?3);",
                  -1, 0, &stmt, NULL);
     if (rv == SQLITE_ERROR)
-        mx_elogger(MX_LOG_FILE, LOGERR, "insert room into database");
+        mx_elogger(MX_LOG_FILE, LOGERR, "insert room into db one %d\n", rv);
     sqlite3_bind_text(stmt, 1, name_room, -1, SQLITE_STATIC);
     sqlite3_bind_text(stmt, 2, customer, -1, SQLITE_STATIC);
+    sqlite3_bind_int(stmt, 3, (long int)time(NULL));
     if ((rv = sqlite3_step(stmt)) != SQLITE_DONE) {
         printf("%d\n", rv);
-        mx_elogger(MX_LOG_FILE, LOGERR, "insert room into database");
+        mx_elogger(MX_LOG_FILE, LOGERR, "insert room into db two %d\n", rv);
     }
     sqlite3_finalize(stmt);
     mx_create_table_room(database, name_room);

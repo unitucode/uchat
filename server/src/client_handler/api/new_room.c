@@ -11,6 +11,8 @@ static t_dtp *get_resend_room(t_room *room) {
         return NULL;
     if (!cJSON_AddNumberToObject(send, "id", room->id))
         return NULL;
+    if (!cJSON_AddNumberToObject(send, "date", room->date))
+        return NULL;
     return mx_get_transport_data(send);
 }
 
@@ -20,6 +22,7 @@ bool mx_new_room(t_dtp *data, t_client *client) { //TODO leaks
     t_room *new_room = NULL;
     t_dtp *resend = NULL;
 
+    printf("data = %s\n", data->str);
     if (!room || !cJSON_IsString(room))
         return false;
     new_room = mx_get_room(client->chat->database, room->valuestring);
