@@ -10,7 +10,7 @@ bool mx_get_msgs_handler(t_dtp *data, t_client *client) {
         return false;
     if (!count || !cJSON_IsNumber(count))
         return false;
-    if (!cJSON_AddItemReferenceToObject(rooms_json, "msgs",) {
+    if (!cJSON_AddItemReferenceToObject(rooms_json, "msgs", ) {
         cJSON_Delete(rooms_json);
         return false;
     }

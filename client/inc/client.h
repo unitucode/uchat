@@ -60,6 +60,7 @@ bool mx_update_users(t_dtp *data, t_chat *chat);
 bool mx_msg(t_dtp *data, t_chat *chat);
 bool mx_rooms_hanlder(t_dtp *data, t_chat *chat);
 bool mx_log_out(t_dtp *token, t_chat *chat);
+bool mx_new_msgs_hanlder(t_dtp *data, t_chat *chat);
 
 //api
 t_dtp *mx_new_room_request(char *room_name, bool is_private, char *pass);
@@ -69,6 +70,7 @@ t_dtp *mx_log_in_request(char *login, char *pass);
 t_dtp *mx_sign_up_request(char *login, char *pass);
 t_dtp *mx_get_rooms_request(long int date);
 t_dtp *mx_log_out_request(char *token);
+t_dtp *mx_get_new_msgs_request(long int date);
 
 //gui
 GtkBuilder *mx_init_window(int argc, char **argv);
