@@ -46,6 +46,7 @@ bool mx_authorization(t_dtp *token, t_chat *chat) {
         return false;
     }
     chat->auth_token = strdup(auth_token->valuestring);
+    mx_get_data(chat);
     mx_start_main_window(chat);
     return true;
 }

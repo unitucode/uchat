@@ -48,6 +48,7 @@ void mx_signup(SSL *ssl);
 void mx_login(SSL *ssl);
 void *mx_receiver(void *arg);
 void mx_init_receiver(t_chat *chat);
+void mx_get_data(t_chat *chat);
 
 //handlers
 bool mx_error_handle(t_dtp *data, t_chat *chat);
@@ -61,6 +62,7 @@ t_dtp *mx_new_room_request(char *room_name, bool is_private, char *pass);
 t_dtp *mx_token_request(char *token);
 t_dtp *mx_log_in_request(char *login, char *pass);
 t_dtp *mx_sign_up_request(char *login, char *pass);
+t_dtp *mx_get_rooms_request(long int date);
 
 //gui
 GtkBuilder *mx_init_window(int argc, char **argv);

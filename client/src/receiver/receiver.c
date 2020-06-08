@@ -6,6 +6,8 @@ void mx_init_receiver(t_chat *chat) {
     chat->request_handler[RQ_ERROR_MSG] = mx_error_handle;
     chat->request_handler[RQ_LOG_IN] = NULL;
     chat->request_handler[RQ_SIGN_UP] = NULL;
+    chat->request_handler[RQ_GET_ROOMS] = NULL;
+    chat->request_handler[RQ_GET_MSGS] = NULL;
     chat->request_handler[RQ_NEW_ROOM] = mx_new_room;
     chat->request_handler[RQ_USERS_ONLINE] = mx_update_users;
     chat->request_handler[RQ_MSG] = mx_msg;
