@@ -7,6 +7,7 @@ void mx_init_receiver(t_chat *chat) {
     chat->request_handler[RQ_NEW_ROOM] = mx_new_room;
     chat->request_handler[RQ_MSG] = mx_msg;
     chat->request_handler[RQ_GET_ROOMS] = mx_get_rooms_handler;
+    chat->request_handler[RQ_LOG_OUT] = mx_log_out;
 }
 
 void *mx_receiver(void *arg) {
@@ -15,7 +16,7 @@ void *mx_receiver(void *arg) {
     // system("leaks -q uchat_server");
 
     while ((data = mx_recv(client->ssl))) {
-        printf("recv = %s\n", data->str);
+        printf("recv = %s\n", cJSON_Print(data->json));
         if (client->user || data->type == RQ_LOG_IN
             || data->type == RQ_SIGN_UP
             || data->type == RQ_TOKEN) {

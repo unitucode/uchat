@@ -63,7 +63,6 @@ static void add_room_row(t_groom *room, GtkBuilder *builder) {
 }
 
 void mx_add_groom(t_groom *room, GtkBuilder *builder) {
-
     add_messages_box(room, builder);
     add_room_row(room, builder);
 }
