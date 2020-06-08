@@ -1,10 +1,9 @@
 #include "client.h"
 
-void mx_create_message(GtkButton *btn, GtkBuilder *builder) {
-    GtkWidget *list_box = GTK_WIDGET(gtk_builder_get_object(builder, "box_test"));
+GtkWidget *mx_create_message_row(gchar *message_text) {
     GtkWidget *row = gtk_list_box_row_new();
 
-    GtkWidget *label_txt = gtk_label_new("Message Text");
+    GtkWidget *label_txt = gtk_label_new(message_text);
     gtk_label_set_xalign(GTK_LABEL(label_txt), 0.03);
     GtkWidget *main_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
     gtk_box_pack_end(GTK_BOX(main_box), label_txt, true, true, 0);
@@ -25,7 +24,5 @@ void mx_create_message(GtkButton *btn, GtkBuilder *builder) {
     gtk_box_pack_start(GTK_BOX(main_box), info_box, true, true, 0);
 
     gtk_container_add(GTK_CONTAINER(row), GTK_WIDGET(main_box));
-    gtk_list_box_insert(GTK_LIST_BOX(list_box), row, -1);
-    gtk_widget_show_all(GTK_WIDGET(list_box));
-    (void)btn;
+    return row;
 }

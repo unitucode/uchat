@@ -2,8 +2,7 @@
 
 // SIGNAL-HANDLERS
 void mx_reset_addroom(GtkButton *btn, GtkBuilder *builder) {
-    GtkButton *button = GTK_BUTTON(gtk_builder_get_object(builder,
-                                                          "checkbtn_private"));
+    GObject *button = gtk_builder_get_object(builder, "checkbtn_private");
 
     mx_clear_buffer_text("buffer_roomname", builder);
     mx_clear_buffer_text("buffer_roompass", builder);
@@ -24,8 +23,7 @@ void mx_swap_room(GtkWidget *widget, GdkEventButton *event, t_groom *room) {
 //================================
 
 static void add_messages_box(t_groom *room, GtkBuilder *builder) {
-    GtkStack *stack = GTK_STACK(gtk_builder_get_object(builder,
-                                                       "stack_messege_rooms"));
+    GObject *stack = gtk_builder_get_object(builder, "stack_messege_rooms");
     GtkWidget *box = gtk_list_box_new();
     GtkWidget *scroll = gtk_scrolled_window_new(NULL, NULL);
     GtkWidget *view = gtk_viewport_new(NULL, NULL);
@@ -35,15 +33,16 @@ static void add_messages_box(t_groom *room, GtkBuilder *builder) {
     gtk_container_add(GTK_CONTAINER(scroll), view);
     gtk_container_add(GTK_CONTAINER(view), box);
 
-    gtk_stack_add_named(stack, scroll, room->room_name);
-    room->stack_msg = stack;
+    gtk_stack_add_named(GTK_STACK(stack), scroll, room->room_name);
+    room->stack_msg = GTK_STACK(stack);
     room->page = GTK_SCROLLED_WINDOW(scroll);
     gtk_widget_show_all(scroll);
     mx_scrlldwnd_connect(NULL, scroll, builder);
 }
 
 static void add_room_row(t_groom *room, GtkBuilder *builder) {
-    GtkListBox *box = GTK_LIST_BOX(gtk_builder_get_object(builder, "listbox_rooms"));
+    GtkListBox *box = GTK_LIST_BOX(gtk_builder_get_object(builder,
+                                                          "listbox_rooms"));
     GtkWidget *row = gtk_list_box_row_new();
     GtkWidget *label = gtk_label_new(room->room_name);
     GtkWidget *event = gtk_event_box_new();
@@ -59,11 +58,11 @@ static void add_room_row(t_groom *room, GtkBuilder *builder) {
 
     gtk_list_box_insert(box, row, -1);
     gtk_widget_show_all(GTK_WIDGET(box));
+    mx_swap_room(NULL, NULL, room);
     mx_scrlldwnd_connect("scrlldwnd_rooms", NULL, builder);
 }
 
 void mx_add_groom(t_groom *room, GtkBuilder *builder) {
-
     add_messages_box(room, builder);
     add_room_row(room, builder);
 }

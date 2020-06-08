@@ -30,6 +30,7 @@ void *mx_receiver(void *arg) {
     }
     mx_free_request(&data);
     mx_disconnect_client(client);
-    printf("Closed receiver Server\n");
+    printf("Closed receiver Server\n===============================\n");
+    system("leaks -q uchat");
     return NULL;
 }
