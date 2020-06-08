@@ -68,12 +68,14 @@ void mx_add_groom(t_groom *room, GtkBuilder *builder) {
     add_room_row(room, builder);
 }
 
-t_groom *mx_create_groom(char *room_name, char *customer, int id) {
+t_groom *mx_create_groom(char *room_name, char *customer, int id,
+                         long int date) {
     t_groom *room = mx_malloc(sizeof(t_groom));
 
     room->room_name = strdup(room_name);
-    room->id = id;
     room->customer = strdup(customer);
+    room->id = id;
+    room->date = date;
     return room;
 }
 

@@ -1,17 +1,16 @@
 #include "utils.h"
 
 void mx_delete_room(sqlite3 *database, int id_room) {
-    int rv = 0;
     sqlite3_stmt *stmt;
+    int rv = 0;
 
-    rv = sqlite3_prepare_v3(database, "DELETE FROM ROOMS WHERE ID_ROOM = ?1;\
-    DELETE FROM MEMBER WHERE ID_ROOM = ?1;\
-    DELETE FROM MESSAGE WHERE ID_ROOM = ?1", -1, 0, &stmt, NULL);
+    rv = sqlite3_prepare_v3(database, "DELETE FROM ROOMS WHERE ID_ROOM = 1;",
+        -1, 0, &stmt, NULL);
     sqlite3_bind_int(stmt, 1, id_room);
     if (rv == SQLITE_ERROR)
-        mx_elogger(MX_LOG_FILE, LOGERR, "delete room");
+        mx_elogger(MX_LOG_FILE, LOGERR, "delete room one\n");
     if ((rv = sqlite3_step(stmt)) != SQLITE_DONE)
-        mx_elogger(MX_LOG_FILE, LOGERR, "delete room");
+        mx_elogger(MX_LOG_FILE, LOGERR, "delete room\n");
     sqlite3_finalize(stmt);
 }
 

@@ -22,6 +22,7 @@ typedef struct s_groom {
     int id;
     char *room_name;
     char *customer;
+    long int date;
 }              t_groom;
 
 typedef struct s_gmsg {
@@ -56,6 +57,7 @@ bool mx_authorization(t_dtp *token, t_chat *chat);
 bool mx_new_room(t_dtp *data, t_chat *chat);
 bool mx_update_users(t_dtp *data, t_chat *chat);
 bool mx_msg(t_dtp *data, t_chat *chat);
+bool mx_rooms_hanlder(t_dtp *data, t_chat *chat);
 
 //api
 t_dtp *mx_new_room_request(char *room_name, bool is_private, char *pass);
@@ -71,7 +73,8 @@ int mx_start_gui(t_chat *chat);
 void mx_start_main_window(t_chat *chat);
 void mx_add_groom(t_groom *room, GtkBuilder *builder);
 void mx_delete_groom(t_groom **room);
-t_groom *mx_create_groom(char *room_name, char *customer, int id);
+t_groom *mx_create_groom(char *room_name, char *customer, int id,
+                         long int date);
 t_gmsg *mx_create_gmsg(cJSON *msg);
 void mx_delete_gmsg(t_gmsg **gmsg);
 

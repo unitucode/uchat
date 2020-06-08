@@ -1,17 +1,6 @@
 #include "server.h"
 #include "sqlite3.h"
 
-int callback(void *message, int argc, char** argv, char **data_parametr) {
-    for (int i = 0; i < argc; i++) {
-        printf("%s -> %s\n", data_parametr[i], argv[i]);
-        if (strcmp("MESSAGE", data_parametr[i]) == 0 && argv[i] != NULL) {
-            message = strdup(argv[i]);
-        }
-    }
-    printf("Ok\n");
-    return 0;
-}
-
 void mx_change_working_dir(void) {
     #ifdef MX_SERVER
     if (chdir(MX_SERVER)) {

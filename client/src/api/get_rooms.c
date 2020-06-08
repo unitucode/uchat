@@ -9,3 +9,27 @@ t_dtp *mx_get_rooms_request(long int date) {
         return NULL;
     return mx_get_transport_data(json_result);
 }
+
+static void insert_room(cJSON *room, t_chat *chat) {
+    t_dtp *dtp = NULL;
+    cJSON *dup = cJSON_Duplicate(room, cJSON_True);
+
+    if (!cJSON_AddNumberToObject(dup, "type", RQ_NEW_ROOM))
+        return;
+    dtp = mx_get_transport_data(dup);
+    mx_new_room(dtp, chat);
+    mx_free_request(&dtp);
+}
+
+bool mx_rooms_hanlder(t_dtp *data, t_chat *chat) {
+    cJSON *rooms = cJSON_GetObjectItemCaseSensitive(data->json, "rooms");
+    cJSON *room = NULL;
+
+    if (!rooms || !cJSON_IsArray(rooms))
+        return false;
+    for (int i = 0; i < cJSON_GetArraySize(rooms); i++) {
+        room = cJSON_GetArrayItem(rooms, i);
+        insert_room(room, chat);
+    }
+    return true;
+}
