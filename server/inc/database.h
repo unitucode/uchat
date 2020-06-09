@@ -14,15 +14,17 @@
 
 typedef struct s_members_room {
     char *login;
+    char *name_room;
     struct s_members_room *next;
 }              t_members_room;
 
 typedef struct s_db_user {
-    const char *token;
-    const char *login;
-    const char *password;
     unsigned int permission;
     long int date;
+    char *password;
+    char *token;
+    char *login;
+    char *description;
 }              t_db_user;
 
 typedef struct s_db_message {
@@ -37,6 +39,7 @@ typedef struct s_db_message {
 typedef struct s_db_room {
     long int date;
     unsigned int id;
+    char *description;
     char *name_room;
     char *customer;
 }              t_db_room;
@@ -85,3 +88,8 @@ cJSON *mx_get_rooms(sqlite3 *database, long int date);
 
 void mx_test_json();
 void mx_json();
+
+
+// error
+
+void mx_error_sqlite(int rv, char *error, char *where_error);

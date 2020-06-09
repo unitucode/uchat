@@ -18,25 +18,32 @@ int main(int argc, char **argv) {
     
     // create room
     t_db_room *room = mx_insert_room_into_db(database, "name_room", "customer");
+    printf("%s\n", room->name_room);
+    printf("%s\n", room->customer);
+    printf("%s\n", room->description);
+    printf("%d\n", room->date);
+    printf("%d\n", room->id);
     mx_free_room(&room);
 
     // create message
-    for (int i = 0; i < 100; i++) {
-        t_db_message *message = mx_insert_message_into_db(database, "hello", "login", "name_room");
-        mx_free_message(&message);
-    }
+    // for (int i = 0; i < 100; i++) {
+    //     t_db_message *message = mx_insert_message_into_db(database, "hello", "login", "name_room");
+    //     mx_free_message(&message);
+    // }
     
     // delete message
     // for (int i = 0; i < 20; i++) {
     //     mx_delete_message(database, "name_room", i);
     // }
 
-    // t_db_user *user = mx_insert_user_into_db(database, "login", "password", "token");
-    // printf("login -> %s\n", user->login);
-    // printf("pass -> %s\n", user->password);
-    // printf("token -> %s\n", user->token);
-    // printf("date -> %ld\n", user->date);
-    // mx_close_database(database);
+    t_db_user *user = mx_insert_user_into_db(database, "login", "password", "token");
+    printf("login -> %s\n", user->login);
+    printf("login -> %s\n", user->description);
+    printf("pass -> %s\n", user->password);
+    printf("token -> %s\n", user->token);
+    printf("date -> %ld\n", user->date);
+    mx_free_user(&user);
+    mx_close_database(database);
     system("leaks -q uchat_server");
     printf("Ok\n");
     exit(1);
