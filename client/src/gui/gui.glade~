@@ -330,9 +330,10 @@
                   <object class="GtkStack" id="stack_messege_rooms">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
+                    <property name="transition_duration">100</property>
                     <property name="transition_type">crossfade</property>
                     <child>
-                      <object class="GtkLabel" id="labe_no_room">
+                      <object class="GtkLabel" id="label_no_room">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">Choose any room to start dialog</property>
@@ -502,7 +503,7 @@
                         <property name="can_focus">True</property>
                         <property name="receives_default">True</property>
                         <property name="image">image8</property>
-                        <signal name="clicked" handler="mx_widget_switch_visibility" object="dialog_edit_room" swapped="no"/>
+                        <signal name="clicked" handler="mx_widget_switch_visibility" object="dialog_room_sett" swapped="no"/>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -1157,6 +1158,7 @@
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
+                <signal name="clicked" handler="mx_widget_switch_visibility" object="dialog_profile_sett" swapped="no"/>
               </object>
               <packing>
                 <property name="expand">True</property>
@@ -1317,7 +1319,7 @@
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
-                <signal name="clicked" handler="mx_widget_switch_visibility" object="dialog_edit_room" swapped="no"/>
+                <signal name="clicked" handler="mx_widget_switch_visibility" object="dialog_room_sett" swapped="no"/>
               </object>
               <packing>
                 <property name="expand">True</property>

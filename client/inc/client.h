@@ -94,6 +94,7 @@ t_gmsg *mx_create_gmsg(cJSON *msg);
 void mx_delete_gmsg(t_gmsg **gmsg);
 GtkWidget *mx_create_message_row(t_gmsg *msg);
 void mx_add_message_to_room(t_gmsg *msg, GtkBuilder *builder);
+void mx_logout_client(t_chat *chat);
 
 // gui utils
 void mx_scrlldwnd_connect(char *name, GtkWidget *scroll, GtkBuilder *builder);
