@@ -1099,8 +1099,12 @@
     </child>
   </object>
   <object class="GtkDialog" id="dialog_profile_prefs">
+    <property name="width_request">320</property>
+    <property name="height_request">260</property>
     <property name="can_focus">False</property>
     <property name="resizable">False</property>
+    <property name="modal">True</property>
+    <property name="window_position">center-on-parent</property>
     <property name="type_hint">dialog</property>
     <property name="deletable">False</property>
     <property name="transient_for">wnd_main</property>
