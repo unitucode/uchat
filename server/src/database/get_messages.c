@@ -14,7 +14,7 @@ static cJSON *get_object_message(sqlite3_stmt *stmt) {
         cJSON_CreateString((char *)sqlite3_column_text(stmt, 1)));
     cJSON_AddItemToObject(object_message, "date",
         cJSON_CreateNumber(sqlite3_column_int(stmt, 2)));
-    cJSON_AddItemToObject(object_message, "message",
+    cJSON_AddItemToObject(object_message, "msg",
         cJSON_CreateString((char *)sqlite3_column_text(stmt, 3)));
     return object_message;
 }
@@ -31,7 +31,7 @@ static cJSON *get_messages(sqlite3_stmt *stmt, char *name_room, int count,
         cJSON_AddItemToArray(message, get_object_message(stmt));
     }
     cJSON_AddItemToObject(room, "name_room", cJSON_CreateString(name_room));
-    cJSON_AddItemToObject(room, "message", message);
+    cJSON_AddItemToObject(room, "messages", message);
     sqlite3_finalize(stmt);
     return room;
 }

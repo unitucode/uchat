@@ -3,11 +3,11 @@
 static cJSON *get_object_room(sqlite3_stmt *stmt) {
     cJSON *room = cJSON_CreateObject();
 
-    cJSON_AddItemToObject(room, "id_room",
+    cJSON_AddItemToObject(room, "id",
         cJSON_CreateNumber(sqlite3_column_int(stmt, 0)));
-    cJSON_AddItemToObject(room, "name_room",
+    cJSON_AddItemToObject(room, "room_name",
         cJSON_CreateString((char *)sqlite3_column_text(stmt, 1)));
-    cJSON_AddItemToObject(room, "customer_login",
+    cJSON_AddItemToObject(room, "customer",
         cJSON_CreateString((char *)sqlite3_column_text(stmt, 2)));
     cJSON_AddItemToObject(room, "date",
         cJSON_CreateNumber(sqlite3_column_int(stmt, 3)));

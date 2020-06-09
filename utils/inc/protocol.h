@@ -7,12 +7,15 @@
 typedef enum s_request_type {
     RQ_LOG_IN = 0,
     RQ_SIGN_UP,
+    RQ_LOG_OUT,
     RQ_TOKEN,
     RQ_MSG,
     RQ_NEW_ROOM,
     RQ_DELETE_ROOM,
     RQ_ERROR_MSG,
     RQ_USERS_ONLINE,
+    RQ_GET_ROOMS,
+    RQ_GET_NEW_MSGS,
     RQ_COUNT_REQUEST
 }            t_request_type;
 

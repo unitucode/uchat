@@ -24,7 +24,7 @@ void mx_create_table_room(sqlite3 *database, char *name_room) {
     sqlite3_str_appendall(str, "CREATE TABLE IF NOT EXISTS'");
     sqlite3_str_appendall(str, name_room);
     sqlite3_str_appendall(str,
-                          "' (ID_MESSAGE  INTEGER PRIMARY KEY NOT NULL,"
+                        "' (ID_MESSAGE INTEGER UNIQUE NOT NULL,"
                           "LOGIN        TEXT NOT NULL,"
                           "DATE         INTEGER NOT NULL,"
                           "MESSAGE      TEXT NOT NULL);");
