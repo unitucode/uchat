@@ -13,7 +13,7 @@
 #define MX_ERRMSG_DIFPASS "Passwords must match"
 #define MX_ERRMSG_INCCRDATA "The email or password inccorect"
 #define MX_ERRMSG_USEREXIST "User already exist"
-#define MX_BUF_MSGS 50
+#define MX_BUF_MSGS 5
 
 typedef struct s_groom {
     GtkListBox *box_rooms;
