@@ -17,8 +17,8 @@ bool mx_log_out(t_dtp *token, t_chat *chat) {
         return false;
     if (strcmp(chat->auth_token, tok->valuestring))
         return false;
-    mx_free((void**)chat->auth_token);
+    mx_free((void**)&chat->auth_token);
+    mx_free((void**)&chat->login);
     mx_start_main_window(chat);
-
     return true;
 }

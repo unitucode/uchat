@@ -5,12 +5,17 @@
 #include "list.h"
 #include "sqlite3.h"
 
-#define MX_LISTENQ 1024
-#define MX_PORT_LEN 8
 #define MX_OLD_MESSAGE 2
 #define MX_NEW_MESSAGE 1
 #define MX_CURR_MESSAGE 0
 #define MX_DB "database.db"
+
+
+//settings
+#define MX_LISTENQ 1024
+#define MX_PORT_LEN 8
+#define MX_REQUEST_PER_SECOND 20
+#define MX_DELAY (1000000 / MX_REQUEST_PER_SECOND)
 
 typedef struct s_chat t_chat;
 typedef struct s_client t_client;
@@ -68,7 +73,7 @@ struct s_client {
 };
 
 //api
-t_dtp *mx_token_request(char *token);
+t_dtp *mx_token_request(char *token, char *login);
 t_dtp *mx_error_msg_request(int error_code, char *msg);
 t_dtp *mx_online_users_request(int count);
 t_dtp *mx_log_out_request(char *token);

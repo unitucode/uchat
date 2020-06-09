@@ -13,7 +13,11 @@
 #define MX_ERRMSG_DIFPASS "Passwords must match"
 #define MX_ERRMSG_INCCRDATA "The email or password inccorect"
 #define MX_ERRMSG_USEREXIST "User already exist"
-#define MX_BUF_MSGS 5
+
+
+//settings
+#define MX_BUF_MSGS 50
+#define MX_MAX_LENGTH_QUEUE 10
 
 typedef struct s_groom {
     GtkListBox *box_rooms;
@@ -25,6 +29,7 @@ typedef struct s_groom {
     char *room_name;
     char *customer;
     long int date;
+    char *desc;
     bool is_updated;
 }              t_groom;
 
@@ -38,9 +43,10 @@ typedef struct s_gmsg {
 
 typedef struct s_chat {
     char *auth_token;
+    char *login;
     SSL *ssl;
-    GtkBuilder *builder;
     t_dtp *data;
+    GtkBuilder *builder;
     GAsyncQueue *queue;
     bool valid;
     bool (*request_handler[RQ_COUNT_REQUEST])(t_dtp *dtp, struct s_chat *chat);
@@ -73,6 +79,7 @@ t_dtp *mx_sign_up_request(char *login, char *pass);
 t_dtp *mx_get_rooms_request(long int date);
 t_dtp *mx_log_out_request(char *token);
 t_dtp *mx_get_new_msgs_request(long int date, char *room_name);
+t_dtp *mx_upd_room_desc_request(char *room_name, char *desc, char *token); //TODO
 
 //gui
 GtkBuilder *mx_init_window(int argc, char **argv);

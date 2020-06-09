@@ -68,6 +68,7 @@ static void add_room_row(t_groom *room, GtkBuilder *builder) {
     gtk_container_add(GTK_CONTAINER(row), event);
     gtk_widget_set_size_request(row, -1, 80);
     gtk_list_box_set_sort_func(box, (GtkListBoxSortFunc)mx_room_sort, NULL, NULL);
+    room->is_updated = false;
     gtk_list_box_insert(box, row, -1);
     gtk_widget_show_all(GTK_WIDGET(box));
 }
@@ -91,6 +92,7 @@ t_groom *mx_create_groom(char *room_name, char *customer, int id,
     room->id = id;
     room->date = date;
     room->is_updated = true;
+    room->desc = NULL;
     return room;
 }
 

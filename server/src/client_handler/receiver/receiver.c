@@ -30,6 +30,7 @@ void *mx_receiver(void *arg) {
             break;
         // send_to_all(client->chat->clients, client->chat, client, dtp->str);
         mx_free_request(&data);
+        usleep(MX_DELAY);
     }
     mx_free_request(&data);
     mx_disconnect_client(client);
