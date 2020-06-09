@@ -21,8 +21,8 @@ void *mx_receiver(void *arg) {
     t_dtp *data = NULL;
 
     while ((data = mx_recv(chat->ssl)) && chat->valid) {
-        printf("get date = %ld\n", time(NULL));
-        // printf("recv = %s", cJSON_Print(data->json));
+        // printf("get date = %ld\n", time(NULL));
+        printf("recv = %s", cJSON_Print(data->json));
         g_async_queue_push(chat->queue, data);
         mx_handle_request(chat);
     }
