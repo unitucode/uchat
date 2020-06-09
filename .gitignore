@@ -6,7 +6,7 @@ README.md
 obj
 info.log
 a.out
-.db
+database.db
 .vscode/settings.json
 .vscode
 libraries/**/*.o
@@ -16,3 +16,4 @@ client/uchat_wd/info.log
 server/uchat_server_wd/info.log
 utils/libutils.a
 users.db
+info.log

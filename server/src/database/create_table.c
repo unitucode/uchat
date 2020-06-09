@@ -1,17 +1,17 @@
 #include "utils.h"
 
 void mx_create_table_users(sqlite3 *database) {
-    sqlite3_exec(database, "CREATE TABLE USERS IF NOT EXISTS("
+    sqlite3_exec(database, "CREATE TABLE IF NOT EXISTS USERS("
                            "LOGIN          TEXT  UNIQUE   NOT NULL,"
                            "PASSWORD       TEXT           NOT NULL,"
                            "TOKEN          TEXT           NOT NULL,"
                            "PERMISSION     INTEGER        NOT NULL,"
-                           "ON_OFF         INTEGER        NOT NULL);",
+                           "DATE         INTEGER        NOT NULL);",
                  0, 0, 0);
 }
 
 void mx_create_table_member(sqlite3 *database) {
-    sqlite3_exec(database, "CREATE TABLE MEMBER IF NOT EXISTS("
+    sqlite3_exec(database, "CREATE TABLE IF NOT EXISTS MEMBER("
                            "NAME_ROOM        TEXT NOT NULL,"
                            "LOGIN            TEXT    NOT NULL);",
                  0, 0, 0);
@@ -21,10 +21,10 @@ void mx_create_table_room(sqlite3 *database, char *name_room) {
     sqlite3_str *str = sqlite3_str_new(database);
     char *sql = NULL;
 
-    sqlite3_str_appendall(str, "CREATE TABLE '");
+    sqlite3_str_appendall(str, "CREATE TABLE IF NOT EXISTS'");
     sqlite3_str_appendall(str, name_room);
     sqlite3_str_appendall(str,
-                          "' IF NOT EXISTS(ID_MESSAGE  INTEGER PRIMARY KEY NOT NULL,"
+                          "' (ID_MESSAGE  INTEGER PRIMARY KEY NOT NULL,"
                           "LOGIN        TEXT NOT NULL,"
                           "DATE         INTEGER NOT NULL,"
                           "MESSAGE      TEXT NOT NULL);");
@@ -34,7 +34,7 @@ void mx_create_table_room(sqlite3 *database, char *name_room) {
 }
 
 void mx_create_table_rooms(sqlite3 *database) {
-    sqlite3_exec(database, "CREATE TABLE ROOMS("
+    sqlite3_exec(database, "CREATE TABLE IF NOT EXISTS ROOMS("
                        "ID                 INTEGER PRIMARY KEY NOT NULL,"
                        "NAME_ROOM          TEXT                NOT NULL, "
                        "CUSTOMER_LOGIN     TEXT                NOT NULL,"

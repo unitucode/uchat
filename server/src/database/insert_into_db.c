@@ -52,16 +52,17 @@ t_db_user *mx_insert_user_into_db(sqlite3 *database, char *login,
     int rv = 0;
 
     rv = sqlite3_prepare_v3(database,
-        "INSERT INTO USERS(LOGIN, PASSWORD, TOKEN, PERMISSION, ON_OFF) "
-        "VALUES(?1, ?2, ?3, 0, 1);",
+        "INSERT INTO USERS(LOGIN, PASSWORD, TOKEN, PERMISSION, DATE) "
+        "VALUES(?1, ?2, ?3, 0, ?4);",
                             -1, 0, &stmt, NULL);
     if (rv == SQLITE_ERROR)
         mx_elogger(MX_LOG_FILE, LOGERR, "insert user into database");
     sqlite3_bind_text(stmt, 1, login, -1, SQLITE_STATIC);
     sqlite3_bind_text(stmt, 2, pass, -1, SQLITE_STATIC);
     sqlite3_bind_text(stmt, 3, token, -1, SQLITE_STATIC);
+    sqlite3_bind_int(stmt, 4, (long int)time(NULL));
     if ((rv = sqlite3_step(stmt)) != SQLITE_DONE)
-        mx_elogger(MX_LOG_FILE, LOGERR, "insert user into database");
+        mx_logger(MX_LOG_FILE, LOGWAR, "insert user into database");
     sqlite3_finalize(stmt);
     return mx_get_user_by_login(database, login);
 }
