@@ -20,6 +20,18 @@ void mx_swap_room(GtkWidget *widget, GdkEventButton *event, t_groom *room) {
     (void)widget;
     (void)event;
 }
+
+void mx_swap_prefs(GtkListBox *box, GtkListBoxRow *row, GtkBuilder *builder) {
+    t_groom *groom = mx_get_selected_groom(builder);
+    GObject *name = gtk_builder_get_object(builder, "label_prefs_roomname");
+    GObject *customer = gtk_builder_get_object(builder,
+                                               "label_prefs_customer");
+
+    gtk_label_set_text(GTK_LABEL(name), groom->room_name);
+    gtk_label_set_text(GTK_LABEL(customer), groom->customer);
+    (void)box;
+    (void)row;
+}
 //================================
 
 static void add_messages_box(t_groom *room, GtkBuilder *builder) {
@@ -54,6 +66,7 @@ static void add_room_row(t_groom *room, GtkBuilder *builder) {
     room->row_room = GTK_LIST_BOX_ROW(row);
     g_signal_connect(event, "button_press_event",
                      G_CALLBACK(mx_swap_room), room);
+    g_signal_connect(box, "row-selected", G_CALLBACK(mx_swap_prefs), builder);
     gtk_container_add(GTK_CONTAINER(event), label);
     gtk_container_add(GTK_CONTAINER(row), event);
     gtk_widget_set_size_request(row, -1, 80);
