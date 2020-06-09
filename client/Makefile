@@ -15,9 +15,11 @@ INCD_CLIENT = -Iinc/
 UTILS_INC = -I../utils/inc
 UTILS_LIB = ../utils/libutils.a
 
-SRCD := src src/gui src/receiver src/api src/gui/wrappers
+SRCD = src src/gui src/receiver src/api src/gui/wrappers
+INCD = inc
 SRCS = $(foreach dir, $(SRCD), $(wildcard $(dir)/*.c))
 OBJS = $(addprefix $(OBJD)/, $(notdir $(SRCS:%.c=%.o)))
+INCS = $(foreach dir, $(INCD), $(wildcard $(dir)/*.h))
 
 # GTK library flags
 # GTK_INC = -I/usr/include/gtk-3.0 -I/usr/include/at-spi2-atk/2.0 \
@@ -49,8 +51,8 @@ $(CLIENT): $(OBJS)
 	$(CC) -o $@ $^ $(UTILS_LIB) $(LIBS)
 	@printf "\033[32;1m$@ created\033[0m\n"
 
-$(OBJS): obj/%.o: %.c | $(OBJD)
-	$(CC) $(CPPFLAGS) $(CFLAGS) -g -c -o $@ $<
+$(OBJS): obj/%.o: %.c $(INCS) | $(OBJD)
+	$(CC) $(CPPFLAGS) $(CFLAGS) -c -o $@ $<
 	@printf "\033[32mcompiled: \033[0m$(notdir $<)\n"
 
 $(OBJD):
