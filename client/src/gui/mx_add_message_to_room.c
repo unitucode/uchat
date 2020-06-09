@@ -13,6 +13,5 @@ static void add_message_row(t_gmsg *msg, GtkBuilder *builder) {
 }
 
 void mx_add_message_to_room(t_gmsg *msg, GtkBuilder *builder) {
-    mx_clear_buffer_text("buffer_message", builder);
     add_message_row(msg, builder);
 }
