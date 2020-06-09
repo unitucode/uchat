@@ -6,7 +6,9 @@ void mx_free_user(t_db_user **user) {
     if ((*user)->password)
         mx_free((void**)&(*user)->password); 
     if ((*user)->token) 
-        mx_free((void**)&(*user)->token); 
+        mx_free((void**)&(*user)->token);
+    if ((*user)->description)
+        mx_free((void**)&(*user)->description); 
     mx_free((void**)user); 
     *user = NULL;
 }

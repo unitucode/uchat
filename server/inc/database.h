@@ -54,6 +54,7 @@ void mx_delete_message(sqlite3 *database, char *name_room, int id_message);
 void mx_create_table_users(sqlite3 *database);
 void mx_create_table_rooms(sqlite3 *database);
 void mx_create_table_member(sqlite3 *database);
+void mx_create_table_room(sqlite3 *database, char *name_room);
 
 t_db_user *mx_get_user_by_login(sqlite3 *database, char *login);
 t_db_user *mx_get_user_by_token(sqlite3 *database, char *token);
@@ -61,11 +62,15 @@ t_db_room *mx_get_room(sqlite3 *database, char *name_room);
 void mx_free_room(t_db_room **room);
 void mx_free_message(t_db_message **message);
 
-void mx_update_permission_of_user(sqlite3 *database,
-                                  unsigned int permission, char *login);
-void mx_update_token(sqlite3 *database, char *new_token, char *login);
 
-void mx_create_table_room(sqlite3 *database, char *name_room);
+void mx_update_permission_of_user(sqlite3 *database, char *login, 
+                                  unsigned int new);
+void mx_update_token(sqlite3 *database, char *login, char *new);
+void mx_update_description_user(sqlite3 *database, char *login, char *new);
+void mx_update_description_room(sqlite3 *database, char *name, char *new);
+void update(sqlite3_stmt *stmt, char *new, char *name, char *error);
+void mx_edit_name_room(sqlite3 *database, char *name_room, char *new);
+void mx_edit_name_user(sqlite3 *database, char *login, char *new);
 
 void mx_insert_to_room(sqlite3 *database, t_db_message *room, char *name_room);
 t_db_message *mx_insert_message_into_db(sqlite3 *database, char *message_str,
@@ -90,6 +95,6 @@ void mx_test_json();
 void mx_json();
 
 
-// error
+    // error
 
-void mx_error_sqlite(int rv, char *error, char *where_error);
+int mx_error_sqlite(int rv, char *error, char *where_error);

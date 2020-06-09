@@ -6,7 +6,8 @@ void mx_create_table_users(sqlite3 *database) {
                            "PASSWORD       TEXT           NOT NULL,"
                            "TOKEN          TEXT           NOT NULL,"
                            "PERMISSION     INTEGER        NOT NULL,"
-                           "DATE         INTEGER        NOT NULL);",
+                           "DATE           INTEGER        NOT NULL,"
+                           "DESCRIPTION    TEXT);",
                  0, 0, 0);
 }
 
@@ -24,7 +25,7 @@ void mx_create_table_room(sqlite3 *database, char *name_room) {
     sqlite3_str_appendall(str, "CREATE TABLE IF NOT EXISTS'");
     sqlite3_str_appendall(str, name_room);
     sqlite3_str_appendall(str,
-                        "' (ID_MESSAGE INTEGER UNIQUE NOT NULL,"
+                        "' (ID_MESSAGE INTEGER PRIMARY KEY NOT NULL,"
                           "LOGIN        TEXT NOT NULL,"
                           "DATE         INTEGER NOT NULL,"
                           "MESSAGE      TEXT NOT NULL);");
@@ -39,6 +40,6 @@ void mx_create_table_rooms(sqlite3 *database) {
                        "NAME_ROOM          TEXT                NOT NULL, "
                        "CUSTOMER_LOGIN     TEXT                NOT NULL,"
                        "DATE               INTEGER             NOT NULL,"
-                       "DESCRI);",
+                       "DESCRIPTION        TEXT);",
                         0, 0, 0);
 }

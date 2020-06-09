@@ -17,13 +17,18 @@ int main(int argc, char **argv) {
     sqlite3 *database = mx_server_data_open(MX_DB);
     
     // create room
-    t_db_room *room = mx_insert_room_into_db(database, "name_room", "customer");
-    printf("%s\n", room->name_room);
-    printf("%s\n", room->customer);
-    printf("%s\n", room->description);
-    printf("%d\n", room->date);
-    printf("%d\n", room->id);
-    mx_free_room(&room);
+    // t_db_room *room = mx_insert_room_into_db(database, "name_room", "customer");
+    // printf("%s\n", room->name_room);
+    // printf("%s\n", room->customer);
+    // printf("%s\n", room->description);
+    // printf("%d\n", room->date);
+    // printf("%d\n", room->id);
+    // mx_free_room(&room);
+
+
+
+    // edit room name
+    // mx_edit_name_room(database, "name_room_100", "name_room_show");
 
     // create message
     // for (int i = 0; i < 100; i++) {
@@ -36,13 +41,17 @@ int main(int argc, char **argv) {
     //     mx_delete_message(database, "name_room", i);
     // }
 
-    t_db_user *user = mx_insert_user_into_db(database, "login", "password", "token");
-    printf("login -> %s\n", user->login);
-    printf("login -> %s\n", user->description);
-    printf("pass -> %s\n", user->password);
-    printf("token -> %s\n", user->token);
-    printf("date -> %ld\n", user->date);
-    mx_free_user(&user);
+    // edit login
+    mx_edit_name_user(database, "login1", "login");
+
+    // create users
+    // t_db_user *user = mx_insert_user_into_db(database, "login5", "password", "token");
+    // printf("login -> %s\n", user->login);
+    // printf("desc -> %s\n", user->description);
+    // printf("pass -> %s\n", user->password);
+    // printf("token -> %s\n", user->token);
+    // printf("date -> %ld\n", user->date);
+    // mx_free_user(&user);
     mx_close_database(database);
     system("leaks -q uchat_server");
     printf("Ok\n");
