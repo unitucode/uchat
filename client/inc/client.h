@@ -25,6 +25,7 @@ typedef struct s_groom {
     char *room_name;
     char *customer;
     long int date;
+    bool is_updated;
 }              t_groom;
 
 typedef struct s_gmsg {

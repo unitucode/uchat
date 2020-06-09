@@ -22,6 +22,16 @@ void mx_swap_room(GtkWidget *widget, GdkEventButton *event, t_groom *room) {
 }
 //================================
 
+gint mx_room_sort(GtkListBoxRow *row1, GtkListBoxRow *row2) {
+    t_groom *f_room = g_object_get_data(G_OBJECT(row1), "groom");
+
+    if (f_room->is_updated) {
+        return false;
+    }
+    (void)row2;
+    return true;
+}
+
 static void add_messages_box(t_groom *room, GtkBuilder *builder) {
     GObject *stack = gtk_builder_get_object(builder, "stack_messege_rooms");
     GtkWidget *box = gtk_list_box_new();
@@ -57,7 +67,7 @@ static void add_room_row(t_groom *room, GtkBuilder *builder) {
     gtk_container_add(GTK_CONTAINER(event), label);
     gtk_container_add(GTK_CONTAINER(row), event);
     gtk_widget_set_size_request(row, -1, 80);
-
+    gtk_list_box_set_sort_func(box, (GtkListBoxSortFunc)mx_room_sort, NULL, NULL);
     gtk_list_box_insert(box, row, -1);
     gtk_widget_show_all(GTK_WIDGET(box));
 }
@@ -80,6 +90,7 @@ t_groom *mx_create_groom(char *room_name, char *customer, int id,
     room->stack_msg = NULL;
     room->id = id;
     room->date = date;
+    room->is_updated = true;
     return room;
 }
 
