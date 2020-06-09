@@ -47,6 +47,21 @@ void mx_close_auth(GtkButton *btn, GtkDialog *dialog) {
     (void)btn;
 }
 
-void mx_show_password(GtkToggleButton *btn, GtkEntry *entry) {
-    gtk_entry_set_visibility(entry, gtk_toggle_button_get_active(btn));
+void mx_show_password(GtkEntry *entry, GtkEntryIconPosition icon_pos,
+                      GdkEvent *event, gpointer *user_data) {
+    if (gtk_entry_get_visibility(entry)) {
+        GdkPixbuf *eye = gdk_pixbuf_new_from_file_at_size("eye.png", 15, 15, NULL);
+
+        gtk_entry_set_icon_from_pixbuf(entry, icon_pos, eye);
+        gtk_entry_set_visibility(entry, false);
+    }
+    else {
+        GdkPixbuf *closed_eye = gdk_pixbuf_new_from_file_at_size("closed-eye.png",
+                                                         15, 15, NULL);
+
+        gtk_entry_set_icon_from_pixbuf(entry, icon_pos, closed_eye);
+        gtk_entry_set_visibility(entry, true);
+    }
+    (void)event;
+    (void)user_data;
 }
