@@ -16,6 +16,8 @@
 #define MX_PORT_LEN 8
 #define MX_REQUEST_PER_SECOND 20
 #define MX_DELAY (1000000 / MX_REQUEST_PER_SECOND)
+#define MX_MAX_ROOMS 20
+#define MX_MAX_MSGS 500
 
 typedef struct s_chat t_chat;
 typedef struct s_client t_client;

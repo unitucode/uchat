@@ -5,7 +5,7 @@ t_dtp *mx_log_out_request(char *token) {
 
     if (!cJSON_AddNumberToObject(json_result, "type", RQ_LOG_OUT))
         return NULL;
-    if (!cJSON_AddStringToObject(json_result, "token", token))
+    if (!cJSON_AddStringToObject(json_result, "token", MX_J_STR(token)))
         return NULL;
     return mx_get_transport_data(json_result);
 }
@@ -19,6 +19,6 @@ bool mx_log_out(t_dtp *token, t_chat *chat) {
         return false;
     mx_free((void**)&chat->auth_token);
     mx_free((void**)&chat->login);
-    mx_start_main_window(chat);
+    // mx_start_main_window(chat);
     return true;
 }
