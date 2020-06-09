@@ -8,6 +8,7 @@ void mx_init_receiver(t_chat *chat) {
     chat->request_handler[RQ_MSG] = mx_msg;
     chat->request_handler[RQ_GET_ROOMS] = mx_get_rooms_handler;
     chat->request_handler[RQ_LOG_OUT] = mx_log_out;
+    chat->request_handler[RQ_GET_NEW_MSGS] = mx_get_msgs_handler;
 }
 
 void *mx_receiver(void *arg) {
@@ -29,6 +30,7 @@ void *mx_receiver(void *arg) {
             break;
         // send_to_all(client->chat->clients, client->chat, client, dtp->str);
         mx_free_request(&data);
+        usleep(MX_DELAY);
     }
     mx_free_request(&data);
     mx_disconnect_client(client);

@@ -7,7 +7,7 @@ void mx_init_receiver(t_chat *chat) {
     chat->request_handler[RQ_LOG_IN] = NULL;
     chat->request_handler[RQ_SIGN_UP] = NULL;
     chat->request_handler[RQ_GET_ROOMS] = mx_rooms_hanlder;
-    chat->request_handler[RQ_GET_MSGS] = NULL;
+    chat->request_handler[RQ_GET_NEW_MSGS] = mx_new_msgs_hanlder;
     chat->request_handler[RQ_NEW_ROOM] = mx_new_room;
     chat->request_handler[RQ_USERS_ONLINE] = mx_update_users;
     chat->request_handler[RQ_MSG] = mx_msg;
@@ -21,8 +21,10 @@ void *mx_receiver(void *arg) {
     t_dtp *data = NULL;
 
     while ((data = mx_recv(chat->ssl)) && chat->valid) {
-        printf("get date = %ld\n", time(NULL));
-        // printf("recv = %s", cJSON_Print(data->json));
+        // printf("get date = %ld\n", time(NULL));
+        printf("recv = %s", cJSON_Print(data->json));
+        if (g_async_queue_length(chat->queue) > MX_MAX_LENGTH_QUEUE)
+            chat->valid = false;
         g_async_queue_push(chat->queue, data);
         mx_handle_request(chat);
     }

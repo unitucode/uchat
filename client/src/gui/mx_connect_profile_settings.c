@@ -1,9 +1,11 @@
 #include "client.h"
 
 static void req_logout(GtkButton *btn, t_chat *chat) {
-    puts("LOGAOUT FUNC");
+    t_dtp *logout = mx_log_out_request(chat->auth_token);
+
+    mx_send(chat->ssl, logout);
+    mx_free_request(&logout);
     (void)btn;
-    (void)chat;
 }
 
 void mx_connect_profile_settings(t_chat *chat) {

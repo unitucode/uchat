@@ -5,12 +5,19 @@
 #include "list.h"
 #include "sqlite3.h"
 
-#define MX_LISTENQ 1024
-#define MX_PORT_LEN 8
 #define MX_OLD_MESSAGE 2
 #define MX_NEW_MESSAGE 1
 #define MX_CURR_MESSAGE 0
 #define MX_DB "database.db"
+
+
+//settings
+#define MX_LISTENQ 1024
+#define MX_PORT_LEN 8
+#define MX_REQUEST_PER_SECOND 20
+#define MX_DELAY (1000000 / MX_REQUEST_PER_SECOND)
+#define MX_MAX_ROOMS 20
+#define MX_MAX_MSGS 500
 
 typedef struct s_chat t_chat;
 typedef struct s_client t_client;
@@ -27,14 +34,6 @@ typedef struct s_db_user {
     unsigned int permission;
     int on_off;
 }              t_db_user;
-
-typedef struct s_db_gmp {
-    long int date;
-    int count;
-    char *name_room;
-    sqlite3 *db;
-    int flag;
-}              t_db_gmp;
 
 typedef struct s_db_message {
     unsigned int id_room;
@@ -76,7 +75,7 @@ struct s_client {
 };
 
 //api
-t_dtp *mx_token_request(char *token);
+t_dtp *mx_token_request(char *token, char *login);
 t_dtp *mx_error_msg_request(int error_code, char *msg);
 t_dtp *mx_online_users_request(int count);
 t_dtp *mx_log_out_request(char *token);
@@ -89,6 +88,7 @@ bool mx_new_room(t_dtp *data, t_client *client);
 bool mx_msg(t_dtp *data, t_client *client);
 bool mx_get_rooms_handler(t_dtp *data, t_client *client);
 bool mx_log_out(t_dtp *token, t_client *client);
+bool mx_get_msgs_handler(t_dtp *data, t_client *client);
 
 int mx_tcp_listen(const char *serv, socklen_t *addr_len);
 void mx_get_client_info(t_client *client);
@@ -117,6 +117,7 @@ void mx_close_database(sqlite3 *database);
 void mx_free_user(t_db_user **user);
 void mx_delete_room(sqlite3 *database, char *name_room);
 void mx_delete_user(sqlite3 *database, char *login);
+void mx_delete_message(sqlite3 *database, char *name_room, int id_message);
 
 void mx_create_table_users(sqlite3 *database);
 void mx_create_table_rooms(sqlite3 *database);
@@ -128,13 +129,13 @@ t_db_room *mx_get_room(sqlite3 *database, char *name_room);
 void mx_free_room(t_db_room **room);
 void mx_free_message(t_db_message **message);
 
-    void mx_update_permission_of_user(sqlite3 *database,
+void mx_update_permission_of_user(sqlite3 *database,
                                       unsigned int permission, char *login);
 void mx_update_token(sqlite3 *database, char *new_token, char *login);
 
 void mx_create_table_room(sqlite3 *database, char *name_room);
-void mx_insert_to_room(sqlite3 *database, t_db_message *room, char *name_room);
 
+void mx_insert_to_room(sqlite3 *database, t_db_message *room, char *name_room);
 t_db_message *mx_insert_message_into_db(sqlite3 *database, char *message_str,
                                      char *login, char *name_room);
 t_db_room *mx_insert_room_into_db(sqlite3 *database, char *name_room,
@@ -144,15 +145,14 @@ t_db_user *mx_insert_user_into_db(sqlite3 *database, char *login,
 void mx_insert_member_into_db(sqlite3 *database,
                               char *login, char *name_room);
 
-cJSON *mx_create_json_object(sqlite3 *database, char *user_login);
-cJSON *mx_get_message_arr(sqlite3 *database, char *name_room, int count);
-void mx_parse_message(cJSON *room_mss, t_dl_list *list);
-
-char *mx_create_request_message(t_db_gmp *pr);
+cJSON *mx_get_new_messages(sqlite3 *database, char *name_room,
+                           long int date, int count);
+cJSON *mx_get_old_messages(sqlite3 *database, char *name_room,
+                           long int date, int count);
+cJSON *mx_get_curr_messages(sqlite3 *database, char *name_room, int count); 
+char *mx_create_request_message(sqlite3 *database, char *name_room, int flag);
 t_db_message *mx_get_last_message(sqlite3 *database, char *name_room);
-cJSON *mx_get_messages(t_db_gmp *pr);
 cJSON *mx_get_rooms(sqlite3 *database, long int date);
 
-t_dl_list *mx_parse_json(char *rooms_json);
 void mx_test_json();
 void mx_json();

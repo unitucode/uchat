@@ -15,7 +15,8 @@ typedef enum s_request_type {
     RQ_ERROR_MSG,
     RQ_USERS_ONLINE,
     RQ_GET_ROOMS,
-    RQ_GET_MSGS,
+    RQ_GET_NEW_MSGS,
+    RQ_UPD_ROOM_DESC,
     RQ_COUNT_REQUEST
 }            t_request_type;
 
