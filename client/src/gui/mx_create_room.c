@@ -26,8 +26,10 @@ void mx_swap_prefs(GtkListBox *box, GtkListBoxRow *row, GtkBuilder *builder) {
     GObject *name = gtk_builder_get_object(builder, "label_prefs_roomname");
     GObject *customer = gtk_builder_get_object(builder,
                                                "label_prefs_customer");
+    GObject *header = gtk_builder_get_object(builder, "header_main");
 
     gtk_label_set_text(GTK_LABEL(name), groom->room_name);
+    gtk_header_bar_set_title(GTK_HEADER_BAR(header), groom->room_name);
     gtk_label_set_text(GTK_LABEL(customer), groom->customer);
     (void)box;
     (void)row;
