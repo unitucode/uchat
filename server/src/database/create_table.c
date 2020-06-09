@@ -38,6 +38,7 @@ void mx_create_table_rooms(sqlite3 *database) {
                        "ID                 INTEGER PRIMARY KEY NOT NULL,"
                        "NAME_ROOM          TEXT                NOT NULL, "
                        "CUSTOMER_LOGIN     TEXT                NOT NULL,"
-                       "DATE               INTEGER             NOT NULL);",
+                       "DATE               INTEGER             NOT NULL,"
+                       "DESCRI);",
                         0, 0, 0);
 }

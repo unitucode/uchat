@@ -29,9 +29,9 @@ t_db_room *mx_insert_room_into_db(sqlite3 *database, char *name_room,
     int rv = 0;
 
     rv = sqlite3_prepare_v3(database,
-                 "INSERT INTO ROOMS(NAME_ROOM, CUSTOMER_LOGIN, DATE) "
-                 "VALUES(?1, ?2, ?3);",
-                 -1, 0, &stmt, NULL);
+                            "INSERT INTO ROOMS(NAME_ROOM, CUSTOMER_LOGIN, DATE,"
+                            " DESCRIPTION) VALUES(?1, ?2, ?3, null);",
+                            -1, 0, &stmt, NULL);
     if (rv == SQLITE_ERROR)
         mx_elogger(MX_LOG_FILE, LOGERR, "insert room into db one %d\n", rv);
     sqlite3_bind_text(stmt, 1, name_room, -1, SQLITE_STATIC);
