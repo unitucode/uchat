@@ -48,20 +48,21 @@ void mx_close_auth(GtkButton *btn, GtkDialog *dialog) {
 }
 
 void mx_show_password(GtkEntry *entry, GtkEntryIconPosition icon_pos,
-                      GdkEvent *event, gpointer *user_data) {
+                      GdkEvent *event, gpointer *entry_second) {
     if (gtk_entry_get_visibility(entry)) {
-        GdkPixbuf *eye = gdk_pixbuf_new_from_file_at_size("eye.png", 15, 15, NULL);
+        GdkPixbuf *eye = gdk_pixbuf_new_from_file("../src/gui/eye.png", NULL);
 
         gtk_entry_set_icon_from_pixbuf(entry, icon_pos, eye);
         gtk_entry_set_visibility(entry, false);
+        if (GTK_IS_ENTRY(entry_second))
+            gtk_entry_set_visibility(GTK_ENTRY(entry_second), false);
     }
-    else {
-        GdkPixbuf *closed_eye = gdk_pixbuf_new_from_file_at_size("closed-eye.png",
-                                                         15, 15, NULL);
-
+    else { 
+        GdkPixbuf *closed_eye = gdk_pixbuf_new_from_file("../src/gui/closed-eye.png", NULL);
         gtk_entry_set_icon_from_pixbuf(entry, icon_pos, closed_eye);
         gtk_entry_set_visibility(entry, true);
+        if (GTK_IS_ENTRY(entry_second))
+            gtk_entry_set_visibility(GTK_ENTRY(entry_second), true);
     }
     (void)event;
-    (void)user_data;
 }
