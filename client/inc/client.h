@@ -7,6 +7,8 @@
 #include "protocol.h"
 
 #define MX_GUI_PATH "../src/gui/gui.glade"
+#define MX_IMG_EYE "../src/gui/eye.png"
+#define MX_IMG_CLOSEDEYE "../src/gui/closed-eye.png"
 
 #define MX_ERRMSG_INVALID_LOGIN "Login can be minimum 3 symbol of a-z, 0-9, -"
 #define MX_ERRMSG_NODATA "Please, enter login and password"

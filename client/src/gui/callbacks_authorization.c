@@ -29,9 +29,9 @@ void mx_reset_auth(GtkNotebook *note, GtkWidget *page,
     GObject *signup = gtk_builder_get_object(builder, "entry_signup_password");
     GObject *confirm = gtk_builder_get_object(builder, "entry_signup_confirm");
 
-    mx_entry_set_icon_by_path(GTK_ENTRY(login), "../src/gui/eye.png",
+    mx_entry_set_icon_by_path(GTK_ENTRY(login), MX_IMG_EYE,
                               GTK_ENTRY_ICON_SECONDARY);
-    mx_entry_set_icon_by_path(GTK_ENTRY(signup), "../src/gui/eye.png",
+    mx_entry_set_icon_by_path(GTK_ENTRY(signup), MX_IMG_EYE,
                               GTK_ENTRY_ICON_SECONDARY);
     gtk_entry_set_visibility(GTK_ENTRY(login), false);
     gtk_entry_set_visibility(GTK_ENTRY(signup), false);
@@ -54,13 +54,13 @@ void mx_close_auth(GtkButton *btn, GtkDialog *dialog) {
 void mx_show_password(GtkEntry *entry, GtkEntryIconPosition icon_pos,
                       GdkEvent *event, gpointer *entry_second) {
     if (gtk_entry_get_visibility(entry)) {
-        mx_entry_set_icon_by_path(entry, "../src/gui/eye.png", icon_pos);
+        mx_entry_set_icon_by_path(entry, MX_IMG_EYE, icon_pos);
         gtk_entry_set_visibility(entry, false);
         if (GTK_IS_ENTRY(entry_second))
             gtk_entry_set_visibility(GTK_ENTRY(entry_second), false);
     }
     else { 
-        mx_entry_set_icon_by_path(entry, "../src/gui/closed-eye.png", icon_pos);
+        mx_entry_set_icon_by_path(entry, MX_IMG_CLOSEDEYE, icon_pos);
         gtk_entry_set_visibility(entry, true);
         if (GTK_IS_ENTRY(entry_second))
             gtk_entry_set_visibility(GTK_ENTRY(entry_second), true);
