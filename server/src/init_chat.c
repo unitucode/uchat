@@ -11,6 +11,7 @@ t_chat *mx_init_chat(int argc, char **argv) {
     else
         mx_elogger(NULL, LOGMSG, "usage: ./chat_server <port>\n");
     chat->clients = mx_new_dl_list(mx_delete_client);
+    chat->online_users = 0;
     mx_init_receiver(chat);
     mx_pthread_mutex_init(&chat->mutex, NULL);
     srand(time(NULL));

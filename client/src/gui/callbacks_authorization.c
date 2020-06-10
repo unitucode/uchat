@@ -25,18 +25,11 @@ void mx_set_unsensetive_confirm(GtkEntryBuffer *buff, guint pos,
 
 void mx_reset_auth(GtkNotebook *note, GtkWidget *page,
                    guint page_num, GtkBuilder *builder) {
-    GtkButton *checkbtn_login = GTK_BUTTON(gtk_builder_get_object(builder,
-                                                          "checkbtn_login"));
-    GtkButton *checkbtn_signup = GTK_BUTTON(gtk_builder_get_object(builder,
-                                                          "checkbtn_signup"));
-
     mx_clear_buffer_text("buffer_login", builder);
     mx_clear_buffer_text("buffer_password", builder);
     mx_clear_buffer_text("buffer_password_confirm", builder);
     mx_clear_label_by_name("label_autherror_login", builder);
     mx_clear_label_by_name("label_autherror_signup", builder);
-    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(checkbtn_login), 0);
-    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(checkbtn_signup), 0);
     (void)note;
     (void)page;
     (void)page_num;

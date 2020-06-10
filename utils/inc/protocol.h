@@ -7,11 +7,16 @@
 typedef enum s_request_type {
     RQ_LOG_IN = 0,
     RQ_SIGN_UP,
+    RQ_LOG_OUT,
     RQ_TOKEN,
     RQ_MSG,
     RQ_NEW_ROOM,
     RQ_DELETE_ROOM,
     RQ_ERROR_MSG,
+    RQ_USERS_ONLINE,
+    RQ_GET_ROOMS,
+    RQ_GET_NEW_MSGS,
+    RQ_UPD_ROOM_DESC,
     RQ_COUNT_REQUEST
 }            t_request_type;
 
@@ -32,9 +37,7 @@ typedef struct s_dtp { // Data Transfer Protocol view
 }              t_dtp;
 
 //requests
-t_dtp *mx_msg_request(int id_room, char *from, char *msg);
 t_dtp *mx_delete_room_request(char *room_name);
-t_dtp *mx_error_msg_request(int error_code, char *msg);
 t_dtp *mx_get_transport_data(cJSON *json_result);
 
 //SSL

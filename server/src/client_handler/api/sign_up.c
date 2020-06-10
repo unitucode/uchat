@@ -9,7 +9,7 @@ static void incorrect_data(t_client *client) {
 }
 
 static void sign_up(char *login, char *pass, t_client *client) {
-    t_user *user = mx_get_user_by_login(client->chat->database, login);
+    t_db_user *user = mx_get_user_by_login(client->chat->database, login);
     char token[MX_MD5_BUF_SIZE + 1 + strlen(login)];
 
     if (user) {
@@ -18,7 +18,7 @@ static void sign_up(char *login, char *pass, t_client *client) {
         return;
     }
     mx_create_token(token, login);
-    client->user = mx_insert_user(client->chat->database, login, pass, token);
+    client->user = mx_insert_user_into_db(client->chat->database, login, pass, token);
     mx_logger(MX_LOG_FILE, LOGMSG, "Success signup user %s\n", login);
     mx_correct_data(login, client);
 }
