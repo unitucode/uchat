@@ -25,6 +25,17 @@ void mx_set_unsensetive_confirm(GtkEntryBuffer *buff, guint pos,
 
 void mx_reset_auth(GtkNotebook *note, GtkWidget *page,
                    guint page_num, GtkBuilder *builder) {
+    GObject *login = gtk_builder_get_object(builder, "entry_login_password");
+    GObject *signup = gtk_builder_get_object(builder, "entry_signup_password");
+    GObject *confirm = gtk_builder_get_object(builder, "entry_signup_confirm");
+
+    mx_entry_set_icon_by_path(GTK_ENTRY(login), MX_IMG_EYE,
+                              GTK_ENTRY_ICON_SECONDARY);
+    mx_entry_set_icon_by_path(GTK_ENTRY(signup), MX_IMG_EYE,
+                              GTK_ENTRY_ICON_SECONDARY);
+    gtk_entry_set_visibility(GTK_ENTRY(login), false);
+    gtk_entry_set_visibility(GTK_ENTRY(signup), false);
+    gtk_entry_set_visibility(GTK_ENTRY(confirm), false);
     mx_clear_buffer_text("buffer_login", builder);
     mx_clear_buffer_text("buffer_password", builder);
     mx_clear_buffer_text("buffer_password_confirm", builder);
@@ -43,16 +54,13 @@ void mx_close_auth(GtkButton *btn, GtkDialog *dialog) {
 void mx_show_password(GtkEntry *entry, GtkEntryIconPosition icon_pos,
                       GdkEvent *event, gpointer *entry_second) {
     if (gtk_entry_get_visibility(entry)) {
-        GdkPixbuf *eye = gdk_pixbuf_new_from_file("../src/gui/eye.png", NULL);
-
-        gtk_entry_set_icon_from_pixbuf(entry, icon_pos, eye);
+        mx_entry_set_icon_by_path(entry, MX_IMG_EYE, icon_pos);
         gtk_entry_set_visibility(entry, false);
         if (GTK_IS_ENTRY(entry_second))
             gtk_entry_set_visibility(GTK_ENTRY(entry_second), false);
     }
     else { 
-        GdkPixbuf *closed_eye = gdk_pixbuf_new_from_file("../src/gui/closed-eye.png", NULL);
-        gtk_entry_set_icon_from_pixbuf(entry, icon_pos, closed_eye);
+        mx_entry_set_icon_by_path(entry, MX_IMG_CLOSEDEYE, icon_pos);
         gtk_entry_set_visibility(entry, true);
         if (GTK_IS_ENTRY(entry_second))
             gtk_entry_set_visibility(GTK_ENTRY(entry_second), true);

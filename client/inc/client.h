@@ -7,6 +7,8 @@
 #include "protocol.h"
 
 #define MX_GUI_PATH "../src/gui/gui.glade"
+#define MX_IMG_EYE "../src/gui/eye.png"
+#define MX_IMG_CLOSEDEYE "../src/gui/closed-eye.png"
 
 #define MX_ERRMSG_INVALID_LOGIN "Login can be minimum 3 symbol of a-z, 0-9, -"
 #define MX_ERRMSG_NODATA "Please, enter login and password"
@@ -95,13 +97,6 @@ void mx_delete_gmsg(t_gmsg **gmsg);
 GtkWidget *mx_create_message_row(t_gmsg *msg);
 void mx_add_message_to_room(t_gmsg *msg, GtkBuilder *builder);
 void mx_logout_client(t_chat *chat);
-
-// gui utils
-void mx_scrlldwnd_connect(char *name, GtkWidget *scroll, GtkBuilder *builder);
-gchar *mx_get_buffer_text(char *buff_name, GtkBuilder *builder);
-void mx_clear_buffer_text(char *buff_name, GtkBuilder *builder);
-void mx_clear_label_by_name(char *label_name, GtkBuilder *builder);
-void mx_widget_switch_visibility(GtkWidget *usr_ctrl, void *widget);
 void mx_reset_addroom(GtkButton *btn, GtkBuilder *builder);
 void mx_connect_authorization(t_chat *chat);
 void mx_connect_addroom(t_chat *chat);
@@ -109,11 +104,20 @@ void mx_connect_send_message(t_chat *chat);
 void mx_connect_profile_settings(t_chat *chat);
 void mx_errmsg_wrong_authdata(GtkBuilder *builder);
 void mx_errmsg_user_exist(GtkBuilder *builder);
+void mx_delete_row_room(GtkWidget *row, GtkBuilder *builder);
+void mx_set_default_room_sett(GtkBuilder *builder);
+
+// gui utils
+void mx_scrlldwnd_connect(char *name, GtkWidget *scroll, GtkBuilder *builder);
+gchar *mx_get_buffer_text(char *buff_name, GtkBuilder *builder);
+void mx_clear_buffer_text(char *buff_name, GtkBuilder *builder);
+void mx_clear_label_by_name(char *label_name, GtkBuilder *builder);
+void mx_widget_switch_visibility(GtkWidget *usr_ctrl, void *widget);
 t_groom *mx_get_selected_groom(GtkBuilder *builder);
 t_groom *mx_get_groom_by_name(char *name, GtkBuilder *builder);
-void mx_delete_row_room(GtkWidget *row, GtkBuilder *builder);
 void mx_unselect_room(t_groom *groom, GtkBuilder *builder);
-void mx_set_default_room_sett(GtkBuilder *builder);
+void mx_entry_set_icon_by_path(GtkEntry *entry, char *path,
+                               GtkEntryIconPosition icon_pos);
 
 //gui wrappers
 // void mx_widget_show_all(GtkWidget *widget);
