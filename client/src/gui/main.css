@@ -1,87 +1,77 @@
-@define-color placeholder_text_color #ffffff;
+@define-color placeholder_text_color #a1b6c0;
 
 * {
-    font-family: "Gilroy", sans-serif;
+    font-family: "Gill Sans", sans-serif;
+    transition: all .3s ease-out;
+}
+
+button, .input, entry, notebook, .dialog_auth .titlebar  {
+    border: none;
 }
 
 .dialog_auth  {
     background: rgb(20,39,69);
-    background: linear-gradient(173deg, rgba(20,39,69,1) 0%, rgba(0,100,123,1) 49%, rgba(105,114,145,1) 100%);
+    background: linear-gradient(173deg, rgba(20,39,69,1) 0%,
+                rgba(0,100,123,1) 49%, rgba(105,114,145,1) 100%);
 }
 
-box stack {
+box stack, entry, .dialog_notebook header {
     background-color: transparent;
 }
 
 entry {
 	box-shadow: none;
-    border: none;
     padding: 0;
-    background-color: transparent;
-    border-bottom: 1px solid #fff;
+    border-bottom: 1px solid rgba(255,255,255,.7);
     border-radius: 0;
     margin: 0 -25px;
-}
-
-notebook {
-    border: none;
-}
-
-button, .input {
-    border: none;
-}
-
-.login_btn {
-    background: #fff;
-    box-shadow: none;
-    padding: 15px 30px;
-    border-radius: 2px;
-    color: #104C65;
-    transition: all .3s ease-out;
-}
-
-.login_btn:hover {
-    opacity: .8;
-}
-
-.label {
-    color: #fff;
-    margin-bottom: 10px;
-}
-
-.input {
-    border-radius: 0;
     caret-color: #fff;
     color: #fff;
-    
-    background: none;
-    border-bottom: 1px solid #fff;
-    transition: all .5s ease-out;
+    font-size: 15px;
 }
 
-.input > property {
-    color: #fff;
+.dialog-action-area {
+    margin-bottom: 45px;
+}
+
+.dialog-action-area button {
+    background-image: none;
+    background-color: #fff;
+    box-shadow: none;
+    padding: 12px 40px;
+    border-radius: 2px;
+    color: #104C65;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.dialog-action-area button:first-child {
+    margin-right: 5px;
+}
+
+.dialog-action-area button:last-child {
+    margin-left: 5px;
+}
+
+.dialog-action-area button:hover {
+    background-image: none;
+    background-color: rgba(255,255,255,.7);
 }
 
 .notebook_item {
-	margin-top: 35px;
-}
-
-.dialog_notebook header {
-	background-color: transparent;
+	margin-top: 30px;
 }
 
 .dialog_auth .titlebar {
-	opacity: 0;
-	border: none;
+    min-height: 40px;
 }
 
 .dialog_auth decoration {
-	box-shadow: none;
+    box-shadow: none;
 }
 
 .dialog_auth {
-	border-radius: 8px;
+	border-radius: 0 0 8px 8px;
 }
 
 .dialog_notebook stack, tabs {
@@ -89,5 +79,59 @@ button, .input {
 }
 
 .dialog_notebook header tab {
-	margin: 0;
+    margin: 0;
+}
+
+.dialog_notebook {
+    margin-top: 30px;
+}
+
+.dialog_notebook header {
+	border: none;
+}
+
+.dialog_notebook tab{
+    color: #fff;
+    padding-top: 7px;
+    padding-bottom: 8px;
+    outline: none;
+}
+
+.dialog_notebook tab {
+    box-shadow: 0 -3px rgba(105,114,145,.4) inset;
+}
+
+.dialog_notebook tab:hover {
+    box-shadow: 0 -3px rgba(105,114,145,.75) inset;
+}
+
+.dialog_notebook tab:checked {
+	box-shadow: 0 -3px rgb(105,114,145) inset;
+}
+
+.dialog_notebook tab label {
+    font-weight: 500;
+    font-size: 16px;
+    color: rgba(255,255,255,.6);
+}
+
+.dialog_notebook tab:hover label {
+    color: rgba(255,255,255,.8);
+}
+
+.dialog_notebook tab:checked label {
+    color: #fff;
+}
+
+headerbar box label {
+	font-size: 14px;
+	font-weight: 500;
+	color: #fff; 
+}
+
+dialog headerbar {
+	background: linear-gradient(173deg, rgba(20,39,69,1) 0%,
+                rgba(0,100,123,1) 49%, rgba(105,114,145,1) 100%);
+	box-shadow: none;
+	box-shadow: inset 0 0 8px rgba(255, 255, 255,.15);
 }
