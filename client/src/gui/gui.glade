@@ -226,7 +226,7 @@
                     <property name="receives_default">True</property>
                     <property name="events"/>
                     <property name="image">image4</property>
-                    <signal name="clicked" handler="mx_widget_switch_visibility" swapped="no"/>
+                    <signal name="clicked" handler="mx_widget_switch_visibility" object="btnbox_msg_ctrl" swapped="no"/>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -839,10 +839,6 @@
                     <property name="margin_right">10</property>
                     <property name="margin_start">10</property>
                     <property name="margin_end">10</property>
-                    <attributes>
-                      <attribute name="foreground" value="#efef29292929"/>
-                      <attribute name="size" value="9216"/>
-                    </attributes>
                   </object>
                   <packing>
                     <property name="expand">True</property>
