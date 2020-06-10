@@ -22,15 +22,29 @@ int main(int argc, char **argv) {
     //     exit(0);
     // printf("%s\n", room->name_room);
     // printf("%s\n", room->customer);
-    // printf("%s\n", room->description);
     // printf("%ld\n", room->date);
     // printf("%d\n", room->id);
+    // printf("%s\n", room->description);
     // mx_free_room(&room);
 
 
 
     // edit room name
     // mx_edit_name_room(database, "name_room_100", "name_room_show");
+    sqlite3_str *str = sqlite3_str_new(database);
+    sqlite3_stmt *stmt;
+    char *request = NULL;
+    int rv = SQLITE_OK;
+
+    sqlite3_str_appendall(str, "create table ");
+    sqlite3_str_appendf(str, "room%d", 11);
+    sqlite3_str_appendall(str, "(id integer primary key not null);");
+    request = sqlite3_str_finish(str);
+    printf("%s\n", request);
+    rv = sqlite3_prepare_v2(database, request, -1, &stmt, NULL);
+    mx_error_sqlite(rv, "prepare", "server");
+    mx_error_sqlite(sqlite3_step(stmt), "step", "server");
+    sqlite3_finalize(stmt);
 
     // create message
     // for (int i = 0; i < 100; i++) {
@@ -39,7 +53,10 @@ int main(int argc, char **argv) {
     // }
     
     // delete room by id
-    mx_delete_room_by_id(database, 5);
+    // mx_delete_room_by_id(database, 5);
+
+    // if exists room
+    // printf("->\t%d\n", (int)mx_is_exists_room_by_id(database, 1));
 
     // delete message
     // for (int i = 0; i < 20; i++) {

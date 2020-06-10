@@ -18,14 +18,14 @@ void mx_create_table_member(sqlite3 *database) {
                  0, 0, 0);
 }
 
-void mx_create_table_room(sqlite3 *database, char *name_room) {
+void mx_create_table_room(sqlite3 *database, int id) {
     sqlite3_str *str = sqlite3_str_new(database);
     char *sql = NULL;
 
-    sqlite3_str_appendall(str, "CREATE TABLE IF NOT EXISTS'");
-    sqlite3_str_appendall(str, name_room);
+    sqlite3_str_appendall(str, "CREATE TABLE IF NOT EXISTS ");
+    sqlite3_str_appendf(str, "room%d", id);
     sqlite3_str_appendall(str,
-                        "' (ID_MESSAGE INTEGER PRIMARY KEY NOT NULL,"
+                        " (ID_MESSAGE INTEGER PRIMARY KEY NOT NULL,"
                           "LOGIN        TEXT NOT NULL,"
                           "DATE         INTEGER NOT NULL,"
                           "MESSAGE      TEXT NOT NULL);");

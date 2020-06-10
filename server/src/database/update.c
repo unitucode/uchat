@@ -32,6 +32,21 @@ void mx_update_token(sqlite3 *database, char *login, char *new) {
     update(stmt, new, login, "update token");
 }
 
+
+void mx_update_description_room_by_id(sqlite3 *db, int id, char *new) {
+    sqlite3_stmt *stmt;
+    int rv = SQLITE_OK;
+
+    rv = sqlite3_prepare_v3(database, "update rooms set description = ?1 "
+                       "where id = ?2", -1, 0, &stmt, NULL);
+    mx_error_sqlite(rv, "prepare", "update description");
+    sqlite3_bind_text(stmt, 1, new, -1, SQLITE_STATIC);
+    sqlite3_bind_int(stmt, 2, id)
+    mx_error_sqlite(sqlite3_step(stmt), "step", "update room");
+    sqlite3_finalize(stmt);
+}
+
+// to delete
 void mx_update_description_room(sqlite3 *database, char *name, char *new) {
     sqlite3_stmt *stmt;
     int rv = SQLITE_OK;

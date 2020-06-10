@@ -20,7 +20,7 @@ t_db_message *mx_insert_message_into_db(sqlite3 *database, char *message_str,
         mx_elogger(MX_LOG_FILE, LOGERR, "insert message into database");
     sqlite3_finalize(stmt);
     sqlite3_free(request);
-    return mx_get_last_message(database, name_room);
+    return mx_get_last_message(database, mx_get_roomid_by_name(name_room));
 }
 
 t_db_room *mx_insert_room_into_db(sqlite3 *database, char *name_room, 
