@@ -708,7 +708,6 @@
   </object>
   <object class="GtkDialog" id="dialog_auth">
     <property name="width_request">450</property>
-    <property name="height_request">-1</property>
     <property name="visible">True</property>
     <property name="can_focus">False</property>
     <property name="resizable">False</property>
@@ -797,7 +796,7 @@
                     <property name="placeholder_text" translatable="yes">Enter your login</property>
                   </object>
                   <packing>
-                    <property name="expand">False</property>
+                    <property name="expand">True</property>
                     <property name="fill">False</property>
                     <property name="position">1</property>
                   </packing>
@@ -822,13 +821,14 @@
                     <signal name="icon-press" handler="mx_show_password" swapped="no"/>
                   </object>
                   <packing>
-                    <property name="expand">False</property>
+                    <property name="expand">True</property>
                     <property name="fill">False</property>
                     <property name="position">3</property>
                   </packing>
                 </child>
                 <child>
                   <object class="GtkLabel" id="label_autherror_login">
+                    <property name="height_request">20</property>
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="margin_left">10</property>
@@ -841,8 +841,8 @@
                     </attributes>
                   </object>
                   <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">True</property>
+                    <property name="expand">True</property>
+                    <property name="fill">False</property>
                     <property name="position">4</property>
                   </packing>
                 </child>
@@ -850,6 +850,9 @@
                   <class name="notebook_item"/>
                 </style>
               </object>
+              <packing>
+                <property name="tab_expand">True</property>
+              </packing>
             </child>
             <child type="tab">
               <object class="GtkLabel">
@@ -880,7 +883,7 @@
                     <property name="placeholder_text" translatable="yes">Enter your login</property>
                   </object>
                   <packing>
-                    <property name="expand">False</property>
+                    <property name="expand">True</property>
                     <property name="fill">False</property>
                     <property name="position">1</property>
                   </packing>
@@ -902,7 +905,7 @@
                     <signal name="icon-press" handler="mx_show_password" object="entry_signup_confirm" swapped="no"/>
                   </object>
                   <packing>
-                    <property name="expand">False</property>
+                    <property name="expand">True</property>
                     <property name="fill">False</property>
                     <property name="position">3</property>
                   </packing>
@@ -930,20 +933,22 @@
                 </child>
                 <child>
                   <object class="GtkLabel" id="label_autherror_signup">
+                    <property name="height_request">20</property>
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="margin_left">10</property>
                     <property name="margin_right">10</property>
                     <property name="margin_start">10</property>
                     <property name="margin_end">10</property>
+                    <property name="margin_bottom">5</property>
                     <attributes>
                       <attribute name="foreground" value="#efef29292929"/>
                       <attribute name="size" value="9216"/>
                     </attributes>
                   </object>
                   <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">True</property>
+                    <property name="expand">True</property>
+                    <property name="fill">False</property>
                     <property name="position">6</property>
                   </packing>
                 </child>
@@ -953,6 +958,7 @@
               </object>
               <packing>
                 <property name="position">1</property>
+                <property name="tab_expand">True</property>
               </packing>
             </child>
             <child type="tab">
@@ -978,8 +984,8 @@
             </style>
           </object>
           <packing>
-            <property name="expand">True</property>
-            <property name="fill">True</property>
+            <property name="expand">False</property>
+            <property name="fill">False</property>
             <property name="position">1</property>
           </packing>
         </child>
