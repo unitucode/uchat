@@ -7,16 +7,16 @@ typedef struct s_message {
 }   t_message;
 
 void mx_select_msg(GtkWidget *widget, GdkEventButton *event, t_message *msg) {
-    GObject *control = gtk_builder_get_object(msg->builder, "btnbox_msg_ctrl");
+    // GObject *control = gtk_builder_get_object(msg->builder, "btnbox_msg_ctrl");
 
     t_groom *groom = mx_get_selected_groom(msg->builder);
     if (gtk_list_box_row_is_selected(GTK_LIST_BOX_ROW(msg->row_msg))) {
-        gtk_widget_hide(GTK_WIDGET(control));
+        // gtk_widget_hide(GTK_WIDGET(control));
         gtk_list_box_unselect_row(GTK_LIST_BOX(groom->box_messages),
                                   GTK_LIST_BOX_ROW(msg->row_msg));
     }
     else {
-        gtk_widget_show_all(GTK_WIDGET(control));
+        // gtk_widget_show_all(GTK_WIDGET(control));
         gtk_list_box_select_row(GTK_LIST_BOX(groom->box_messages),
                                 GTK_LIST_BOX_ROW(msg->row_msg));
     }
