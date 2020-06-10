@@ -1,7 +1,7 @@
 #include "client.h"
 
 GtkWidget *mx_create_message_row(t_gmsg *msg) {
-    GtkWidget *row = gtk_list_box_row_new();
+    GtkWidget  *event = gtk_event_box_new();
 
     GtkWidget *label_txt = gtk_label_new(msg->msg);
     gtk_label_set_xalign(GTK_LABEL(label_txt), 0.03);
@@ -23,6 +23,6 @@ GtkWidget *mx_create_message_row(t_gmsg *msg) {
     gtk_box_pack_end(GTK_BOX(info_box), label_time, true, true, 0);
     gtk_box_pack_start(GTK_BOX(main_box), info_box, true, true, 0);
 
-    gtk_container_add(GTK_CONTAINER(row), GTK_WIDGET(main_box));
-    return row;
+    gtk_container_add(GTK_CONTAINER(event), GTK_WIDGET(main_box));
+    return event;
 }
