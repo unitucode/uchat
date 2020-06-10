@@ -41,22 +41,21 @@ void mx_close_auth(GtkButton *btn, GtkDialog *dialog) {
 }
 
 void mx_show_password(GtkEntry *entry, GtkEntryIconPosition icon_pos,
-                      GdkEvent *event, GtkBuilder *builder) {
-    GtkEntry *pixbuf_pass = GTK_ENTRY(gtk_builder_get_object(builder,
-                                                             "pixbuf_pass"));
-
+                      GdkEvent *event, gpointer *entry_second) {
     if (gtk_entry_get_visibility(entry)) {
-        GdkPixbuf *vis = gtk_entry_get_icon_pixbuf(pixbuf_pass,
-                                                   GTK_ENTRY_ICON_PRIMARY);
+        GdkPixbuf *eye = gdk_pixbuf_new_from_file("../src/gui/eye.png", NULL);
 
-        gtk_entry_set_icon_from_pixbuf(entry, icon_pos, vis);
+        gtk_entry_set_icon_from_pixbuf(entry, icon_pos, eye);
         gtk_entry_set_visibility(entry, false);
+        if (GTK_IS_ENTRY(entry_second))
+            gtk_entry_set_visibility(GTK_ENTRY(entry_second), false);
     }
     else { 
-        GdkPixbuf *unvis = gtk_entry_get_icon_pixbuf(pixbuf_pass,
-                                                     GTK_ENTRY_ICON_SECONDARY);
-        gtk_entry_set_icon_from_pixbuf(entry, icon_pos, unvis);
+        GdkPixbuf *closed_eye = gdk_pixbuf_new_from_file("../src/gui/closed-eye.png", NULL);
+        gtk_entry_set_icon_from_pixbuf(entry, icon_pos, closed_eye);
         gtk_entry_set_visibility(entry, true);
+        if (GTK_IS_ENTRY(entry_second))
+            gtk_entry_set_visibility(GTK_ENTRY(entry_second), true);
     }
     (void)event;
 }
