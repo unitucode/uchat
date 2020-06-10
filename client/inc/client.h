@@ -111,6 +111,9 @@ void mx_errmsg_wrong_authdata(GtkBuilder *builder);
 void mx_errmsg_user_exist(GtkBuilder *builder);
 t_groom *mx_get_selected_groom(GtkBuilder *builder);
 t_groom *mx_get_groom_by_name(char *name, GtkBuilder *builder);
+void mx_delete_row_room(GtkWidget *row, GtkBuilder *builder);
+void mx_unselect_room(t_groom *groom, GtkBuilder *builder);
+void mx_set_default_room_sett(GtkBuilder *builder);
 
 //gui wrappers
 // void mx_widget_show_all(GtkWidget *widget);

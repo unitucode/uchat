@@ -28,6 +28,6 @@ void mx_start_main_window(t_chat *chat) {
                                                         "dialog_auth");
 
     // gtk_widget_destroy(GTK_WIDGET(dialog_auth));
-    mx_widget_switch_visibility(NULL, GTK_WIDGET(dialog_auth));
     mx_widget_switch_visibility(NULL, GTK_WIDGET(wnd_main));
+    mx_widget_switch_visibility(NULL, GTK_WIDGET(dialog_auth));
 }
