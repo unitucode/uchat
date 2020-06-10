@@ -6,7 +6,8 @@
 
 .dialog_auth  {
     background: rgb(20,39,69);
-    background: linear-gradient(173deg, rgba(20,39,69,1) 0%, rgba(0,100,123,1) 49%, rgba(105,114,145,1) 100%);
+    background: linear-gradient(173deg, rgba(20,39,69,1) 0%,
+                rgba(0,100,123,1) 49%, rgba(105,114,145,1) 100%);
 }
 
 box stack {
@@ -72,8 +73,8 @@ button, .input {
 }
 
 .dialog_auth .titlebar {
-	opacity: 0;
-	border: none;
+    border: none;
+    min-height: 30px;
 }
 
 .dialog_auth decoration {
@@ -81,7 +82,7 @@ button, .input {
 }
 
 .dialog_auth {
-	border-radius: 8px;
+	border-radius: 0 0 8px 8px;
 }
 
 .dialog_notebook stack, tabs {
