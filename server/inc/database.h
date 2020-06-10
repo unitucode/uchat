@@ -1,12 +1,8 @@
 #pragma once
 
 #include "utils.h"
-#include "protocol.h"
-#include "list.h"
 #include "sqlite3.h"
 
-#define MX_LISTENQ 1024
-#define MX_PORT_LEN 8
 #define MX_OLD_MESSAGE 2
 #define MX_NEW_MESSAGE 1
 #define MX_CURR_MESSAGE 0
@@ -50,6 +46,7 @@ void mx_free_user(t_db_user **user);
 void mx_delete_room(sqlite3 *database, char *name_room);
 void mx_delete_user(sqlite3 *database, char *login);
 void mx_delete_message(sqlite3 *database, char *name_room, int id_message);
+void mx_delete_room_by_id(sqlite3 *db, int id);
 
 void mx_create_table_users(sqlite3 *database);
 void mx_create_table_rooms(sqlite3 *database);

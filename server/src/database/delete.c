@@ -1,7 +1,23 @@
-#include "utils.h"
+#include "server.h"
 
-// "DELETE FROM ROOMS WHERE NAME_ROOM = ?1"
 
+static void drop_table(sqlite3 *db, char *name, sqlite3_stmt *stmt) {
+    int rv = SQLITE_OK;
+    sqlite3_str *str = sqlite3_str_new(db);
+    char *request = NULL;
+
+    sqlite3_str_appendall(str, "drop table '");
+    sqlite3_str_appendall(str, name);
+    sqlite3_str_appendall(str, "'");
+    request = sqlite3_str_finish(str);
+    rv = sqlite3_prepare_v2(db, request, -1, &stmt, NULL);
+    mx_error_sqlite(rv, "prepare", "drop room");
+    mx_error_sqlite(sqlite3_step(stmt), "step", "drop room");
+    sqlite3_free(request);
+    sqlite3_finalize(stmt);
+}
+
+// to delete
 void mx_delete_room(sqlite3 *database, char *name_room) {
     sqlite3_str *str = sqlite3_str_new(database);
     char *request = NULL;
@@ -18,6 +34,28 @@ void mx_delete_room(sqlite3 *database, char *name_room) {
         mx_logger(MX_LOG_FILE, LOGWAR, "delete room\n");
     sqlite3_free(request);
 }
+
+void mx_delete_room_by_id(sqlite3 *db, int id) {
+    char *name = NULL;
+    sqlite3_stmt *stmt;
+    int rv = 0;
+
+    rv = sqlite3_prepare_v2(db, "select name from rooms where id = ?1",
+                            -1, &stmt, NULL);
+    mx_error_sqlite(rv, "prepare", "delete room by id");
+    sqlite3_bind_int(stmt, 1, id);
+    mx_error_sqlite(sqlite3_step(stmt), "step", "delete room by id");
+    name = mx_strdup((char *)sqlite3_column_text(stmt, 0));
+    sqlite3_finalize(stmt);
+    rv = sqlite3_prepare_v2(db, "delete from rooms where id = ?1", -1, &stmt, NULL);
+    mx_error_sqlite(rv, "prepare1", "delete room by id");
+    sqlite3_bind_int(stmt, 1, id);
+    mx_error_sqlite(sqlite3_step(stmt), "step1", "delete room by id");
+    sqlite3_finalize(stmt);
+    drop_table(db, name, stmt);
+    mx_free((void**)&name);
+}
+
 
 void mx_delete_user(sqlite3 *database, char *login) {
     sqlite3_stmt *stmt;

@@ -72,6 +72,7 @@ long long mx_get_current_time(void);
 
 
 //wrappers
+char *mx_strdup(char *str);
 void *mx_malloc(size_t size);
 void mx_free(void **ptr);
 int mx_socket(int domain, int type, int protocol);

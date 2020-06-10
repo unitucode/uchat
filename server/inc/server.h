@@ -6,6 +6,9 @@
 #include "sqlite3.h"
 #include "database.h"
 
+
+#define MX_LISTENQ 1024
+#define MX_PORT_LEN 8
 typedef struct s_chat t_chat;
 typedef struct s_client t_client;
 

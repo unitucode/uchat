@@ -18,6 +18,8 @@ void mx_free_room(t_db_room **room) {
         mx_free((void**)&(*room)->customer);
     if ((*room)->name_room)
         mx_free((void**)&(*room)->name_room);
+    if ((*room)->description)
+        mx_free((void **)&(*room)->description);
     mx_free((void**)room);
     room = NULL;
 }
