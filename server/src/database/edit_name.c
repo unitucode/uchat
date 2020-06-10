@@ -11,7 +11,7 @@ void mx_edit_name_user(sqlite3 *database, char *login, char *new) {
     update(stmt, new, login, "rename user");
 }
 
-void mx_edit_name_room(sqlite3 *database, int id, char *new) {
+void mx_edit_name_room(sqlite3 *database, unsigned long long int id, char *new) {
     sqlite3_stmt *stmt;
     int rv = SQLITE_OK;
 

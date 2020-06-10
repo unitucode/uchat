@@ -26,7 +26,8 @@ char *mx_create_request_message(sqlite3 *database, char *name_room, int flag) {
     return request;
 }
 
-char *mx_create_request_message_by_id(sqlite3 *database, int id, int flag) {
+char *mx_create_request_message_by_id(sqlite3 *database, 
+                                      unsigned long long int id, int flag) {
     sqlite3_str *str = sqlite3_str_new(database);
     char *request = NULL;
     void (*func[])(sqlite3_str **) = {message_curr, message_new, message_old};
@@ -34,7 +35,7 @@ char *mx_create_request_message_by_id(sqlite3 *database, int id, int flag) {
     sqlite3_str_appendall(str, "SELECT * FROM '");
     sqlite3_str_appendf(str, "room%d", id);
     func[flag](&str);
-    sqlite3_str_appendall(str, " ORDER BY DATE DESC");
+    sqlite3_str_appendall(str, " ORDER BY id DESC");
     request = sqlite3_str_finish(str);
     return request;
 }

@@ -37,7 +37,7 @@ t_db_user *mx_get_user_by_token(sqlite3 *database, char *token) {
     return for_get_user(stmt);
 }
 
-t_db_room *mx_get_room_by_id(sqlite3 *database, int id) {
+t_db_room *mx_get_room_by_id(sqlite3 *database, unsigned long long int id) {
     t_db_room *room = NULL;
     sqlite3_stmt *stmt;
 
@@ -61,8 +61,10 @@ t_db_room *mx_get_room(sqlite3 *database, char *name_room) {
     t_db_room *room = NULL;
     sqlite3_stmt *stmt;
 
-    mx_error_sqlite(sqlite3_prepare_v3(database, "SELECT * FROM ROOMS WHERE "
-        "name = ?1", -1, 0, &stmt, NULL), "prepare", "get_room");
+    mx_error_sqlite(sqlite3_prepare_v3(database, "select * from rooms where "
+                                                 "name = ?1 order by date desc",
+                                       -1, 0, &stmt, NULL),
+                                       "prepare", "get_room");
     sqlite3_bind_text(stmt, 1, name_room, -1, SQLITE_STATIC);
     if (!mx_error_sqlite(sqlite3_step(stmt), "step", "get room")) {
         room = malloc(sizeof(t_db_room));

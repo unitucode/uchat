@@ -29,8 +29,8 @@ void mx_free_message(t_db_message **message) {
         mx_free((void **)&(*message)->message);
     if ((*message)->login)
         mx_free((void **)&(*message)->login);
-    if ((*message)->name_room)
-        mx_free((void **)&(*message)->name_room);
+    // if ((*message)->name_room)
+    //     mx_free((void **)&(*message)->name_room);
     mx_free((void**)message);
     message = NULL;
 }

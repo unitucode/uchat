@@ -29,20 +29,22 @@ cJSON *mx_get_rooms(sqlite3 *database, long int date) {
     return rooms;
 }
 
-bool mx_is_exists_room_by_id(sqlite3 *db, int id) {
+bool mx_is_exists_room_by_id(sqlite3 *db, unsigned long long int id) {
     sqlite3_stmt *stmt;
     int rv = 1;
     char *request = NULL; 
+    sqlite3_str *str = sqlite3_str_new(db);
 
-    sqlite3_str_appendall(str, "select name from sqlite_master where type "
+    sqlite3_str_appendall(str, "select * from sqlite_master where type "
                                 "= 'table' and name = ");
-    sqlite3_str_appendf(str, "room%d", id);
+    sqlite3_str_appendf(str, "'room%d'", id);
     request = sqlite3_str_finish(str);
     mx_error_sqlite(sqlite3_prepare_v2(db, request, -1, &stmt, NULL), "prepar",
-                                       "delete room by id");
+                                       "exists room by id");
     mx_error_sqlite(sqlite3_step(stmt), "step", "delete room by id");
     if (!sqlite3_column_text(stmt, 0))
         rv = 0;
+    sqlite3_free(request);
     sqlite3_finalize(stmt);
     return rv;
 }

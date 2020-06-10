@@ -54,34 +54,35 @@ static cJSON *get_messages(sqlite3_stmt *stmt, char *name_room, int count,
     return room;
 }
 
-cJSON *mx_get_new_messages_by_id(sqlite3 *db, int id, long int date,
-                                 int count) {
+cJSON *mx_get_new_messages_by_id(sqlite3 *db, unsigned long long int id, 
+                                 long int date, int count) {
     sqlite3_stmt *stmt;
     int rv = SQLITE_OK;
-    char *request = mx_create_request_message_by_id(database, id, 1);
+    char *request = mx_create_request_message_by_id(db, id, 1);
 
-    rv = sqlite3_prepare_v3(database, request, -1, 0, &stmt, NULL);
+    rv = sqlite3_prepare_v3(db, request, -1, 0, &stmt, NULL);
     sqlite3_free(request);
     return get_messages_by_id(stmt, id, count, date);
 }
 
-cJSON *mx_get_old_messages_by_id(sqlite3 *db, int id, long int date,
-                                int count) {
+cJSON *mx_get_old_messages_by_id(sqlite3 *db, unsigned long long int id, 
+                                 long int date, int count) {
     sqlite3_stmt *stmt;
     int rv = SQLITE_OK;
-    char *request = mx_create_request_message_by_id(database, id, 2);
+    char *request = mx_create_request_message_by_id(db, id, 2);
 
-    rv = sqlite3_prepare_v3(database, request, -1, 0, &stmt, NULL);
+    rv = sqlite3_prepare_v3(db, request, -1, 0, &stmt, NULL);
     sqlite3_free(request);
     return get_messages_by_id(stmt, id, count, date);
 }
 
-cJSON *mx_get_curr_messages_by_id(sqlite3 *db, int id, int count) {
+cJSON *mx_get_curr_messages_by_id(sqlite3 *db, unsigned long long int id, 
+                                  int count) {
     sqlite3_stmt *stmt;
     int rv = SQLITE_OK;
-    char *request = mx_create_request_message_by_id(database, id, 0);
+    char *request = mx_create_request_message_by_id(db, id, 0);
 
-    rv = sqlite3_prepare_v3(database, request, -1, 0, &stmt, NULL);
+    rv = sqlite3_prepare_v3(db, request, -1, 0, &stmt, NULL);
     sqlite3_free(request);
     return get_messages_by_id(stmt, id, count, 0);
 }
