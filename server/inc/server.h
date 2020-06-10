@@ -21,35 +21,39 @@
 
 typedef struct s_chat t_chat;
 typedef struct s_client t_client;
+typedef struct s_members_room t_members_room;
+typedef struct s_db_user t_db_user;
+typedef struct s_db_message t_db_message;
+typedef struct s_db_room t_db_room;
 
-typedef struct s_members_room {
+struct s_members_room {
     char *login;
     struct s_members_room *next;
-}              t_members_room;
+};
 
-typedef struct s_db_user {
+struct s_db_user {
     const char *token;
     const char *login;
     const char *password;
     unsigned int permission;
     int on_off;
-}              t_db_user;
+};
 
-typedef struct s_db_message {
+struct s_db_message {
     unsigned int id_room;
     unsigned int id_message;
     long int date;
     char *name_room;
     char *login;
     char *message;
-}              t_db_message;
+};
 
-typedef struct s_db_room {
+struct s_db_room {
     long int date;
     unsigned int id;
     char *name_room;
     char *customer;
-}              t_db_room;
+};
 
 struct s_chat {
     int listen_fd;
@@ -79,16 +83,18 @@ t_dtp *mx_token_request(char *token, char *login);
 t_dtp *mx_error_msg_request(int error_code, char *msg);
 t_dtp *mx_online_users_request(int count);
 t_dtp *mx_log_out_request(char *token);
+t_dtp *mx_upd_room_desc_request(char *room_name, char *desc);
 
 //data protocol handler functions
-bool mx_log_in(t_dtp *login, t_client *client);
-bool mx_sign_up(t_dtp *signup_data, t_client *client);
-bool mx_log_in_token(t_dtp *token, t_client *client);
-bool mx_new_room(t_dtp *data, t_client *client);
-bool mx_msg(t_dtp *data, t_client *client);
+bool mx_log_in_handler(t_dtp *login, t_client *client);
+bool mx_sign_up_handler(t_dtp *signup_data, t_client *client);
+bool mx_log_in_token_handler(t_dtp *token, t_client *client);
+bool mx_new_room_handler(t_dtp *data, t_client *client);
+bool mx_msg_handler(t_dtp *data, t_client *client);
 bool mx_get_rooms_handler(t_dtp *data, t_client *client);
-bool mx_log_out(t_dtp *token, t_client *client);
+bool mx_log_out_handler(t_dtp *token, t_client *client);
 bool mx_get_msgs_handler(t_dtp *data, t_client *client);
+bool mx_upd_room_desc_handler(t_dtp *desc, t_client *client); //TODO
 
 int mx_tcp_listen(const char *serv, socklen_t *addr_len);
 void mx_get_client_info(t_client *client);

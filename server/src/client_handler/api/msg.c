@@ -18,7 +18,7 @@ static t_dtp *get_resend_msg(t_db_message *msg) {
     return mx_get_transport_data(send_msg);
 }
 
-bool mx_msg(t_dtp *data, t_client *client) { // TODO leaks
+bool mx_msg_handler(t_dtp *data, t_client *client) { // TODO leaks
     cJSON *msg = cJSON_GetObjectItemCaseSensitive(data->json, "msg");
     cJSON *room_name = cJSON_GetObjectItemCaseSensitive(data->json,
                                                         "room_name");

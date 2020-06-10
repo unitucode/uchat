@@ -12,7 +12,7 @@ t_dtp *mx_msg_request(char *msg, char *room_name) {
     return mx_get_transport_data(json_result);
 }
 
-bool mx_msg(t_dtp *data, t_chat *chat) {
+bool mx_msg_handler(t_dtp *data, t_chat *chat) {
     t_gmsg *gmsg = mx_create_gmsg(data->json);
 
     if (!gmsg)

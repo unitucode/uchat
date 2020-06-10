@@ -21,7 +21,7 @@ static void insert_room(cJSON *room, t_chat *chat) {
     if (!cJSON_AddNumberToObject(dup, "type", RQ_NEW_ROOM))
         return;
     dtp = mx_get_transport_data(dup);
-    mx_new_room(dtp, chat);
+    mx_new_room_handler(dtp, chat);
     msgs = mx_get_new_msgs_request(0, room_name->valuestring);
     mx_send(chat->ssl, msgs);
     mx_free_request(&dtp);

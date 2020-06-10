@@ -1,17 +1,23 @@
 #include "client.h"
 
-void mx_init_receiver(t_chat *chat) {
+void mx_init_errors(t_chat *chat) {
+    chat->error_handler[ER_AUTH_DATA] = mx_err_auth_data_handler;
+    chat->error_handler[ER_USER_EXST] = mx_err_user_exist_handler;
+}
+
+void mx_init_handlers(t_chat *chat) {
     pthread_t tid;
-    chat->request_handler[RQ_TOKEN] = mx_authorization;
-    chat->request_handler[RQ_ERROR_MSG] = mx_error_handle;
+
+    chat->request_handler[RQ_TOKEN] = mx_authorization_handler;
+    chat->request_handler[RQ_ERROR_MSG] = mx_error_handler;
     chat->request_handler[RQ_LOG_IN] = NULL;
     chat->request_handler[RQ_SIGN_UP] = NULL;
     chat->request_handler[RQ_GET_ROOMS] = mx_rooms_hanlder;
     chat->request_handler[RQ_GET_NEW_MSGS] = mx_new_msgs_hanlder;
-    chat->request_handler[RQ_NEW_ROOM] = mx_new_room;
-    chat->request_handler[RQ_USERS_ONLINE] = mx_update_users;
-    chat->request_handler[RQ_MSG] = mx_msg;
-    chat->request_handler[RQ_LOG_OUT] = mx_log_out;
+    chat->request_handler[RQ_NEW_ROOM] = mx_new_room_handler;
+    chat->request_handler[RQ_USERS_ONLINE] = mx_update_users_handler;
+    chat->request_handler[RQ_MSG] = mx_msg_handler;
+    chat->request_handler[RQ_LOG_OUT] = mx_log_out_handler;
     mx_pthread_create(&tid, NULL, mx_receiver, chat);
 }
 

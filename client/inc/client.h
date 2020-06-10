@@ -19,7 +19,11 @@
 #define MX_BUF_MSGS 50
 #define MX_MAX_LENGTH_QUEUE 10
 
-typedef struct s_groom {
+typedef struct s_groom t_groom;
+typedef struct s_gmsg t_gmsg;
+typedef struct s_chat t_chat;
+
+struct s_groom {
     GtkListBox *box_rooms;
     GtkScrolledWindow *page;
     GtkListBoxRow *row_room;
@@ -31,17 +35,17 @@ typedef struct s_groom {
     long int date;
     char *desc;
     bool is_updated;
-}              t_groom;
+};
 
-typedef struct s_gmsg {
+struct s_gmsg {
     char *msg;
     char *login;
     long int date;
     char *room_name;
     int id_message;
-}              t_gmsg;
+};
 
-typedef struct s_chat {
+struct s_chat {
     char *auth_token;
     char *login;
     SSL *ssl;
@@ -49,25 +53,27 @@ typedef struct s_chat {
     GtkBuilder *builder;
     GAsyncQueue *queue;
     bool valid;
+    void (*error_handler[ER_COUNT_ERRS])(GtkBuilder *builder);
     bool (*request_handler[RQ_COUNT_REQUEST])(t_dtp *dtp, struct s_chat *chat);
-}              t_chat;
+};
 
 int mx_tcp_connect(const char *host, const char *serv);
 t_chat *mx_init_chat(void);
 void mx_signup(SSL *ssl);
 void mx_login(SSL *ssl);
 void *mx_receiver(void *arg);
-void mx_init_receiver(t_chat *chat);
+void mx_init_handlers(t_chat *chat);
+void mx_init_errors(t_chat *chat);
 void mx_get_data(t_chat *chat);
 
 //handlers
-bool mx_error_handle(t_dtp *data, t_chat *chat);
-bool mx_authorization(t_dtp *token, t_chat *chat);
-bool mx_new_room(t_dtp *data, t_chat *chat);
-bool mx_update_users(t_dtp *data, t_chat *chat);
-bool mx_msg(t_dtp *data, t_chat *chat);
+bool mx_error_handler(t_dtp *data, t_chat *chat);
+bool mx_authorization_handler(t_dtp *token, t_chat *chat);
+bool mx_new_room_handler(t_dtp *data, t_chat *chat);
+bool mx_update_users_handler(t_dtp *data, t_chat *chat);
+bool mx_msg_handler(t_dtp *data, t_chat *chat);
 bool mx_rooms_hanlder(t_dtp *data, t_chat *chat);
-bool mx_log_out(t_dtp *token, t_chat *chat);
+bool mx_log_out_handler(t_dtp *token, t_chat *chat);
 bool mx_new_msgs_hanlder(t_dtp *data, t_chat *chat);
 
 //api
@@ -79,7 +85,11 @@ t_dtp *mx_sign_up_request(char *login, char *pass);
 t_dtp *mx_get_rooms_request(long int date);
 t_dtp *mx_log_out_request(char *token);
 t_dtp *mx_get_new_msgs_request(long int date, char *room_name);
-t_dtp *mx_upd_room_desc_request(char *room_name, char *desc, char *token); //TODO
+t_dtp *mx_upd_room_desc_request(int room_id, char *desc); //TODO
+
+//errors api
+void mx_err_auth_data_handler(GtkBuilder *builder);
+void mx_err_user_exist_handler(GtkBuilder *builder);
 
 //gui
 GtkBuilder *mx_init_window(int argc, char **argv);
@@ -106,8 +116,6 @@ void mx_connect_authorization(t_chat *chat);
 void mx_connect_addroom(t_chat *chat);
 void mx_connect_send_message(t_chat *chat);
 void mx_connect_profile_settings(t_chat *chat);
-void mx_errmsg_wrong_authdata(GtkBuilder *builder);
-void mx_errmsg_user_exist(GtkBuilder *builder);
 t_groom *mx_get_selected_groom(GtkBuilder *builder);
 t_groom *mx_get_groom_by_name(char *name, GtkBuilder *builder);
 

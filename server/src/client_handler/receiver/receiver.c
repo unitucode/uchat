@@ -1,13 +1,13 @@
 #include "server.h"
 
 void mx_init_receiver(t_chat *chat) {
-    chat->request_handler[RQ_SIGN_UP] = mx_sign_up;
-    chat->request_handler[RQ_TOKEN] = mx_log_in_token;
-    chat->request_handler[RQ_LOG_IN] = mx_log_in;
-    chat->request_handler[RQ_NEW_ROOM] = mx_new_room;
-    chat->request_handler[RQ_MSG] = mx_msg;
+    chat->request_handler[RQ_SIGN_UP] = mx_sign_up_handler;
+    chat->request_handler[RQ_TOKEN] = mx_log_in_token_handler;
+    chat->request_handler[RQ_LOG_IN] = mx_log_in_handler;
+    chat->request_handler[RQ_NEW_ROOM] = mx_new_room_handler;
+    chat->request_handler[RQ_MSG] = mx_msg_handler;
     chat->request_handler[RQ_GET_ROOMS] = mx_get_rooms_handler;
-    chat->request_handler[RQ_LOG_OUT] = mx_log_out;
+    chat->request_handler[RQ_LOG_OUT] = mx_log_out_handler;
     chat->request_handler[RQ_GET_NEW_MSGS] = mx_get_msgs_handler;
 }
 

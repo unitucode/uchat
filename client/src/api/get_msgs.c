@@ -23,7 +23,7 @@ static void insert_msg(cJSON *room, t_chat *chat, char *room_name) {
     if (!cJSON_AddStringToObject(dup, "room_name", room_name))
         return;
     dtp = mx_get_transport_data(dup);
-    mx_msg(dtp, chat);
+    mx_msg_handler(dtp, chat);
     mx_free_request(&dtp);
 }
 

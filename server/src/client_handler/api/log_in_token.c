@@ -12,7 +12,7 @@ t_dtp *mx_token_request(char *token, char *login) {
     return mx_get_transport_data(json_result);
 }
 
-bool mx_log_in_token(t_dtp *token, t_client *client) { // TODO!!!!!!
+bool mx_log_in_token_handler(t_dtp *token, t_client *client) { // TODO!!!!!!
     cJSON *json = cJSON_Parse(token->str);
     cJSON *user_token = cJSON_GetObjectItemCaseSensitive(json, "token");
 
