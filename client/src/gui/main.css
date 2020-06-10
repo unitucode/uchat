@@ -1,0 +1,69 @@
+@define-color placeholder_text_color #ffffff;
+
+* {
+    font-family: "Gilroy", sans-serif;
+}
+
+.dialog_auth  {
+    background: rgb(20,39,69);
+    background: linear-gradient(173deg, rgba(20,39,69,1) 0%, rgba(0,100,123,1) 49%, rgba(105,114,145,1) 100%);
+}
+
+box stack {
+    background-color: transparent;
+}
+
+entry {
+	box-shadow: none;
+    border: none;
+    padding: 0;
+    background-color: transparent;
+    border-bottom: 1px solid #fff;
+    border-radius: 0;
+    margin: 0 -25px;
+}
+
+notebook {
+    border: none;
+}
+
+button, .input {
+    border: none;
+}
+
+.login_btn {
+    background: #fff;
+    box-shadow: none;
+    padding: 15px 30px;
+    border-radius: 2px;
+    color: #104C65;
+    transition: all .3s ease-out;
+}
+
+.login_btn:hover {
+    opacity: .8;
+}
+
+.label {
+    color: #fff;
+    margin-bottom: 10px;
+}
+
+.input {
+    border-radius: 0;
+    caret-color: #fff;
+    color: #fff;
+    
+    background: none;
+    border-bottom: 1px solid #fff;
+    transition: all .5s ease-out;
+}
+
+.login_btn:focus {
+    outline-color: red;
+    outline-width: 3px;
+}
+
+.input > property {
+    color: #fff;
+}

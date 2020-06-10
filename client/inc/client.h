@@ -122,3 +122,4 @@ void mx_set_default_room_sett(GtkBuilder *builder);
 void mx_handle_request(t_chat *chat);
 void mx_send_auth_request(char *login, char *password,
                           SSL *ssl, t_request_type request_type);
+void css_connect();

@@ -7,6 +7,7 @@ GtkBuilder *mx_init_window(int argc, char **argv) {
     builder = gtk_builder_new();
     gtk_builder_add_from_file(builder, MX_GUI_PATH, NULL);
     gtk_builder_connect_signals(builder, builder);
+    css_connect();
     return builder;
 }
 
