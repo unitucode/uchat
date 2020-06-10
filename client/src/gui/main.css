@@ -59,11 +59,35 @@ button, .input {
     transition: all .5s ease-out;
 }
 
-.login_btn:focus {
-    outline-color: red;
-    outline-width: 3px;
-}
-
 .input > property {
     color: #fff;
+}
+
+.notebook_item {
+	margin-top: 35px;
+}
+
+.dialog_notebook header {
+	background-color: transparent;
+}
+
+.dialog_auth .titlebar {
+	opacity: 0;
+	border: none;
+}
+
+.dialog_auth decoration {
+	box-shadow: none;
+}
+
+.dialog_auth {
+	border-radius: 8px;
+}
+
+.dialog_notebook stack, tabs {
+	padding: 0;
+}
+
+.dialog_notebook header tab {
+	margin: 0;
 }
