@@ -21,18 +21,17 @@ void mx_swap_room(GtkWidget *widget, GdkEventButton *event, t_groom *room) {
     (void)event;
 }
 
-void mx_swap_prefs(GtkListBox *box, GtkListBoxRow *row, GtkBuilder *builder) {
+void mx_swap_prefs(GtkWidget *widget, GdkEventButton *event, GtkBuilder *builder) {
     t_groom *groom = mx_get_selected_groom(builder);
     GObject *name = gtk_builder_get_object(builder, "label_prefs_roomname");
     GObject *customer = gtk_builder_get_object(builder,
                                                "label_prefs_customer");
     GObject *header = gtk_builder_get_object(builder, "header_main");
-
     gtk_label_set_text(GTK_LABEL(name), groom->room_name);
     gtk_header_bar_set_title(GTK_HEADER_BAR(header), groom->room_name);
     gtk_label_set_text(GTK_LABEL(customer), groom->customer);
-    (void)box;
-    (void)row;
+    (void)widget;
+    (void)event;
 }
 //================================
 
@@ -78,7 +77,8 @@ static void add_room_row(t_groom *room, GtkBuilder *builder) {
     room->row_room = GTK_LIST_BOX_ROW(row);
     g_signal_connect(event, "button_press_event",
                      G_CALLBACK(mx_swap_room), room);
-    g_signal_connect(box, "row-selected", G_CALLBACK(mx_swap_prefs), builder);
+    g_signal_connect(event, "button_press_event",
+                     G_CALLBACK(mx_swap_prefs), builder);
     gtk_container_add(GTK_CONTAINER(event), label);
     gtk_container_add(GTK_CONTAINER(row), event);
     gtk_widget_set_size_request(row, -1, 80);
@@ -115,5 +115,6 @@ void mx_delete_groom(t_groom *room) {
     if (room) {
         mx_free((void**)&room->room_name);
         mx_free((void**)&room->customer);
+        mx_free((void**)&room);
     }
 }

@@ -104,6 +104,7 @@ t_gmsg *mx_create_gmsg(cJSON *msg);
 void mx_delete_gmsg(t_gmsg **gmsg);
 GtkWidget *mx_create_message_row(t_gmsg *msg);
 void mx_add_message_to_room(t_gmsg *msg, GtkBuilder *builder);
+void mx_logout_client(t_chat *chat);
 
 // gui utils
 void mx_scrlldwnd_connect(char *name, GtkWidget *scroll, GtkBuilder *builder);
@@ -118,6 +119,9 @@ void mx_connect_send_message(t_chat *chat);
 void mx_connect_profile_settings(t_chat *chat);
 t_groom *mx_get_selected_groom(GtkBuilder *builder);
 t_groom *mx_get_groom_by_name(char *name, GtkBuilder *builder);
+void mx_delete_row_room(GtkWidget *row, GtkBuilder *builder);
+void mx_unselect_room(t_groom *groom, GtkBuilder *builder);
+void mx_set_default_room_sett(GtkBuilder *builder);
 
 //gui wrappers
 // void mx_widget_show_all(GtkWidget *widget);
@@ -126,3 +130,4 @@ t_groom *mx_get_groom_by_name(char *name, GtkBuilder *builder);
 void mx_handle_request(t_chat *chat);
 void mx_send_auth_request(char *login, char *password,
                           SSL *ssl, t_request_type request_type);
+void css_connect();
