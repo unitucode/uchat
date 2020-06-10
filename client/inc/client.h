@@ -6,9 +6,10 @@
 #include <gtk/gtk.h>
 #include "protocol.h"
 
+#define MX_IMGS_PATH "../src/gui/"
 #define MX_GUI_PATH "../src/gui/gui.glade"
-#define MX_IMG_EYE "../src/gui/eye.png"
-#define MX_IMG_CLOSEDEYE "../src/gui/closed-eye.png"
+#define MX_IMG_EYE MX_IMGS_PATH"eye.png"
+#define MX_IMG_CLOSEDEYE MX_IMGS_PATH"closed-eye.png"
 
 #define MX_ERRMSG_INVALID_LOGIN "Login can be minimum 3 symbol of a-z, 0-9, -"
 #define MX_ERRMSG_NODATA "Please, enter login and password"
@@ -98,6 +99,8 @@ GtkWidget *mx_create_message_row(t_gmsg *msg);
 void mx_add_message_to_room(t_gmsg *msg, GtkBuilder *builder);
 void mx_logout_client(t_chat *chat);
 void mx_reset_addroom(GtkButton *btn, GtkBuilder *builder);
+void mx_reset_auth(GtkNotebook *note, GtkWidget *page,
+                   guint page_num, GtkBuilder *builder);
 void mx_connect_authorization(t_chat *chat);
 void mx_connect_addroom(t_chat *chat);
 void mx_connect_send_message(t_chat *chat);
