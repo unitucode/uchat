@@ -14,13 +14,13 @@ void mx_change_working_dir(void) {
 
 int main(int argc, char **argv) {
     // mx_change_working_dir();
-    sqlite3 *database = mx_server_data_open(MX_DB);
+    // sqlite3 *database = mx_server_data_open(MX_DB);
     
     // get message by id
     // cJSON *vlad = mx_get_old_messages();
     // cJSON *vlad = mx_get_new_messages();
-    cJSON *vlad = mx_get_curr_messages_by_id(database, 23, 50);
-    printf("%s\n", cJSON_Print(vlad));
+    // cJSON *vlad = mx_get_curr_messages_by_id(database, 23, 50);
+    // printf("%s\n", cJSON_Print(vlad));
 
     // create room                  Ok
     // t_db_room *room = mx_insert_room_into_db(database, "name7", "customer");
@@ -59,18 +59,31 @@ int main(int argc, char **argv) {
     // delete user                    Ok
     // mx_delete_user(database, "login1");
 
-    // create users                  Ok 
-    // t_db_user *user = mx_insert_user_into_db(database, "login5", "password", "token");
+
+    // create user                  Ok 
+    // t_db_user *user = mx_insert_user_into_db(database, "login4", "password", "token");
     // printf("login -> %s\n", user->login);
     // printf("desc -> %s\n", user->description);
     // printf("pass -> %s\n", user->password);
     // printf("token -> %s\n", user->token);
-    // printf("date -> %ld\n", user->date);
+    // printf("date -> %ld\n\n\n", user->date);
     // mx_free_user(&user);
-    mx_close_database(database);
-    system("leaks -q uchat_server");
-    printf("Ok\n");
-    exit(1);
+    
+    // get user 
+    // t_db_user *user = mx_get_user_by_login(database, "login8");
+    // if (user) {
+    //     printf("login -> %s\n", user->login);
+    //     printf("desc -> %s\n", user->description);
+    //     printf("pass -> %s\n", user->password);
+    //     printf("token -> %s\n", user->token);
+    //     printf("date -> %ld\n", user->date);
+    //     mx_free_user(&user);
+    // }
+
+    // mx_close_database(database);
+    // system("leaks -q uchat_server");
+    // printf("Ok\n");
+    // exit(1);
     t_chat *chat = mx_init_chat(argc, argv);
     t_client *client = NULL;
     t_ssl_con *ssl = NULL;

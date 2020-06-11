@@ -39,4 +39,3 @@ char *mx_create_request_message_by_id(sqlite3 *database,
     request = sqlite3_str_finish(str);
     return request;
 }
-

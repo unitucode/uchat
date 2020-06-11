@@ -1,7 +1,7 @@
 #include "server.h"
 
 static t_db_user *for_get_user(sqlite3_stmt *stmt) {
-    if (!mx_error_sqlite(sqlite3_step(stmt), "step", "for_get_user")) {
+    if (sqlite3_step(stmt) == 100) {
         t_db_user *user = mx_malloc(sizeof(t_db_user));
         user->login = strdup((const char*)sqlite3_column_text(stmt, 0));
         user->password = strdup((const char*)sqlite3_column_text(stmt, 1));
@@ -12,6 +12,7 @@ static t_db_user *for_get_user(sqlite3_stmt *stmt) {
         sqlite3_finalize(stmt);
         return user;
     }
+    sqlite3_finalize(stmt);
     return NULL;
 }
 
@@ -21,8 +22,10 @@ t_db_user *mx_get_user_by_login(sqlite3 *database, char *login) {
 
     rv = sqlite3_prepare_v3(database, "select * from users where login = ?1",
         -1, 0, &stmt, NULL);
+    printf("login -> %s\n", login);
     sqlite3_bind_text(stmt, 1, login, -1, SQLITE_STATIC);
     mx_error_sqlite(rv, "prepare", "get_user_by_login");
+    printf("vlad point prepare %d\n", rv);
     return for_get_user(stmt);
 }
 
