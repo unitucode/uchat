@@ -16,12 +16,12 @@ t_gmsg *mx_create_gmsg(cJSON *msg) {
         gmsg->msg = strdup(data->valuestring);
     if ((valid = get_data(msg, &data, "login")) && cJSON_IsString(data))
         gmsg->login = strdup(data->valuestring);
-    if ((valid = get_data(msg, &data, "room_name")) && cJSON_IsString(data))
-        gmsg->room_name = strdup(data->valuestring);
+    if ((valid = get_data(msg, &data, "room_id")) && cJSON_IsNumber(data))
+        gmsg->room_id = data->valueint;
     if ((valid = get_data(msg, &data, "date")) && cJSON_IsNumber(data))
         gmsg->date = data->valueint;
-    if ((valid = get_data(msg, &data, "id_message")) && cJSON_IsNumber(data))
-        gmsg->id_message = data->valueint;
+    if ((valid = get_data(msg, &data, "message_id")) && cJSON_IsNumber(data))
+        gmsg->message_id = data->valueint;
     if (!valid) {
         mx_delete_gmsg(&gmsg);
         return NULL;
@@ -33,7 +33,6 @@ void mx_delete_gmsg(t_gmsg **gmsg) {
     if (gmsg && *gmsg) {
         mx_free((void**)&(*gmsg)->msg);
         mx_free((void**)&(*gmsg)->login);
-        mx_free((void**)&(*gmsg)->room_name);
         mx_free((void**)gmsg);
         *gmsg = NULL;
     }

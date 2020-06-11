@@ -3,7 +3,7 @@
 #include "utils.h"
 
 #define MX_J_STR(m) (m) ? (m) : "(null)"
-#define MX_RQ_SIZE 512
+#define MX_RQ_SIZE 20
 
 typedef struct s_ssl_con t_ssl_con;
 typedef struct s_dtp t_dtp;

@@ -14,15 +14,15 @@ static void insert_room(cJSON *room, t_chat *chat) {
     t_dtp *dtp = NULL;
     t_dtp *msgs = NULL;
     cJSON *dup = cJSON_Duplicate(room, cJSON_True);
-    cJSON *room_name = cJSON_GetObjectItemCaseSensitive(room, "room_name");
+    cJSON *room_id = cJSON_GetObjectItemCaseSensitive(room, "id");
 
-    if (!room_name || !cJSON_IsString(room_name))
+    if (!room_id || !cJSON_IsNumber(room_id))
         return;
     if (!cJSON_AddNumberToObject(dup, "type", RQ_NEW_ROOM))
         return;
     dtp = mx_get_transport_data(dup);
     mx_new_room_handler(dtp, chat);
-    msgs = mx_get_new_msgs_request(0, room_name->valuestring);
+    msgs = mx_get_new_msgs_request(0, room_id->valueint);
     mx_send(chat->ssl, msgs);
     mx_free_request(&dtp);
 }

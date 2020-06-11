@@ -2,7 +2,7 @@
 
 static void add_message_row(t_gmsg *msg, GtkBuilder *builder) {
     GtkWidget *row = mx_create_message_row(msg);
-    t_groom *room = mx_get_groom_by_name(msg->room_name, builder);
+    t_groom *room = mx_get_groom_by_id(msg->room_id, builder);
     GtkWidget *box = room->box_messages;
 
     room->is_updated = true;

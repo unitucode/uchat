@@ -41,8 +41,8 @@ struct s_gmsg {
     char *msg;
     char *login;
     long int date;
-    char *room_name;
-    int id_message;
+    int room_id;
+    int message_id;
 };
 
 struct s_chat {
@@ -78,13 +78,13 @@ bool mx_new_msgs_hanlder(t_dtp *data, t_chat *chat);
 
 //api
 t_dtp *mx_new_room_request(char *room_name, bool is_private, char *pass);
-t_dtp *mx_msg_request(char *msg, char *room_name);
+t_dtp *mx_msg_request(char *msg, int room_id);
 t_dtp *mx_token_request(char *token);
 t_dtp *mx_log_in_request(char *login, char *pass);
 t_dtp *mx_sign_up_request(char *login, char *pass);
 t_dtp *mx_get_rooms_request(long int date);
 t_dtp *mx_log_out_request(char *token);
-t_dtp *mx_get_new_msgs_request(long int date, char *room_name);
+t_dtp *mx_get_new_msgs_request(long int date, int room_id);
 t_dtp *mx_upd_room_desc_request(int room_id, char *desc); //TODO
 
 //errors api
@@ -118,7 +118,7 @@ void mx_connect_addroom(t_chat *chat);
 void mx_connect_send_message(t_chat *chat);
 void mx_connect_profile_settings(t_chat *chat);
 t_groom *mx_get_selected_groom(GtkBuilder *builder);
-t_groom *mx_get_groom_by_name(char *name, GtkBuilder *builder);
+t_groom *mx_get_groom_by_id(int room_id, GtkBuilder *builder);
 void mx_delete_row_room(GtkWidget *row, GtkBuilder *builder);
 void mx_unselect_room(t_groom *groom, GtkBuilder *builder);
 void mx_set_default_room_sett(GtkBuilder *builder);
