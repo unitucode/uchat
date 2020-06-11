@@ -19,6 +19,7 @@ bool mx_get_msgs_handler(t_dtp *data, t_client *client) {
         return false;
     }
     msgs = mx_get_transport_data(msgs_json);
+    printf("send = %s\n", msgs->str);
     mx_send(client->ssl, msgs);
     mx_free_request(&msgs);
     return true;

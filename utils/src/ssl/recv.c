@@ -37,7 +37,9 @@ t_dtp *mx_recv(SSL *ssl) {
                 strcat(data, buf);
             if (readed_bytes == size)
                 break;
+            bzero(buf, sizeof(buf));
         }
+        fprintf(stderr, "readed = %s\n", data);
         if (strlen(data) == (unsigned int)size)
             dtp = mx_request_creation(data);
     }
