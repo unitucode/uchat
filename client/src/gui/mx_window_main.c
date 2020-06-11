@@ -20,7 +20,7 @@ int mx_start_gui(t_chat *chat) {
 void mx_start_main_window(t_chat *chat) {
     GObject *wnd_main = gtk_builder_get_object(chat->builder, "wnd_main");
     GObject *dialog_auth = gtk_builder_get_object(chat->builder,
-                                                        "dialog_auth");
+                                                  "dialog_auth");
 
     mx_widget_switch_visibility(NULL, GTK_WIDGET(wnd_main));
     mx_widget_switch_visibility(NULL, GTK_WIDGET(dialog_auth));

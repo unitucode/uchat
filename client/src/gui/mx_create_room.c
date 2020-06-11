@@ -14,6 +14,18 @@ void mx_make_private(GtkToggleButton *btn, GtkWidget *widget) {
     gtk_widget_set_sensitive(widget, gtk_toggle_button_get_active(btn));
 }
 
+void mx_unselect_curr_room_messages(GtkListBox *box, GtkListBoxRow *row,
+                                    GtkBuilder *builder) {
+    t_groom *groom = NULL;
+
+    if (row)
+        groom = (t_groom *)g_object_get_data(G_OBJECT(row), "groom");
+    if (groom)
+        gtk_list_box_unselect_all(groom->box_messages);
+    (void)box;
+    (void)builder;
+}
+
 void mx_swap_room(GtkWidget *widget, GdkEventButton *event, t_groom *room) {
     gtk_stack_set_visible_child(room->stack_msg, GTK_WIDGET(room->page));
     gtk_list_box_select_row(room->box_rooms, room->row_room);
@@ -27,11 +39,19 @@ void mx_swap_prefs(GtkWidget *widget, GdkEventButton *event, GtkBuilder *builder
     GObject *customer = gtk_builder_get_object(builder,
                                                "label_prefs_customer");
     GObject *header = gtk_builder_get_object(builder, "header_main");
+
     gtk_label_set_text(GTK_LABEL(name), groom->room_name);
     gtk_header_bar_set_title(GTK_HEADER_BAR(header), groom->room_name);
     gtk_label_set_text(GTK_LABEL(customer), groom->customer);
     (void)widget;
     (void)event;
+}
+
+void mx_hide_msg_ctrl(GtkListBox *box, GtkListBoxRow *row,
+                      GtkButtonBox *control) {
+    gtk_widget_hide(GTK_WIDGET(control));
+    (void)box;
+    (void)row;
 }
 //================================
 
@@ -51,7 +71,7 @@ static void add_messages_box(t_groom *room, GtkBuilder *builder) {
     GtkWidget *scroll = gtk_scrolled_window_new(NULL, NULL);
     GtkWidget *view = gtk_viewport_new(NULL, NULL);
 
-    room->box_messages = box;
+    room->box_messages = GTK_LIST_BOX(box);
     gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scroll),
                                    GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
     gtk_container_add(GTK_CONTAINER(scroll), view);
@@ -75,10 +95,12 @@ static void add_room_row(t_groom *room, GtkBuilder *builder) {
                            (GDestroyNotify)mx_delete_groom);
     room->box_rooms = box;
     room->row_room = GTK_LIST_BOX_ROW(row);
+
     g_signal_connect(event, "button_press_event",
                      G_CALLBACK(mx_swap_room), room);
     g_signal_connect(event, "button_press_event",
                      G_CALLBACK(mx_swap_prefs), builder);
+
     gtk_container_add(GTK_CONTAINER(event), label);
     gtk_container_add(GTK_CONTAINER(row), event);
     gtk_widget_set_size_request(row, -1, 80);

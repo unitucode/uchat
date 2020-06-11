@@ -27,7 +27,7 @@ typedef struct s_groom {
     GtkScrolledWindow *page;
     GtkListBoxRow *row_room;
     GtkStack *stack_msg;
-    GtkWidget *box_messages;
+    GtkListBox *box_messages;
     int id;
     char *room_name;
     char *customer;
