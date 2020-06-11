@@ -1051,6 +1051,9 @@
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
+                <signal name="clicked" handler="mx_widget_switch_visibility" object="dialog_auth" swapped="no"/>
+                <signal name="clicked" handler="mx_widget_switch_visibility" object="dialog_profile_sett" swapped="no"/>
+                <signal name="clicked" handler="mx_widget_switch_visibility" object="wnd_main" swapped="no"/>
               </object>
               <packing>
                 <property name="expand">True</property>
