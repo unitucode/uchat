@@ -22,7 +22,7 @@ void mx_start_main_window(t_chat *chat) {
     GObject *dialog_auth = gtk_builder_get_object(chat->builder,
                                                   "dialog_auth");
 
-    mx_widget_switch_visibility(NULL, GTK_WIDGET(wnd_main));
     mx_widget_switch_visibility(NULL, GTK_WIDGET(dialog_auth));
+    mx_widget_switch_visibility(NULL, GTK_WIDGET(wnd_main));
     mx_reset_auth(NULL, NULL, -1, chat->builder);
 }
