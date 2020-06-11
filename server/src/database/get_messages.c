@@ -25,12 +25,9 @@ static cJSON *get_messages_by_id(sqlite3_stmt *stmt, int id, int count,
     cJSON *message = cJSON_CreateArray();
     int rv = 0;
 
-    printf("count -> %d\nid -> %d\n", count, id);
-    printf("date -> %ld\n", date);
     sqlite3_bind_int(stmt, 1, date);
     for (int i = 0; i < count 
                         && (rv = sqlite3_step(stmt)) == SQLITE_ROW; i++) {
-        printf("vlad point\n");
         cJSON_AddItemToArray(message, get_object_message(stmt));
     }
     cJSON_AddItemToObject(room, "id", cJSON_CreateNumber(id));

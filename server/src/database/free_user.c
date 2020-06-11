@@ -1,6 +1,8 @@
 #include "server.h"
 
 void mx_free_user(t_db_user **user) {
+    if (!user || !*user)
+        return;
     if ((*user)->login)
         mx_free((void**)&(*user)->login);
     if ((*user)->password)
@@ -14,6 +16,8 @@ void mx_free_user(t_db_user **user) {
 }
 
 void mx_free_room(t_db_room **room) {
+    if (!room || !*room)
+        return;
     if ((*room)->customer)
         mx_free((void**)&(*room)->customer);
     if ((*room)->name_room)
@@ -25,6 +29,8 @@ void mx_free_room(t_db_room **room) {
 }
 
 void mx_free_message(t_db_message **message) {
+    if (!message || !*message)
+        return;
     if ((*message)->message)
         mx_free((void **)&(*message)->message);
     if ((*message)->login)
