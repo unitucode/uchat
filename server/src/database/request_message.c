@@ -32,10 +32,11 @@ char *mx_create_request_message_by_id(sqlite3 *database,
     char *request = NULL;
     void (*func[])(sqlite3_str **) = {message_curr, message_new, message_old};
 
-    sqlite3_str_appendall(str, "SELECT * FROM '");
-    sqlite3_str_appendf(str, "room%d", id);
+    sqlite3_str_appendall(str, "select * from ");
+    sqlite3_str_appendf(str, "'room%d", id);
     func[flag](&str);
-    sqlite3_str_appendall(str, " ORDER BY id DESC");
+    sqlite3_str_appendall(str, " order by id_message desc");
     request = sqlite3_str_finish(str);
     return request;
 }
+
