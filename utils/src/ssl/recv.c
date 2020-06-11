@@ -9,10 +9,10 @@ static int message_size(SSL *ssl) {
     int size = -1;
 
     bytes = SSL_read(ssl, buf, sizeof(buf));
-    // if (bytes != sizeof(int)) {
-    //     mx_logger(MX_LOG_FILE, LOGWAR, "Invalid packet\n");
-    //     return -1;
-    // }
+    if (bytes != sizeof(int)) {
+        mx_logger(MX_LOG_FILE, LOGWAR, "Invalid packet\n");
+        return -1;
+    }
     memcpy(&size, buf, sizeof(int));
     return size;
 }
@@ -23,25 +23,27 @@ static int message_size(SSL *ssl) {
 t_dtp *mx_recv(SSL *ssl) {
     t_dtp *dtp = NULL;
     int size = 0;
-    long int readed_bytes = 0;
+    long int bytes = MX_RQ_SIZE;
+    long int read = 0;
 
     if ((size = message_size(ssl)) > 0) {
         char data[size + 1];
-        char buf[MX_RQ_SIZE + 1];
 
         bzero(data, sizeof(data));
-        bzero(buf, sizeof(buf));
-        while (SSL_read(ssl, buf, MX_RQ_SIZE) > 0) {
-            readed_bytes += strlen(buf);
-            if (readed_bytes <= size)
-                strcat(data, buf);
-            if (readed_bytes == size)
-                break;
-            bzero(buf, sizeof(buf));
+        if (size < MX_RQ_SIZE)
+            bytes = size;
+        while (read < size && SSL_read(ssl, &data[read], bytes) > 0) {
+            fprintf(stderr, "1.read = %ld size = %d bytes = %ld data = %s\n", read, size, bytes, &data[read]);
+            read += bytes;
+            if (size - read < MX_RQ_SIZE)
+                bytes = size - read;
+            fprintf(stderr, "2.read = %ld size = %d bytes = %ld data = %s\n", read, size, bytes, &data[read]);
         }
-        fprintf(stderr, "readed = %s\n", data);
-        if (strlen(data) == (unsigned int)size)
+        fprintf(stderr, "read = %ld size = %d\n", read, size);
+        if (read == size)
             dtp = mx_request_creation(data);
+        else
+            mx_logger(MX_LOG_FILE, LOGWAR, "Invalid len of packet\n");
     }
     return dtp;
 }
