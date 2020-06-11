@@ -22,10 +22,8 @@ t_db_user *mx_get_user_by_login(sqlite3 *database, char *login) {
 
     rv = sqlite3_prepare_v3(database, "select * from users where login = ?1",
         -1, 0, &stmt, NULL);
-    printf("login -> %s\n", login);
     sqlite3_bind_text(stmt, 1, login, -1, SQLITE_STATIC);
     mx_error_sqlite(rv, "prepare", "get_user_by_login");
-    printf("vlad point prepare %d\n", rv);
     return for_get_user(stmt);
 }
 
@@ -33,7 +31,7 @@ t_db_user *mx_get_user_by_token(sqlite3 *database, char *token) {
     sqlite3_stmt *stmt;
     int rv = 0;
 
-    rv = sqlite3_prepare_v3(database, "SELECT * FROM USERSS WHERE token = ?1",
+    rv = sqlite3_prepare_v3(database, "select * from users where token = ?1",
         -1, 0, &stmt, NULL);
     mx_error_sqlite(rv, "prepare", "get user by token");
     sqlite3_bind_text(stmt, 1, token, -1, SQLITE_STATIC);
@@ -47,7 +45,7 @@ t_db_room *mx_get_room_by_id(sqlite3 *database, unsigned long long int id) {
     mx_error_sqlite(sqlite3_prepare_v3(database, "select * from rooms where "
         "id = ?1", -1, 0, &stmt, NULL), "prepare", "get_room");
     sqlite3_bind_int(stmt, 1, id);
-    if (!mx_error_sqlite(sqlite3_step(stmt), "step", "get room")) {
+    if (sqlite3_step(stmt) == 100) {
         room = malloc(sizeof(t_db_room));
         room->id = sqlite3_column_int(stmt, 0);
         room->name_room = strdup((const char*)sqlite3_column_text(stmt, 1));
@@ -69,7 +67,7 @@ t_db_room *mx_get_room(sqlite3 *database, char *name_room) {
                                        -1, 0, &stmt, NULL),
                                        "prepare", "get_room");
     sqlite3_bind_text(stmt, 1, name_room, -1, SQLITE_STATIC);
-    if (!mx_error_sqlite(sqlite3_step(stmt), "step", "get room")) {
+    if (sqlite3_step(stmt) == 100) {
         room = malloc(sizeof(t_db_room));
         room->id = sqlite3_column_int(stmt, 0);
         room->name_room = strdup((const char*)sqlite3_column_text(stmt, 1));
