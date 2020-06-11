@@ -26,6 +26,7 @@ void mx_unselect_curr_room_messages(GtkListBox *box, GtkListBoxRow *row,
     (void)builder;
 }
 
+    puts("First Callback");
 void mx_swap_room(GtkWidget *widget, GdkEventButton *event, t_groom *room) {
     gtk_stack_set_visible_child(room->stack_msg, GTK_WIDGET(room->page));
     gtk_list_box_select_row(room->box_rooms, room->row_room);
@@ -34,6 +35,7 @@ void mx_swap_room(GtkWidget *widget, GdkEventButton *event, t_groom *room) {
 }
 
 void mx_swap_prefs(GtkWidget *widget, GdkEventButton *event, GtkBuilder *builder) {
+    puts("Second Callback");
     t_groom *groom = mx_get_selected_groom(builder);
     GObject *name = gtk_builder_get_object(builder, "label_prefs_roomname");
     GObject *customer = gtk_builder_get_object(builder,
@@ -45,6 +47,7 @@ void mx_swap_prefs(GtkWidget *widget, GdkEventButton *event, GtkBuilder *builder
     gtk_label_set_text(GTK_LABEL(customer), groom->customer);
     (void)widget;
     (void)event;
+    (void)builder;
 }
 
 void mx_hide_msg_ctrl(GtkListBox *box, GtkListBoxRow *row,
@@ -98,8 +101,9 @@ static void add_room_row(t_groom *room, GtkBuilder *builder) {
 
     g_signal_connect(event, "button_press_event",
                      G_CALLBACK(mx_swap_room), room);
-    g_signal_connect(event, "button_press_event",
+    g_signal_connect(event, "button_release_event",
                      G_CALLBACK(mx_swap_prefs), builder);
+    // g_signal_connect(box, "row-selected", G_CALLBACK(mx_swap_prefs), builder);
 
     gtk_container_add(GTK_CONTAINER(event), label);
     gtk_container_add(GTK_CONTAINER(row), event);

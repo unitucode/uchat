@@ -1,6 +1,11 @@
 #include "client.h"
 
-void req_room_sett(GtkButton *btn, t_chat *chat) {
+static void req_room_sett(GtkButton *btn, t_chat *chat) {
+    GObject *label_name = gtk_builder_get_object(chat->builder,
+                                                 "label_prefs_roomname");
+    gchar *name = mx_get_buffer_text("buffer_roomname", chat->builder);
+    puts(name);
+    gtk_label_set_text(GTK_LABEL(label_name), name);
     (void)btn;
 }
 
