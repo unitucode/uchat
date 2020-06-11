@@ -716,7 +716,7 @@
     <property name="can_focus">False</property>
     <property name="resizable">False</property>
     <property name="modal">True</property>
-    <property name="window_position">center-always</property>
+    <property name="window_position">center-on-parent</property>
     <property name="destroy_with_parent">True</property>
     <property name="type_hint">dialog</property>
     <property name="urgency_hint">True</property>
@@ -1053,7 +1053,6 @@
                 <property name="receives_default">True</property>
                 <signal name="clicked" handler="mx_widget_switch_visibility" object="dialog_auth" swapped="no"/>
                 <signal name="clicked" handler="mx_widget_switch_visibility" object="dialog_profile_sett" swapped="no"/>
-                <signal name="clicked" handler="mx_widget_switch_visibility" object="wnd_main" swapped="no"/>
               </object>
               <packing>
                 <property name="expand">True</property>
