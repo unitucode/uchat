@@ -19,6 +19,27 @@ static cJSON *get_object_message(sqlite3_stmt *stmt) {
     return object_message;
 }
 
+static cJSON *get_messages_by_id(sqlite3_stmt *stmt, int id, int count,
+                                 long int date) {
+    cJSON *room = cJSON_CreateObject();
+    cJSON *message = cJSON_CreateArray();
+    int rv = 0;
+
+    printf("count -> %d\nid -> %d\n", count, id);
+    printf("date -> %ld\n", date);
+    sqlite3_bind_int(stmt, 1, date);
+    for (int i = 0; i < count 
+                        && (rv = sqlite3_step(stmt)) == SQLITE_ROW; i++) {
+        printf("vlad point\n");
+        cJSON_AddItemToArray(message, get_object_message(stmt));
+    }
+    cJSON_AddItemToObject(room, "id", cJSON_CreateNumber(id));
+    cJSON_AddItemToObject(room, "messages", message);
+    sqlite3_finalize(stmt);
+    return room;
+}
+
+//to delete
 static cJSON *get_messages(sqlite3_stmt *stmt, char *name_room, int count,
                        long int date) {
     cJSON *room = cJSON_CreateObject();
@@ -36,6 +57,41 @@ static cJSON *get_messages(sqlite3_stmt *stmt, char *name_room, int count,
     return room;
 }
 
+cJSON *mx_get_new_messages_by_id(sqlite3 *db, unsigned long long int id, 
+                                 long int date, int count) {
+    sqlite3_stmt *stmt;
+    int rv = SQLITE_OK;
+    char *request = mx_create_request_message_by_id(db, id, 1);
+
+    rv = sqlite3_prepare_v3(db, request, -1, 0, &stmt, NULL);
+    sqlite3_free(request);
+    return get_messages_by_id(stmt, id, count, date);
+}
+
+cJSON *mx_get_old_messages_by_id(sqlite3 *db, unsigned long long int id, 
+                                 long int date, int count) {
+    sqlite3_stmt *stmt;
+    int rv = SQLITE_OK;
+    char *request = mx_create_request_message_by_id(db, id, 2);
+
+    rv = sqlite3_prepare_v3(db, request, -1, 0, &stmt, NULL);
+    sqlite3_free(request);
+    return get_messages_by_id(stmt, id, count, date);
+}
+
+cJSON *mx_get_curr_messages_by_id(sqlite3 *db, unsigned long long int id, 
+                                  int count) {
+    sqlite3_stmt *stmt;
+    int rv = SQLITE_OK;
+    char *request = mx_create_request_message_by_id(db, id, 0);
+
+    printf("%s\n", request);
+    rv = sqlite3_prepare_v3(db, request, -1, 0, &stmt, NULL);
+    sqlite3_free(request);
+    return get_messages_by_id(stmt, id, count, 0);
+}
+
+// to delete
 cJSON *mx_get_new_messages(sqlite3 *database, char *name_room,
                            long int date, int count) {
     sqlite3_stmt *stmt;
@@ -46,7 +102,7 @@ cJSON *mx_get_new_messages(sqlite3 *database, char *name_room,
     sqlite3_free(request);
     return get_messages(stmt, name_room, count, date);
 }
-
+// to delete
 cJSON *mx_get_curr_messages(sqlite3 *database, char *name_room, int count) {
     sqlite3_stmt *stmt;
     int rv = SQLITE_OK;
@@ -56,7 +112,7 @@ cJSON *mx_get_curr_messages(sqlite3 *database, char *name_room, int count) {
     sqlite3_free(request);
     return get_messages(stmt, name_room, count, 0);
 }
-
+// to delete
 cJSON *mx_get_old_messages(sqlite3 *database, char *name_room,
                            long int date, int count) {
     sqlite3_stmt *stmt;
