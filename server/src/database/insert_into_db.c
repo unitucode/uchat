@@ -54,17 +54,14 @@ t_db_room *mx_insert_room_into_db(sqlite3 *database, char *name_room,
     int rv = 0;
 
     rv = sqlite3_prepare_v3(database,
-                            "INSERT INTO ROOMS(NAME, CUSTOMER_LOGIN, DATE,"
-                            " DESCRIPTION) VALUES(?1, ?2, ?3, '');",
+                            "insert into rooms(name, customer_login, date,"
+                            " description) values(?1, ?2, ?3, '');",
                             -1, 0, &stmt, NULL);
-    if (rv == SQLITE_ERROR)
-        mx_elogger(MX_LOG_FILE, LOGERR, "insert room into db one %d\n", rv);
+    mx_error_sqlite(rv, "prepare", "insert room");
     sqlite3_bind_text(stmt, 1, name_room, -1, SQLITE_STATIC);
     sqlite3_bind_text(stmt, 2, customer, -1, SQLITE_STATIC);
     sqlite3_bind_int(stmt, 3, (long int)time(NULL));
-    if ((rv = sqlite3_step(stmt)) != SQLITE_DONE) {
-        mx_elogger(MX_LOG_FILE, LOGERR, "insert room into db two %d\n", rv);
-    }
+    mx_error_sqlite(sqlite3_step(stmt), "step", "insert room");
     sqlite3_finalize(stmt);
     mx_create_table_room(database, (int)mx_get_roomid_by_name(database, name_room));
     return mx_get_room(database, name_room);

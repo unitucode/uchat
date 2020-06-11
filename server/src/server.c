@@ -23,15 +23,15 @@ int main(int argc, char **argv) {
     // printf("%s\n", cJSON_Print(vlad));
 
     // create room                  Ok
-    // t_db_room *room = mx_insert_room_into_db(database, "name7", "customer");
-    // if (!room)
-    //     exit(0);
-    // printf("%s\n", room->name_room);
-    // printf("%s\n", room->customer);
-    // printf("%ld\n", room->date);
-    // printf("%d\n", room->id);
-    // printf("%s\n", room->description);
-    // mx_free_room(&room);
+    t_db_room *room = mx_insert_room_into_db(database, "name7", "customer");
+    if (!room)
+        exit(0);
+    printf("%s\n", room->name_room);
+    printf("%s\n", room->customer);
+    printf("%ld\n", room->date);
+    printf("%d\n", room->id);
+    printf("%s\n", room->description);
+    mx_free_room(&room);
 
     // test valid database
     // char *request = "";
@@ -44,7 +44,7 @@ int main(int argc, char **argv) {
 
     // // create message               Ok
     // for (int i = 0; i < 100; i++) {
-    //     t_db_message *message = mx_insert_message_into_db_by_id(database, "fffdfffdfffdffffdfffdfffdfffdfffdfffdfffdfffdfffdfffdfffdfffdfffdfffdfffdfffdffdfffdfffdfffdfffdfffdfffdfffdffffdfffdfffdfffdfffdfffdfffdfffdfffdfffdfffdfffdfffdfffdfffdfffdffdfffdfffdfffdfffdfffdfffdfffdffffdfffdfffdfffdfffdfffdfffdfffdfffdfffdfffdfffdfffdfffdfffdfffdffdfffdfffdfffdfffdfffdfffdfffdffffdfffdfffdfffdfffdfffdfffdfffdfffdfffdfffdfffdfffdfffdfffdfffdffdfffdfffdfffdfffdfffdfffdfffdffffdfffdfffdfffdfffdfffdfffdfffdfffdfffdfffdfffdfffdfffdfffdfffdffdfffdfffdfffdfffdfffdfffdfffdffffdfffdfffdfffdfffdfffdfffdfffdfffdfffdfffdfffdfffdfffdfffdfffdffdfffdfffdfffdfffdfffdfffdfffdffffdfffdfffdfffdfffdfffdfffdfffdfffdfffdfffdfffdfffdfffdfffdfffdffdfffdfffdfffdfffdfffdfffdfffdffffdfffdfffdfffdfffdfffdfffdfffdfffdfffdfffdfffdfffdfffdfffdfffdffdfffdfffdfffdfffdfffdfffdfffdffffdfffdfffdfffdfffdfffdfffdfffdfffdfffdfffdfffdfffdfffdfffdfffdffdfffdfffdfffdfffdfffdfffdfffdffffdfffdfffdfffdfffdfffdfffdfffdfffdfffdfffdfffdfffdfffdfffdfffdffdfffdfffdfffdfffdfffdfffdfffdffffdfffdfffdfffdfffdfffdfffdfffdfffdfffdfffdfffdfffdfffdfffdfffdffdfffdfffdfffdfffdfffdfffdfffdffffdfffdfffdfffdfffdfffdfffdfffdfffdfffdfffdfffdfffdfffdfffdfffdffdfffdfffdfffdfffdfffdfffdfffdffffdfffdfffdfffdfffdfffdfffdfffdfffdfffdfffdfffdfffdfffdfffdfffdffdfffdfffdfffdfffdfffdfffdfffdffffdfffdfffdfffdfffdfffdfffdfffdfffdfffdfffdfffdfffdfffdfffdfffdffdfffdfffdfffdfffdfffdfffdfffdffffdfffdfffdfffdfffdfffdfffdfffdfffdfffdfffdfffdfffdfffdfffdfffdffdfffdfffdfffdfffd", "login", 1);
+    //     t_db_message *message = mx_insert_message_into_db_by_id(database, "ffd", "login", 1);
     //     mx_free_message(&message);  
     // }
 
@@ -65,19 +65,25 @@ int main(int argc, char **argv) {
     // delete user                    Ok
     // mx_delete_user(database, "login1");
 
+
+    // get count                Ok 
+    // printf("count rooms ->\t %llu\n", mx_get_count_rooms(database));
+    // printf("count users ->\t %llu\n", mx_get_count_users(database));
+    // printf("count mssgs ->\t %llu\n", mx_get_count_messages(database, 1));
+
     // count 
-    sqlite3_stmt *stmt;
-    int rv = SQLITE_OK;
+    // sqlite3_stmt *stmt;
+    // int rv = SQLITE_OK;
     
-    rv = sqlite3_prepare_v2(database, "select count() from users", -1, &stmt, NULL);
-    printf("rv prepare -> %d\n", rv);
-    rv = sqlite3_step(stmt);
-    printf("rv step    -> %d\n", rv);
-    printf("count      -> %d\n", sqlite3_column_int(stmt, 0));
-    sqlite3_finalize(stmt);
+    // rv = sqlite3_prepare_v2(database, "select count() from users", -1, &stmt, NULL);
+    // printf("rv prepare -> %d\n", rv);
+    // rv = sqlite3_step(stmt);
+    // printf("rv step    -> %d\n", rv);
+    // printf("count      -> %d\n", sqlite3_column_int(stmt, 0));
+    // sqlite3_finalize(stmt);
 
     // create user                  Ok 
-    // t_db_user *user = mx_insert_user_into_db(database, "login4", "password", "token");
+    // t_db_user *user = mx_insert_user_into_db(database, "login", "password", "token");
     // if (user) {
     //     printf("login -> %s\n", user->login);
     //     printf("desc -> %s\n", user->description);
@@ -85,7 +91,7 @@ int main(int argc, char **argv) {
     //     printf("token -> %s\n", user->token);
     //     printf("date -> %ld\n\n\n", user->date);
     //     mx_free_user(&user);
-    // }    
+    // }
     // get user 
     // t_db_user *user = mx_get_user_by_login(database, "login8");
     // if (user) {

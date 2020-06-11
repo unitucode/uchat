@@ -107,8 +107,14 @@ cJSON *mx_get_rooms(sqlite3 * database, long int date);
 void mx_test_json();
 void mx_json();
 
+//count 
+
+unsigned long long int mx_get_count_users(sqlite3 *db);
+unsigned long long int mx_get_count_rooms(sqlite3 *db);
+unsigned long long int mx_get_count_messages(sqlite3 *db,
+                                             unsigned long long int id);
 
     // error
 
-int mx_error_sqlite(int rv, char *error, char *where_error);
+    int mx_error_sqlite(int rv, char *error, char *where_error);
 bool mx_is_exists_room_by_id(sqlite3 *db, unsigned long long int id);
