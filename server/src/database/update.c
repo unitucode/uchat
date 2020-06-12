@@ -32,7 +32,6 @@ void mx_update_token(sqlite3 *database, char *login, char *new) {
     update(stmt, new, login, "update token");
 }
 
-
 void mx_update_description_room_by_id(sqlite3 *db, unsigned long long int id,
                                       char *new) {
     sqlite3_stmt *stmt;

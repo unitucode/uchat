@@ -24,8 +24,8 @@ typedef struct s_db_user {
 }              t_db_user;
 
 typedef struct s_db_message {
-    unsigned int id_room;
-    unsigned int id_message;
+    unsigned int id;
+    unsigned int room_id;
     long int date;
     char *name_room;
     char *login;
@@ -36,7 +36,7 @@ typedef struct s_db_room {
     long int date;
     unsigned int id;
     char *description;
-    char *name_room;
+    char *room_name;
     char *customer;
 }              t_db_room;
 

@@ -9,3 +9,18 @@ t_dtp *mx_upd_user_desc_request(char *desc) {
         return NULL;
     return mx_get_transport_data(json_result);
 }
+
+bool mx_upd_user_desc_handler(t_dtp *data, t_chat *chat) {
+    cJSON *desc = cJSON_GetObjectItemCaseSensitive(data->json, "desc");
+    cJSON *login = cJSON_GetObjectItemCaseSensitive(data->json, "name");
+
+    if (!desc || !cJSON_IsString(desc))
+        return false;
+    if (!login || !cJSON_IsString(login))
+        return false;
+    //WORKING WITH GUI
+    chat++;
+    printf("new desc = %s in %s user\n", desc->valuestring, login->valuestring);
+    //WORKING WITH GUI
+    return true;
+}

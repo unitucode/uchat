@@ -7,13 +7,13 @@ static t_dtp *get_resend_msg(t_db_message *msg) {
         return NULL;
     if (!cJSON_AddStringToObject(send_msg, "msg", MX_J_STR(msg->message)))
         return NULL;
-    if (!cJSON_AddNumberToObject(send_msg, "room_id", msg->id_room))
+    if (!cJSON_AddNumberToObject(send_msg, "room_id", msg->room_id))
         return NULL;
     if (!cJSON_AddNumberToObject(send_msg, "date", msg->date))
         return NULL;
     if (!cJSON_AddStringToObject(send_msg, "login", MX_J_STR(msg->login)))
         return NULL;
-    if (!cJSON_AddNumberToObject(send_msg, "message_id", msg->id_message))
+    if (!cJSON_AddNumberToObject(send_msg, "message_id", msg->id))
         return NULL;
     return mx_get_transport_data(send_msg);
 }

@@ -47,9 +47,11 @@ struct s_client {
 //api
 t_dtp *mx_token_request(char *token, char *login);
 t_dtp *mx_error_msg_request(int error_code, char *msg);
-t_dtp *mx_online_users_request(int count);
+t_dtp *mx_users_online_request(int count, int all);
 t_dtp *mx_log_out_request(char *token);
 t_dtp *mx_upd_room_desc_request(int room_id, char *room_name);
+t_dtp *mx_upd_room_name_request(int room_id, char *room_name);
+t_dtp *mx_upd_user_desc_request(char *name, char *desc);
 
 //data protocol handler functions
 bool mx_log_in_handler(t_dtp *login, t_client *client);
@@ -61,6 +63,8 @@ bool mx_get_rooms_handler(t_dtp *data, t_client *client);
 bool mx_log_out_handler(t_dtp *token, t_client *client);
 bool mx_get_msgs_handler(t_dtp *data, t_client *client);
 bool mx_upd_room_desc_handler(t_dtp *desc, t_client *client); //TODO
+bool mx_upd_room_name_handler(t_dtp *desc, t_client *client); //TODO
+bool mx_upd_user_desc_handler(t_dtp *desc_data, t_client *client); //TODO
 
 int mx_tcp_listen(const char *serv, socklen_t *addr_len);
 void mx_get_client_info(t_client *client);

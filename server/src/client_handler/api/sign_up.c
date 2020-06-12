@@ -19,8 +19,13 @@ static void sign_up(char *login, char *pass, t_client *client) {
     }
     mx_create_token(token, login);
     client->user = mx_insert_user_into_db(client->chat->database, login, pass, token);
+    if (!client->user) {
+        mx_logger(MX_LOG_FILE, LOGMSG, "Failded signup user %s\n", login);
+        return;
+    }
     mx_logger(MX_LOG_FILE, LOGMSG, "Success signup user %s\n", login);
     mx_correct_data(login, client);
+    return;
 }
 
 bool mx_sign_up_handler(t_dtp *signup_data, t_client *client) {
