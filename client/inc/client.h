@@ -20,11 +20,14 @@
 
 //settings
 #define MX_BUF_MSGS 50
-#define MX_MAX_LENGTH_QUEUE 10
+#define MX_MAX_LENGTH_QUEUE 30
+#define MX_RECONN_ATTEMPTS 6
+#define MX_RECONN_DELAY_S 4
 
 typedef struct s_groom t_groom;
 typedef struct s_gmsg t_gmsg;
 typedef struct s_chat t_chat;
+typedef struct s_con_data t_con_data;
 
 struct s_groom {
     GtkListBox *box_rooms;
@@ -48,9 +51,15 @@ struct s_gmsg {
     int message_id;
 };
 
+struct s_con_data {
+    t_ssl_con *ssl;
+    char **argv;
+};
+
 struct s_chat {
     char *auth_token;
     char *login;
+    t_con_data *con_data;
     t_groom *curr_room;
     SSL *ssl;
     t_dtp *data;
@@ -76,6 +85,8 @@ void *mx_receiver(void *arg);
 void mx_init_handlers(t_chat *chat);
 void mx_init_errors(t_chat *chat);
 void mx_get_data(t_chat *chat);
+bool mx_connect(t_chat *chat);
+bool mx_reconnect(t_chat *chat);
 
 //handlers
 bool mx_error_handler(t_dtp *data, t_chat *chat);

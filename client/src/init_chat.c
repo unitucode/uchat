@@ -8,6 +8,7 @@ t_chat *mx_init_chat(void) {
     chat->ssl = NULL;
     chat->auth_token = NULL;
     chat->queue = g_async_queue_new();
+    chat->con_data = mx_malloc(sizeof(t_con_data));
     chat->valid = true;
     chat->login = NULL;
     return chat;
