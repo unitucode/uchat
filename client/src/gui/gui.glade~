@@ -441,14 +441,13 @@
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <child>
-                  <object class="GtkButton" id="bnt_stikers">
+                  <object class="GtkButton" id="bnt_stickers">
                     <property name="width_request">36</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
                     <property name="events"/>
                     <property name="image">image4</property>
-                    <signal name="clicked" handler="mx_req_test" object="btnbox_msg_ctrl" swapped="no"/>
                   </object>
                   <packing>
                     <property name="expand">False</property>

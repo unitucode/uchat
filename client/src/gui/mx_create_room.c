@@ -26,16 +26,7 @@ void mx_unselect_curr_room_messages(GtkListBox *box, GtkListBoxRow *row,
     (void)builder;
 }
 
-void mx_swap_room(GtkWidget *widget, GdkEventButton *event, t_groom *room) {
-    // puts("First Callback");
-    gtk_stack_set_visible_child(room->stack_msg, GTK_WIDGET(room->page));
-    gtk_list_box_select_row(room->box_rooms, room->row_room);
-    (void)widget;
-    (void)event;
-}
-
-void mx_swap_prefs(GtkWidget *widget, GdkEventButton *event, GtkBuilder *builder) {
-    // puts("Second Callback");
+static void set_current_room_prefs(GtkBuilder *builder) {
     t_groom *groom = mx_get_selected_groom(builder);
     GObject *name = gtk_builder_get_object(builder, "label_prefs_roomname");
     GObject *customer = gtk_builder_get_object(builder,
@@ -45,9 +36,17 @@ void mx_swap_prefs(GtkWidget *widget, GdkEventButton *event, GtkBuilder *builder
     gtk_label_set_text(GTK_LABEL(name), groom->room_name);
     gtk_header_bar_set_title(GTK_HEADER_BAR(header), groom->room_name);
     gtk_label_set_text(GTK_LABEL(customer), groom->customer);
+}
+
+void mx_select_room(GtkWidget *widget, GdkEventButton *event,
+                    t_signal_data *data) {
+    gtk_stack_set_visible_child(data->groom->stack_msg,
+                                GTK_WIDGET(data->groom->page));
+    gtk_list_box_select_row(data->groom->box_rooms,
+                            data->groom->row_room);
+    set_current_room_prefs(data->builder);
     (void)widget;
     (void)event;
-    (void)builder;
 }
 
 void mx_hide_msg_ctrl(GtkListBox *box, GtkListBoxRow *row,
@@ -93,17 +92,18 @@ static void add_room_row(t_groom *room, GtkBuilder *builder) {
     GtkWidget *row = gtk_list_box_row_new();
     GtkWidget *label = gtk_label_new(room->room_name);
     GtkWidget *event = gtk_event_box_new();
+    gtk_event_box_set_above_child(GTK_EVENT_BOX(event), false);
 
     g_object_set_data_full(G_OBJECT(row), "groom", room,
                            (GDestroyNotify)mx_delete_groom);
     room->box_rooms = box;
     room->row_room = GTK_LIST_BOX_ROW(row);
 
+    t_signal_data *data = (t_signal_data*)malloc(sizeof(t_signal_data));
+    data->builder = builder;
+    data->groom = room;
     g_signal_connect(event, "button_press_event",
-                     G_CALLBACK(mx_swap_room), room);
-    g_signal_connect(event, "button_release_event",
-                     G_CALLBACK(mx_swap_prefs), builder);
-    // g_signal_connect(box, "row-selected", G_CALLBACK(mx_swap_prefs), builder);
+                     G_CALLBACK(mx_select_room), data);
 
     gtk_container_add(GTK_CONTAINER(event), label);
     gtk_container_add(GTK_CONTAINER(row), event);
