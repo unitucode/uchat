@@ -47,6 +47,7 @@ typedef struct s_gmsg {
 typedef struct s_chat {
     char *auth_token;
     char *login;
+    t_groom *curr_room;
     SSL *ssl;
     t_dtp *data;
     GtkBuilder *builder;
@@ -54,6 +55,13 @@ typedef struct s_chat {
     bool valid;
     bool (*request_handler[RQ_COUNT_REQUEST])(t_dtp *dtp, struct s_chat *chat);
 }              t_chat;
+
+typedef struct s_signal_data {
+    t_gmsg *msg;
+    t_groom *groom;
+    GtkBuilder *builder;
+    GtkWidget *row_msg;
+}              t_signal_data;
 
 int mx_tcp_connect(const char *host, const char *serv);
 t_chat *mx_init_chat(void);
