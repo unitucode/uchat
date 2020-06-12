@@ -17,7 +17,7 @@ int main(int argc, char **argv) {
     // sqlite3 *database = mx_server_data_open(MX_DB);
     
     // get message by id
-    // cJSON *vlad = mx_get_old_messages();
+    // cJSON *vlad = mx_get_old_messages_by_id(database, 10, 1591959523, 10000);
     // cJSON *vlad = mx_get_new_messages_by_id(database, 1, 0, 50);
     // cJSON *vlad = mx_get_curr_messages_by_id(database, 23, 50);
     // printf("%s\n", cJSON_Print(vlad));
@@ -26,7 +26,7 @@ int main(int argc, char **argv) {
     // t_db_room *room = mx_insert_room_into_db(database, "name7", "customer");
     // if (!room)
     //     exit(0);
-    // printf("%s\n", room->name_room);
+    // printf("%s\n", room->room_name);
     // printf("%s\n", room->customer);
     // printf("%ld\n", room->date);
     // printf("%d\n", room->id);
@@ -43,8 +43,8 @@ int main(int argc, char **argv) {
     // mx_edit_name_room(database, 5, "edit.002");
 
     // // create message               Ok
-    // for (int i = 0; i < 100; i++) {
-    //     t_db_message *message = mx_insert_message_into_db_by_id(database, "ffd", "login", 1);
+    // for (int i = 0; i < 10000; i++) {
+    //     t_db_message *message = mx_insert_message_into_db_by_id(database, "hi baby I am snaik !!! you afreid because I touch you and will kill you", "snaik", 10);
     //     mx_free_message(&message);  
     // }
 
@@ -83,7 +83,7 @@ int main(int argc, char **argv) {
     // sqlite3_finalize(stmt);
 
     // create user                  Ok 
-    // t_db_user *user = mx_insert_user_into_db(database, "login", "password", "token");
+    // t_db_user *user = mx_insert_user_into_db(database, "keds", "password", "token");
     // if (user) {
     //     printf("login -> %s\n", user->login);
     //     printf("desc -> %s\n", user->description);
@@ -92,7 +92,8 @@ int main(int argc, char **argv) {
     //     printf("date -> %ld\n\n\n", user->date);
     //     mx_free_user(&user);
     // }
-    // get user 
+
+    // get user                     Ok
     // t_db_user *user = mx_get_user_by_login(database, "login8");
     // if (user) {
     //     printf("login -> %s\n", user->login);
@@ -105,6 +106,8 @@ int main(int argc, char **argv) {
 
     //  update description              Ok
     // mx_update_description_room_by_id(database, 2, "Hi, I afreid you !! don`t shoot");
+    // mx_update_description_user(database, "giblin gob", "I am rich goblin hahahahahaha");
+
 
     // mx_close_database(database);
     // system("leaks -q uchat_server");

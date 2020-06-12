@@ -48,7 +48,7 @@ t_db_room *mx_get_room_by_id(sqlite3 *database, unsigned long long int id) {
     if (sqlite3_step(stmt) == 100) {
         room = malloc(sizeof(t_db_room));
         room->id = sqlite3_column_int(stmt, 0);
-        room->name_room = strdup((const char*)sqlite3_column_text(stmt, 1));
+        room->room_name = strdup((const char*)sqlite3_column_text(stmt, 1));
         room->customer = strdup((const char*)sqlite3_column_text(stmt, 2));
         room->date = sqlite3_column_int(stmt, 3);
         room->description = strdup((const char*)sqlite3_column_text(stmt, 4));
@@ -70,7 +70,7 @@ t_db_room *mx_get_room(sqlite3 *database, char *name_room) {
     if (sqlite3_step(stmt) == 100) {
         room = malloc(sizeof(t_db_room));
         room->id = sqlite3_column_int(stmt, 0);
-        room->name_room = strdup((const char*)sqlite3_column_text(stmt, 1));
+        room->room_name = strdup((const char*)sqlite3_column_text(stmt, 1));
         room->customer = strdup((const char*)sqlite3_column_text(stmt, 2));
         room->date = sqlite3_column_int(stmt, 3);
         room->description = strdup((const char*)sqlite3_column_text(stmt, 4));

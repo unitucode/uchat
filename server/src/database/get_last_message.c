@@ -36,11 +36,11 @@ t_db_message *mx_get_last_message(sqlite3 *database,
     mx_error_sqlite(rv, "prepare", "get last message");
     sqlite3_bind_text(stmt, 1, login, -1, SQLITE_STATIC);
     mx_error_sqlite(sqlite3_step(stmt), "step", "get last message");
-    message->id_message = sqlite3_column_int(stmt, 0);
+    message->id = sqlite3_column_int(stmt, 0);
     message->login = strdup((char *)sqlite3_column_text(stmt, 1));
     message->date = sqlite3_column_int(stmt, 2);
     message->message = strdup((char *)sqlite3_column_text(stmt, 3));
-    message->id_room = id;
+    message->room_id = id;
     sqlite3_free(request);
     sqlite3_finalize(stmt);
     return message;
