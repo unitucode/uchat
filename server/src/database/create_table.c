@@ -6,14 +6,13 @@ static void check_correct_table(sqlite3 *db, sqlite3_stmt *stmt) {
     if (sqlite3_column_text(stmt, 0)) {
         table = strdup((char*)sqlite3_column_text(stmt, 0));
         sqlite3_finalize(stmt);
-        if (strcmp(table, "CREATE TABLE users(login          "
-                          "text  unique   not null,password  "
-                          "     text           not null,token"
-                          "          text           not null,"
-                          "permission     integer        not "
-                          "null,date           integer       "
-                          " not null,description    text)") != 0) {
-            printf("drop table -> %s\n", table);
+        if (strcmp(table, "CREATE TABLE users(login          text  unique   "
+                          "not null,password       text           not null,t"
+                          "oken          text           not null,permission "
+                          "    integer        not null,date           intege"
+                          "r        not null,description    text           n"
+                          "ot null)") != 0) {
+            printf("drop table -> (%s)\n", table);
             sqlite3_exec(db, "drop table users", 0, 0, 0);
         }
         mx_free((void**)&table);
