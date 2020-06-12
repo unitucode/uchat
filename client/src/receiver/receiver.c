@@ -29,6 +29,7 @@ void *mx_receiver(void *arg) {
     t_chat *chat = (t_chat*)arg;
     t_dtp *data = NULL;
 
+    
     while ((data = mx_recv(chat->ssl)) && chat->valid) {
         printf("recv = %s", cJSON_Print(data->json));
         if (g_async_queue_length(chat->queue) > MX_MAX_LENGTH_QUEUE)

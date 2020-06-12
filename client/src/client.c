@@ -65,8 +65,21 @@ void test(t_chat *chat) {
     mx_free_request(&signup);
 }
 
+bool mx_connect(t_chat *chat) {
+    int sockfd = mx_tcp_connect(chat->con_data->argv[1], 
+                                chat->con_data->argv[2]);
+
+    chat->con_data->ssl->ssl = SSL_new(chat->con_data->ssl->ctx);
+    chat->ssl = chat->con_data->ssl->ssl;
+    SSL_set_fd(chat->con_data->ssl->ssl, sockfd);
+    if (SSL_connect(chat->con_data->ssl->ssl) == -1) {
+        mx_logger(MX_LOG_FILE, LOGERR, "SSL_connect failded\n");
+        return false;
+    }
+    return true;
+}
+
 int main(int argc, char **argv) {
-    int sockfd;
     t_ssl_con *ssl = NULL;
     t_chat *chat = mx_init_chat();
 
@@ -77,13 +90,10 @@ int main(int argc, char **argv) {
     }
     ssl = mx_init_ssl(CLIENT);
     mx_logger(MX_LOG_FILE, LOGMSG, "started client: %s %s\n", argv[1], argv[2]);
-    sockfd = mx_tcp_connect(argv[1], argv[2]);
-    ssl->ssl = SSL_new(ssl->ctx);
-    chat->ssl = ssl->ssl;
-    SSL_set_fd(ssl->ssl, sockfd);
-    if (SSL_connect(ssl->ssl) == -1) {
-        mx_elogger(MX_LOG_FILE, LOGERR, "SSL_connect failded\n");
-    }
+    chat->con_data->ssl = ssl;
+    chat->con_data->argv = argv;
+    if (!mx_connect(chat))
+        mx_logger(MX_LOG_FILE, LOGERR, "SSL_connect failded\n");
     chat->builder = mx_init_window(argc, argv);
     mx_init_gui(chat);
     mx_init_errors(chat);
