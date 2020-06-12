@@ -22,7 +22,7 @@ int mx_send(SSL *ssl, t_dtp *dtp) {
             mx_logger(MX_LOG_FILE, LOGWAR, "SSL_write data failed\n");
             return false;
         }
-        fprintf(stderr, "written = %s\n", data + written + 4);
+        fprintf(stderr, "written = %s\n", data + written);
         written += bytes;
     }
     return true;

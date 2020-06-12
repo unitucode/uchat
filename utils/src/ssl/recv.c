@@ -10,7 +10,7 @@ static int message_size(SSL *ssl) {
 
     bytes = SSL_read(ssl, buf, sizeof(buf));
     if (bytes != sizeof(int)) {
-        mx_logger(MX_LOG_FILE, LOGWAR, "Invalid packet\n");
+        mx_logger(MX_LOG_FILE, LOGWAR, "Invalid packet. Readed %d\n", bytes);
         return -1;
     }
     memcpy(&size, buf, sizeof(int));
