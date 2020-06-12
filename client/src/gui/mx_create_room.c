@@ -38,15 +38,17 @@ static void set_current_room_prefs(GtkBuilder *builder) {
     gtk_label_set_text(GTK_LABEL(customer), groom->customer);
 }
 
-void mx_select_room(GtkWidget *widget, GdkEventButton *event,
-                    t_signal_data *data) {
+void mx_select_room(GtkWidget *event_box, GdkEventButton *event,
+                    gpointer *user_data) {
+    t_signal_data *data = g_object_get_data(G_OBJECT(event_box), "sigdata");
+
     gtk_stack_set_visible_child(data->groom->stack_msg,
                                 GTK_WIDGET(data->groom->page));
     gtk_list_box_select_row(data->groom->box_rooms,
                             data->groom->row_room);
     set_current_room_prefs(data->builder);
-    (void)widget;
     (void)event;
+    (void)user_data;
 }
 
 void mx_hide_msg_ctrl(GtkListBox *box, GtkListBoxRow *row,
@@ -92,18 +94,15 @@ static void add_room_row(t_groom *room, GtkBuilder *builder) {
     GtkWidget *row = gtk_list_box_row_new();
     GtkWidget *label = gtk_label_new(room->room_name);
     GtkWidget *event = gtk_event_box_new();
-    gtk_event_box_set_above_child(GTK_EVENT_BOX(event), false);
+    t_signal_data *data = NULL;
 
-    g_object_set_data_full(G_OBJECT(row), "groom", room,
-                           (GDestroyNotify)mx_delete_groom);
+
     room->box_rooms = box;
     room->row_room = GTK_LIST_BOX_ROW(row);
 
-    t_signal_data *data = (t_signal_data*)malloc(sizeof(t_signal_data));
-    data->builder = builder;
-    data->groom = room;
+    data = mx_create_sigdata(builder, room, NULL);
     g_signal_connect(event, "button_press_event",
-                     G_CALLBACK(mx_select_room), data);
+                     G_CALLBACK(mx_select_room), NULL);
 
     gtk_container_add(GTK_CONTAINER(event), label);
     gtk_container_add(GTK_CONTAINER(row), event);
@@ -112,6 +111,11 @@ static void add_room_row(t_groom *room, GtkBuilder *builder) {
     room->is_updated = false;
     gtk_list_box_insert(box, row, -1);
     gtk_widget_show_all(GTK_WIDGET(box));
+
+    g_object_set_data_full(G_OBJECT(row), "groom", room,
+                           (GDestroyNotify)mx_delete_groom);
+    g_object_set_data_full(G_OBJECT(event), "sigdata", data,
+                            (GDestroyNotify)mx_free_sigdata);
 }
 
 void mx_add_groom(t_groom *room, GtkBuilder *builder) {
@@ -137,10 +141,14 @@ t_groom *mx_create_groom(char *room_name, char *customer, int id,
     return room;
 }
 
+void mx_free_sigdata(t_signal_data *data) {
+    mx_free((void **)&data);
+}
+
 void mx_delete_groom(t_groom *room) {
     if (room) {
-        mx_free((void**)&room->room_name);
-        mx_free((void**)&room->customer);
+        mx_free((void**)&(room->room_name));
+        mx_free((void**)&(room->customer));
         mx_free((void**)&room);
     }
 }

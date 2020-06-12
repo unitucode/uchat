@@ -62,10 +62,9 @@ struct s_chat {
 };
 
 typedef struct s_signal_data {
-    t_gmsg *msg;
     t_groom *groom;
     GtkBuilder *builder;
-    GtkWidget *row_msg;
+    GtkListBoxRow *row_msg;
 }              t_signal_data;
 
 int mx_tcp_connect(const char *host, const char *serv);
@@ -145,8 +144,11 @@ t_groom *mx_get_groom_by_id(int room_id, GtkBuilder *builder);
 void mx_unselect_room(t_groom *groom, GtkBuilder *builder);
 void mx_entry_set_icon_by_path(GtkEntry *entry, char *path,
                                GtkEntryIconPosition icon_pos);
+t_signal_data *mx_create_sigdata(GtkBuilder *builder, t_groom *groom,
+                                 GtkListBoxRow *row_msg);
+void mx_free_sigdata(t_signal_data *data);
 
-//gui wrappers
+// gui wrappers
 // void mx_widget_show_all(GtkWidget *widget);
 // void mx_widget_destroy(GtkWidget *widget);
 // void mx_widget_show(GtkWidget *widget);
