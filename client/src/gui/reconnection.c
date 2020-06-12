@@ -24,6 +24,11 @@ bool mx_reconnect(t_chat *chat) {
         mx_logger(MX_LOG_FILE, LOGMSG, "Attemp to reconnect[%d]\n", i);
         sleep(MX_RECONN_DELAY_S);
         if (mx_connect(chat)) {
+            t_dtp *reconnect = mx_token_request(chat->auth_token);
+            mx_send(chat->ssl, reconnect);
+            mx_free_request(&reconnect);
+            mx_free((void**)&(chat->auth_token));
+            mx_free((void**)&(chat->login));
             g_idle_add(G_SOURCE_FUNC(reconnect_off), chat);
             return true;
         }

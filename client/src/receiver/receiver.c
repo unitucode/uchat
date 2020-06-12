@@ -38,7 +38,7 @@ void *mx_receiver(void *arg) {
             mx_handle_request(chat);
         }
         SSL_shutdown(chat->ssl);
-        if (!mx_reconnect(chat)) {
+        if (!mx_reconnect(chat) && chat->valid) {
             printf("Closed receiver\n");
             break;
         }
