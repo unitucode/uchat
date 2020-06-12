@@ -48,7 +48,7 @@ t_db_message *mx_insert_message_into_db(sqlite3 *db, char *message_str,
     return mx_get_last_message(db, mx_get_roomid_by_name(db, name_room), login);
 }
 
-t_db_room *mx_insert_room_into_db(sqlite3 *database, char *name_room, 
+t_db_room *mx_insert_room_into_db(sqlite3 *database, char *room_name, 
                             char *customer) {
     sqlite3_stmt *stmt;
     int rv = 0;
@@ -58,13 +58,13 @@ t_db_room *mx_insert_room_into_db(sqlite3 *database, char *name_room,
                             " description) values(?1, ?2, ?3, '');",
                             -1, 0, &stmt, NULL);
     mx_error_sqlite(rv, "prepare", "insert room");
-    sqlite3_bind_text(stmt, 1, name_room, -1, SQLITE_STATIC);
+    sqlite3_bind_text(stmt, 1, room_name, -1, SQLITE_STATIC);
     sqlite3_bind_text(stmt, 2, customer, -1, SQLITE_STATIC);
     sqlite3_bind_int(stmt, 3, (long int)time(NULL));
     mx_error_sqlite(sqlite3_step(stmt), "step", "insert room");
     sqlite3_finalize(stmt);
-    mx_create_table_room(database, (int)mx_get_roomid_by_name(database, name_room));
-    return mx_get_room(database, name_room);
+    mx_create_table_room(database, (int)mx_get_roomid_by_name(database, room_name));
+    return mx_get_room(database, room_name);
 }
 
 t_db_user *mx_insert_user_into_db(sqlite3 *database, char *login,
