@@ -95,7 +95,7 @@ int main(int argc, char **argv) {
     chat->con_data->ssl = ssl;
     chat->con_data->argv = argv;
     if (!mx_connect(chat))
-        mx_logger(MX_LOG_FILE, LOGERR, "SSL_connect failded\n");
+        mx_elogger(MX_LOG_FILE, LOGERR, "SSL_connect failded\n");
     chat->builder = mx_init_window(argc, argv);
     mx_init_gui(chat);
     mx_init_errors(chat);
