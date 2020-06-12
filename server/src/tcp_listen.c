@@ -21,7 +21,7 @@ static void init_sockopt(int fd, const int on) {
     // sockopt.option_name = SO_REUSEADDR;
     #ifdef SO_NOSIGPIPE
         sockopt.option_name = SO_NOSIGPIPE;
-    #elif
+    #else
         signal(SIGPIPE, SIG_IGN); // for linux
     #endif
     sockopt.option_value = &on;
