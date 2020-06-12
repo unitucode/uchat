@@ -18,7 +18,7 @@ int main(int argc, char **argv) {
     
     // get message by id
     // cJSON *vlad = mx_get_old_messages();
-    // cJSON *vlad = mx_get_new_messages();
+    // cJSON *vlad = mx_get_new_messages_by_id(database, 1, 0, 50);
     // cJSON *vlad = mx_get_curr_messages_by_id(database, 23, 50);
     // printf("%s\n", cJSON_Print(vlad));
 
@@ -33,13 +33,19 @@ int main(int argc, char **argv) {
     // printf("%s\n", room->description);
     // mx_free_room(&room);
 
+    // test valid database
+    // char *request = "";
+    // sqlite3_preparev_2(database);
+
+    // sqlite3_step(stmt);
+
     // edit room name                Ok
     // mx_edit_name_room(database, 5, "edit.002");
 
-    // create message               Ok
-    // t_db_message *message = mx_insert_message_into_db_by_id(database, "fdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsafdsa", "login", 23);
-    // mx_free_message(&message);  
+    // // create message               Ok
     // for (int i = 0; i < 100; i++) {
+    //     t_db_message *message = mx_insert_message_into_db_by_id(database, "ffd", "login", 1);
+    //     mx_free_message(&message);  
     // }
 
     // delete room by id            Ok
@@ -60,15 +66,32 @@ int main(int argc, char **argv) {
     // mx_delete_user(database, "login1");
 
 
-    // create user                  Ok 
-    // t_db_user *user = mx_insert_user_into_db(database, "login4", "password", "token");
-    // printf("login -> %s\n", user->login);
-    // printf("desc -> %s\n", user->description);
-    // printf("pass -> %s\n", user->password);
-    // printf("token -> %s\n", user->token);
-    // printf("date -> %ld\n\n\n", user->date);
-    // mx_free_user(&user);
+    // get count                Ok 
+    // printf("count rooms ->\t %llu\n", mx_get_count_rooms(database));
+    // printf("count users ->\t %llu\n", mx_get_count_users(database));
+    // printf("count mssgs ->\t %llu\n", mx_get_count_messages(database, 1));
+
+    // count 
+    // sqlite3_stmt *stmt;
+    // int rv = SQLITE_OK;
     
+    // rv = sqlite3_prepare_v2(database, "select count() from users", -1, &stmt, NULL);
+    // printf("rv prepare -> %d\n", rv);
+    // rv = sqlite3_step(stmt);
+    // printf("rv step    -> %d\n", rv);
+    // printf("count      -> %d\n", sqlite3_column_int(stmt, 0));
+    // sqlite3_finalize(stmt);
+
+    // create user                  Ok 
+    // t_db_user *user = mx_insert_user_into_db(database, "login", "password", "token");
+    // if (user) {
+    //     printf("login -> %s\n", user->login);
+    //     printf("desc -> %s\n", user->description);
+    //     printf("pass -> %s\n", user->password);
+    //     printf("token -> %s\n", user->token);
+    //     printf("date -> %ld\n\n\n", user->date);
+    //     mx_free_user(&user);
+    // }
     // get user 
     // t_db_user *user = mx_get_user_by_login(database, "login8");
     // if (user) {
@@ -79,6 +102,9 @@ int main(int argc, char **argv) {
     //     printf("date -> %ld\n", user->date);
     //     mx_free_user(&user);
     // }
+
+    //  update description              Ok
+    // mx_update_description_room_by_id(database, 2, "Hi, I afreid you !! don`t shoot");
 
     // mx_close_database(database);
     // system("leaks -q uchat_server");

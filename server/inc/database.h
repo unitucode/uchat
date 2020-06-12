@@ -69,6 +69,8 @@ void mx_update_permission_of_user(sqlite3 *database, char *login,
 void mx_update_token(sqlite3 *database, char *login, char *new);
 void mx_update_description_user(sqlite3 *database, char *login, char *new);
 void mx_update_description_room(sqlite3 *database, char *name, char *new);
+void mx_update_description_room_by_id(sqlite3 *db, unsigned long long int id,
+                                      char *new);
 void update(sqlite3_stmt *stmt, char *new, char *name, char *error);
 void mx_edit_name_room(sqlite3 *database, unsigned long long int id, char *new);
 void mx_edit_name_user(sqlite3 *database, char *login, char *new);
@@ -107,8 +109,14 @@ cJSON *mx_get_rooms(sqlite3 * database, long int date);
 void mx_test_json();
 void mx_json();
 
+//count 
+
+unsigned long long int mx_get_count_users(sqlite3 *db);
+unsigned long long int mx_get_count_rooms(sqlite3 *db);
+unsigned long long int mx_get_count_messages(sqlite3 *db,
+                                             unsigned long long int id);
 
     // error
 
-int mx_error_sqlite(int rv, char *error, char *where_error);
+    int mx_error_sqlite(int rv, char *error, char *where_error);
 bool mx_is_exists_room_by_id(sqlite3 *db, unsigned long long int id);

@@ -33,7 +33,8 @@ void mx_update_token(sqlite3 *database, char *login, char *new) {
 }
 
 
-void mx_update_description_room_by_id(sqlite3 *db, int id, char *new) {
+void mx_update_description_room_by_id(sqlite3 *db, unsigned long long int id,
+                                      char *new) {
     sqlite3_stmt *stmt;
     int rv = SQLITE_OK;
 
@@ -61,8 +62,8 @@ void mx_update_description_user(sqlite3 *database, char *login, char *new) {
     sqlite3_stmt *stmt;
     int rv = SQLITE_OK;
     
-    rv = sqlite3_prepare_v3(database, "UPDATE USERS SET DESCRIPTION = ?1"
-                            " WHERE LOGIN = ?2", -1, 0, &stmt, NULL);
+    rv = sqlite3_prepare_v3(database, "update users set description = ?1"
+                            " where login = ?2", -1, 0, &stmt, NULL);
     mx_error_sqlite(rv, "prepare", "update user");
     update(stmt, new, login, "update user desc");
 }
