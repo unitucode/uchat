@@ -36,7 +36,7 @@ static void set_current_room_prefs(GtkBuilder *builder) {
 
     gtk_label_set_text(GTK_LABEL(name), groom->room_name);
     gtk_header_bar_set_title(GTK_HEADER_BAR(header), groom->room_name);
-    gtk_text_buffer_set_text(GTK_TEXT_BUFFER(desc), "", -1);
+    gtk_text_buffer_set_text(GTK_TEXT_BUFFER(desc), groom->desc, -1);
     gtk_label_set_text(GTK_LABEL(customer), groom->customer);
 }
 
@@ -135,7 +135,7 @@ t_groom *mx_create_groom(char *room_name, char *customer, int id,
     room->id = id;
     room->date = date;
     room->is_updated = true;
-    room->desc = NULL;
+    room->desc = "sdfsdfsdfsfd";
     return room;
 }
 

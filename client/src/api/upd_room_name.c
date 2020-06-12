@@ -1,5 +1,11 @@
 #include "client.h"
 
+void mx_gupd_room_name(int id, char *name, GtkBuilder *builder) {
+    t_groom *groom = mx_get_groom_by_id(id, builder);
+    groom->room_name = name;
+    // SET NEW NAME ON LABEL
+}
+
 t_dtp *mx_upd_room_name_request(int room_id, char *name) {
     cJSON *json_result = cJSON_CreateObject();
 
@@ -20,9 +26,7 @@ bool mx_upd_room_name_handler(t_dtp *data, t_chat *chat) {
         return false;
     if (!room_name || !cJSON_IsString(room_name))
         return false;
-    //WORKING WITH GUI
-    chat++;
-    printf("room_id = %d new room_name = %s\n", room_id->valueint, room_name->valuestring);
-    //WORKING WITH GUI
+    mx_gupd_room_name(room_id->valueint, room_name->valuestring,
+                      chat->builder);
     return true;
 }

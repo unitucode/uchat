@@ -753,8 +753,8 @@
                           <object class="GtkScrolledWindow">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
-                            <property name="margin_left">5</property>
-                            <property name="margin_right">5</property>
+                            <property name="margin_left">10</property>
+                            <property name="margin_right">10</property>
                             <property name="shadow_type">in</property>
                             <property name="max_content_height">290</property>
                             <property name="propagate_natural_height">True</property>
@@ -766,6 +766,7 @@
                                 <property name="editable">False</property>
                                 <property name="wrap_mode">word-char</property>
                                 <property name="cursor_visible">False</property>
+                                <property name="buffer">buffer_room_desc</property>
                               </object>
                             </child>
                           </object>

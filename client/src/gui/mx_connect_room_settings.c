@@ -6,8 +6,7 @@ static void set_room_sett(GtkButton *btn, t_chat *chat) {
     GObject *desc = gtk_builder_get_object(chat->builder, "buffer_room_desc");
     t_groom *groom = mx_get_selected_groom(chat->builder);
 
-    if (groom->desc)
-        gtk_text_buffer_set_text(GTK_TEXT_BUFFER(desc), groom->desc, 10);
+    gtk_text_buffer_set_text(GTK_TEXT_BUFFER(desc), groom->desc, -1);
     gtk_entry_set_text(name, groom->room_name);
     (void)btn;
 }
@@ -19,13 +18,13 @@ static void req_room_sett(GtkButton *btn, t_chat *chat) {
                                               chat->builder);
     char *new_desc = mx_get_buffer_text("buffer_room_desc", chat->builder);
 
-    if (strcmp(groom->desc, new_desc)) {
-        dtp = mx_upd_room_desc_request(groom->id, new_desc);
+    if (strcmp(groom->room_name, new_name)) {
+        dtp = mx_upd_room_name_request(groom->id, new_name);
         mx_send(chat->ssl, dtp);
         mx_free_request(&dtp);
     }
-    if (strcmp(groom->room_name, new_name)) {
-        dtp = mx_upd_room_name_request(groom->id, new_name);
+    if (!groom->desc || strcmp(groom->desc, new_desc)) {
+        dtp = mx_upd_room_desc_request(groom->id, new_desc);
         mx_send(chat->ssl, dtp);
         mx_free_request(&dtp);
     }
