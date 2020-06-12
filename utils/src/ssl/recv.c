@@ -33,13 +33,10 @@ t_dtp *mx_recv(SSL *ssl) {
         if (size < MX_RQ_SIZE)
             bytes = size;
         while (read < size && SSL_read(ssl, &data[read], bytes) > 0) {
-            fprintf(stderr, "1.read = %ld size = %d bytes = %ld data = %s\n", read, size, bytes, &data[read]);
             read += bytes;
             if (size - read < MX_RQ_SIZE)
                 bytes = size - read;
-            fprintf(stderr, "2.read = %ld size = %d bytes = %ld data = %s\n", read, size, bytes, &data[read]);
         }
-        fprintf(stderr, "read = %ld size = %d\n", read, size);
         if (read == size)
             dtp = mx_request_creation(data);
         else

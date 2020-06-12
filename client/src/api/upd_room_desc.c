@@ -11,5 +11,3 @@ t_dtp *mx_upd_room_desc_request(int room_id, char *desc) {
         return NULL;
     return mx_get_transport_data(json_result);
 }
-
-
