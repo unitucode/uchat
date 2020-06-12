@@ -166,6 +166,7 @@
                 <property name="can_focus">True</property>
                 <property name="hscrollbar_policy">never</property>
                 <property name="shadow_type">in</property>
+                <property name="propagate_natural_height">True</property>
                 <child>
                   <object class="GtkViewport">
                     <property name="visible">True</property>
@@ -174,6 +175,9 @@
                       <object class="GtkListBox" id="listbox_rooms">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
+                        <style>
+                          <class name="rooms-list"/>
+                        </style>
                       </object>
                     </child>
                   </object>
@@ -193,6 +197,9 @@
                 <property name="receives_default">True</property>
                 <property name="image">image5</property>
                 <signal name="clicked" handler="mx_widget_switch_visibility" object="dialog_addroom" swapped="no"/>
+                <style>
+                  <class name="add-room-button"/>
+                </style>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -200,6 +207,9 @@
                 <property name="position">1</property>
               </packing>
             </child>
+            <style>
+              <class name="box-rooms"/>
+            </style>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -226,7 +236,6 @@
                     <property name="receives_default">True</property>
                     <property name="events"/>
                     <property name="image">image4</property>
-                    <signal name="clicked" handler="mx_widget_switch_visibility" object="btnbox_msg_ctrl" swapped="no"/>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -347,6 +356,9 @@
                         <property name="title" translatable="yes">page0</property>
                       </packing>
                     </child>
+                    <style>
+                      <class name="stack_messages"/>
+                    </style>
                   </object>
                   <packing>
                     <property name="expand">True</property>
@@ -548,6 +560,8 @@
     <child internal-child="vbox">
       <object class="GtkBox">
         <property name="can_focus">False</property>
+        <property name="margin_left">75</property>
+        <property name="margin_right">75</property>
         <property name="orientation">vertical</property>
         <property name="spacing">2</property>
         <child internal-child="action_area">
@@ -593,7 +607,7 @@
         <child>
           <object class="GtkBox">
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
+            <property name="can_focus">True</property>
             <property name="orientation">vertical</property>
             <property name="homogeneous">True</property>
             <child>
@@ -602,19 +616,6 @@
                 <property name="can_focus">False</property>
                 <property name="orientation">vertical</property>
                 <child>
-                  <object class="GtkLabel">
-                    <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <property name="margin_bottom">16</property>
-                    <property name="label" translatable="yes">Room Name</property>
-                  </object>
-                  <packing>
-                    <property name="expand">True</property>
-                    <property name="fill">False</property>
-                    <property name="position">0</property>
-                  </packing>
-                </child>
-                <child>
                   <object class="GtkEntry" id="entry_roomname">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
@@ -622,7 +623,7 @@
                     <property name="margin_right">25</property>
                     <property name="buffer">buffer_roomname</property>
                     <property name="max_length">20</property>
-                    <property name="placeholder_text" translatable="yes">Name</property>
+                    <property name="placeholder_text" translatable="yes">Room name</property>
                   </object>
                   <packing>
                     <property name="expand">True</property>
@@ -646,7 +647,6 @@
                   <object class="GtkCheckButton" id="checkbtn_private">
                     <property name="label" translatable="yes">Private</property>
                     <property name="visible">True</property>
-                    <property name="sensitive">False</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>
                     <property name="halign">center</property>
@@ -658,19 +658,6 @@
                     <property name="expand">True</property>
                     <property name="fill">True</property>
                     <property name="position">0</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkLabel">
-                    <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <property name="margin_bottom">15</property>
-                    <property name="label" translatable="yes">Password</property>
-                  </object>
-                  <packing>
-                    <property name="expand">True</property>
-                    <property name="fill">True</property>
-                    <property name="position">1</property>
                   </packing>
                 </child>
                 <child>
@@ -709,7 +696,7 @@
     </child>
   </object>
   <object class="GtkDialog" id="dialog_auth">
-    <property name="width_request">375</property>
+    <property name="width_request">450</property>
     <property name="visible">True</property>
     <property name="can_focus">False</property>
     <property name="resizable">False</property>
@@ -739,7 +726,6 @@
         <child internal-child="action_area">
           <object class="GtkButtonBox">
             <property name="can_focus">False</property>
-            <property name="homogeneous">True</property>
             <property name="layout_style">center</property>
             <child>
               <object class="GtkButton" id="btn_auth_cancel">
@@ -750,7 +736,7 @@
                 <signal name="clicked" handler="mx_close_auth" object="dialog_auth" swapped="no"/>
               </object>
               <packing>
-                <property name="expand">True</property>
+                <property name="expand">False</property>
                 <property name="fill">True</property>
                 <property name="position">0</property>
               </packing>
@@ -763,15 +749,15 @@
                 <property name="receives_default">True</property>
               </object>
               <packing>
-                <property name="expand">True</property>
+                <property name="expand">False</property>
                 <property name="fill">True</property>
                 <property name="position">1</property>
               </packing>
             </child>
           </object>
           <packing>
-            <property name="expand">True</property>
-            <property name="fill">True</property>
+            <property name="expand">False</property>
+            <property name="fill">False</property>
             <property name="position">0</property>
           </packing>
         </child>
@@ -815,7 +801,6 @@
                     <property name="visibility">False</property>
                     <property name="invisible_char">•</property>
                     <property name="shadow_type">none</property>
-                    <property name="caps_lock_warning">False</property>
                     <property name="primary_icon_pixbuf">lock.png</property>
                     <property name="secondary_icon_pixbuf">eye.png</property>
                     <property name="primary_icon_activatable">False</property>
@@ -839,6 +824,10 @@
                     <property name="margin_right">10</property>
                     <property name="margin_start">10</property>
                     <property name="margin_end">10</property>
+                    <attributes>
+                      <attribute name="foreground" value="#efef29292929"/>
+                      <attribute name="size" value="9216"/>
+                    </attributes>
                   </object>
                   <packing>
                     <property name="expand">True</property>
@@ -941,6 +930,10 @@
                     <property name="margin_start">10</property>
                     <property name="margin_end">10</property>
                     <property name="margin_bottom">5</property>
+                    <attributes>
+                      <attribute name="foreground" value="#efef29292929"/>
+                      <attribute name="size" value="9216"/>
+                    </attributes>
                   </object>
                   <packing>
                     <property name="expand">True</property>
@@ -1487,5 +1480,12 @@
         </child>
       </object>
     </child>
+  </object>
+  <object class="GtkEntry" id="pixbuf_pass">
+    <property name="name">entry_password_pixbuff</property>
+    <property name="visible">True</property>
+    <property name="can_focus">True</property>
+    <property name="primary_icon_pixbuf">eye.png</property>
+    <property name="secondary_icon_pixbuf">closed-eye.png</property>
   </object>
 </interface>

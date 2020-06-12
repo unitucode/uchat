@@ -7,11 +7,18 @@
 button, .input, entry, notebook, .dialog_auth .titlebar  {
     border: none;
 }
-.dialog_auth  {
-    background: rgb(20,39,69);
+.dialog_auth, .csd {
+    /* background: rgb(20,39,69);
     background: linear-gradient(173deg, rgba(20,39,69,1) 0%,
-                rgba(0,100,123,1) 49%, rgba(105,114,145,1) 100%);
+                rgba(0,100,123,1) 49%, rgba(105,114,145,1) 100%); */
+    background: rgb(62,50,107);
+    background-image: linear-gradient(173deg, rgb(62, 50, 107) 0%, rgba(40,34,65,1) 100%);
 }
+
+/* .box-rooms {
+    background: rgb(57,69,107);
+    background-image: linear-gradient(173deg, rgb(62, 50, 107) 0%, rgba(40,34,65,1) 100%);
+} */
 box stack, entry, .dialog_notebook header {
     background-color: transparent;
 }
@@ -90,7 +97,8 @@ entry {
     box-shadow: 0 -3px rgba(105,114,145,.75) inset;
 }
 .dialog_notebook tab:checked {
-	box-shadow: 0 -3px rgb(105,114,145) inset;
+    box-shadow: none;
+	box-shadow: 0 -3px #647FFF inset;
 }
 .dialog_notebook tab label {
     font-weight: 500;
@@ -106,11 +114,53 @@ entry {
 headerbar box label {
 	font-size: 14px;
 	font-weight: 500;
-	color: #fff; 
+	color: #403E3D; 
 }
 dialog headerbar {
-	background: linear-gradient(173deg, rgba(20,39,69,1) 0%,
-                rgba(0,100,123,1) 49%, rgba(105,114,145,1) 100%);
-	box-shadow: none;
-	box-shadow: inset 0 0 8px rgba(255, 255, 255,.15);
+    background: linear-gradient(178.49deg, #E4E5E5 21.51%, #CDCDCE 78.45%);
+    box-shadow: 0 -1px #A8A7A6 inset;
+}
+
+.rooms-list, .stack_messages list, .rooms-list .activatable:selected {
+	background: transparent;
+}
+
+scrolledwindow {
+	border: none;
+}
+
+.rooms-list row {
+	padding: 8px 25px;
+    color: #fff;
+    outline: none;
+}
+.rooms-list row:selected {
+	padding: 8px 15px;
+}
+
+.rooms-list row label {
+	background-color: rgba(63,51, 107,.8);
+	padding: 25px 20px;
+	transition: .3s easy;
+	border-radius: 5px;
+}
+
+.rooms-list row:selected label {
+	background-color: rgb(71,59, 120);
+	border-left: 3px solid #6785FF;
+}
+
+.add-room-button {
+	background: none;
+	padding: 30px 0;
+}
+scrolledwindow overshoot, scrolledwindow undershoot {
+	box-shadow: none
+}
+
+scrolledwindow scrollbar.bottom {
+	box-shadow: 0 -20px 20px #29304b;
+}
+.box-rooms {
+	box-shadow: 10px 0 10px -2px rgba(0,0,0,.1);
 }
