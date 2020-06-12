@@ -3,7 +3,7 @@
 /*
  * Returns groom by name, if not found NULL is returned
  */
-t_groom *mx_get_groom_by_name(char *name, GtkBuilder *builder) {
+t_groom *mx_get_groom_by_id(int room_id, GtkBuilder *builder) {
     GObject *list = gtk_builder_get_object(builder,
                                            "listbox_rooms");
     GtkListBoxRow *row = NULL;
@@ -16,7 +16,7 @@ t_groom *mx_get_groom_by_name(char *name, GtkBuilder *builder) {
             flag = false;
         else {
             groom = (t_groom*)g_object_get_data(G_OBJECT(row), "groom");
-            if (!strcmp(name, groom->room_name))
+            if (room_id == groom->id)
                 return groom;
         }
     }

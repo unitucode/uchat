@@ -14,7 +14,7 @@ t_dtp *mx_new_room_request(char *room_name, bool is_private, char *pass) {
     return mx_get_transport_data(json_result);
 }
 
-bool mx_new_room(t_dtp *data, t_chat *chat) {
+bool mx_new_room_handler(t_dtp *data, t_chat *chat) {
     cJSON *room_name = cJSON_GetObjectItemCaseSensitive(data->json,
                                                         "room_name");
     cJSON *customer = cJSON_GetObjectItemCaseSensitive(data->json,

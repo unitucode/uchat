@@ -1,12 +1,11 @@
 #include "client.h"
 
-bool mx_error_handle(t_dtp *data, t_chat *chat) {
-    cJSON *data_obj = cJSON_GetObjectItemCaseSensitive(data->json, "error_code");
-    int error = data_obj->valueint;
+bool mx_error_handler(t_dtp *data, t_chat *chat) {
+    cJSON *error = cJSON_GetObjectItemCaseSensitive(data->json, "error_code");
 
-    if (error == 10)
-        mx_errmsg_wrong_authdata(chat->builder);
-    if (error == 11)
-        mx_errmsg_user_exist(chat->builder);
+    if (!error || !cJSON_IsNumber(error) || error->valueint >= ER_COUNT_ERRS
+        || error->valueint < 0)
+        return false;
+    chat->error_handler[error->valueint](chat->builder);
     return true;
 }

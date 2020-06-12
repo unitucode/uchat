@@ -25,7 +25,7 @@ void mx_select_msg(GtkWidget *widget, GdkEventButton *event,
 static void add_message_row(t_gmsg *msg, GtkBuilder *builder) {
     GtkWidget *row = gtk_list_box_row_new();
     GtkWidget *event = mx_create_message_row(msg);
-    t_groom *room = mx_get_groom_by_name(msg->room_name, builder);
+    t_groom *room = mx_get_groom_by_id(msg->room_id, builder);
     GtkListBox *box = room->box_messages;
     t_signal_data *data = (t_signal_data*)malloc(sizeof(t_signal_data));
 

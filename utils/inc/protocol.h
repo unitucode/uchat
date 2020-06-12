@@ -3,6 +3,16 @@
 #include "utils.h"
 
 #define MX_J_STR(m) (m) ? (m) : "(null)"
+#define MX_RQ_SIZE 2048
+
+typedef struct s_ssl_con t_ssl_con;
+typedef struct s_dtp t_dtp;
+
+typedef enum s_error_type {
+    ER_AUTH_DATA = 0,
+    ER_USER_EXST,
+    ER_COUNT_ERRS
+}            t_error_type;
 
 typedef enum s_request_type {
     RQ_LOG_IN = 0,
@@ -17,24 +27,27 @@ typedef enum s_request_type {
     RQ_GET_ROOMS,
     RQ_GET_NEW_MSGS,
     RQ_UPD_ROOM_DESC,
+    RQ_UPD_ROOM_NAME,
+    RQ_UPD_USER_DESC,
+    RQ_UPD_USER_NAME,
     RQ_COUNT_REQUEST
 }            t_request_type;
 
-typedef struct s_ssl_con {
+struct s_ssl_con {
     SSL_CTX *ctx;
     SSL *ssl;
     char *cert_file;
     char *key_file;
     char *password;
-}              t_ssl_con;
+};
 
-typedef struct s_dtp { // Data Transfer Protocol view
+struct s_dtp { // Data Transfer Protocol view
     char *data;
     char *str;
     cJSON *json;
     size_t len;
     int type;
-}              t_dtp;
+};
 
 //requests
 t_dtp *mx_delete_room_request(char *room_name);

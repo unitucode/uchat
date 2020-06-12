@@ -1,6 +1,6 @@
 #include "client.h"
 
-bool mx_update_users(t_dtp *data, t_chat *chat) {
+bool mx_update_users_handler(t_dtp *data, t_chat *chat) {
     cJSON *users = cJSON_GetObjectItemCaseSensitive(data->json, "online");
     chat++; // TODO
 

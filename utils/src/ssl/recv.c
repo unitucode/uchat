@@ -23,17 +23,24 @@ static int message_size(SSL *ssl) {
 t_dtp *mx_recv(SSL *ssl) {
     t_dtp *dtp = NULL;
     int size = 0;
-    int bytes = 0;
+    long int bytes = MX_RQ_SIZE;
+    long int read = 0;
 
     if ((size = message_size(ssl)) > 0) {
-        char buf[size + 1];
+        char data[size + 1];
 
-        if ((bytes = SSL_read(ssl, buf, size)) == size) {
-            buf[bytes] = '\0';
-            dtp = mx_request_creation(buf);
+        bzero(data, sizeof(data));
+        if (size < MX_RQ_SIZE)
+            bytes = size;
+        while (read < size && SSL_read(ssl, &data[read], bytes) > 0) {
+            read += bytes;
+            if (size - read < MX_RQ_SIZE)
+                bytes = size - read;
         }
+        if (read == size)
+            dtp = mx_request_creation(data);
         else
-            mx_logger(MX_LOG_FILE, LOGWAR, "mx_recv\n");
+            mx_logger(MX_LOG_FILE, LOGWAR, "Invalid len of packet\n");
     }
     return dtp;
 }
