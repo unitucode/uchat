@@ -81,7 +81,6 @@ void mx_get_data(t_chat *chat);
 bool mx_error_handler(t_dtp *data, t_chat *chat);
 bool mx_authorization_handler(t_dtp *token, t_chat *chat);
 bool mx_new_room_handler(t_dtp *data, t_chat *chat);
-bool mx_update_users_handler(t_dtp *data, t_chat *chat);
 bool mx_msg_handler(t_dtp *data, t_chat *chat);
 bool mx_rooms_hanlder(t_dtp *data, t_chat *chat);
 bool mx_log_out_handler(t_dtp *token, t_chat *chat);
@@ -89,6 +88,7 @@ bool mx_new_msgs_hanlder(t_dtp *data, t_chat *chat);
 bool mx_upd_room_desc_handler(t_dtp *data, t_chat *chat);  // HANDLER FOR ROOM UPDATE DESCRIPTION REQUEST
 bool mx_upd_room_name_handler(t_dtp *data, t_chat *chat); // HANDLER FOR ROOM UPDATE NAME REQUEST
 bool mx_upd_user_desc_handler(t_dtp *data, t_chat *chat); // HANDLER FOR USER UPDATE DESCRIPTION REQUEST
+bool mx_update_users_handler(t_dtp *data, t_chat *chat); // HANDLER FOR USERS ONLINE UPDATE
 
 
 /*

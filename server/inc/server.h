@@ -47,7 +47,7 @@ struct s_client {
 //api
 t_dtp *mx_token_request(char *token, char *login);
 t_dtp *mx_error_msg_request(int error_code, char *msg);
-t_dtp *mx_online_users_request(int count);
+t_dtp *mx_users_online_request(int count, int all);
 t_dtp *mx_log_out_request(char *token);
 t_dtp *mx_upd_room_desc_request(int room_id, char *room_name);
 t_dtp *mx_upd_room_name_request(int room_id, char *room_name);
