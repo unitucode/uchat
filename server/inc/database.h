@@ -69,6 +69,8 @@ void mx_update_permission_of_user(sqlite3 *database, char *login,
 void mx_update_token(sqlite3 *database, char *login, char *new);
 void mx_update_description_user(sqlite3 *database, char *login, char *new);
 void mx_update_description_room(sqlite3 *database, char *name, char *new);
+void mx_update_description_room_by_id(sqlite3 *db, unsigned long long int id,
+                                      char *new);
 void update(sqlite3_stmt *stmt, char *new, char *name, char *error);
 void mx_edit_name_room(sqlite3 *database, unsigned long long int id, char *new);
 void mx_edit_name_user(sqlite3 *database, char *login, char *new);

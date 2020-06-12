@@ -14,7 +14,7 @@ void mx_change_working_dir(void) {
 
 int main(int argc, char **argv) {
     // mx_change_working_dir();
-    sqlite3 *database = mx_server_data_open(MX_DB);
+    // sqlite3 *database = mx_server_data_open(MX_DB);
     
     // get message by id
     // cJSON *vlad = mx_get_old_messages();
@@ -23,15 +23,15 @@ int main(int argc, char **argv) {
     // printf("%s\n", cJSON_Print(vlad));
 
     // create room                  Ok
-    t_db_room *room = mx_insert_room_into_db(database, "name7", "customer");
-    if (!room)
-        exit(0);
-    printf("%s\n", room->name_room);
-    printf("%s\n", room->customer);
-    printf("%ld\n", room->date);
-    printf("%d\n", room->id);
-    printf("%s\n", room->description);
-    mx_free_room(&room);
+    // t_db_room *room = mx_insert_room_into_db(database, "name7", "customer");
+    // if (!room)
+    //     exit(0);
+    // printf("%s\n", room->name_room);
+    // printf("%s\n", room->customer);
+    // printf("%ld\n", room->date);
+    // printf("%d\n", room->id);
+    // printf("%s\n", room->description);
+    // mx_free_room(&room);
 
     // test valid database
     // char *request = "";
@@ -103,10 +103,13 @@ int main(int argc, char **argv) {
     //     mx_free_user(&user);
     // }
 
-    mx_close_database(database);
-    system("leaks -q uchat_server");
-    printf("Ok\n");
-    exit(1);
+    //  update description              Ok
+    // mx_update_description_room_by_id(database, 2, "Hi, I afreid you !! don`t shoot");
+
+    // mx_close_database(database);
+    // system("leaks -q uchat_server");
+    // printf("Ok\n");
+    // exit(1);
     t_chat *chat = mx_init_chat(argc, argv);
     t_client *client = NULL;
     t_ssl_con *ssl = NULL;
