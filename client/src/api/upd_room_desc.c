@@ -22,7 +22,7 @@ bool mx_upd_room_desc_handler(t_dtp *data, t_chat *chat) {
         return false;
     //WORKING WITH GUI
     chat++;
-    printf("room_id = %d new room_name = %s\n", room_id->valueint, desc->valuestring);
+    printf("room_id = %d new room_desc = %s\n", room_id->valueint, desc->valuestring);
     //WORKING WITH GUI
     return true;
 }

@@ -86,8 +86,19 @@ bool mx_msg_handler(t_dtp *data, t_chat *chat);
 bool mx_rooms_hanlder(t_dtp *data, t_chat *chat);
 bool mx_log_out_handler(t_dtp *token, t_chat *chat);
 bool mx_new_msgs_hanlder(t_dtp *data, t_chat *chat);
-bool mx_upd_room_desc_handler(t_dtp *data, t_chat *chat);
+bool mx_upd_room_desc_handler(t_dtp *data, t_chat *chat);  // HANDLER FOR ROOM UPDATE DESCRIPTION REQUEST
+bool mx_upd_room_name_handler(t_dtp *data, t_chat *chat); // HANDLER FOR ROOM UPDATE NAME REQUEST
+bool mx_upd_user_desc_handler(t_dtp *data, t_chat *chat); // HANDLER FOR USER UPDATE DESCRIPTION REQUEST
 
+
+/*
+ *  t_dtp *dtp = mx_upd_room_desc_request(1, "0000000000");
+ *  mx_send(chat->ssl, dtp);
+ *  mx_free_request(&dtp);
+ * 
+ * 
+ * 
+ */
 //api
 t_dtp *mx_new_room_request(char *room_name, bool is_private, char *pass);
 t_dtp *mx_msg_request(char *msg, int room_id);
@@ -97,9 +108,9 @@ t_dtp *mx_sign_up_request(char *login, char *pass);
 t_dtp *mx_get_rooms_request(long int date);
 t_dtp *mx_log_out_request(char *token);
 t_dtp *mx_get_new_msgs_request(long int date, int room_id);
-t_dtp *mx_upd_room_desc_request(int room_id, char *desc); //TODO
-t_dtp *mx_upd_room_name_request(int room_id, char *desc); // TODO
-t_dtp *mx_upd_user_desc_request(char *desc); // TODO
+t_dtp *mx_upd_room_desc_request(int room_id, char *desc); // FOR ROOM UPDATE DESCRIPTION CREATE REQUEST
+t_dtp *mx_upd_room_name_request(int room_id, char *name); // FOR ROOM UPDATE NAME CREATE REQUEST
+t_dtp *mx_upd_user_desc_request(char *desc); // FOR USER DESCRIPTION UPDATE 
 t_dtp *mx_upd_user_name_request(char *name); //TODO
 
 //errors api
