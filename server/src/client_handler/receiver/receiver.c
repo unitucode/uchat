@@ -9,6 +9,7 @@ void mx_init_receiver(t_chat *chat) {
     chat->request_handler[RQ_GET_ROOMS] = mx_get_rooms_handler;
     chat->request_handler[RQ_LOG_OUT] = mx_log_out_handler;
     chat->request_handler[RQ_GET_NEW_MSGS] = mx_get_msgs_handler;
+    chat->request_handler[RQ_UPD_ROOM_DESC] = mx_upd_room_desc_handler;
 }
 
 void *mx_receiver(void *arg) {

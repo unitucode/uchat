@@ -78,6 +78,7 @@ bool mx_msg_handler(t_dtp *data, t_chat *chat);
 bool mx_rooms_hanlder(t_dtp *data, t_chat *chat);
 bool mx_log_out_handler(t_dtp *token, t_chat *chat);
 bool mx_new_msgs_hanlder(t_dtp *data, t_chat *chat);
+bool mx_upd_room_desc_handler(t_dtp *data, t_chat *chat);
 
 //api
 t_dtp *mx_new_room_request(char *room_name, bool is_private, char *pass);
