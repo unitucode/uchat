@@ -148,6 +148,7 @@ void mx_set_default_room_sett(GtkBuilder *builder);
 
 // gui utils
 void mx_scrlldwnd_connect(char *name, GtkWidget *scroll, GtkBuilder *builder);
+gchar *mx_entry_get_text(char *entry_name, GtkBuilder *builder);
 gchar *mx_get_buffer_text(char *buff_name, GtkBuilder *builder);
 void mx_clear_buffer_text(char *buff_name, GtkBuilder *builder);
 void mx_clear_label_by_name(char *label_name, GtkBuilder *builder);
