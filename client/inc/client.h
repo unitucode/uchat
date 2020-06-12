@@ -119,6 +119,7 @@ void mx_connect_addroom(t_chat *chat);
 void mx_connect_send_message(t_chat *chat);
 void mx_connect_profile_settings(t_chat *chat);
 void mx_connect_room_settings(t_chat *chat);
+void mx_connect_test_request(t_chat *chat); // DELETE
 void mx_errmsg_wrong_authdata(GtkBuilder *builder);
 void mx_errmsg_user_exist(GtkBuilder *builder);
 void mx_delete_row_room(GtkWidget *row, GtkBuilder *builder);
