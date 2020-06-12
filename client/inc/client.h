@@ -89,6 +89,9 @@ t_dtp *mx_get_rooms_request(long int date);
 t_dtp *mx_log_out_request(char *token);
 t_dtp *mx_get_new_msgs_request(long int date, int room_id);
 t_dtp *mx_upd_room_desc_request(int room_id, char *desc); //TODO
+t_dtp *mx_upd_room_name_request(int room_id, char *desc); // TODO
+t_dtp *mx_upd_user_desc_request(char *desc); // TODO
+t_dtp *mx_upd_user_name_request(char *name); //TODO
 
 //errors api
 void mx_err_auth_data_handler(GtkBuilder *builder);

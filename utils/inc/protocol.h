@@ -3,7 +3,7 @@
 #include "utils.h"
 
 #define MX_J_STR(m) (m) ? (m) : "(null)"
-#define MX_RQ_SIZE 1024
+#define MX_RQ_SIZE 2048
 
 typedef struct s_ssl_con t_ssl_con;
 typedef struct s_dtp t_dtp;
@@ -29,6 +29,7 @@ typedef enum s_request_type {
     RQ_UPD_ROOM_DESC,
     RQ_UPD_ROOM_NAME,
     RQ_UPD_USER_DESC,
+    RQ_UPD_USER_NAME,
     RQ_COUNT_REQUEST
 }            t_request_type;
 
