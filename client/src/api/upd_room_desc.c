@@ -14,15 +14,15 @@ t_dtp *mx_upd_room_desc_request(int room_id, char *desc) {
 
 bool mx_upd_room_desc_handler(t_dtp *data, t_chat *chat) {
     cJSON *room_id = cJSON_GetObjectItemCaseSensitive(data->json, "room_id");
-    cJSON *room_name = cJSON_GetObjectItemCaseSensitive(data->json, "room_name");
+    cJSON *desc = cJSON_GetObjectItemCaseSensitive(data->json, "desc");
 
     if (!room_id || !cJSON_IsNumber(room_id))
         return false;
-    if (!room_name || !cJSON_IsString(room_name))
+    if (!desc || !cJSON_IsString(desc))
         return false;
     //WORKING WITH GUI
     chat++;
-    printf("room_id = %d new room_name = %s\n", room_id->valueint, room_name->valuestring);
+    printf("room_id = %d new room_name = %s\n", room_id->valueint, desc->valuestring);
     //WORKING WITH GUI
     return true;
 }
