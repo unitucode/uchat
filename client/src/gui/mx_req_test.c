@@ -1,13 +1,13 @@
 #include "client.h"
 
 static void req_test(GtkButton *btn, t_chat *chat) {
-    t_dtp *dtp = mx_upd_room_desc_request(1, "0000000000");
-    mx_send(chat->ssl, dtp);
-    mx_free_request(&dtp);
-    dtp = mx_upd_room_name_request(1, "0000000000");
-    mx_send(chat->ssl, dtp);
-    mx_free_request(&dtp);
-    dtp = mx_upd_user_desc_request("0000000000");
+    // t_dtp *dtp = mx_upd_room_desc_request(1, "0000000000");
+    // mx_send(chat->ssl, dtp);
+    // mx_free_request(&dtp);
+    // dtp = mx_upd_room_name_request(1, "0000000000");
+    // mx_send(chat->ssl, dtp);
+    // mx_free_request(&dtp);
+    t_dtp *dtp = mx_upd_user_desc_request("0000000000");
     mx_send(chat->ssl, dtp);
     mx_free_request(&dtp);
     (void)btn;

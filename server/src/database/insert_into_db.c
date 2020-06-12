@@ -10,12 +10,12 @@ t_db_message *mx_insert_message_into_db_by_id(sqlite3 *db, char *message_str,
 
     sqlite3_str_appendall(str, "insert into");
     sqlite3_str_appendf(str, " 'room%llu' ", id);
-    sqlite3_str_appendall(str, "(login, date, message) values(?1, ?2, ?3);");
+    sqlite3_str_appendall(str, "(login, date, message) values(?1, strftime"
+                               "('%s', 'now'), ?3);");
     request = sqlite3_str_finish(str);
     mx_error_sqlite(sqlite3_prepare_v2(db, request, -1, &stmt, NULL), "prepare", 
                     "insert message into db");
     sqlite3_bind_text(stmt, 1, login, -1, SQLITE_STATIC);
-    sqlite3_bind_int(stmt, 2, (long int)time(NULL));
     sqlite3_bind_text(stmt, 3, message_str, -1, SQLITE_STATIC);
     rv = mx_error_sqlite(sqlite3_step(stmt), "step", "insert message into db");
     sqlite3_finalize(stmt);
@@ -35,12 +35,12 @@ t_db_message *mx_insert_message_into_db(sqlite3 *db, char *message_str,
 
     sqlite3_str_appendall(str, "INSERT INTO '" );
     sqlite3_str_appendall(str, name_room);
-    sqlite3_str_appendall(str, "' (LOGIN, DATE, MESSAGE) VALUES(?1, ?2, ?3);");
+    sqlite3_str_appendall(str, "' (LOGIN, DATE, MESSAGE) VALUES(?1, strftime"
+                               "('%s', 'now'), ?3);");
     request = sqlite3_str_finish(str);
     rv = sqlite3_prepare_v3(db, request, -1, 0, &stmt, NULL);
     mx_error_sqlite(rv, "prepare", "insert message");
     sqlite3_bind_text(stmt, 1, login, -1, SQLITE_STATIC);
-    sqlite3_bind_int(stmt, 2, (long int)time(NULL));
     sqlite3_bind_text(stmt, 3, message_str, -1, SQLITE_STATIC);
     mx_error_sqlite(sqlite3_step(stmt), "step", "insert message");
     sqlite3_finalize(stmt);
@@ -54,13 +54,12 @@ t_db_room *mx_insert_room_into_db(sqlite3 *database, char *room_name,
     int rv = 0;
 
     rv = sqlite3_prepare_v3(database,
-                            "insert into rooms(name, customer_login, date,"
-                            " description) values(?1, ?2, ?3, '');",
-                            -1, 0, &stmt, NULL);
+                            "insert into rooms(name, customer_login, date, desc"
+                            "ription) values(?1, ?2, strftime('%s', 'now'), "
+                            "'');", -1, 0, &stmt, NULL);
     mx_error_sqlite(rv, "prepare", "insert room");
     sqlite3_bind_text(stmt, 1, room_name, -1, SQLITE_STATIC);
     sqlite3_bind_text(stmt, 2, customer, -1, SQLITE_STATIC);
-    sqlite3_bind_int(stmt, 3, (long int)time(NULL));
     mx_error_sqlite(sqlite3_step(stmt), "step", "insert room");
     sqlite3_finalize(stmt);
     mx_create_table_room(database, (int)mx_get_roomid_by_name(database, room_name));
@@ -73,14 +72,13 @@ t_db_user *mx_insert_user_into_db(sqlite3 *database, char *login,
     int rv = 0;
 
     rv = sqlite3_prepare_v3(database,
-        "INSERT INTO USERS(LOGIN, PASSWORD, TOKEN, PERMISSION, DATE, " 
-        "DESCRIPTION) VALUES(?1, ?2, ?3, 0, ?4, '');",
-                            -1, 0, &stmt, NULL);
+                            "insert into users(login, password, token, permis"
+                            "sion, date, description) values(?1, ?2, ?3, 0, "
+                            "strftime('%s', 'now'), '');", -1, 0, &stmt, NULL);
     mx_error_sqlite(rv, "prepare", "insert user");
     sqlite3_bind_text(stmt, 1, login, -1, SQLITE_STATIC);
     sqlite3_bind_text(stmt, 2, pass, -1, SQLITE_STATIC);
     sqlite3_bind_text(stmt, 3, token, -1, SQLITE_STATIC);
-    sqlite3_bind_int(stmt, 4, (long int)time(NULL));
     mx_error_sqlite(sqlite3_step(stmt), "step", "insert user");
     sqlite3_finalize(stmt);
     return mx_get_user_by_login(database, login);

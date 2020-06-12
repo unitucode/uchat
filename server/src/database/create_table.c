@@ -12,15 +12,13 @@ static void check_correct_table(sqlite3 *db, sqlite3_stmt *stmt) {
                           "    integer        not null,date           intege"
                           "r        not null,description    text           n"
                           "ot null)") != 0) {
-            printf("drop table -> (%s)\n", table);
             sqlite3_exec(db, "drop table users", 0, 0, 0);
         }
         mx_free((void**)&table);
     }
     else {
-        printf("drop table 1\n");
         sqlite3_finalize(stmt);
-        sqlite3_exec(db, "drop table users", 0, 0, 0);
+        sqlite3_exec(db, "drop table if exists users", 0, 0, 0);
     }
 }
 
@@ -53,11 +51,11 @@ void mx_create_table_room(sqlite3 *db, int id) {
     sqlite3_str *str2 = sqlite3_str_new(db);
     char *request = NULL;
 
-    sqlite3_str_appendf(str, "drop table room%llu", id);
+    sqlite3_str_appendf(str, "drop table if exists room%llu", id);
     request = sqlite3_str_finish(str);
     sqlite3_exec(db, request, 0, 0, 0);
     sqlite3_free(request);
-    sqlite3_str_appendf(str2, "create table if not exists room%llu "
+    sqlite3_str_appendf(str2, "create table room%llu "
                              "(id_message   integer primary key not null,"
                              "login        text    not null,"
                              "date         integer not null,"
@@ -80,15 +78,13 @@ static void check_correct_table_rooms(sqlite3 *db, sqlite3_stmt *stmt) {
                           "                not null,date               in"
                           "teger             not null,description        "
                           "text                not null)") != 0) {
-            printf("drop table 3\n");
             sqlite3_exec(db, "drop table rooms", 0, 0, 0);
         }
         mx_free((void **)&table);
     }
     else {
-        printf("drop table 2\n");
         sqlite3_finalize(stmt);
-        sqlite3_exec(db, "drop table rooms", 0, 0, 0);
+        sqlite3_exec(db, "drop table if exists rooms", 0, 0, 0);
     }
 }
 
