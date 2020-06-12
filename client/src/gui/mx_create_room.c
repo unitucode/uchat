@@ -26,8 +26,8 @@ void mx_unselect_curr_room_messages(GtkListBox *box, GtkListBoxRow *row,
     (void)builder;
 }
 
-    puts("First Callback");
 void mx_swap_room(GtkWidget *widget, GdkEventButton *event, t_groom *room) {
+    // puts("First Callback");
     gtk_stack_set_visible_child(room->stack_msg, GTK_WIDGET(room->page));
     gtk_list_box_select_row(room->box_rooms, room->row_room);
     (void)widget;
@@ -35,7 +35,7 @@ void mx_swap_room(GtkWidget *widget, GdkEventButton *event, t_groom *room) {
 }
 
 void mx_swap_prefs(GtkWidget *widget, GdkEventButton *event, GtkBuilder *builder) {
-    puts("Second Callback");
+    // puts("Second Callback");
     t_groom *groom = mx_get_selected_groom(builder);
     GObject *name = gtk_builder_get_object(builder, "label_prefs_roomname");
     GObject *customer = gtk_builder_get_object(builder,
