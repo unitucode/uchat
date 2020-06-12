@@ -14,13 +14,59 @@ void mx_make_private(GtkToggleButton *btn, GtkWidget *widget) {
     gtk_widget_set_sensitive(widget, gtk_toggle_button_get_active(btn));
 }
 
+void mx_unselect_curr_room_messages(GtkListBox *box, GtkListBoxRow *row,
+                                    GtkBuilder *builder) {
+    t_groom *groom = NULL;
+
+    if (row)
+        groom = (t_groom *)g_object_get_data(G_OBJECT(row), "groom");
+    if (groom)
+        gtk_list_box_unselect_all(groom->box_messages);
+    (void)box;
+    (void)builder;
+}
+
 void mx_swap_room(GtkWidget *widget, GdkEventButton *event, t_groom *room) {
+    // puts("First Callback");
     gtk_stack_set_visible_child(room->stack_msg, GTK_WIDGET(room->page));
     gtk_list_box_select_row(room->box_rooms, room->row_room);
     (void)widget;
     (void)event;
 }
+
+void mx_swap_prefs(GtkWidget *widget, GdkEventButton *event, GtkBuilder *builder) {
+    // puts("Second Callback");
+    t_groom *groom = mx_get_selected_groom(builder);
+    GObject *name = gtk_builder_get_object(builder, "label_prefs_roomname");
+    GObject *customer = gtk_builder_get_object(builder,
+                                               "label_prefs_customer");
+    GObject *header = gtk_builder_get_object(builder, "header_main");
+
+    gtk_label_set_text(GTK_LABEL(name), groom->room_name);
+    gtk_header_bar_set_title(GTK_HEADER_BAR(header), groom->room_name);
+    gtk_label_set_text(GTK_LABEL(customer), groom->customer);
+    (void)widget;
+    (void)event;
+    (void)builder;
+}
+
+void mx_hide_msg_ctrl(GtkListBox *box, GtkListBoxRow *row,
+                      GtkButtonBox *control) {
+    gtk_widget_hide(GTK_WIDGET(control));
+    (void)box;
+    (void)row;
+}
 //================================
+
+gint mx_room_sort(GtkListBoxRow *row1, GtkListBoxRow *row2) {
+    t_groom *f_room = g_object_get_data(G_OBJECT(row1), "groom");
+
+    if (f_room->is_updated) {
+        return false;
+    }
+    (void)row2;
+    return true;
+}
 
 static void add_messages_box(t_groom *room, GtkBuilder *builder) {
     GObject *stack = gtk_builder_get_object(builder, "stack_messege_rooms");
@@ -28,7 +74,7 @@ static void add_messages_box(t_groom *room, GtkBuilder *builder) {
     GtkWidget *scroll = gtk_scrolled_window_new(NULL, NULL);
     GtkWidget *view = gtk_viewport_new(NULL, NULL);
 
-    room->box_messages = box;
+    room->box_messages = GTK_LIST_BOX(box);
     gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scroll),
                                    GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
     gtk_container_add(GTK_CONTAINER(scroll), view);
@@ -52,12 +98,18 @@ static void add_room_row(t_groom *room, GtkBuilder *builder) {
                            (GDestroyNotify)mx_delete_groom);
     room->box_rooms = box;
     room->row_room = GTK_LIST_BOX_ROW(row);
+
     g_signal_connect(event, "button_press_event",
                      G_CALLBACK(mx_swap_room), room);
+    g_signal_connect(event, "button_release_event",
+                     G_CALLBACK(mx_swap_prefs), builder);
+    // g_signal_connect(box, "row-selected", G_CALLBACK(mx_swap_prefs), builder);
+
     gtk_container_add(GTK_CONTAINER(event), label);
     gtk_container_add(GTK_CONTAINER(row), event);
     gtk_widget_set_size_request(row, -1, 80);
-
+    gtk_list_box_set_sort_func(box, (GtkListBoxSortFunc)mx_room_sort, NULL, NULL);
+    room->is_updated = false;
     gtk_list_box_insert(box, row, -1);
     gtk_widget_show_all(GTK_WIDGET(box));
 }
@@ -80,6 +132,8 @@ t_groom *mx_create_groom(char *room_name, char *customer, int id,
     room->stack_msg = NULL;
     room->id = id;
     room->date = date;
+    room->is_updated = true;
+    room->desc = NULL;
     return room;
 }
 
@@ -87,5 +141,6 @@ void mx_delete_groom(t_groom *room) {
     if (room) {
         mx_free((void**)&room->room_name);
         mx_free((void**)&room->customer);
+        mx_free((void**)&room);
     }
 }

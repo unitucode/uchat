@@ -13,13 +13,13 @@ static void check_correct_table(sqlite3 *db, sqlite3_stmt *stmt) {
                           "permission     integer        not "
                           "null,date           integer       "
                           " not null,description    text)") != 0) {
-            printf("drop table\n");
+            printf("drop table -> %s\n", table);
             sqlite3_exec(db, "drop table users", 0, 0, 0);
         }
         mx_free((void**)&table);
     }
     else {
-        printf("drop table\n");
+        printf("drop table 1\n");
         sqlite3_finalize(stmt);
         sqlite3_exec(db, "drop table users", 0, 0, 0);
     }
@@ -81,13 +81,13 @@ static void check_correct_table_rooms(sqlite3 *db, sqlite3_stmt *stmt) {
                           "                not null,date               in"
                           "teger             not null,description        "
                           "text                not null)") != 0) {
-            printf("drop table\n");
+            printf("drop table 3\n");
             sqlite3_exec(db, "drop table rooms", 0, 0, 0);
         }
         mx_free((void **)&table);
     }
     else {
-        printf("drop table\n");
+        printf("drop table 2\n");
         sqlite3_finalize(stmt);
         sqlite3_exec(db, "drop table rooms", 0, 0, 0);
     }

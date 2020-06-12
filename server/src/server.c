@@ -121,7 +121,6 @@ int main(int argc, char **argv) {
     chat->database = mx_server_data_open(MX_DB);
     client = NULL;
     ssl = mx_init_ssl(SERVER);
-    mx_create_table_users(chat->database);
     mx_logger(MX_LOG_FILE, LOGMSG,"started server pid[%d]: %s %s\n", getpid(), argv[0], argv[1]);
     while (1) {
         client = mx_new_client(chat->len);

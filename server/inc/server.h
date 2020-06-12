@@ -6,11 +6,20 @@
 #include "sqlite3.h"
 #include "database.h"
 
-
+//settings
 #define MX_LISTENQ 1024
 #define MX_PORT_LEN 8
+#define MX_REQUEST_PER_SECOND 20
+#define MX_DELAY (1000000 / MX_REQUEST_PER_SECOND)
+#define MX_MAX_ROOMS 20
+#define MX_MAX_MSGS 500
+
 typedef struct s_chat t_chat;
 typedef struct s_client t_client;
+// typedef struct s_members_room t_members_room;
+// typedef struct s_db_user t_db_user;
+// typedef struct s_db_message t_db_message;
+// typedef struct s_db_room t_db_room;
 
 struct s_chat {
     int listen_fd;
@@ -36,20 +45,22 @@ struct s_client {
 };
 
 //api
-t_dtp *mx_token_request(char *token);
+t_dtp *mx_token_request(char *token, char *login);
 t_dtp *mx_error_msg_request(int error_code, char *msg);
 t_dtp *mx_online_users_request(int count);
 t_dtp *mx_log_out_request(char *token);
+t_dtp *mx_upd_room_desc_request(int room_id, char *room_name);
 
 //data protocol handler functions
-bool mx_log_in(t_dtp *login, t_client *client);
-bool mx_sign_up(t_dtp *signup_data, t_client *client);
-bool mx_log_in_token(t_dtp *token, t_client *client);
-bool mx_new_room(t_dtp *data, t_client *client);
-bool mx_msg(t_dtp *data, t_client *client);
+bool mx_log_in_handler(t_dtp *login, t_client *client);
+bool mx_sign_up_handler(t_dtp *signup_data, t_client *client);
+bool mx_log_in_token_handler(t_dtp *token, t_client *client);
+bool mx_new_room_handler(t_dtp *data, t_client *client);
+bool mx_msg_handler(t_dtp *data, t_client *client);
 bool mx_get_rooms_handler(t_dtp *data, t_client *client);
-bool mx_log_out(t_dtp *token, t_client *client);
+bool mx_log_out_handler(t_dtp *token, t_client *client);
 bool mx_get_msgs_handler(t_dtp *data, t_client *client);
+bool mx_upd_room_desc_handler(t_dtp *desc, t_client *client); //TODO
 
 int mx_tcp_listen(const char *serv, socklen_t *addr_len);
 void mx_get_client_info(t_client *client);

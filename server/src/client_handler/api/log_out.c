@@ -10,7 +10,7 @@ t_dtp *mx_log_out_request(char *token) {
     return mx_get_transport_data(json_result);
 }
 
-bool mx_log_out(t_dtp *token, t_client *client) {
+bool mx_log_out_handler(t_dtp *token, t_client *client) {
     cJSON *tok = cJSON_GetObjectItemCaseSensitive(token->json, "token");
     t_dtp *answer = NULL;
 

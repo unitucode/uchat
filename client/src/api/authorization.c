@@ -34,8 +34,9 @@ t_dtp *mx_sign_up_request(char *login, char *pass) {
     return mx_get_transport_data(json_result);
 }
 
-bool mx_authorization(t_dtp *token, t_chat *chat) {
+bool mx_authorization_handler(t_dtp *token, t_chat *chat) {
     cJSON *auth_token = NULL;
+    cJSON *login = NULL;
 
     if (chat->auth_token) {
         return false;
@@ -45,6 +46,12 @@ bool mx_authorization(t_dtp *token, t_chat *chat) {
         || !mx_isvalid_token(auth_token->valuestring)) {
         return false;
     }
+    login = cJSON_GetObjectItemCaseSensitive(token->json, "login");
+    if (!login || !cJSON_IsString(login)
+        || !mx_match_search(login->valuestring, MX_LOGIN_REGEX)) {
+        return false;
+    }
+    chat->login = strdup(login->valuestring);
     chat->auth_token = strdup(auth_token->valuestring);
     mx_get_data(chat);
     mx_start_main_window(chat);
