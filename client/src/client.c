@@ -69,6 +69,8 @@ bool mx_connect(t_chat *chat) {
     int sockfd = mx_tcp_connect(chat->con_data->argv[1], 
                                 chat->con_data->argv[2]);
 
+    if (sockfd == -1)
+        return false;
     chat->con_data->ssl->ssl = SSL_new(chat->con_data->ssl->ctx);
     chat->ssl = chat->con_data->ssl->ssl;
     SSL_set_fd(chat->con_data->ssl->ssl, sockfd);

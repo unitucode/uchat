@@ -30,8 +30,10 @@ int mx_tcp_connect(const char *host, const char *serv) {
             break;
         mx_close(sockfd);
     }
-    if (!res)
-        mx_elogger(MX_LOG_FILE, LOGERR, "tcp_connect\n");
+    if (!res) {
+        mx_logger(MX_LOG_FILE, LOGERR, "tcp_connect\n");
+        return -1;
+    }
     freeaddrinfo(res_save);
     return sockfd;
 }

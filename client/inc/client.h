@@ -86,6 +86,7 @@ void mx_init_handlers(t_chat *chat);
 void mx_init_errors(t_chat *chat);
 void mx_get_data(t_chat *chat);
 bool mx_connect(t_chat *chat);
+bool mx_reconnect(t_chat *chat);
 
 //handlers
 bool mx_error_handler(t_dtp *data, t_chat *chat);
