@@ -14,8 +14,8 @@ void mx_change_working_dir(void) {
 
 int main(int argc, char **argv) {
     // mx_change_working_dir();
-    // sqlite3 *database = mx_server_data_open(MX_DB);
-    
+    sqlite3 *database = mx_server_data_open(MX_DB);
+
     // get message by id
     // cJSON *vlad = mx_get_old_messages_by_id(database, 10, 1591959523, 10000);
     // cJSON *vlad = mx_get_new_messages_by_id(database, 1, 0, 50);
@@ -93,6 +93,12 @@ int main(int argc, char **argv) {
     //     mx_free_user(&user);
     // }
 
+    // test queue
+    // for(int i = 0; i < 1000; i++)
+    //     mx_db_push_queue(database, "keds", "request3");
+    // printf("request -> %s\n", mx_get_queue(database, "keds"));
+    // mx_db_pop_queue(database, "keds");
+
     // get user                     Ok
     // t_db_user *user = mx_get_user_by_login(database, "login8");
     // if (user) {
@@ -109,10 +115,10 @@ int main(int argc, char **argv) {
     // mx_update_description_user(database, "giblin gob", "I am rich goblin hahahahahaha");
 
 
-    // mx_close_database(database);
-    // system("leaks -q uchat_server");
-    // printf("Ok\n");
-    // exit(1);
+    mx_close_database(database);
+    system("leaks -q uchat_server");
+    printf("Ok\n");
+    exit(1);
     t_chat *chat = mx_init_chat(argc, argv);
     t_client *client = NULL;
     t_ssl_con *ssl = NULL;
