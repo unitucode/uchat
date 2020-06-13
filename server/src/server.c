@@ -15,8 +15,11 @@ void mx_change_working_dir(void) {
 int main(int argc, char **argv) {
     // mx_change_working_dir();
     // sqlite3 *database = mx_server_data_open(MX_DB);
-    
-    // get message by id
+
+    // edit message                     Ok
+    // mx_edit_message(database, 2, 98, "hi snaik, how are you ?");
+
+    // get message by id                Ok
     // cJSON *vlad = mx_get_old_messages_by_id(database, 10, 1591959523, 10000);
     // cJSON *vlad = mx_get_new_messages_by_id(database, 1, 0, 50);
     // cJSON *vlad = mx_get_curr_messages_by_id(database, 23, 50);
@@ -33,7 +36,7 @@ int main(int argc, char **argv) {
     // printf("%s\n", room->description);
     // mx_free_room(&room);
 
-    // test valid database
+    // test valid database                  Ok
     // char *request = "";
     // sqlite3_preparev_2(database);
 
@@ -43,8 +46,8 @@ int main(int argc, char **argv) {
     // mx_edit_name_room(database, 5, "edit.002");
 
     // // create message               Ok
-    // for (int i = 0; i < 10000; i++) {
-    //     t_db_message *message = mx_insert_message_into_db_by_id(database, "hi baby I am snaik !!! you afreid because I touch you and will kill you", "snaik", 10);
+    // for (int i = 0; i < 100; i++) {
+    //     t_db_message *message = mx_insert_message_into_db_by_id(database, "hi baby I am snaik !!! you afreid because I touch you and will kill you", "snaik", 1);
     //     mx_free_message(&message);  
     // }
 
@@ -71,7 +74,7 @@ int main(int argc, char **argv) {
     // printf("count users ->\t %llu\n", mx_get_count_users(database));
     // printf("count mssgs ->\t %llu\n", mx_get_count_messages(database, 1));
 
-    // count 
+    // count                            Ok
     // sqlite3_stmt *stmt;
     // int rv = SQLITE_OK;
     
@@ -92,6 +95,12 @@ int main(int argc, char **argv) {
     //     printf("date -> %ld\n\n\n", user->date);
     //     mx_free_user(&user);
     // }
+
+    // test queue                       Ok
+    // for(int i = 0; i < 1000; i++)
+    //     mx_db_push_queue(database, "keds", "request3");
+    // printf("request -> %s\n", mx_get_queue(database, "keds"));
+    // mx_db_pop_queue(database, "keds");
 
     // get user                     Ok
     // t_db_user *user = mx_get_user_by_login(database, "login8");
