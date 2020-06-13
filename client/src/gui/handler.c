@@ -7,7 +7,7 @@ static gboolean handle(t_chat *chat) {
            && chat->valid) {
         puts("handle");
         if (chat->auth_token || dtp->type == RQ_ERROR_MSG
-            || dtp->type == RQ_TOKEN) {
+            || dtp->type == RQ_TOKEN || dtp->type == RQ_RECONNECT) {
             if (chat->request_handler[dtp->type]) {
                 if (!chat->request_handler[dtp->type](dtp, chat)) {
                     shutdown(SSL_get_fd(chat->ssl), SHUT_WR);

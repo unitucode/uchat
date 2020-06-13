@@ -100,6 +100,7 @@ bool mx_upd_room_desc_handler(t_dtp *data, t_chat *chat);  // HANDLER FOR ROOM U
 bool mx_upd_room_name_handler(t_dtp *data, t_chat *chat); // HANDLER FOR ROOM UPDATE NAME REQUEST
 bool mx_upd_user_desc_handler(t_dtp *data, t_chat *chat); // HANDLER FOR USER UPDATE DESCRIPTION REQUEST
 bool mx_update_users_handler(t_dtp *data, t_chat *chat); // HANDLER FOR USERS ONLINE UPDATE
+bool mx_reconnect_hanlder(t_dtp *token, t_chat *chat); // HANDLER FOR RECONNECT
 
 
 /*

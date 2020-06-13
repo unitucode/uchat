@@ -30,6 +30,7 @@ typedef enum s_request_type {
     RQ_UPD_ROOM_NAME,
     RQ_UPD_USER_DESC,
     RQ_UPD_USER_NAME,
+    RQ_RECONNECT,
     RQ_COUNT_REQUEST
 }            t_request_type;
 
