@@ -22,6 +22,7 @@ void mx_init_handlers(t_chat *chat) {
     chat->request_handler[RQ_UPD_ROOM_NAME] = mx_upd_room_name_handler;
     chat->request_handler[RQ_UPD_USER_DESC] = mx_upd_user_desc_handler;
     chat->request_handler[RQ_RECONNECT] = mx_reconnect_hanlder;
+    chat->request_handler[RQ_DEL_ROOM] = mx_del_room_handler;
     mx_pthread_create(&tid, NULL, mx_receiver, chat);
 }
 

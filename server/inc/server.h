@@ -66,6 +66,7 @@ bool mx_get_msgs_handler(t_dtp *data, t_client *client);
 bool mx_upd_room_desc_handler(t_dtp *desc, t_client *client); //TODO
 bool mx_upd_room_name_handler(t_dtp *desc, t_client *client); //TODO
 bool mx_upd_user_desc_handler(t_dtp *desc_data, t_client *client); //TODO
+bool mx_del_room_handler(t_dtp *data, t_client *client); //TODO
 
 int mx_tcp_listen(const char *serv, socklen_t *addr_len);
 void mx_get_client_info(t_client *client);

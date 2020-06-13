@@ -31,6 +31,8 @@ typedef enum s_request_type {
     RQ_UPD_USER_DESC,
     RQ_UPD_USER_NAME,
     RQ_RECONNECT,
+    RQ_DEL_ROOM,
+    RQ_DEL_USER,
     RQ_COUNT_REQUEST
 }            t_request_type;
 
