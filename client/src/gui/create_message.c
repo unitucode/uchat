@@ -23,17 +23,18 @@ t_gmsg *mx_create_gmsg(cJSON *msg) {
     if ((valid = get_data(msg, &data, "message_id")) && cJSON_IsNumber(data))
         gmsg->message_id = data->valueint;
     if (!valid) {
-        mx_delete_gmsg(&gmsg);
+        mx_delete_gmsg(gmsg);
         return NULL;
     }
+    gmsg->row_msg = NULL;
     return gmsg;
 }
 
-void mx_delete_gmsg(t_gmsg **gmsg) {
-    if (gmsg && *gmsg) {
-        mx_free((void**)&(*gmsg)->msg);
-        mx_free((void**)&(*gmsg)->login);
-        mx_free((void**)gmsg);
-        *gmsg = NULL;
+void mx_delete_gmsg(t_gmsg *gmsg) {
+    if (gmsg) {
+        mx_free((void**)&(gmsg->msg));
+        mx_free((void**)&(gmsg->login));
+        mx_free((void**)&gmsg);
+        gmsg = NULL;
     }
 }

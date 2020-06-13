@@ -182,5 +182,6 @@ void mx_delete_groom(t_groom *room) {
         mx_free((void**)&(room->customer));
         mx_free((void**)&(room->desc));
         mx_free((void**)&room);
+        room = NULL;
     }
 }

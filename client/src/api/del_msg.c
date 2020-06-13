@@ -20,9 +20,6 @@ bool mx_del_msg_handler(t_dtp *data, t_chat *chat) {
         return false;
     if (!msg_id || !cJSON_IsNumber(msg_id))
         return false;
-    // GUI WORK
-    chat++;
-    printf("deleted msg_id %d room_id %d\n", msg_id->valueint, room_id->valueint);
-    // GUI WORK
+    mx_gdel_msg(msg_id->valueint, room_id->valueint, chat->builder);
     return true;
 }
