@@ -41,3 +41,9 @@ void mx_clear_label_by_name(char *label_name, GtkBuilder *builder) {
 
     gtk_label_set_text(label, "\0");
 }
+
+gchar *mx_entry_get_text(char *entry_name, GtkBuilder *builder) {
+    GtkEntry *entry = GTK_ENTRY(gtk_builder_get_object(builder, entry_name));
+
+    return (gchar*)gtk_entry_get_text(entry);
+}

@@ -1,7 +1,7 @@
 #include "client.h"
 
 /*
- * Returns groom by name, if not found NULL is returned
+ * Returns groom by id, if not found NULL is returned
  */
 t_groom *mx_get_groom_by_id(int room_id, GtkBuilder *builder) {
     GObject *list = gtk_builder_get_object(builder,

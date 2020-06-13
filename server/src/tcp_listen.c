@@ -18,8 +18,12 @@ static void init_sockopt(int fd, const int on) {
 
     sockopt.socket = fd;
     sockopt.level = SOL_SOCKET;
-    // sockopt.option_name = SO_REUSEADDR;
-    sockopt.option_name = SO_NOSIGPIPE;
+    #ifdef SO_NOSIGPIPE
+        sockopt.option_name = SO_NOSIGPIPE;
+    #else
+        sockopt.option_name = SO_REUSEADDR;
+        signal(SIGPIPE, SIG_IGN); // for linux
+    #endif
     sockopt.option_value = &on;
     sockopt.option_len = sizeof(on);
     mx_setsockopt(&sockopt);
