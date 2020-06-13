@@ -33,7 +33,8 @@ bool mx_msg_handler(t_dtp *data, t_client *client) { // TODO leaks
                                         msg->valuestring, 
                                         (char*)client->user->login,
                                         room_id->valueint);
-    resend = get_resend_msg(message);
+    if (message)
+        resend = get_resend_msg(message);
     if (!resend)
         return false;
     mx_send_to_all(resend, client);
