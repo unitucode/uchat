@@ -119,28 +119,57 @@ void mx_add_groom(t_groom *room, GtkBuilder *builder) {
     add_room_row(room, builder);
 }
 
-t_groom *mx_create_groom(char *room_name, char *customer, int id,
-                         long int date) {
+static t_groom *mx_init_groom() {
     t_groom *room = mx_malloc(sizeof(t_groom));
 
-    room->room_name = strdup(room_name);
-    room->customer = strdup(customer);
+    room->room_name = NULL;
+    room->customer = NULL;
     room->box_rooms = NULL;
     room->box_messages = NULL;
     room->page = NULL;
     room->row_room = NULL;
     room->stack_msg = NULL;
-    room->id = id;
-    room->date = date;
+    room->id = -1;
+    room->date = -1;
     room->is_updated = true;
     room->desc = NULL;
     return room;
 }
 
+static bool get_data(cJSON *msg, cJSON **data, char *field) { // TO FIX IN GMSG GET_DATA
+    *data = cJSON_GetObjectItemCaseSensitive(msg, field);
+    if (!*data)
+        return false;
+    return true;
+}
+
+t_groom *mx_create_groom(cJSON *room) {
+    t_groom *groom = mx_init_groom();
+    cJSON *data = NULL;
+    bool valid = true;
+
+    if ((valid = get_data(room, &data, "room_name")) && cJSON_IsString(data))
+        groom->room_name = strdup(data->valuestring);
+    if ((valid = get_data(room, &data, "customer")) && cJSON_IsString(data))
+        groom->customer = strdup(data->valuestring);
+    if ((valid = get_data(room, &data, "id")) && cJSON_IsNumber(data))
+        groom->id = data->valueint;
+    if ((valid = get_data(room, &data, "date")) && cJSON_IsNumber(data))
+        groom->date = data->valueint;
+    if ((valid = get_data(room, &data, "desc")) && cJSON_IsString(data))
+        groom->desc = strdup(data->valuestring);
+    if (!valid) {
+        mx_delete_groom(groom);
+        return NULL;
+    }
+    return groom;
+}
+
 void mx_delete_groom(t_groom *room) {
     if (room) {
-        mx_free((void**)&room->room_name);
-        mx_free((void**)&room->customer);
+        mx_free((void**)&(room->room_name));
+        mx_free((void**)&(room->customer));
+        mx_free((void**)&(room->desc));
         mx_free((void**)&room);
     }
 }
