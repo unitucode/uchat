@@ -6,7 +6,7 @@
 #include <gtk/gtk.h>
 #include "protocol.h"
 
-#define MX_IMGS_PATH "../src/gui/"
+#define MX_IMGS_PATH "../src/gui/resources/"
 #define MX_GUI_PATH "../src/gui/gui.glade"
 #define MX_IMG_EYE MX_IMGS_PATH"eye.png"
 #define MX_IMG_CLOSEDEYE MX_IMGS_PATH"closed-eye.png"

@@ -51,14 +51,14 @@
   <object class="GtkImage" id="image5">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
+    <property name="pixbuf">resources/add-room.png</property>
     <property name="pixel_size">30</property>
-    <property name="icon_name">window-new</property>
   </object>
   <object class="GtkImage" id="image6">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
+    <property name="pixbuf">resources/rooms-open.png</property>
     <property name="pixel_size">20</property>
-    <property name="icon_name">format-justify-fill</property>
   </object>
   <object class="GtkImage" id="image7">
     <property name="visible">True</property>
@@ -83,7 +83,7 @@
     <property name="can_focus">False</property>
     <property name="title" translatable="yes">UChat</property>
     <property name="window_position">center</property>
-    <property name="default_width">1000</property>
+    <property name="default_width">900</property>
     <property name="default_height">480</property>
     <property name="destroy_with_parent">True</property>
     <property name="show_menubar">False</property>
@@ -128,6 +128,9 @@
                 <property name="receives_default">True</property>
                 <property name="image">image6</property>
                 <signal name="clicked" handler="mx_widget_switch_visibility" object="box_rooms_list" swapped="no"/>
+                <style>
+                  <class name="rooms-open"/>
+                </style>
               </object>
             </child>
             <child>
@@ -191,10 +194,10 @@
             </child>
             <child>
               <object class="GtkButton" id="btn_add_room">
-                <property name="height_request">48</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
+                <property name="halign">center</property>
                 <property name="image">image5</property>
                 <signal name="clicked" handler="mx_widget_switch_visibility" object="dialog_addroom" swapped="no"/>
                 <style>
@@ -203,7 +206,7 @@
               </object>
               <packing>
                 <property name="expand">False</property>
-                <property name="fill">True</property>
+                <property name="fill">False</property>
                 <property name="position">1</property>
               </packing>
             </child>
@@ -212,7 +215,7 @@
             </style>
           </object>
           <packing>
-            <property name="expand">False</property>
+            <property name="expand">True</property>
             <property name="fill">True</property>
             <property name="position">0</property>
           </packing>
@@ -781,7 +784,7 @@
                     <property name="buffer">buffer_login</property>
                     <property name="max_length">22</property>
                     <property name="shadow_type">none</property>
-                    <property name="primary_icon_pixbuf">login.png</property>
+                    <property name="primary_icon_pixbuf">resources/login.png</property>
                     <property name="placeholder_text" translatable="yes">Enter your login</property>
                   </object>
                   <packing>
@@ -801,8 +804,8 @@
                     <property name="visibility">False</property>
                     <property name="invisible_char">•</property>
                     <property name="shadow_type">none</property>
-                    <property name="primary_icon_pixbuf">lock.png</property>
-                    <property name="secondary_icon_pixbuf">eye.png</property>
+                    <property name="primary_icon_pixbuf">resources/lock.png</property>
+                    <property name="secondary_icon_pixbuf">resources/eye.png</property>
                     <property name="primary_icon_activatable">False</property>
                     <property name="secondary_icon_tooltip_text" translatable="yes">Show password</property>
                     <property name="placeholder_text" translatable="yes">Enter your password</property>
@@ -868,7 +871,7 @@
                     <property name="margin_end">25</property>
                     <property name="buffer">buffer_login</property>
                     <property name="max_length">22</property>
-                    <property name="primary_icon_pixbuf">id-card.png</property>
+                    <property name="primary_icon_pixbuf">resources/id-card.png</property>
                     <property name="placeholder_text" translatable="yes">Enter your login</property>
                   </object>
                   <packing>
@@ -887,8 +890,8 @@
                     <property name="max_length">50</property>
                     <property name="visibility">False</property>
                     <property name="invisible_char">•</property>
-                    <property name="primary_icon_pixbuf">lock.png</property>
-                    <property name="secondary_icon_pixbuf">eye.png</property>
+                    <property name="primary_icon_pixbuf">resources/lock.png</property>
+                    <property name="secondary_icon_pixbuf">resources/eye.png</property>
                     <property name="placeholder_text" translatable="yes">Enter your password</property>
                     <property name="input_purpose">password</property>
                     <signal name="icon-press" handler="mx_show_password" object="entry_signup_confirm" swapped="no"/>
@@ -910,7 +913,7 @@
                     <property name="max_length">50</property>
                     <property name="visibility">False</property>
                     <property name="invisible_char">•</property>
-                    <property name="primary_icon_pixbuf">lock.png</property>
+                    <property name="primary_icon_pixbuf">resources/lock.png</property>
                     <property name="placeholder_text" translatable="yes">Re-enter your password</property>
                     <property name="input_purpose">password</property>
                   </object>
@@ -1480,12 +1483,5 @@
         </child>
       </object>
     </child>
-  </object>
-  <object class="GtkEntry" id="pixbuf_pass">
-    <property name="name">entry_password_pixbuff</property>
-    <property name="visible">True</property>
-    <property name="can_focus">True</property>
-    <property name="primary_icon_pixbuf">eye.png</property>
-    <property name="secondary_icon_pixbuf">closed-eye.png</property>
   </object>
 </interface>

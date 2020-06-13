@@ -98,7 +98,7 @@ entry {
 }
 .dialog_notebook tab:checked {
     box-shadow: none;
-	box-shadow: 0 -3px #647FFF inset;
+	box-shadow: 0 -3px rgb(88,83,187) inset;
 }
 .dialog_notebook tab label {
     font-weight: 500;
@@ -130,7 +130,7 @@ scrolledwindow {
 }
 
 .rooms-list row {
-	padding: 8px 25px;
+	padding: 5px 25px;
     color: #fff;
     outline: none;
 }
@@ -147,12 +147,18 @@ scrolledwindow {
 
 .rooms-list row:selected label {
 	background-color: rgb(71,59, 120);
-	border-left: 3px solid #6785FF;
+	border-left: 3px solid rgb(88,83,187);
 }
 
 .add-room-button {
 	background: none;
-	padding: 30px 0;
+    padding: 17px;
+    border-radius: 100px;
+    background-color: rgb(88,83,187);
+    margin: 20px 0;
+}
+.add-room-button:hover {
+    background-color: rgb(71,59, 120);
 }
 scrolledwindow overshoot, scrolledwindow undershoot {
 	box-shadow: none
@@ -163,4 +169,33 @@ scrolledwindow scrollbar.bottom {
 }
 .box-rooms {
 	box-shadow: 10px 0 10px -2px rgba(0,0,0,.1);
+}
+list {
+    color: #fff;
+}
+srcollbar.hovering slider {
+    background-color: rgba(63,51, 107,.8);
+}
+.hovering {
+    background-color: rgb(71,59, 120);
+	border:none;
+}
+.dragging slider {
+	background-color: rgb(88,83,187);
+}
+scrollbar slider {
+	border-color: transparent;
+	background-color: rgba(88,83,187,.8);
+}
+.box-rooms undershoot.bottom {
+	box-shadow: 0 -40px 12px -20px rgba(47,39,78,1) inset;
+	opacity: 1;
+}
+headerbar button image {
+	-gtk-icon-effect: none;
+}
+
+headerbar button:hover {
+	background-image: image(rgba(252,252,252,.75));
+	transition: .1s easy;
 }
