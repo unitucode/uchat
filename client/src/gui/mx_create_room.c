@@ -26,7 +26,7 @@ void mx_unselect_curr_room_messages(GtkListBox *box, GtkListBoxRow *row,
     (void)builder;
 }
 
-static void set_current_room_prefs(GtkBuilder *builder) {
+void mx_set_current_room_sett(GtkBuilder *builder) {
     t_groom *groom = mx_get_selected_groom(builder);
     GObject *name = gtk_builder_get_object(builder, "label_prefs_roomname");
     GObject *customer = gtk_builder_get_object(builder,
@@ -48,7 +48,7 @@ void mx_select_room(GtkWidget *event_box, GdkEventButton *event,
                                 GTK_WIDGET(data->groom->page));
     gtk_list_box_select_row(data->groom->box_rooms,
                             data->groom->row_room);
-    set_current_room_prefs(data->builder);
+    mx_set_current_room_sett(data->builder);
     (void)event;
     (void)user_data;
 }
@@ -101,6 +101,7 @@ static void add_room_row(t_groom *room, GtkBuilder *builder) {
 
     room->box_rooms = box;
     room->row_room = GTK_LIST_BOX_ROW(row);
+    room->label_name = GTK_LABEL(label);
 
     data = mx_create_sigdata(builder, room, NULL);
     g_signal_connect(event, "button_press_event",
@@ -130,6 +131,7 @@ t_groom *mx_create_groom(char *room_name, char *customer, int id,
     t_groom *room = mx_malloc(sizeof(t_groom));
 
     room->room_name = strdup(room_name);
+    room->label_name = NULL;
     room->customer = strdup(customer);
     room->box_rooms = NULL;
     room->box_messages = NULL;
@@ -139,7 +141,7 @@ t_groom *mx_create_groom(char *room_name, char *customer, int id,
     room->id = id;
     room->date = date;
     room->is_updated = true;
-    room->desc = "sdfsdfsdfsfd";
+    room->desc = "Description";
     return room;
 }
 
@@ -151,6 +153,7 @@ void mx_delete_groom(t_groom *room) {
     if (room) {
         mx_free((void**)&(room->room_name));
         mx_free((void**)&(room->customer));
+        // mx_free((void**)&(room->desc));
         mx_free((void**)&room);
     }
 }

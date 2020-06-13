@@ -35,6 +35,7 @@ struct s_groom {
     GtkListBoxRow *row_room;
     GtkStack *stack_msg;
     GtkListBox *box_messages;
+    GtkLabel *label_name;
     int id;
     char *room_name;
     char *customer;
@@ -155,6 +156,7 @@ void mx_errmsg_wrong_authdata(GtkBuilder *builder);
 void mx_errmsg_user_exist(GtkBuilder *builder);
 void mx_delete_row_room(GtkWidget *row, GtkBuilder *builder);
 void mx_set_default_room_sett(GtkBuilder *builder);
+void mx_set_current_room_sett(GtkBuilder *builder);
 
 // gui utils
 void mx_scrlldwnd_connect(char *name, GtkWidget *scroll, GtkBuilder *builder);
