@@ -14,7 +14,7 @@ void mx_change_working_dir(void) {
 
 int main(int argc, char **argv) {
     // mx_change_working_dir();
-    sqlite3 *database = mx_server_data_open(MX_DB);
+    // sqlite3 *database = mx_server_data_open(MX_DB);
 
     // edit message                     Ok
     // mx_edit_message(database, 2, 98, "hi snaik, how are you ?");
@@ -118,10 +118,10 @@ int main(int argc, char **argv) {
     // mx_update_description_user(database, "giblin gob", "I am rich goblin hahahahahaha");
 
 
-    mx_close_database(database);
-    system("leaks -q uchat_server");
-    printf("Ok\n");
-    exit(1);
+    // mx_close_database(database);
+    // system("leaks -q uchat_server");
+    // printf("Ok\n");
+    // exit(1);
     t_chat *chat = mx_init_chat(argc, argv);
     t_client *client = NULL;
     t_ssl_con *ssl = NULL;
