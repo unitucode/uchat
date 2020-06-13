@@ -66,12 +66,12 @@ t_db_room *mx_insert_room_into_db(sqlite3 *database, char *room_name,
     return mx_get_room(database, room_name);
 }
 
-t_db_user *mx_insert_user_into_db(sqlite3 *database, char *login,
+t_db_user *mx_insert_user_into_db(sqlite3 *db, char *login,
                             char *pass, char *token) {
     sqlite3_stmt *stmt;
     int rv = 0;
 
-    rv = sqlite3_prepare_v3(database,
+    rv = sqlite3_prepare_v3(db,
                             "insert into users(login, password, token, permis"
                             "sion, date, description) values(?1, ?2, ?3, 0, "
                             "strftime('%s', 'now'), '');", -1, 0, &stmt, NULL);
@@ -81,7 +81,8 @@ t_db_user *mx_insert_user_into_db(sqlite3 *database, char *login,
     sqlite3_bind_text(stmt, 3, token, -1, SQLITE_STATIC);
     mx_error_sqlite(sqlite3_step(stmt), "step", "insert user");
     sqlite3_finalize(stmt);
-    return mx_get_user_by_login(database, login);
+    mx_create_table_queue(db, login); 
+    return mx_get_user_by_login(db, login);
 }
 
 void mx_insert_member_into_db(sqlite3 *database, 
