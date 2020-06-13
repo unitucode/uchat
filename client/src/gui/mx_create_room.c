@@ -139,7 +139,7 @@ static t_groom *mx_init_groom() {
     room->id = -1;
     room->date = -1;
     room->is_updated = true;
-    room->desc = strdup("");
+    room->desc = NULL;
     return room;
 }
 

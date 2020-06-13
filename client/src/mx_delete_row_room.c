@@ -5,10 +5,12 @@ void mx_set_default_room_sett(GtkBuilder *builder) {
     GObject *customer = gtk_builder_get_object(builder,
                                                "label_prefs_customer");
     GObject *header = gtk_builder_get_object(builder, "header_main");
+    GObject *desc = gtk_builder_get_object(builder, "buffer_room_desc");
 
     gtk_label_set_text(GTK_LABEL(name), "Room Name");
     gtk_header_bar_set_title(GTK_HEADER_BAR(header), "UChat");
     gtk_label_set_text(GTK_LABEL(customer), "customer login");
+    gtk_text_buffer_set_text(GTK_TEXT_BUFFER(desc), "", -1);
 }
 
 void mx_unselect_room(t_groom *groom, GtkBuilder *builder) {
