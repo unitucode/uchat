@@ -83,7 +83,7 @@ static void add_messages_box(t_groom *room, GtkBuilder *builder) {
     gtk_container_add(GTK_CONTAINER(scroll), view);
     gtk_container_add(GTK_CONTAINER(view), box);
 
-    gtk_stack_add_named(GTK_STACK(stack), scroll, room->room_name);
+    gtk_stack_add_named(GTK_STACK(stack), scroll, MX_ITOA(room->id));
     room->stack_msg = GTK_STACK(stack);
     room->page = GTK_SCROLLED_WINDOW(scroll);
     gtk_widget_show_all(scroll);
