@@ -113,7 +113,7 @@ bool mx_del_room_handler(t_dtp *data, t_chat *chat); // HANDLER FOR DELETE ROOM
  * 
  */
 //api
-t_dtp *mx_new_room_request(char *room_name, bool is_private, char *pass);
+t_dtp *mx_new_room_request(char *room_name, char *desc);
 t_dtp *mx_msg_request(char *msg, int room_id);
 t_dtp *mx_token_request(char *token);
 t_dtp *mx_log_in_request(char *login, char *pass);
