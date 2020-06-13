@@ -138,8 +138,7 @@ int mx_start_gui(t_chat *chat);
 void mx_start_main_window(t_chat *chat);
 void mx_add_groom(t_groom *room, GtkBuilder *builder);
 void mx_delete_groom(t_groom *room);
-t_groom *mx_create_groom(char *room_name, char *customer, int id,
-                         long int date);
+t_groom *mx_create_groom(cJSON *room);
 t_gmsg *mx_create_gmsg(cJSON *msg);
 void mx_delete_gmsg(t_gmsg **gmsg);
 GtkWidget *mx_create_message_row(t_gmsg *msg);
@@ -156,7 +155,7 @@ void mx_connect_room_settings(t_chat *chat);
 void mx_connect_test_request(t_chat *chat); // DELETE
 void mx_errmsg_wrong_authdata(GtkBuilder *builder);
 void mx_errmsg_user_exist(GtkBuilder *builder);
-void mx_delete_row_room(GtkWidget *row, GtkBuilder *builder);
+void mx_delete_row_room(GtkListBoxRow *row, GtkBuilder *builder);
 void mx_set_default_room_sett(GtkBuilder *builder);
 void mx_set_current_room_sett(GtkBuilder *builder);
 

@@ -1,5 +1,13 @@
 #include "client.h"
 
+static void gdel_room(int id, GtkBuilder *builder) {
+    t_groom *groom = mx_get_groom_by_id(id, builder);
+    GObject *room_sett = gtk_builder_get_object(builder, "dialog_room_sett");
+
+    mx_delete_row_room(groom->row_room, builder);
+    mx_widget_switch_visibility(NULL, GTK_WIDGET(room_sett));
+}
+
 t_dtp *mx_del_room_request(int room_id) {
     cJSON *json_result = cJSON_CreateObject();
 
@@ -15,9 +23,6 @@ bool mx_del_room_handler(t_dtp *data, t_chat *chat) {
 
     if (!room_id || !cJSON_IsNumber(room_id))
         return false;
-    //WORKING WITH GUI
-    chat++;
-    printf("deleted id %d\n", room_id->valueint);
-    //WORKING WITH GUI
+    gdel_room(room_id->valueint, chat->builder);
     return true;
 }

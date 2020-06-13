@@ -34,7 +34,7 @@ static void req_room_sett(GtkButton *btn, t_chat *chat) {
 static void req_room_del(GtkButton *btn, t_chat *chat) {
     t_groom *groom = mx_get_selected_groom(chat->builder);
     t_dtp *dtp = mx_del_room_request(groom->id);
-    puts("WORK");
+
     mx_send(chat->ssl, dtp);
     mx_free_request(&dtp);
     (void)btn;
