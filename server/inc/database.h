@@ -53,6 +53,7 @@ void mx_create_table_users(sqlite3 *database);
 void mx_create_table_rooms(sqlite3 *database);
 void mx_create_table_member(sqlite3 *database);
 void mx_create_table_room(sqlite3 *database, unsigned long long int id);
+void mx_create_table_queue(sqlite3 *db, char *login);
 
 t_db_user *mx_get_user_by_login(sqlite3 *database, char *login);
 t_db_user *mx_get_user_by_token(sqlite3 *database, char *token);
@@ -116,7 +117,7 @@ unsigned long long int mx_get_count_rooms(sqlite3 *db);
 unsigned long long int mx_get_count_messages(sqlite3 *db,
                                              unsigned long long int id);
 
-    // error
 
-    int mx_error_sqlite(int rv, char *error, char *where_error);
+// error
+int mx_error_sqlite(int rv, char *error, char *where_error);
 bool mx_is_exists_room_by_id(sqlite3 *db, unsigned long long int id);
