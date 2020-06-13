@@ -15,6 +15,7 @@
 #include <stdbool.h>
 #include <stdarg.h>
 #include <time.h>
+#include <signal.h>
 #include <sys/stat.h>
 #include <openssl/ssl.h>
 #include <openssl/err.h>
@@ -63,6 +64,9 @@ typedef enum e_logtype {
     LOGERR
 }            t_logtype;
 
+// write
+ssize_t SSL_safe_write(SSL *ssl, const void* buf, size_t size);
+
 //Utils
 bool mx_match_search(char *str, char *regex);
 bool mx_match_nsearch(char *str, char *regex, size_t size);
@@ -72,6 +76,7 @@ long long mx_get_current_time(void);
 
 
 //wrappers
+char *mx_strdup(char *str);
 void *mx_malloc(size_t size);
 void mx_free(void **ptr);
 int mx_socket(int domain, int type, int protocol);

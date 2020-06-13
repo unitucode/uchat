@@ -34,7 +34,7 @@ t_dtp *mx_sign_up_request(char *login, char *pass) {
     return mx_get_transport_data(json_result);
 }
 
-bool mx_authorization(t_dtp *token, t_chat *chat) {
+bool mx_authorization_handler(t_dtp *token, t_chat *chat) {
     cJSON *auth_token = NULL;
     cJSON *login = NULL;
 

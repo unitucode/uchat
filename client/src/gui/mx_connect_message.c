@@ -2,12 +2,15 @@
 
 static void req_send_message(GtkButton *btn, t_chat *chat) {
     gchar *message_text = mx_get_buffer_text("buffer_message", chat->builder);
-    char *room_name = mx_get_selected_groom(chat->builder)->room_name;
-    t_dtp *dtp = mx_msg_request(message_text, room_name);
+    t_groom *room = mx_get_selected_groom(chat->builder);
+    t_dtp *dtp = NULL;
 
-    mx_send(chat->ssl, dtp);
-    mx_free_request(&dtp);
-    mx_clear_buffer_text("buffer_message", chat->builder);
+    if (room) {
+        dtp = mx_msg_request(message_text, room->id);
+        mx_send(chat->ssl, dtp);
+        mx_free_request(&dtp);
+        mx_clear_buffer_text("buffer_message", chat->builder);
+    }
     (void)btn;
 }
 

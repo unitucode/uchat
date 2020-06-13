@@ -10,7 +10,7 @@ t_dtp *mx_log_out_request(char *token) {
     return mx_get_transport_data(json_result);
 }
 
-bool mx_log_out(t_dtp *token, t_chat *chat) {
+bool mx_log_out_handler(t_dtp *token, t_chat *chat) {
     cJSON *tok = cJSON_GetObjectItemCaseSensitive(token->json, "token");
 
     if (!tok || !cJSON_IsString(tok) || !mx_isvalid_token(tok->valuestring))

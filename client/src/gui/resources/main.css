@@ -27,7 +27,7 @@ entry {
     padding: 0;
     border-bottom: 1px solid rgba(255,255,255,.7);
     border-radius: 0;
-    margin: 0 -25px;
+    /* margin: 0 -25px; */
     caret-color: #fff;
     color: #fff;
     font-size: 15px;
@@ -128,28 +128,23 @@ dialog headerbar {
 scrolledwindow {
 	border: none;
 }
-
 .rooms-list row {
-	padding: 5px 25px;
     color: #fff;
     outline: none;
 }
-.rooms-list row:selected {
-	padding: 8px 15px;
-}
-
-.rooms-list row label {
+.rooms-list label {
 	background-color: rgba(63,51, 107,.8);
-	padding: 25px 20px;
-	transition: .3s easy;
-	border-radius: 5px;
+	padding: 25px 0;
+    border-radius: 5px;
+    margin: 5px 25px;
+    transition: all .3s easy;
 }
-
 .rooms-list row:selected label {
 	background-color: rgb(71,59, 120);
-	border-left: 3px solid rgb(88,83,187);
+    border-left: 3px solid rgb(88,83,187);
+    border-right: 3px solid rgb(88,83,187);
+    margin: 5px 15px;
 }
-
 .add-room-button {
 	background: none;
     padding: 17px;
@@ -163,7 +158,6 @@ scrolledwindow {
 scrolledwindow overshoot, scrolledwindow undershoot {
 	box-shadow: none
 }
-
 scrolledwindow scrollbar.bottom {
 	box-shadow: 0 -20px 20px #29304b;
 }

@@ -1,14 +1,21 @@
 #include "server.h"
 
 void mx_init_receiver(t_chat *chat) {
-    chat->request_handler[RQ_SIGN_UP] = mx_sign_up;
-    chat->request_handler[RQ_TOKEN] = mx_log_in_token;
-    chat->request_handler[RQ_LOG_IN] = mx_log_in;
-    chat->request_handler[RQ_NEW_ROOM] = mx_new_room;
-    chat->request_handler[RQ_MSG] = mx_msg;
+    chat->request_handler[RQ_SIGN_UP] = mx_sign_up_handler;
+    chat->request_handler[RQ_TOKEN] = mx_log_in_token_handler;
+    chat->request_handler[RQ_LOG_IN] = mx_log_in_handler;
+    chat->request_handler[RQ_NEW_ROOM] = mx_new_room_handler;
+    chat->request_handler[RQ_MSG] = mx_msg_handler;
     chat->request_handler[RQ_GET_ROOMS] = mx_get_rooms_handler;
-    chat->request_handler[RQ_LOG_OUT] = mx_log_out;
+    chat->request_handler[RQ_LOG_OUT] = mx_log_out_handler;
     chat->request_handler[RQ_GET_NEW_MSGS] = mx_get_msgs_handler;
+    chat->request_handler[RQ_UPD_ROOM_DESC] = mx_upd_room_desc_handler;
+    chat->request_handler[RQ_UPD_ROOM_NAME] = mx_upd_room_name_handler;
+    chat->request_handler[RQ_UPD_USER_DESC] = mx_upd_user_desc_handler;
+    chat->request_handler[RQ_DEL_ROOM] = mx_del_room_handler;
+    chat->request_handler[RQ_RECONNECT] = NULL;
+    chat->request_handler[RQ_DEL_MSG] = mx_del_msg_handler;
+    chat->request_handler[RQ_EDIT_MSG] = mx_edit_msg_handler;
 }
 
 void *mx_receiver(void *arg) {

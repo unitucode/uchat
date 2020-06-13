@@ -13,11 +13,11 @@ GtkWidget *mx_create_message_row(t_gmsg *msg) {
     pango_attr_list_insert(attr_list, attr);
     GtkWidget *label_name = gtk_label_new(msg->login);
     gtk_label_set_xalign(GTK_LABEL(label_name), 0.03);
-    GtkWidget *label_time = gtk_label_new("15:05");
+    GtkWidget *label_time = gtk_label_new("13:07");
     gtk_label_set_xalign(GTK_LABEL(label_time), 0.97);
     gtk_label_set_attributes(GTK_LABEL(label_name), attr_list);
     pango_attr_list_unref(attr_list);
-    gtk_widget_set_tooltip_text(label_time, "24.05.2020    15:05");
+    gtk_widget_set_tooltip_text(label_time, "24.05.2020    13:37");
     GtkWidget *info_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
     gtk_box_pack_start(GTK_BOX(info_box), label_name, true, true, 0);
     gtk_box_pack_end(GTK_BOX(info_box), label_time, true, true, 0);
