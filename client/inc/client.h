@@ -158,6 +158,9 @@ void mx_errmsg_user_exist(GtkBuilder *builder);
 void mx_delete_row_room(GtkListBoxRow *row, GtkBuilder *builder);
 void mx_set_default_room_sett(GtkBuilder *builder);
 void mx_set_current_room_sett(GtkBuilder *builder);
+void mx_gupd_room_desc(int id, char *desc, GtkBuilder *builder);
+void mx_gupd_room_name(int id, char *name, GtkBuilder *builder);
+void mx_gdel_room(int id, GtkBuilder *builder);
 
 // gui utils
 void mx_scrlldwnd_connect(char *name, GtkWidget *scroll, GtkBuilder *builder);
