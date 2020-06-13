@@ -141,7 +141,7 @@ t_groom *mx_create_groom(char *room_name, char *customer, int id,
     room->id = id;
     room->date = date;
     room->is_updated = true;
-    room->desc = "Description";
+    room->desc = strdup("");
     return room;
 }
 

@@ -1,6 +1,6 @@
 #include "client.h"
 
-static void mx_gupd_room_name(int id, char *name, GtkBuilder *builder) {
+static void gupd_room_name(int id, char *name, GtkBuilder *builder) {
     t_groom *groom = mx_get_groom_by_id(id, builder);
 
     mx_free((void**)&(groom->room_name));
@@ -29,7 +29,6 @@ bool mx_upd_room_name_handler(t_dtp *data, t_chat *chat) {
         return false;
     if (!room_name || !cJSON_IsString(room_name))
         return false;
-    mx_gupd_room_name(room_id->valueint, room_name->valuestring,
-                      chat->builder);
+    gupd_room_name(room_id->valueint, room_name->valuestring, chat->builder);
     return true;
 }

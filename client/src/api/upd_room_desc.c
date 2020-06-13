@@ -1,5 +1,13 @@
 #include "client.h"
 
+static void gupd_room_desc(int id, char *desc, GtkBuilder *builder) {
+    t_groom *groom = mx_get_groom_by_id(id, builder);
+
+    mx_free((void **)&(groom->desc));
+    groom->desc = strdup(desc);
+    mx_set_current_room_sett(builder);
+}
+
 t_dtp *mx_upd_room_desc_request(int room_id, char *desc) {
     cJSON *json_result = cJSON_CreateObject();
 
@@ -20,9 +28,6 @@ bool mx_upd_room_desc_handler(t_dtp *data, t_chat *chat) {
         return false;
     if (!desc || !cJSON_IsString(desc))
         return false;
-    //WORKING WITH GUI
-    chat++;
-    printf("room_id = %d new room_desc = %s\n", room_id->valueint, desc->valuestring);
-    //WORKING WITH GUI
+    gupd_room_desc(room_id->valueint, desc->valuestring, chat->builder);
     return true;
 }
