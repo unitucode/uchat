@@ -20,7 +20,7 @@ $(SQLITE_STATIC): $(SQLITE_OBJ)
 	@printf "\033[32;1m$(notdir $@) created\033[0m\n"
 
 $(SQLITE_OBJ): sqlite3.c sqlite3.h
-	@$(CC) -c $<
+	@$(CC) -DSQLITE_ENABLE_UPDATE_DELETE_LIMIT -c $<
 
 uninstall: clean
 	@rm -rf $(SQLITE_STATIC)
@@ -28,5 +28,4 @@ uninstall: clean
 clean:
 	@rm -rf $(SQLITE_OBJ)
 	@rm -rf ../../include/sqlite3.h
-
 reinstall: uninstall all
