@@ -15,9 +15,6 @@ bool mx_del_room_handler(t_dtp *data, t_chat *chat) {
 
     if (!room_id || !cJSON_IsNumber(room_id))
         return false;
-    //WORKING WITH GUI
-    chat++;
-    printf("deleted id %d\n", room_id->valueint);
-    //WORKING WITH GUI
+    mx_gdel_room(room_id->valueint, chat->builder);
     return true;
 }

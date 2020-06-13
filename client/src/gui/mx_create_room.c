@@ -26,27 +26,31 @@ void mx_unselect_curr_room_messages(GtkListBox *box, GtkListBoxRow *row,
     (void)builder;
 }
 
-static void set_current_room_prefs(GtkBuilder *builder) {
+void mx_set_current_room_sett(GtkBuilder *builder) {
     t_groom *groom = mx_get_selected_groom(builder);
     GObject *name = gtk_builder_get_object(builder, "label_prefs_roomname");
     GObject *customer = gtk_builder_get_object(builder,
                                                "label_prefs_customer");
+    GObject *desc = gtk_builder_get_object(builder, "buffer_room_desc");
     GObject *header = gtk_builder_get_object(builder, "header_main");
 
     gtk_label_set_text(GTK_LABEL(name), groom->room_name);
     gtk_header_bar_set_title(GTK_HEADER_BAR(header), groom->room_name);
+    gtk_text_buffer_set_text(GTK_TEXT_BUFFER(desc), groom->desc, -1);
     gtk_label_set_text(GTK_LABEL(customer), groom->customer);
 }
 
-void mx_select_room(GtkWidget *widget, GdkEventButton *event,
-                    t_signal_data *data) {
+void mx_select_room(GtkWidget *event_box, GdkEventButton *event,
+                    gpointer *user_data) {
+    t_signal_data *data = g_object_get_data(G_OBJECT(event_box), "sigdata");
+
     gtk_stack_set_visible_child(data->groom->stack_msg,
                                 GTK_WIDGET(data->groom->page));
     gtk_list_box_select_row(data->groom->box_rooms,
                             data->groom->row_room);
-    set_current_room_prefs(data->builder);
-    (void)widget;
+    mx_set_current_room_sett(data->builder);
     (void)event;
+    (void)user_data;
 }
 
 void mx_hide_msg_ctrl(GtkListBox *box, GtkListBoxRow *row,
@@ -79,7 +83,7 @@ static void add_messages_box(t_groom *room, GtkBuilder *builder) {
     gtk_container_add(GTK_CONTAINER(scroll), view);
     gtk_container_add(GTK_CONTAINER(view), box);
 
-    gtk_stack_add_named(GTK_STACK(stack), scroll, room->room_name);
+    gtk_stack_add_named(GTK_STACK(stack), scroll, MX_ITOA(room->id));
     room->stack_msg = GTK_STACK(stack);
     room->page = GTK_SCROLLED_WINDOW(scroll);
     gtk_widget_show_all(scroll);
@@ -92,18 +96,16 @@ static void add_room_row(t_groom *room, GtkBuilder *builder) {
     GtkWidget *row = gtk_list_box_row_new();
     GtkWidget *label = gtk_label_new(room->room_name);
     GtkWidget *event = gtk_event_box_new();
-    gtk_event_box_set_above_child(GTK_EVENT_BOX(event), false);
+    t_signal_data *data = NULL;
 
-    g_object_set_data_full(G_OBJECT(row), "groom", room,
-                           (GDestroyNotify)mx_delete_groom);
+
     room->box_rooms = box;
     room->row_room = GTK_LIST_BOX_ROW(row);
+    room->label_name = GTK_LABEL(label);
 
-    t_signal_data *data = (t_signal_data*)malloc(sizeof(t_signal_data));
-    data->builder = builder;
-    data->groom = room;
+    data = mx_create_sigdata(builder, room, NULL);
     g_signal_connect(event, "button_press_event",
-                     G_CALLBACK(mx_select_room), data);
+                     G_CALLBACK(mx_select_room), NULL);
 
     gtk_container_add(GTK_CONTAINER(event), label);
     gtk_container_add(GTK_CONTAINER(row), event);
@@ -112,6 +114,11 @@ static void add_room_row(t_groom *room, GtkBuilder *builder) {
     room->is_updated = false;
     gtk_list_box_insert(box, row, -1);
     gtk_widget_show_all(GTK_WIDGET(box));
+
+    g_object_set_data_full(G_OBJECT(row), "groom", room,
+                           (GDestroyNotify)mx_delete_groom);
+    g_object_set_data_full(G_OBJECT(event), "sigdata", data,
+                            (GDestroyNotify)mx_free_sigdata);
 }
 
 void mx_add_groom(t_groom *room, GtkBuilder *builder) {
@@ -134,6 +141,10 @@ static t_groom *mx_init_groom() {
     room->is_updated = true;
     room->desc = NULL;
     return room;
+}
+
+void mx_free_sigdata(t_signal_data *data) {
+    mx_free((void **)&data);
 }
 
 static bool get_data(cJSON *msg, cJSON **data, char *field) { // TO FIX IN GMSG GET_DATA

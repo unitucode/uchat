@@ -20,9 +20,7 @@ bool mx_upd_room_name_handler(t_dtp *data, t_chat *chat) {
         return false;
     if (!room_name || !cJSON_IsString(room_name))
         return false;
-    //WORKING WITH GUI
-    chat++;
-    printf("room_id = %d new room_name = %s\n", room_id->valueint, room_name->valuestring);
-    //WORKING WITH GUI
+    mx_gupd_room_name(room_id->valueint, room_name->valuestring,
+                      chat->builder);
     return true;
 }

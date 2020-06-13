@@ -6,7 +6,7 @@
 #include <gtk/gtk.h>
 #include "protocol.h"
 
-#define MX_IMGS_PATH "../src/gui/"
+#define MX_IMGS_PATH "../src/gui/resources/"
 #define MX_GUI_PATH "../src/gui/gui.glade"
 #define MX_IMG_EYE MX_IMGS_PATH"eye.png"
 #define MX_IMG_CLOSEDEYE MX_IMGS_PATH"closed-eye.png"
@@ -35,6 +35,7 @@ struct s_groom {
     GtkListBoxRow *row_room;
     GtkStack *stack_msg;
     GtkListBox *box_messages;
+    GtkLabel *label_name;
     int id;
     char *room_name;
     char *customer;
@@ -71,10 +72,9 @@ struct s_chat {
 };
 
 typedef struct s_signal_data {
-    t_gmsg *msg;
     t_groom *groom;
     GtkBuilder *builder;
-    GtkWidget *row_msg;
+    GtkListBoxRow *row_msg;
 }              t_signal_data;
 
 int mx_tcp_connect(const char *host, const char *serv);
@@ -96,7 +96,7 @@ bool mx_msg_handler(t_dtp *data, t_chat *chat);
 bool mx_rooms_hanlder(t_dtp *data, t_chat *chat);
 bool mx_log_out_handler(t_dtp *token, t_chat *chat);
 bool mx_new_msgs_hanlder(t_dtp *data, t_chat *chat);
-bool mx_upd_room_desc_handler(t_dtp *data, t_chat *chat);  // HANDLER FOR ROOM UPDATE DESCRIPTION REQUEST
+bool mx_upd_room_desc_handler(t_dtp *data, t_chat *chat); // HANDLER FOR ROOM UPDATE DESCRIPTION REQUEST
 bool mx_upd_room_name_handler(t_dtp *data, t_chat *chat); // HANDLER FOR ROOM UPDATE NAME REQUEST
 bool mx_upd_user_desc_handler(t_dtp *data, t_chat *chat); // HANDLER FOR USER UPDATE DESCRIPTION REQUEST
 bool mx_update_users_handler(t_dtp *data, t_chat *chat); // HANDLER FOR USERS ONLINE UPDATE
@@ -160,11 +160,16 @@ void mx_connect_room_settings(t_chat *chat);
 void mx_connect_test_request(t_chat *chat); // DELETE
 void mx_errmsg_wrong_authdata(GtkBuilder *builder);
 void mx_errmsg_user_exist(GtkBuilder *builder);
-void mx_delete_row_room(GtkWidget *row, GtkBuilder *builder);
+void mx_delete_row_room(GtkListBoxRow *row, GtkBuilder *builder);
 void mx_set_default_room_sett(GtkBuilder *builder);
+void mx_set_current_room_sett(GtkBuilder *builder);
+void mx_gupd_room_desc(int id, char *desc, GtkBuilder *builder);
+void mx_gupd_room_name(int id, char *name, GtkBuilder *builder);
+void mx_gdel_room(int id, GtkBuilder *builder);
 
 // gui utils
 void mx_scrlldwnd_connect(char *name, GtkWidget *scroll, GtkBuilder *builder);
+gchar *mx_entry_get_text(char *entry_name, GtkBuilder *builder);
 gchar *mx_get_buffer_text(char *buff_name, GtkBuilder *builder);
 void mx_clear_buffer_text(char *buff_name, GtkBuilder *builder);
 void mx_clear_label_by_name(char *label_name, GtkBuilder *builder);
@@ -174,8 +179,11 @@ t_groom *mx_get_groom_by_id(int room_id, GtkBuilder *builder);
 void mx_unselect_room(t_groom *groom, GtkBuilder *builder);
 void mx_entry_set_icon_by_path(GtkEntry *entry, char *path,
                                GtkEntryIconPosition icon_pos);
+t_signal_data *mx_create_sigdata(GtkBuilder *builder, t_groom *groom,
+                                 GtkListBoxRow *row_msg);
+void mx_free_sigdata(t_signal_data *data);
 
-//gui wrappers
+// gui wrappers
 // void mx_widget_show_all(GtkWidget *widget);
 // void mx_widget_destroy(GtkWidget *widget);
 // void mx_widget_show(GtkWidget *widget);

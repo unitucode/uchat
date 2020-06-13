@@ -27,11 +27,9 @@ static void add_message_row(t_gmsg *msg, GtkBuilder *builder) {
     GtkWidget *event = mx_create_message_row(msg);
     t_groom *room = mx_get_groom_by_id(msg->room_id, builder);
     GtkListBox *box = room->box_messages;
-    t_signal_data *data = (t_signal_data*)malloc(sizeof(t_signal_data));
+    t_signal_data *data = NULL;
 
-    data->builder = builder;
-    data->msg = msg;
-    data->row_msg = row;
+    data = mx_create_sigdata(builder, NULL, GTK_LIST_BOX_ROW(row));
 
     gtk_container_add(GTK_CONTAINER(row), event);
     g_signal_connect(event, "button_press_event",
@@ -41,6 +39,8 @@ static void add_message_row(t_gmsg *msg, GtkBuilder *builder) {
     gtk_list_box_row_changed(room->row_room);
     room->is_updated = false;
     gtk_widget_show_all(GTK_WIDGET(box));
+    g_object_set_data_full(G_OBJECT(event), "sigdata", data,
+                           (GDestroyNotify)mx_free_sigdata);
 }
 
 void mx_add_message_to_room(t_gmsg *msg, GtkBuilder *builder) {
