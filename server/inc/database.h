@@ -77,11 +77,13 @@ void mx_update_description_room_by_id(sqlite3 *db, unsigned long long int id,
 void update(sqlite3_stmt *stmt, char *new, char *name, char *error);
 void mx_edit_name_room(sqlite3 *database, unsigned long long int id, char *new);
 void mx_edit_name_user(sqlite3 *database, char *login, char *new);
+void mx_edit_message(sqlite3 *db, unsigned long long id_room,
+                     unsigned long long id, char *new);
 
 t_db_message *mx_insert_message_into_db_by_id(sqlite3 *db, char *message_str,
-                                        char *login,
-                                        unsigned long long int id);
-void mx_insert_to_room(sqlite3 * database, t_db_message * room, char *name_room);
+                                              char *login,
+                                              unsigned long long int id);
+void mx_insert_to_room(sqlite3 *database, t_db_message *room, char *name_room);
 t_db_message *mx_insert_message_into_db(sqlite3 * database, char *message_str,
                                             char *login, char *name_room);
 t_db_room *mx_insert_room_into_db(sqlite3 * database, char *name_room,

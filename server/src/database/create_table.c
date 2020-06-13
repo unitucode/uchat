@@ -56,10 +56,10 @@ void mx_create_table_room(sqlite3 *db, int id) {
     sqlite3_exec(db, request, 0, 0, 0);
     sqlite3_free(request);
     sqlite3_str_appendf(str2, "create table room%llu "
-                             "(id_message   integer primary key not null,"
-                             "login        text    not null,"
-                             "date         integer not null,"
-                             "message      text    not null);",
+                              "(id_message   integer primary key not null,"
+                              "login        text    not null,"
+                              "date         integer not null,"
+                              "message      text    not null);",
                                                id, id);
     request = sqlite3_str_finish(str2);
     sqlite3_exec(db, request, 0, 0, 0);
