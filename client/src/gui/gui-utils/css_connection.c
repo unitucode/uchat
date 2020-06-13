@@ -1,6 +1,6 @@
 #include "client.h"
 
-void css_connect() {
+void mx_css_connect() {
     GtkCssProvider *cssProv;
 
     cssProv = gtk_css_provider_new();

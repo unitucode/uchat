@@ -8,17 +8,9 @@ button, .input, entry, notebook, .dialog_auth .titlebar  {
     border: none;
 }
 .dialog_auth, .csd {
-    /* background: rgb(20,39,69);
-    background: linear-gradient(173deg, rgba(20,39,69,1) 0%,
-                rgba(0,100,123,1) 49%, rgba(105,114,145,1) 100%); */
     background: rgb(62,50,107);
     background-image: linear-gradient(173deg, rgb(62, 50, 107) 0%, rgba(40,34,65,1) 100%);
 }
-
-/* .box-rooms {
-    background: rgb(57,69,107);
-    background-image: linear-gradient(173deg, rgb(62, 50, 107) 0%, rgba(40,34,65,1) 100%);
-} */
 box stack, entry, .dialog_notebook header {
     background-color: transparent;
 }
@@ -27,7 +19,7 @@ entry {
     padding: 0;
     border-bottom: 1px solid rgba(255,255,255,.7);
     border-radius: 0;
-    margin: 0 -25px;
+    /* margin: 0 -25px; */
     caret-color: #fff;
     color: #fff;
     font-size: 15px;
@@ -128,28 +120,23 @@ dialog headerbar {
 scrolledwindow {
 	border: none;
 }
-
 .rooms-list row {
-	padding: 5px 25px;
     color: #fff;
     outline: none;
 }
-.rooms-list row:selected {
-	padding: 8px 15px;
-}
-
-.rooms-list row label {
+.rooms-list label {
 	background-color: rgba(63,51, 107,.8);
-	padding: 25px 20px;
-	transition: .3s easy;
-	border-radius: 5px;
+	padding: 25px 0;
+    border-radius: 5px;
+    margin: 5px 25px;
+    transition: all .3s;
 }
-
 .rooms-list row:selected label {
 	background-color: rgb(71,59, 120);
-	border-left: 3px solid rgb(88,83,187);
+    border-left: 3px solid rgb(88,83,187);
+    border-right: 3px solid rgb(88,83,187);
+    margin: 5px 15px;
 }
-
 .add-room-button {
 	background: none;
     padding: 17px;
@@ -163,7 +150,6 @@ scrolledwindow {
 scrolledwindow overshoot, scrolledwindow undershoot {
 	box-shadow: none
 }
-
 scrolledwindow scrollbar.bottom {
 	box-shadow: 0 -20px 20px #29304b;
 }

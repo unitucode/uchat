@@ -14,9 +14,17 @@ static void req_send_message(GtkButton *btn, t_chat *chat) {
     (void)btn;
 }
 
-void mx_connect_send_message(t_chat *chat) {
-    GtkButton *btn = GTK_BUTTON(gtk_builder_get_object(chat->builder,
-                                                       "btn_send"));
+static void req_edit_message(GtkButton *btn, t_chat *chat) {
+    puts("APPLY EDITING CHANGES");
+    (void)chat;
+    (void)btn;
+}
 
-    g_signal_connect(btn, "clicked", G_CALLBACK(req_send_message), chat);
+void mx_connect_send_message(t_chat *chat) {
+    GObject *btn_send = gtk_builder_get_object(chat->builder, "btn_send_msg");
+    GObject *btn_edit = gtk_builder_get_object(chat->builder,
+                                               "btn_edit_msg_apply");
+
+    g_signal_connect(btn_send, "clicked", G_CALLBACK(req_send_message), chat);
+    g_signal_connect(btn_edit, "clicked", G_CALLBACK(req_edit_message), chat);
 }

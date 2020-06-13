@@ -170,6 +170,7 @@ void mx_gupd_room_name(int id, char *name, GtkBuilder *builder);
 void mx_gdel_room(int id, GtkBuilder *builder);
 void mx_gdel_msg(int msg_id, int room_id, GtkBuilder *builder);
 
+
 // gui utils
 void mx_scrlldwnd_connect(char *name, GtkWidget *scroll, GtkBuilder *builder);
 gchar *mx_entry_get_text(char *entry_name, GtkBuilder *builder);
@@ -195,4 +196,4 @@ char *mx_page_name(int id);
 void mx_handle_request(t_chat *chat);
 void mx_send_auth_request(char *login, char *password,
                           SSL *ssl, t_request_type request_type);
-void css_connect();
+void mx_css_connect();
