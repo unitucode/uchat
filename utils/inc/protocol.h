@@ -33,6 +33,8 @@ typedef enum s_request_type {
     RQ_RECONNECT,
     RQ_DEL_ROOM,
     RQ_DEL_USER,
+    RQ_EDIT_MSG,
+    RQ_DEL_MSG,
     RQ_COUNT_REQUEST
 }            t_request_type;
 

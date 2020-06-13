@@ -24,7 +24,7 @@ bool mx_del_room_handler(t_dtp *data, t_client *client) { //TODO leaks
     else
         return false;
     resend = get_resend_room(room_id->valueint);
-    mx_send(client->ssl, resend);
+    mx_send_to_all(resend, client);
     mx_free_request(&resend);
     mx_free_room(&room);
     return true;
