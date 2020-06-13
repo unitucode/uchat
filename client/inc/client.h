@@ -182,6 +182,7 @@ void mx_entry_set_icon_by_path(GtkEntry *entry, char *path,
 t_signal_data *mx_create_sigdata(GtkBuilder *builder, t_groom *groom,
                                  GtkListBoxRow *row_msg);
 void mx_free_sigdata(t_signal_data *data);
+char *mx_page_name(int id);
 
 // gui wrappers
 // void mx_widget_show_all(GtkWidget *widget);
