@@ -23,6 +23,8 @@ void mx_init_handlers(t_chat *chat) {
     chat->request_handler[RQ_UPD_USER_DESC] = mx_upd_user_desc_handler;
     chat->request_handler[RQ_RECONNECT] = mx_reconnect_hanlder;
     chat->request_handler[RQ_DEL_ROOM] = mx_del_room_handler;
+    chat->request_handler[RQ_EDIT_MSG] = mx_edit_msg_handler;
+    chat->request_handler[RQ_DEL_MSG] = mx_del_msg_handler;
     mx_pthread_create(&tid, NULL, mx_receiver, chat);
 }
 
@@ -41,11 +43,13 @@ void *mx_receiver(void *arg) {
         }
         printf("chat->valid = %d\n", chat->valid);
         SSL_shutdown(chat->ssl);
-        if (!mx_reconnect(chat) && chat->valid) {
+        if (chat->valid && !mx_reconnect(chat)) {
             printf("Closed receiver\n");
             mx_logger(MX_LOG_FILE, LOGMSG, "Receiver closed\n");
             break;
         }
+        mx_logger(MX_LOG_FILE, LOGMSG, "Receiver closed\n");
+        break;
     }
     return NULL;
 }
