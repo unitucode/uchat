@@ -16,10 +16,7 @@
 
 typedef struct s_chat t_chat;
 typedef struct s_client t_client;
-// typedef struct s_members_room t_members_room;
-// typedef struct s_db_user t_db_user;
-// typedef struct s_db_message t_db_message;
-// typedef struct s_db_room t_db_room;
+typedef struct s_sticker t_sticker;
 
 struct s_chat {
     int listen_fd;

@@ -4,6 +4,7 @@
 
 #define MX_J_STR(m) (m) ? (m) : "(null)"
 #define MX_RQ_SIZE 2048
+#define MX_MAX_FILE_SIZE 50000000
 
 typedef struct s_ssl_con t_ssl_con;
 typedef struct s_dtp t_dtp;
@@ -35,6 +36,7 @@ typedef enum s_request_type {
     RQ_DEL_USER,
     RQ_EDIT_MSG,
     RQ_DEL_MSG,
+    RQ_FILE,
     RQ_COUNT_REQUEST
 }            t_request_type;
 
