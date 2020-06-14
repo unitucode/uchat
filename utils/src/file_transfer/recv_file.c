@@ -2,11 +2,12 @@
 #include "utils.h"
 
 char *mx_recv_file(SSL *ssl, size_t size) {
-    long int bytes = MX_RQ_SIZE;
+    long int bytes = MX_RQ_SIZE; //2048
     size_t read = 0;
     char *data = mx_malloc(size + 1);
 
     bzero(data, size + 1);
+    // sleep(10);
     if (size < MX_RQ_SIZE)
         bytes = size;
     while (read < size && SSL_read(ssl, &data[read], bytes) > 0) {
