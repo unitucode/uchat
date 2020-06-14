@@ -16,6 +16,7 @@ void mx_init_receiver(t_chat *chat) {
     chat->request_handler[RQ_RECONNECT] = NULL;
     chat->request_handler[RQ_DEL_MSG] = mx_del_msg_handler;
     chat->request_handler[RQ_EDIT_MSG] = mx_edit_msg_handler;
+    chat->request_handler[RQ_FILE] = mx_upload_file_handler;
 }
 
 void *mx_receiver(void *arg) {

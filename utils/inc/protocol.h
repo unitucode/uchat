@@ -8,6 +8,7 @@
 
 typedef struct s_ssl_con t_ssl_con;
 typedef struct s_dtp t_dtp;
+typedef struct s_file t_file;
 
 typedef enum s_error_type {
     ER_AUTH_DATA = 0,
@@ -40,6 +41,12 @@ typedef enum s_request_type {
     RQ_COUNT_REQUEST
 }            t_request_type;
 
+struct s_file {
+    char *bytes;
+    char *name;
+    struct stat st;
+};
+
 struct s_ssl_con {
     SSL_CTX *ctx;
     SSL *ssl;
@@ -55,6 +62,12 @@ struct s_dtp { // Data Transfer Protocol view
     size_t len;
     int type;
 };
+
+//file transfer
+t_file *mx_upload_file(char *file_path);
+char *mx_recv_file(SSL *ssl, size_t size);
+int mx_send_file(SSL *ssl, char *data_bytes, size_t size);
+void mx_free_file(t_file **file);
 
 //requests
 t_dtp *mx_delete_room_request(char *room_name);
