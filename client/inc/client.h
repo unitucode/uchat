@@ -169,6 +169,7 @@ void mx_gupd_room_desc(int id, char *desc, GtkBuilder *builder);
 void mx_gupd_room_name(int id, char *name, GtkBuilder *builder);
 void mx_gdel_room(int id, GtkBuilder *builder);
 void mx_gdel_msg(int msg_id, int room_id, GtkBuilder *builder);
+void mx_reset_messege_room(t_groom *new_selected, GtkBuilder *builder);
 
 
 // gui utils
