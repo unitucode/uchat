@@ -8,6 +8,7 @@ void mx_hide_msg_editing(GtkButton *btn, GtkBuilder *builder) {
     gtk_widget_hide(GTK_WIDGET(box_editing));
     gtk_widget_hide(GTK_WIDGET(btn_apply));
     gtk_widget_show(GTK_WIDGET(btn_send));
+    mx_clear_buffer_text("buffer_message", builder);
     (void)btn;
 }
 

@@ -10,10 +10,12 @@ static void req_delete_msg(GtkButton *btn, t_chat *chat) {
 }
 
 static void show_edit_msg(GtkButton *btn, GtkBuilder *builder) {
+    GObject *buffer = gtk_builder_get_object(builder, "buffer_message");
     GObject *label_text = gtk_builder_get_object(builder, "label_edit_text");
     t_gmsg *msg = mx_get_selected_gmsg(builder);
 
     gtk_label_set_text(GTK_LABEL(label_text), msg->msg); // DELETE ALL /n
+    gtk_text_buffer_set_text(GTK_TEXT_BUFFER(buffer), msg->msg, -1);
     (void)btn;
 }
 

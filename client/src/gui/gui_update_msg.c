@@ -1,6 +1,6 @@
 #include "client.h"
 
-t_gmsg *mx_get_msg_by_id(int msg_id, int room_id, GtkBuilder *builder) {
+t_gmsg *mx_get_gmsg_by_id(int msg_id, int room_id, GtkBuilder *builder) {
     t_groom *room = mx_get_groom_by_id(room_id, builder);
     GtkListBox *box = room->box_messages;
     GtkListBoxRow *row = NULL;
@@ -29,7 +29,17 @@ void mx_delete_row_msg(GtkListBoxRow *row, GtkBuilder *builder) {
 }
 
 void mx_gdel_msg(int msg_id, int room_id, GtkBuilder *builder) {
-    t_gmsg *msg = mx_get_msg_by_id(msg_id, room_id, builder);
+    t_gmsg *msg = mx_get_gmsg_by_id(msg_id, room_id, builder);
 
     mx_delete_row_msg(msg->row_msg, builder);
+}
+
+void mx_gupd_msg_text(int msg_id, int room_id,
+                      char *text, GtkBuilder *builder) {
+    t_gmsg *gmsg = mx_get_gmsg_by_id(msg_id, room_id, builder);
+
+    mx_free((void **)&(gmsg->msg));
+    gmsg->msg = mx_strdup(text);
+    gtk_label_set_text(gmsg->label_text, gmsg->msg);
+    gtk_widget_show_all(GTK_WIDGET(gmsg->label_text));
 }

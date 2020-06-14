@@ -578,7 +578,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkButton" id="btn_edit_msg_apply">
+                  <object class="GtkButton" id="c">
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
                     <property name="image">image11</property>

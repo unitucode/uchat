@@ -15,8 +15,17 @@ static void req_send_message(GtkButton *btn, t_chat *chat) {
 }
 
 static void req_edit_message(GtkButton *btn, t_chat *chat) {
-    puts("APPLY EDITING CHANGES");
-    (void)chat;
+    t_gmsg *gmsg = mx_get_selected_gmsg(chat->builder);
+    char *new_text = mx_get_buffer_text("buffer_message", chat->builder);
+    t_dtp *dtp = NULL;
+
+    if (strcmp(gmsg->msg, new_text)) {
+        dtp = mx_edit_msg_request(new_text, gmsg->room_id, gmsg->message_id);
+        mx_send(chat->ssl, dtp);
+        mx_free_request(&dtp);
+    }
+    mx_clear_buffer_text("buffer_message", chat->builder);
+    mx_hide_msg_editing(NULL, chat->builder);
     (void)btn;
 }
 
