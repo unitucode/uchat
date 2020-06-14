@@ -3,17 +3,15 @@
 // SIGNAL-HANDLERS
 void mx_select_msg(GtkWidget *widget, GdkEventButton *event,
                    t_signal_data *data) {
-    GObject *control = gtk_builder_get_object(data->builder,
-                                              "btnbox_msg_ctrl");
     t_groom *groom = mx_get_selected_groom(data->builder);
 
     if (gtk_list_box_row_is_selected(GTK_LIST_BOX_ROW(data->row_msg))) {
-        gtk_widget_set_visible(GTK_WIDGET(control), false);
+        mx_switch_room_header(data->builder, MX_ROOM_CTRL);
         gtk_list_box_unselect_row(GTK_LIST_BOX(groom->box_messages),
                                   GTK_LIST_BOX_ROW(data->row_msg));
     }
     else {
-        gtk_widget_set_visible(GTK_WIDGET(control), true);
+        mx_switch_room_header(data->builder, MX_MSG_CTRL);
         gtk_list_box_select_row(GTK_LIST_BOX(groom->box_messages),
                                 GTK_LIST_BOX_ROW(data->row_msg));
     }

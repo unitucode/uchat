@@ -351,8 +351,7 @@
   <object class="GtkImage" id="image6">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
-    <property name="pixbuf">resources/rooms-open.png</property>
-    <property name="pixel_size">20</property>
+    <property name="pixbuf">resources/multiple.svg</property>
   </object>
   <object class="GtkImage" id="image7">
     <property name="visible">True</property>
@@ -383,63 +382,30 @@
     <property name="show_menubar">False</property>
     <signal name="destroy" handler="gtk_main_quit" swapped="no"/>
     <child type="titlebar">
-      <object class="GtkBox">
+      <object class="GtkHeaderBar" id="header_main">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
+        <property name="title" translatable="yes">UChat</property>
+        <property name="spacing">5</property>
+        <property name="show_close_button">True</property>
         <child>
-          <object class="GtkHeaderBar">
+          <object class="GtkButton" id="btn_show_roomlist">
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <property name="spacing">0</property>
-            <property name="show_close_button">True</property>
-            <child>
-              <object class="GtkButton" id="btn_show_roomprefs">
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
-                <property name="image">image7</property>
-                <signal name="clicked" handler="mx_widget_switch_visibility" object="scrlldwnd_room_sett" swapped="no"/>
-              </object>
-            </child>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="image">image6</property>
+            <signal name="clicked" handler="mx_widget_switch_visibility" object="box_rooms_list" swapped="no"/>
           </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="pack_type">end</property>
-            <property name="position">0</property>
-          </packing>
         </child>
         <child>
-          <object class="GtkHeaderBar" id="header_main">
+          <object class="GtkButton">
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <property name="title" translatable="yes">UChat</property>
-            <property name="spacing">5</property>
-            <child>
-              <object class="GtkButton" id="btn_show_roomlist">
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
-                <property name="image">image6</property>
-                <signal name="clicked" handler="mx_widget_switch_visibility" object="box_rooms_list" swapped="no"/>
-              </object>
-            </child>
-            <child>
-              <object class="GtkButton">
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
-                <property name="image">image9</property>
-                <signal name="clicked" handler="mx_widget_switch_visibility" object="dialog_profile_sett" swapped="no"/>
-              </object>
-              <packing>
-                <property name="position">1</property>
-              </packing>
-            </child>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="image">image9</property>
+            <signal name="clicked" handler="mx_widget_switch_visibility" object="dialog_profile_sett" swapped="no"/>
           </object>
           <packing>
-            <property name="expand">True</property>
-            <property name="fill">True</property>
             <property name="position">1</property>
           </packing>
         </child>
@@ -506,7 +472,7 @@
             </style>
           </object>
           <packing>
-            <property name="expand">True</property>
+            <property name="expand">False</property>
             <property name="fill">True</property>
             <property name="position">0</property>
           </packing>
@@ -520,7 +486,6 @@
             <property name="orientation">vertical</property>
             <child>
               <object class="GtkBox" id="box_entry_field">
-                <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <child>
                   <object class="GtkButton" id="btn_stickers">
@@ -581,6 +546,7 @@
                   <object class="GtkButton" id="btn_edit_msg_apply">
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
+                    <property name="no_show_all">True</property>
                     <property name="image">image11</property>
                   </object>
                   <packing>
@@ -598,51 +564,117 @@
               </packing>
             </child>
             <child>
-              <object class="GtkBox">
-                <property name="visible">True</property>
+              <object class="GtkBox" id="box_room_header">
+                <property name="height_request">50</property>
                 <property name="can_focus">False</property>
                 <property name="orientation">vertical</property>
                 <child>
-                  <object class="GtkButtonBox" id="btnbox_msg_ctrl">
-                    <property name="height_request">30</property>
+                  <object class="GtkStack" id="stack_room_header">
+                    <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="layout_style">center</property>
+                    <property name="transition_type">slide-up-down</property>
                     <child>
-                      <object class="GtkButton" id="btn_edit_msg">
+                      <object class="GtkBox" id="box_room_ctrl">
                         <property name="visible">True</property>
-                        <property name="can_focus">True</property>
-                        <property name="receives_default">True</property>
-                        <property name="image">image1</property>
-                        <signal name="clicked" handler="mx_widget_switch_visibility" object="box_editing_msg" swapped="no"/>
-                        <signal name="clicked" handler="mx_widget_switch_visibility" object="btn_edit_msg_apply" swapped="no"/>
-                        <signal name="clicked" handler="mx_widget_switch_visibility" object="btn_send_msg" swapped="no"/>
+                        <property name="can_focus">False</property>
+                        <child>
+                          <object class="GtkLabel" id="label_header_roomname">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="margin_left">5</property>
+                            <property name="label" translatable="yes">Room Name</property>
+                            <property name="xalign">0</property>
+                            <attributes>
+                              <attribute name="weight" value="ultraheavy"/>
+                              <attribute name="foreground" value="#eeeeeeeeecec"/>
+                            </attributes>
+                          </object>
+                          <packing>
+                            <property name="expand">True</property>
+                            <property name="fill">True</property>
+                            <property name="position">0</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkButton" id="btn_show_roomprefs">
+                            <property name="width_request">50</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="receives_default">True</property>
+                            <property name="image">image7</property>
+                            <signal name="clicked" handler="mx_widget_switch_visibility" object="scrlldwnd_room_sett" swapped="no"/>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">1</property>
+                          </packing>
+                        </child>
                       </object>
                       <packing>
-                        <property name="expand">True</property>
-                        <property name="fill">True</property>
-                        <property name="position">0</property>
+                        <property name="name">page_room_ctrl</property>
+                        <property name="title" translatable="yes">page_room_ctrl</property>
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkButton" id="btn_delete_msg">
-                        <property name="visible">True</property>
-                        <property name="can_focus">True</property>
-                        <property name="receives_default">True</property>
-                        <property name="image">image2</property>
+                      <object class="GtkButtonBox" id="btnbox_msg_ctrl">
+                        <property name="can_focus">False</property>
+                        <property name="layout_style">center</property>
+                        <child>
+                          <object class="GtkButton" id="btn_edit_msg">
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="receives_default">True</property>
+                            <property name="image">image1</property>
+                            <signal name="clicked" handler="mx_widget_switch_visibility" object="box_editing_msg" swapped="no"/>
+                            <signal name="clicked" handler="mx_widget_switch_visibility" object="btn_edit_msg_apply" swapped="no"/>
+                            <signal name="clicked" handler="mx_widget_switch_visibility" object="btn_send_msg" swapped="no"/>
+                          </object>
+                          <packing>
+                            <property name="expand">True</property>
+                            <property name="fill">True</property>
+                            <property name="position">0</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkButton" id="btn_delete_msg">
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="receives_default">True</property>
+                            <property name="image">image2</property>
+                          </object>
+                          <packing>
+                            <property name="expand">True</property>
+                            <property name="fill">True</property>
+                            <property name="position">1</property>
+                          </packing>
+                        </child>
                       </object>
                       <packing>
-                        <property name="expand">True</property>
-                        <property name="fill">True</property>
+                        <property name="name">page_msg_ctrl</property>
+                        <property name="title" translatable="yes">page_msg_ctrl</property>
                         <property name="position">1</property>
                       </packing>
                     </child>
                   </object>
                   <packing>
-                    <property name="expand">False</property>
+                    <property name="expand">True</property>
                     <property name="fill">True</property>
                     <property name="position">0</property>
                   </packing>
                 </child>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkBox" id="box_msg_list">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="orientation">vertical</property>
                 <child>
                   <object class="GtkStack" id="stack_messege_rooms">
                     <property name="visible">True</property>
@@ -677,7 +709,7 @@
               <packing>
                 <property name="expand">True</property>
                 <property name="fill">True</property>
-                <property name="position">0</property>
+                <property name="position">1</property>
               </packing>
             </child>
             <child>

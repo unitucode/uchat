@@ -21,10 +21,8 @@ t_gmsg *mx_get_gmsg_by_id(int msg_id, int room_id, GtkBuilder *builder) {
 }
 
 void mx_delete_row_msg(GtkListBoxRow *row, GtkBuilder *builder) {
-    GObject *control = gtk_builder_get_object(builder, "btnbox_msg_ctrl");
-    
     if (gtk_list_box_row_is_selected(row))
-        gtk_widget_hide(GTK_WIDGET(control));
+        mx_switch_room_header(builder, MX_ROOM_CTRL);
     gtk_widget_destroy(GTK_WIDGET(row));
 }
 

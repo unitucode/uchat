@@ -17,6 +17,8 @@
 #define MX_ERRMSG_INCCRDATA "The email or password inccorect"
 #define MX_ERRMSG_USEREXIST "User already exist"
 
+#define MX_ROOM_CTRL 0
+#define MX_MSG_CTRL 1
 
 //settings
 #define MX_BUF_MSGS 50
@@ -174,6 +176,8 @@ void mx_gupd_msg_text(int msg_id, int room_id,
                       char *text, GtkBuilder *builder);
 void mx_reset_messege_room(t_groom *new_selected, GtkBuilder *builder);
 void mx_hide_msg_editing(GtkButton *btn, GtkBuilder *builder);
+void mx_set_room_widgets_visibility(GtkBuilder *builder, bool visibility);
+void mx_switch_room_header(GtkBuilder *builder, int page_index);
 
 
 // gui utils
