@@ -41,6 +41,7 @@ t_db_message *mx_get_last_message(sqlite3 *database,
     message->date = sqlite3_column_int(stmt, 2);
     message->message = strdup((char *)sqlite3_column_text(stmt, 3));
     message->room_id = id;
+    message->type = sqlite3_column_int(stmt, 4);
     sqlite3_free(request);
     sqlite3_finalize(stmt);
     return message;

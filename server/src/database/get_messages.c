@@ -16,6 +16,8 @@ static cJSON *get_object_message(sqlite3_stmt *stmt) {
         cJSON_CreateNumber(sqlite3_column_int(stmt, 2)));
     cJSON_AddItemToObject(object_message, "msg",
         cJSON_CreateString((char *)sqlite3_column_text(stmt, 3)));
+    cJSON_AddItemToObject(object_message, "type",
+        cJSON_CreateNumber(sqlite3_column_int(stmt, 4)));
     return object_message;
 }
 

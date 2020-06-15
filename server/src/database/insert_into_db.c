@@ -8,10 +8,8 @@ t_db_message *mx_insert_message_into_db_by_id(sqlite3 *db, char *message_str,
     sqlite3_str *str = sqlite3_str_new(db);
     int rv = 0;
 
-    sqlite3_str_appendall(str, "insert into");
-    sqlite3_str_appendf(str, " 'room%llu' ", id);
-    sqlite3_str_appendall(str, "(login, date, message) values(?1, strftime"
-                               "('%s', 'now'), ?3);");
+    sqlite3_str_appendf(str, "insert into 'room%llu'(login, date, message) val"
+                             "ues(?1, strftime('%s', 'now'), ?3);", id);
     request = sqlite3_str_finish(str);
     mx_error_sqlite(sqlite3_prepare_v2(db, request, -1, &stmt, NULL), "prepare", 
                     "insert message into db");

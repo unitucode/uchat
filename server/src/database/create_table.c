@@ -1,4 +1,22 @@
-#include "utils.h"
+#include "server.h"
+
+void mx_create_table_users_json(sqlite3 *db) {
+    int rv = sqlite3_exec(db, "create table users("
+                             "id    integer primary key not null,"
+                             "login text    unique      not null,"
+                             "json  text                not null);", 0, 0, 0);
+
+    mx_error_sqlite(rv, "exec", "create table users");
+}
+
+void mx_create_table_rooms_json(sqlite3 *db) {
+    int rv = sqlite3_exec(db, "create table rooms("
+                              "id   integer primary key not null,"
+                              "date integer             not null,"
+                              "json text                not null);", 0, 0, 0);
+
+    mx_error_sqlite(rv, "exec", "create table rooms");
+}
 
 static void check_correct_table(sqlite3 *db, sqlite3_stmt *stmt) {
     char *table = NULL;
@@ -46,7 +64,7 @@ void mx_create_table_users(sqlite3 *database) {
 //                  0, 0, 0);
 // }
 
-void mx_create_table_room(sqlite3 *db, int id) {
+void mx_create_table_room(sqlite3 *db, unsigned long long int id) {
     sqlite3_str *str = sqlite3_str_new(db);
     sqlite3_str *str2 = sqlite3_str_new(db);
     char *request = NULL;
@@ -56,11 +74,11 @@ void mx_create_table_room(sqlite3 *db, int id) {
     sqlite3_exec(db, request, 0, 0, 0);
     sqlite3_free(request);
     sqlite3_str_appendf(str2, "create table room%llu "
-                              "(id_message   integer primary key not null,"
+                              "(id_message  integer primary key not null,"
                               "login        text    not null,"
                               "date         integer not null,"
-                              "message      text    not null);",
-                                               id, id);
+                              "message      text    not null,"
+                              "type         integer not null);",id, id);
     request = sqlite3_str_finish(str2);
     sqlite3_exec(db, request, 0, 0, 0);
     sqlite3_free(request);

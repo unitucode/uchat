@@ -2,6 +2,7 @@
 
 #include "utils.h"
 #include "sqlite3.h"
+#include <sys/time.h>
 
 #define MX_OLD_MESSAGE 2
 #define MX_NEW_MESSAGE 1
@@ -27,6 +28,7 @@ typedef struct s_db_message {
     unsigned int id;
     unsigned int room_id;
     long int date;
+    int type;
     char *name_room;
     char *login;
     char *message;
@@ -122,7 +124,15 @@ unsigned long long int mx_get_count_rooms(sqlite3 *db);
 unsigned long long int mx_get_count_messages(sqlite3 *db,
                                              unsigned long long int id);
 
+long long mx_get_time();
 
 // error
 int mx_error_sqlite(int rv, char *error, char *where_error);
 bool mx_is_exists_room_by_id(sqlite3 *db, unsigned long long int id);
+
+
+// new function with json
+
+void mx_create_table_rooms_json(sqlite3 *db);
+void mx_create_table_users_json(sqlite3 *db);
+sqlite3 *mx_open_db_json(char *name_db);

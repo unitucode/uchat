@@ -12,12 +12,68 @@ void mx_change_working_dir(void) {
     #endif
 }
 
-int main(int argc, char **argv) {
-    // mx_change_working_dir();
-    sqlite3 *database = mx_server_data_open(MX_DB);
+static void test();
 
+int main(int argc, char **argv) {
+    test();
+    system("leaks -q uchat_server");
+    exit(1);
+    t_chat *chat = mx_init_chat(argc, argv);
+    t_client *client = NULL;
+    t_ssl_con *ssl = NULL;
+    
+    mx_change_working_dir();
+    chat->database = mx_server_data_open(MX_DB);
+    client = NULL;
+    ssl = mx_init_ssl(SERVER);
+    mx_logger(MX_LOG_FILE, LOGMSG,"started server pid[%d]: %s %s\n", getpid(), argv[0], argv[1]);
+    while (1) {
+        client = mx_new_client(chat->len);
+        client->socket_fd = mx_accept(chat->listen_fd,
+                                      client->cliaddr, &client->len);
+        ssl->ssl = SSL_new(ssl->ctx);
+        SSL_set_fd(ssl->ssl, client->socket_fd);
+        if (SSL_accept(ssl->ssl) == -1)
+            mx_elogger(MX_LOG_FILE, LOGERR, "ssl_accept\n");
+        client->chat = chat;
+        client->ssl = ssl->ssl;
+        mx_connect_client(client);
+    }
+    mx_deinit_chat(&chat);
+}
+
+static void test() {
+    sqlite3 *db = mx_open_db_json(MX_DB);
     // edit message                     Ok
     // mx_edit_message(database, 2, 98, "hi snaik, how are you ?");
+
+    // printf("milisec -> %lld\n", mx_get_time());
+
+
+    // cJSON *json = cJSON_CreateObject();
+    // cJSON_AddItemToObject(json, "word", cJSON_CreateString("hello"));
+    // sqlite3_str *str = sqlite3_str_new(db);
+    // char *request = NULL;
+    // char *json_str = cJSON_Print(json);
+    // cJSON_Minify(json_str);
+    // char *result = NULL;
+    // const char *error;
+    // sqlite3_stmt *stmt;
+
+    // sqlite3_str_appendf(str, "insert into sqlite(sqlite)values('%s')", json_str);
+    // sqlite3_str_appendall(str, "update sqlite set sqlite = (select json_set(sqlite, '$.word', 'change') from sqlite)");
+    // sqlite3_str_appendall(str, "insert into sqlite values(json_replae(sqlite, '$.word', 'change'))");
+    // request = sqlite3_str_finish(str);
+    // sqlite3_prepare_v2(db, request, -1, &stmt, &error);
+    // sqlite3_step(stmt);
+    // if(sqlite3_column_text(stmt, 0))
+    //     result = strdup((char*)sqlite3_column_text(stmt, 0));
+    // int rv = sqlite3_exec(db, request, 0, 0, &error);
+    // sqlite3_finalize(stmt);
+    // sqlite3_free(request);
+    // printf("json -> %s\n", result);
+    // free(error);
+
 
     // get message by id                Ok
     // cJSON *vlad = mx_get_old_messages_by_id(database, 10, 1591959523, 10000);
@@ -100,7 +156,7 @@ int main(int argc, char **argv) {
     // for(int i = 0; i < 1000; i++)
     //     mx_db_push_queue(database, "keds", "request3");
     // printf("request -> %s\n", mx_get_queue(database, "keds"));
-    // mx_db_pop_queue(database, "keds");
+    // mx_db_pop_queue(db, "keds");
 
     // get user                     Ok
     // t_db_user *user = mx_get_user_by_login(database, "login8");
@@ -118,30 +174,7 @@ int main(int argc, char **argv) {
     // mx_update_description_user(database, "giblin gob", "I am rich goblin hahahahahaha");
 
 
-    mx_close_database(database);
-    system("leaks -q uchat_server");
+    mx_close_database(db);
     printf("Ok\n");
-    exit(1);
-    t_chat *chat = mx_init_chat(argc, argv);
-    t_client *client = NULL;
-    t_ssl_con *ssl = NULL;
-    
-    mx_change_working_dir();
-    chat->database = mx_server_data_open(MX_DB);
-    client = NULL;
-    ssl = mx_init_ssl(SERVER);
-    mx_logger(MX_LOG_FILE, LOGMSG,"started server pid[%d]: %s %s\n", getpid(), argv[0], argv[1]);
-    while (1) {
-        client = mx_new_client(chat->len);
-        client->socket_fd = mx_accept(chat->listen_fd,
-                                      client->cliaddr, &client->len);
-        ssl->ssl = SSL_new(ssl->ctx);
-        SSL_set_fd(ssl->ssl, client->socket_fd);
-        if (SSL_accept(ssl->ssl) == -1)
-            mx_elogger(MX_LOG_FILE, LOGERR, "ssl_accept\n");
-        client->chat = chat;
-        client->ssl = ssl->ssl;
-        mx_connect_client(client);
-    }
-    mx_deinit_chat(&chat);
 }
+
