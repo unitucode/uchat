@@ -1,9 +1,5 @@
-#include "utils.h"
-#include "protocol.h"
+#include "server.h"
 
-/*
- * Send message by ssl
- */
 int mx_send(SSL *ssl, t_dtp *dtp) {
     long int written = 0;
     char *data = dtp->data;

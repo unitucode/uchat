@@ -61,7 +61,7 @@ void test(t_chat *chat) {
     pass[32] = '\0';
     mx_md5(pass, (const unsigned char*)"admin", 5);
     t_dtp *signup = mx_token_request("89f234ad6490edeec3f09057afc2dbaf123456789");
-    mx_send(chat->ssl, signup);
+    mx_send_request(chat, signup);
     mx_free_request(&signup);
 }
 

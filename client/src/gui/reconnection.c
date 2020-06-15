@@ -46,7 +46,7 @@ bool mx_reconnect(t_chat *chat) {
             if (chat->auth_token) {
                 t_dtp *reconnect = mx_token_request(chat->auth_token);
 
-                mx_send(chat->ssl, reconnect);
+                mx_send_request(chat, reconnect);
                 mx_free_request(&reconnect);
                 mx_free((void**)&(chat->auth_token));
                 mx_free((void**)&(chat->login));

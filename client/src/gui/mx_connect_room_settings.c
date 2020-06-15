@@ -20,12 +20,12 @@ static void req_room_sett(GtkButton *btn, t_chat *chat) {
 
     if (strcmp(groom->room_name, new_name)) {
         dtp = mx_upd_room_name_request(groom->id, new_name);
-        mx_send(chat->ssl, dtp);
+        mx_send_request(chat, dtp);
         mx_free_request(&dtp);
     }
     if (!groom->desc || strcmp(groom->desc, new_desc)) {
         dtp = mx_upd_room_desc_request(groom->id, new_desc);
-        mx_send(chat->ssl, dtp);
+        mx_send_request(chat, dtp);
         mx_free_request(&dtp);
     }
     (void)btn;
@@ -35,7 +35,7 @@ static void req_room_del(GtkButton *btn, t_chat *chat) {
     t_groom *groom = mx_get_selected_groom(chat->builder);
     t_dtp *dtp = mx_del_room_request(groom->id);
 
-    mx_send(chat->ssl, dtp);
+    mx_send_request(chat, dtp);
     mx_free_request(&dtp);
     (void)btn;
 }

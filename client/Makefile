@@ -15,7 +15,7 @@ INCD_CLIENT = -Iinc/
 UTILS_INC = -I../utils/inc
 UTILS_LIB = ../utils/libutils.a
 
-SRCD = src src/gui src/gui/gui-utils src/receiver src/api src/gui/wrappers
+SRCD = src src/gui src/gui/gui-utils src/receiver src/api src/gui/wrappers src/sender
 INCD = inc
 SRCS = $(foreach dir, $(SRCD), $(wildcard $(dir)/*.c))
 OBJS = $(addprefix $(OBJD)/, $(notdir $(SRCS:%.c=%.o)))

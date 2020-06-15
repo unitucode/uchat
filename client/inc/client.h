@@ -66,6 +66,7 @@ struct s_chat {
     t_dtp *data;
     GtkBuilder *builder;
     GAsyncQueue *queue;
+    GAsyncQueue *to_send;
     bool valid;
     void (*error_handler[ER_COUNT_ERRS])(GtkBuilder *builder);
     bool (*request_handler[RQ_COUNT_REQUEST])(t_dtp *dtp, struct s_chat *chat);
@@ -77,6 +78,9 @@ typedef struct s_signal_data {
     GtkListBoxRow *row_msg;
 }              t_signal_data;
 
+t_dtp *mx_recv(SSL *ssl);
+int mx_send(SSL *ssl, t_dtp *dtp);
+void mx_send_request(t_chat *chat, t_dtp *request);
 int mx_tcp_connect(const char *host, const char *serv);
 t_chat *mx_init_chat(void);
 void mx_signup(SSL *ssl);
@@ -192,5 +196,5 @@ char *mx_page_name(int id);
 // void mx_widget_show(GtkWidget *widget);
 void mx_handle_request(t_chat *chat);
 void mx_send_auth_request(char *login, char *password,
-                          SSL *ssl, t_request_type request_type);
+                          t_chat *chat, t_request_type request_type);
 void css_connect();

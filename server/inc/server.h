@@ -68,6 +68,7 @@ bool mx_del_msg_handler(t_dtp *msg, t_client *client); //TODO
 bool mx_edit_msg_handler(t_dtp *msg, t_client *client); //TODO!!!!!!! DB
 bool mx_upload_file_handler(t_dtp *data, t_client *client); //TODO
 
+t_dtp *mx_recv(SSL *ssl);
 int mx_tcp_listen(const char *serv, socklen_t *addr_len);
 void mx_get_client_info(t_client *client);
 t_client *mx_new_client(socklen_t len);

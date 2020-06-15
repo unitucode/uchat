@@ -36,6 +36,13 @@ void *mx_receiver(void *arg) {
     while (true) {
         while ((data = mx_recv(chat->ssl)) && chat->valid) {
             printf("recv = %s", cJSON_Print(data->json));
+            if (data->type == RQ_READY) {
+                mx_free_request(&data);
+                data = g_async_queue_pop(chat->to_send);                
+                mx_send(chat->ssl, data);
+                mx_free_request(&data);
+                continue;
+            }
             if (g_async_queue_length(chat->queue) > MX_MAX_LENGTH_QUEUE)
                 chat->valid = false;
             g_async_queue_push(chat->queue, data);

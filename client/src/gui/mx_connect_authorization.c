@@ -22,7 +22,7 @@ static void req_signup(t_chat *chat) {
 
     if (is_valid_auth_data(login, password, GTK_LABEL(label_error))) {
         if (!strcmp(password, confirm))
-            mx_send_auth_request(login, password, chat->ssl, RQ_SIGN_UP);
+            mx_send_auth_request(login, password, chat, RQ_SIGN_UP);
         else
             gtk_label_set_text(GTK_LABEL(label_error), MX_ERRMSG_DIFPASS);
     }
@@ -35,7 +35,7 @@ static void req_login(t_chat *chat) {
     char *password = mx_get_buffer_text("buffer_password", chat->builder);
 
     if (is_valid_auth_data(login, password, GTK_LABEL(label_error))) {
-        mx_send_auth_request(login, password, chat->ssl, RQ_LOG_IN);
+        mx_send_auth_request(login, password, chat, RQ_LOG_IN);
     }
 }
 

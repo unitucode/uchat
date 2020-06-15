@@ -1,5 +1,25 @@
 #include "protocol.h"
 
+
+static bool ready(SSL *ssl) {
+    char buf[strlen(MX_READY) + 1];
+    cJSON *json = NULL;
+    t_dtp *ready = NULL;
+
+    if (SSL_read(ssl, buf, sizeof(buf) - 1) <= 0 || strcmp(buf, MX_READY)) {
+        mx_logger(MX_LOG_FILE, LOGWAR, "Failed ready read\n");
+        return false;
+    }
+    json = cJSON_CreateObject();
+    if (!cJSON_AddNumberToObject(json, "type", RQ_READY)) {
+        cJSON_Delete(json);
+        return false;
+    }
+    ready = mx_get_transport_data(json);
+    mx_send(ssl, ready);
+    mx_free_request(&ready);
+    return true;
+}
 /*
  * Receive first packet with size of next packet
  */
@@ -30,7 +50,7 @@ t_dtp *mx_recv(SSL *ssl) {
     long int bytes = MX_RQ_SIZE;
     long int read = 0;
 
-    if ((size = message_size(ssl)) > 0) {
+    if (ready(ssl) && (size = message_size(ssl)) > 0) {
         char data[size + 1];
 
         bzero(data, sizeof(data));

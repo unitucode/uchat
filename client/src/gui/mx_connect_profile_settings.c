@@ -3,7 +3,7 @@
 static void req_logout(GtkButton *btn, t_chat *chat) {
     t_dtp *logout = mx_log_out_request(chat->auth_token);
 
-    mx_send(chat->ssl, logout);
+    mx_send_request(chat, logout);
     mx_free_request(&logout);
     (void)btn;
 }
