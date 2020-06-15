@@ -1,5 +1,13 @@
 #include "client.h"
 
+/*
+ * CALLBACK for Glade
+ */
+void mx_switch_to_msg_ctrl(GtkButton *btn, GtkBuilder *builder) {
+    mx_switch_room_header(builder, MX_MSG_CTRL);
+    (void)btn;
+}
+
 static void req_delete_msg(GtkButton *btn, t_chat *chat) {
     t_gmsg *msg = mx_get_selected_gmsg(chat->builder);
     t_dtp *dtp = mx_del_msg_request(msg->room_id, msg->message_id);
@@ -16,6 +24,7 @@ static void show_edit_msg(GtkButton *btn, GtkBuilder *builder) {
 
     gtk_label_set_text(GTK_LABEL(label_text), msg->msg); // DELETE ALL /n
     gtk_text_buffer_set_text(GTK_TEXT_BUFFER(buffer), msg->msg, -1);
+    mx_switch_room_header(builder, MX_ROOM_CTRL);
     (void)btn;
 }
 
