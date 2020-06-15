@@ -178,6 +178,7 @@ void mx_reset_messege_room(t_groom *new_selected, GtkBuilder *builder);
 void mx_hide_msg_editing(GtkButton *btn, GtkBuilder *builder);
 void mx_set_room_widgets_visibility(GtkBuilder *builder, bool visibility);
 void mx_switch_room_header(GtkBuilder *builder, int page_index);
+void mx_unselect_curr_room_messages(GtkBuilder *builder);
 
 
 // gui utils
@@ -186,7 +187,7 @@ gchar *mx_entry_get_text(char *entry_name, GtkBuilder *builder);
 gchar *mx_get_buffer_text(char *buff_name, GtkBuilder *builder);
 void mx_clear_buffer_text(char *buff_name, GtkBuilder *builder);
 void mx_clear_label_by_name(char *label_name, GtkBuilder *builder);
-void mx_widget_switch_visibility(GtkWidget *usr_ctrl, void *widget);
+void mx_widget_switch_visibility(GtkWidget *usr_ctrl, GtkWidget *widget);
 t_groom *mx_get_selected_groom(GtkBuilder *builder);
 t_groom *mx_get_groom_by_id(int room_id, GtkBuilder *builder);
 t_gmsg *mx_get_selected_gmsg(GtkBuilder *builder);
@@ -197,7 +198,8 @@ void mx_entry_set_icon_by_path(GtkEntry *entry, char *path,
 t_signal_data *mx_create_sigdata(GtkBuilder *builder, t_groom *groom,
                                  GtkListBoxRow *row_msg);
 void mx_free_sigdata(t_signal_data *data);
-char *mx_page_name(int id);
+char *mx_msgpage_name(int id);
+bool mx_widget_is_visible(char *widget_name, GtkBuilder *builder);
 
 // gui wrappers
 // void mx_widget_show_all(GtkWidget *widget);

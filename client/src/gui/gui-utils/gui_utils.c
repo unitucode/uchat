@@ -28,12 +28,19 @@ void mx_clear_buffer_text(char *buff_name, GtkBuilder *builder) {
         gtk_entry_buffer_delete_text(GTK_ENTRY_BUFFER(buffer), 0, -1);
 }
 
-void mx_widget_switch_visibility(GtkWidget *usr_ctrl, void *widget) {
-    if (gtk_widget_is_visible(GTK_WIDGET(widget)))
-        gtk_widget_hide(GTK_WIDGET(widget));
-    else
-        gtk_widget_show(GTK_WIDGET(widget));
+void mx_widget_switch_visibility(GtkWidget *usr_ctrl, GtkWidget *widget) {
+    if (gtk_widget_is_visible(widget))
+        gtk_widget_hide(widget);
+    else {
+        gtk_widget_show(widget);
+    }
     (void)usr_ctrl;
+}
+
+void mx_focus_out(GtkWidget *widget, GdkEvent *event, gpointer *user_widget) {
+    if (GTK_IS_BUILDER(user_widget))
+        gtk_widget_hide(widget);
+    (void)event;
 }
 
 void mx_clear_label_by_name(char *label_name, GtkBuilder *builder) {
