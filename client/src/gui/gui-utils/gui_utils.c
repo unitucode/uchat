@@ -37,9 +37,9 @@ void mx_widget_switch_visibility(GtkWidget *usr_ctrl, GtkWidget *widget) {
     (void)usr_ctrl;
 }
 
-void mx_focus_out(GtkWidget *widget, GdkEvent *event, gpointer *user_widget) {
-    if (GTK_IS_BUILDER(user_widget))
-        gtk_widget_hide(widget);
+void mx_focus_out(GtkWidget *widget, GdkEvent *event, gpointer *user_data) {
+    gtk_widget_hide(widget);
+    (void)user_data;
     (void)event;
 }
 

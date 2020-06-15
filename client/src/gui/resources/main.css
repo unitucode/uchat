@@ -7,7 +7,7 @@
 button, .input, entry, notebook, .dialog_auth .titlebar  {
     border: none;
 }
-.dialog_auth, .csd {
+.dialog_auth, .wnd_main {
     background: rgb(62,50,107);
     background-image: linear-gradient(173deg, rgb(62, 50, 107) 0%, rgba(40,34,65,1) 100%);
 }
