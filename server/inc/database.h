@@ -48,6 +48,7 @@ void mx_delete_user(sqlite3 *database, char *login);
 void mx_delete_message(sqlite3 *database, unsigned long long int id,
                        unsigned long long int id_message);
 void mx_delete_room_by_id(sqlite3 *db, unsigned long long int id);
+void mx_db_pop_queue(sqlite3 *db, char *login);
 
 void mx_create_table_users(sqlite3 *database);
 void mx_create_table_rooms(sqlite3 *database);
@@ -55,6 +56,7 @@ void mx_create_table_member(sqlite3 *database);
 void mx_create_table_room(sqlite3 *database, unsigned long long int id);
 void mx_create_table_queue(sqlite3 *db, char *login);
 
+char *mx_get_queue(sqlite3 *db, char *login);
 t_db_user *mx_get_user_by_login(sqlite3 *database, char *login);
 t_db_user *mx_get_user_by_token(sqlite3 *database, char *token);
 t_db_room *mx_get_room(sqlite3 *database, char *name);
@@ -75,11 +77,13 @@ void mx_update_description_room_by_id(sqlite3 *db, unsigned long long int id,
 void update(sqlite3_stmt *stmt, char *new, char *name, char *error);
 void mx_edit_name_room(sqlite3 *database, unsigned long long int id, char *new);
 void mx_edit_name_user(sqlite3 *database, char *login, char *new);
+void mx_edit_message(sqlite3 *db, unsigned long long id_room,
+                     unsigned long long id, char *new);
 
 t_db_message *mx_insert_message_into_db_by_id(sqlite3 *db, char *message_str,
-                                        char *login,
-                                        unsigned long long int id);
-void mx_insert_to_room(sqlite3 * database, t_db_message * room, char *name_room);
+                                              char *login,
+                                              unsigned long long int id);
+void mx_insert_to_room(sqlite3 *database, t_db_message *room, char *name_room);
 t_db_message *mx_insert_message_into_db(sqlite3 * database, char *message_str,
                                             char *login, char *name_room);
 t_db_room *mx_insert_room_into_db(sqlite3 * database, char *name_room,
@@ -88,8 +92,9 @@ t_db_user *mx_insert_user_into_db(sqlite3 * database, char *login,
                                       char *pass, char *token);
 void mx_insert_member_into_db(sqlite3 * database,
                                   char *login, char *name_room);
+void mx_db_push_queue(sqlite3 *db, char *login, char *request);
 
-cJSON *mx_get_new_messages(sqlite3 * database, char *name_room,
+cJSON *mx_get_new_messages(sqlite3 *database, char *name_room,
                                long int date, int count);
 cJSON *mx_get_old_messages(sqlite3 * database, char *name_room,
                                long int date, int count);

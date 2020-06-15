@@ -3,10 +3,11 @@
 GtkWidget *mx_create_message_row(t_gmsg *msg) {
     GtkWidget  *event = gtk_event_box_new();
 
-    GtkWidget *label_txt = gtk_label_new(msg->msg);
-    gtk_label_set_xalign(GTK_LABEL(label_txt), 0.03);
+    GtkWidget *label_text = gtk_label_new(msg->msg);
+    msg->label_text = GTK_LABEL(label_text);
+    gtk_label_set_xalign(GTK_LABEL(label_text), 0.03);
     GtkWidget *main_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
-    gtk_box_pack_end(GTK_BOX(main_box), label_txt, true, true, 0);
+    gtk_box_pack_end(GTK_BOX(main_box), label_text, true, true, 0);
 
     PangoAttrList *attr_list = pango_attr_list_new();
     PangoAttribute *attr = pango_attr_weight_new(PANGO_WEIGHT_HEAVY);

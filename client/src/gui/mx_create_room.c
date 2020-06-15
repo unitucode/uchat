@@ -14,51 +14,36 @@ void mx_make_private(GtkToggleButton *btn, GtkWidget *widget) {
     gtk_widget_set_sensitive(widget, gtk_toggle_button_get_active(btn));
 }
 
-void mx_unselect_curr_room_messages(GtkListBox *box, GtkListBoxRow *row,
-                                    GtkBuilder *builder) {
-    t_groom *groom = NULL;
-
-    if (row)
-        groom = (t_groom *)g_object_get_data(G_OBJECT(row), "groom");
-    if (groom)
-        gtk_list_box_unselect_all(groom->box_messages);
-    (void)box;
-    (void)builder;
-}
-
 void mx_set_current_room_sett(GtkBuilder *builder) {
     t_groom *groom = mx_get_selected_groom(builder);
     GObject *name = gtk_builder_get_object(builder, "label_prefs_roomname");
     GObject *customer = gtk_builder_get_object(builder,
                                                "label_prefs_customer");
     GObject *desc = gtk_builder_get_object(builder, "buffer_room_desc");
-    GObject *header = gtk_builder_get_object(builder, "header_main");
+    GObject *header_name = gtk_builder_get_object(builder,
+                                                  "label_header_roomname");
 
     gtk_label_set_text(GTK_LABEL(name), groom->room_name);
-    gtk_header_bar_set_title(GTK_HEADER_BAR(header), groom->room_name);
     gtk_text_buffer_set_text(GTK_TEXT_BUFFER(desc), groom->desc, -1);
     gtk_label_set_text(GTK_LABEL(customer), groom->customer);
+    gtk_label_set_text(GTK_LABEL(header_name), groom->room_name);
 }
 
 void mx_select_room(GtkWidget *event_box, GdkEventButton *event,
                     gpointer *user_data) {
     t_signal_data *data = g_object_get_data(G_OBJECT(event_box), "sigdata");
 
+    mx_reset_messege_room(data->groom, data->builder);
     gtk_stack_set_visible_child(data->groom->stack_msg,
                                 GTK_WIDGET(data->groom->page));
     gtk_list_box_select_row(data->groom->box_rooms,
                             data->groom->row_room);
     mx_set_current_room_sett(data->builder);
+    mx_set_room_widgets_visibility(data->builder, true);
     (void)event;
     (void)user_data;
 }
 
-void mx_hide_msg_ctrl(GtkListBox *box, GtkListBoxRow *row,
-                      GtkButtonBox *control) {
-    gtk_widget_hide(GTK_WIDGET(control));
-    (void)box;
-    (void)row;
-}
 //================================
 
 gint mx_room_sort(GtkListBoxRow *row1, GtkListBoxRow *row2) {
