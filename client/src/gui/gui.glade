@@ -348,11 +348,11 @@
     <property name="pixbuf">resources/add-room.png</property>
     <property name="pixel_size">30</property>
   </object>
-  <!-- <object class="GtkImage" id="image6">
+  <object class="GtkImage" id="image6">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
-    <property name="pixbuf">resources/image.png</property>
-  </object> -->
+    <property name="pixbuf">resources/rooms-open.png</property>
+  </object>
   <object class="GtkImage" id="image7">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
@@ -393,7 +393,7 @@
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
-            <!-- <property name="image">image6</property> -->
+            <property name="image">image6</property>
             <signal name="clicked" handler="mx_widget_switch_visibility" object="box_rooms_list" swapped="no"/>
           </object>
         </child>
@@ -969,6 +969,9 @@
         </child>
       </object>
     </child>
+        <style>
+      <class name="wnd_main"/>
+    </style>
   </object>
   <object class="GtkDialog" id="dialog_addroom">
     <property name="width_request">315</property>

@@ -8,14 +8,14 @@
 button, .input, entry, notebook, .dialog_auth .titlebar  {
     border: none;
 }
-.dialog_auth, .csd {
+.dialog_auth, .wnd_main {
     background: rgb(57,69,107);
     background-image: linear-gradient(173deg, rgb(57, 69, 107) 0%, rgb(35,41,65) 100%);
 }
 box stack, entry, .dialog_notebook header {
     background-color: transparent;
 }
-entry {
+.dialog_auth entry {
 	box-shadow: none;
     padding: 0;
     border-bottom: 1px solid rgba(255,255,255,.7);
@@ -37,6 +37,9 @@ entry {
     color: #5366BB;
     font-size: 14px;
     font-weight: 500;
+}
+button label {
+    
 }
 .dialog-action-area button:first-child {
     margin-right: 5px;
@@ -119,12 +122,13 @@ dialog headerbar {
 	background: transparent;
 }
 
-scrolledwindow {
+.wnd_main scrolledwindow {
 	border: none;
 }
 .rooms-list row {
     color: #fff;
     outline: none;
+    transition: none;
 }
 .rooms-list label {
 	background-color: rgba(58,70, 107,.8);
@@ -132,6 +136,13 @@ scrolledwindow {
     border-radius: 5px;
     margin: 5px 25px;
     transition: all .3s;
+}
+.rooms-list row:hover {
+    background-color: transparent;
+}
+.rooms-list row:hover label {
+    background-color: rgb(58,70, 107);
+    margin: 5px 20px;
 }
 .rooms-list row:selected label {
 	background-color: rgb(66,78, 120);
@@ -145,33 +156,34 @@ scrolledwindow {
     border-radius: 100px;
     background-color: rgb(83,102,187);
     margin: 20px 0;
+    box-shadow: none;
 }
 .add-room-button:hover {
     background-color: rgb(66,78, 120);
 }
-scrolledwindow overshoot, scrolledwindow undershoot {
+.wnd_main scrolledwindow overshoot, scrolledwindow undershoot {
 	box-shadow: none;
 }
-scrolledwindow scrollbar.bottom {
+.wnd_main scrolledwindow scrollbar.bottom {
 	box-shadow: 0 -20px 20px #2A324D;
 }
 .box-rooms {
 	box-shadow: 10px 0 10px -2px rgba(0,0,0,.1);
 }
-list {
+.wnd_main list {
     color: #fff;
 }
-srcollbar.hovering slider {
+.wnd_main srcollbar.hovering slider {
     background-color: rgba(58,70, 107,.8);
 }
-.hovering {
+.wnd_main .hovering {
     background-color: rgb(66,78, 120);
 	border:none;
 }
-.dragging slider {
+.wnd_main .dragging slider {
 	background-color: rgb(83,102,187);
 }
-scrollbar slider {
+.wnd_main scrollbar slider {
 	border-color: transparent;
 	background-color: rgba(83,102,187,.8);
 }
@@ -179,11 +191,11 @@ scrollbar slider {
 	box-shadow: 0 -40px 12px -20px rgb(42,49,77) inset;
 	opacity: 1;
 }
-headerbar button image {
+.wnd_main headerbar button image {
 	-gtk-icon-effect: none;
 }
 
-headerbar button:hover {
+.wnd_main headerbar button:hover {
 	background-image: image(rgba(252,252,252,.75));
 	transition: .1s easy;
 }
