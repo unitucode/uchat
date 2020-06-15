@@ -3,8 +3,9 @@
 #include "utils.h"
 
 #define MX_J_STR(m) (m) ? (m) : "(null)"
-#define MX_RQ_SIZE 512
+#define MX_RQ_SIZE 2048
 #define MX_MAX_FILE_SIZE 50000000
+#define MX_RES_OK "OK"
 
 typedef struct s_ssl_con t_ssl_con;
 typedef struct s_dtp t_dtp;

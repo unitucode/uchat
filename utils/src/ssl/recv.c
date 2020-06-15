@@ -13,6 +13,10 @@ static int message_size(SSL *ssl) {
         mx_logger(MX_LOG_FILE, LOGWAR, "Invalid packet. Readed %d\n", bytes);
         return -1;
     }
+    if (SSL_write(ssl, MX_RES_OK, strlen(MX_RES_OK)) <= 0) {
+        mx_logger(MX_LOG_FILE, LOGWAR, "Failed response size data\n");
+        return -1;
+    }
     memcpy(&size, buf, sizeof(int));
     return size;
 }
@@ -33,6 +37,10 @@ t_dtp *mx_recv(SSL *ssl) {
         if (size < MX_RQ_SIZE)
             bytes = size;
         while (read < size && SSL_read(ssl, &data[read], bytes) > 0) {
+            if (SSL_write(ssl, MX_RES_OK, strlen(MX_RES_OK)) <= 0) {
+                mx_logger(MX_LOG_FILE, LOGWAR, "Failed response main data\n");
+                return NULL;
+            }
             read += bytes;
             if (size - read < MX_RQ_SIZE)
                 bytes = size - read;
