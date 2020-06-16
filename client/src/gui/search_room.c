@@ -4,7 +4,7 @@ static gboolean filter_room_name(GtkListBoxRow *row, char *search_name) {
     t_groom *groom = (t_groom*)g_object_get_data(G_OBJECT(row), "groom");
     char *room_name = (char*)gtk_label_get_text(groom->label_name);
 
-    if (!strncmp(room_name, search_name, strlen(search_name)))
+    if (!strncasecmp(room_name, search_name, strlen(search_name)))
         return TRUE;
     else
         return FALSE;
