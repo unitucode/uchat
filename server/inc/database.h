@@ -35,14 +35,14 @@ typedef struct s_db_message {
 }              t_db_message;
 
 typedef struct s_db_room {
-    long int date;
+    long long date;
     unsigned int id;
     char *description;
     char *room_name;
     char *customer;
 }              t_db_room;
 
-sqlite3 *mx_server_data_open(char *name_db);
+sqlite3 *mx_open_db(char *name_db);
 void mx_close_database(sqlite3 *database);
 void mx_free_user(t_db_user **user);
 void mx_delete_room(sqlite3 *database, char *name_room);
@@ -56,7 +56,7 @@ void mx_create_table_users(sqlite3 *database);
 void mx_create_table_rooms(sqlite3 *database);
 void mx_create_table_member(sqlite3 *database);
 void mx_create_table_room(sqlite3 *database, unsigned long long int id);
-void mx_create_table_queue(sqlite3 *db, char *login);
+void mx_create_table_queue(sqlite3 *db);
 
 char *mx_get_queue(sqlite3 *db, char *login);
 t_db_user *mx_get_user_by_login(sqlite3 *database, char *login);
@@ -131,8 +131,4 @@ int mx_error_sqlite(int rv, char *error, char *where_error);
 bool mx_is_exists_room_by_id(sqlite3 *db, unsigned long long int id);
 
 
-// new function with json
-
-void mx_create_table_rooms_json(sqlite3 *db);
-void mx_create_table_users_json(sqlite3 *db);
-sqlite3 *mx_open_db_json(char *name_db);
+// new function

@@ -52,15 +52,15 @@ t_db_room *mx_insert_room_into_db(sqlite3 *database, char *room_name,
     int rv = 0;
 
     rv = sqlite3_prepare_v3(database,
-                            "insert into rooms(name, customer_login, date, desc"
-                            "ription) values(?1, ?2, strftime('%s', 'now'), "
-                            "'');", -1, 0, &stmt, NULL);
+                            "insert into rooms(name, customer, date, desc)"
+                            "values(?1, ?2, ?3, ?4);", -1, 0, &stmt, NULL);
     mx_error_sqlite(rv, "prepare", "insert room");
     sqlite3_bind_text(stmt, 1, room_name, -1, SQLITE_STATIC);
     sqlite3_bind_text(stmt, 2, customer, -1, SQLITE_STATIC);
+    sqlite3_bind_int64(stmt, 3, mx_get_time());
+    sqlite3_bind_text(stmt, 4, NULL, -1, SQLITE_STATIC);
     mx_error_sqlite(sqlite3_step(stmt), "step", "insert room");
     sqlite3_finalize(stmt);
-    mx_create_table_room(database, (int)mx_get_roomid_by_name(database, room_name));
     return mx_get_room(database, room_name);
 }
 
@@ -79,7 +79,7 @@ t_db_user *mx_insert_user_into_db(sqlite3 *db, char *login,
     sqlite3_bind_text(stmt, 3, token, -1, SQLITE_STATIC);
     mx_error_sqlite(sqlite3_step(stmt), "step", "insert user");
     sqlite3_finalize(stmt);
-    mx_create_table_queue(db, login); 
+    // mx_create_table_queue(db, login); 
     return mx_get_user_by_login(db, login);
 }
 

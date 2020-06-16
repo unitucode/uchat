@@ -72,8 +72,8 @@ t_db_room *mx_get_room(sqlite3 *database, char *name_room) {
         room->id = sqlite3_column_int(stmt, 0);
         room->room_name = strdup((const char*)sqlite3_column_text(stmt, 1));
         room->customer = strdup((const char*)sqlite3_column_text(stmt, 2));
-        room->date = sqlite3_column_int(stmt, 3);
-        room->description = strdup((const char*)sqlite3_column_text(stmt, 4));
+        room->date = sqlite3_column_int64(stmt, 3);
+        room->description = mx_strdup((char*)sqlite3_column_text(stmt, 4));
     }
     sqlite3_finalize(stmt);
     return room;
