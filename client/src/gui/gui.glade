@@ -339,13 +339,7 @@
   <object class="GtkImage" id="image3">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
-    <property name="margin_left">5</property>
-    <property name="margin_right">5</property>
-    <property name="margin_start">5</property>
-    <property name="margin_end">5</property>
-    <property name="pixel_size">30</property>
-    <property name="icon_name">mail-send</property>
-    <property name="icon_size">6</property>
+    <property name="pixbuf">resources/send-icon.png</property>
   </object>
   <object class="GtkImage" id="image4">
     <property name="visible">True</property>
@@ -362,7 +356,7 @@
   <object class="GtkImage" id="image6">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
-    <property name="pixbuf">resources/rooms-open.png</property>
+    <property name="pixbuf">resources/rooms-list.png</property>
   </object>
   <object class="GtkImage" id="image7">
     <property name="visible">True</property>
@@ -552,6 +546,9 @@
                     <property name="focus_on_click">False</property>
                     <property name="receives_default">True</property>
                     <property name="image">image3</property>
+                    <style>
+                      <class name="button_send_message"/>
+                    </style>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -573,6 +570,9 @@
                     <property name="position">3</property>
                   </packing>
                 </child>
+                <style>
+                  <class name="box_msg_send"/>
+                </style>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -602,7 +602,7 @@
                             <property name="label" translatable="yes">Room Name</property>
                             <property name="xalign">0</property>
                             <attributes>
-                              <attribute name="weight" value="ultraheavy"/>
+                              <attribute name="weight" value="semibold"/>
                               <attribute name="foreground" value="#eeeeeeeeecec"/>
                             </attributes>
                           </object>
@@ -682,6 +682,9 @@
                     <property name="position">0</property>
                   </packing>
                 </child>
+                <style>
+                  <class name="box_room_header"/>
+                </style>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -818,6 +821,9 @@
                 <property name="position">2</property>
               </packing>
             </child>
+            <style>
+              <class name="box_current_room"/>
+            </style>
           </object>
           <packing>
             <property name="expand">True</property>
@@ -827,7 +833,7 @@
         </child>
       </object>
     </child>
-        <style>
+    <style>
       <class name="wnd_main"/>
     </style>
   </object>

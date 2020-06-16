@@ -10,7 +10,7 @@ GtkWidget *mx_create_message_row(t_gmsg *msg) {
     gtk_box_pack_end(GTK_BOX(main_box), label_text, true, true, 0);
 
     PangoAttrList *attr_list = pango_attr_list_new();
-    PangoAttribute *attr = pango_attr_weight_new(PANGO_WEIGHT_HEAVY);
+    PangoAttribute *attr = pango_attr_weight_new(PANGO_WEIGHT_MEDIUM);
     pango_attr_list_insert(attr_list, attr);
     GtkWidget *label_name = gtk_label_new(msg->login);
     gtk_label_set_xalign(GTK_LABEL(label_name), 0.03);
