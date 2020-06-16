@@ -97,6 +97,7 @@ static void add_room_row(t_groom *room, GtkBuilder *builder) {
     gtk_widget_set_size_request(row, -1, 80);
     gtk_list_box_set_sort_func(box, (GtkListBoxSortFunc)mx_room_sort, NULL, NULL);
     room->is_updated = false;
+
     gtk_list_box_insert(box, row, -1);
     gtk_widget_show_all(GTK_WIDGET(box));
 

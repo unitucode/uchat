@@ -471,6 +471,7 @@
                   <object class="GtkSearchEntry" id="sentry_rooms">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
+                    <property name="events">GDK_FOCUS_CHANGE_MASK</property>
                     <property name="margin_left">10</property>
                     <property name="margin_right">10</property>
                     <property name="margin_top">10</property>
@@ -479,7 +480,7 @@
                     <property name="primary_icon_name">edit-find-symbolic</property>
                     <property name="primary_icon_activatable">False</property>
                     <property name="primary_icon_sensitive">False</property>
-                    <signal name="icon-press" handler="mx_sentry_stop" object="box_rooms_list" swapped="no"/>
+                    <signal name="focus-out-event" handler="mx_disable_listbox_filter" object="listbox_rooms" swapped="no"/>
                     <signal name="search-changed" handler="mx_search_room" swapped="no"/>
                   </object>
                   <packing>
