@@ -11,6 +11,10 @@ button {
     text-shadow: none;
     box-shadow: none;
 }
+.dialog_auth entry, .wnd_main entry, .dialog_auth textview, .wnd_main textview {
+    caret-color: #fff;
+    color: #fff;
+}
 button, .input, entry, notebook, .dialog_auth .titlebar, button image  {
     border: none;
 }
@@ -21,14 +25,12 @@ button, .input, entry, notebook, .dialog_auth .titlebar, button image  {
 box stack, entry, .dialog_notebook header {
     background-color: transparent;
 }
-.dialog_auth entry {
+.dialog_auth entry, .wnd_main entry {
 	box-shadow: none;
     padding: 0;
     border-bottom: 1px solid rgba(255,255,255,.7);
     border-radius: 0;
     /* margin: 0 -25px; */
-    caret-color: #fff;
-    color: #fff;
     font-size: 15px;
 }
 .dialog-action-area {
@@ -131,6 +133,9 @@ dialog headerbar {
 .wnd_main scrolledwindow {
 	border: none;
 }
+.rooms-list row {
+	padding: 0;
+}
 .rooms-list row, .rooms-list row label {
     color: #fff;
     outline: none;
@@ -195,14 +200,12 @@ dialog headerbar {
 	box-shadow: 0 -40px 12px -20px rgb(42,49,77) inset;
 	opacity: 1;
 }
-.wnd_main headerbar button {
-    
+.box_titlebar button {
     background-image: none;
-    background-color:rgb(252,252,252);
+    padding: 0;
 }
-.wnd_main headerbar button:hover {
-	background-color: rgba(252,252,252,.75);
-	transition: all .1s ease;
+.box_titlebar button:hover {
+    opacity: .7;
 }
 .box_room_header label {
 	margin-left: 25px;
@@ -224,8 +227,13 @@ dialog headerbar {
 	padding: 13px;
 }
 .box_msg_send textview text,  .box_msg_send textview {
-	background-color: transparent;
+    background-color: transparent;
+    color: #B8C2E5;
 }
 .box_msg_send scrolledwindow {
 	border: 1px solid #424E78;
+}
+.box_titlebar {
+	background-color: #323B59;
+	padding: 0 25px;
 }
