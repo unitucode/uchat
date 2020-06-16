@@ -44,8 +44,6 @@ t_dtp *mx_get_transport_data(cJSON *json_result);
 
 //SSL
 t_ssl_con *mx_init_ssl(t_app_type type);
-t_dtp *mx_recv(SSL *ssl);
-int mx_send(SSL *ssl, t_dtp *data);
 void mx_md5(char *buf, const unsigned char *str, size_t len);
 bool mx_isvalid_hash(char *hash);
 bool mx_isvalid_login(char *login);

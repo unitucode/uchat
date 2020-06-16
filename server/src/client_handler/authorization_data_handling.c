@@ -3,7 +3,7 @@
 void mx_correct_data(char *login, t_client *client) {
     t_dtp *dtp = mx_token_request((char*)client->user->token);
 
-    mx_send(client->ssl, dtp);
+    // mx_send(client->ssl, dtp);
     mx_logger(MX_LOG_FILE, LOGMSG, "Logged in: %s\n", login);
     mx_free_request(&dtp);
 }

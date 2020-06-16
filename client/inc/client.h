@@ -4,6 +4,8 @@
 #include "protocol.h"
 #include "sqlite3.h"
 #include <gtk/gtk.h>
+#include <glib.h>
+#include <gio/gio.h>
 
 #define MX_GUI_PATH "../src/gui/gui.glade"
 
@@ -19,6 +21,9 @@ typedef struct s_chat {
     bool (*request_handler[RQ_COUNT_REQUEST])(t_dtp *dtp, struct s_chat *chat);
 }              t_chat;
 
+
+t_dtp *mx_recv(GInputStream *in);
+gssize mx_send(GOutputStream *out, t_dtp *dtp);
 int mx_tcp_connect(const char *host, const char *serv);
 t_chat *mx_init_chat(void);
 bool mx_authorization(t_dtp *token, t_chat *chat);

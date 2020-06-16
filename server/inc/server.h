@@ -4,12 +4,21 @@
 #include "protocol.h"
 #include "list.h"
 #include "sqlite3.h"
+#include <glib.h>
+#include <gio/gio.h>
 
 #define MX_LISTENQ 1024
 #define MX_PORT_LEN 8
 
 typedef struct s_chat t_chat;
 typedef struct s_client t_client;
+typedef struct s_info t_info;
+
+struct s_info {
+    GList *users;
+    sqlite3* database;
+    bool (*request_handler[RQ_COUNT_REQUEST])(t_dtp *dtp, t_client *chat);
+};
 
 struct s_chat {
     int listen_fd;
@@ -32,6 +41,9 @@ struct s_client {
     t_node *node;
     SSL *ssl;
 };
+
+gssize mx_send(GOutputStream *out, t_dtp *dtp);
+t_dtp *mx_recv(GInputStream *in);
 
 //data protocol handler functions
 bool mx_log_in(t_dtp *login, t_client *client);

@@ -7,23 +7,23 @@ void mx_init_receiver(t_chat *chat) {
 }
 
 void *mx_receiver(void *arg) {
-    t_client *client = (t_client*)arg;
-    t_dtp *data = NULL;
-    // system("leaks -q uchat_server");
+    // t_client *client = (t_client*)arg;
+    // t_dtp *data = NULL;
+    // // system("leaks -q uchat_server");
 
-    while ((data = mx_recv(client->ssl))) {
-        if (client->user || data->type == RQ_LOG_IN || data->type == RQ_SIGN_UP
-            || data->type == RQ_TOKEN) {
-            if (!client->chat->request_handler[data->type]
-                || !client->chat->request_handler[data->type](data, client)) {
-                    break;
-            }
-        }
-        printf("recv = %s\n", data->str);
-        // send_to_all(client->chat->clients, client->chat, client, dtp->str);
-        mx_free_request(&data);
-    }
-    mx_free_request(&data);
-    mx_disconnect_client(client);
-    return NULL;
+    // while ((data = mx_recv(client->ssl))) {
+    //     if (client->user || data->type == RQ_LOG_IN || data->type == RQ_SIGN_UP
+    //         || data->type == RQ_TOKEN) {
+    //         if (!client->chat->request_handler[data->type]
+    //             || !client->chat->request_handler[data->type](data, client)) {
+    //                 break;
+    //         }
+    //     }
+    //     printf("recv = %s\n", data->str);
+    //     // send_to_all(client->chat->clients, client->chat, client, dtp->str);
+    //     mx_free_request(&data);
+    // }
+    // mx_free_request(&data);
+    // mx_disconnect_client(client);
+    return arg;
 }
