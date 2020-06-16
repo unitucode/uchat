@@ -341,13 +341,7 @@
   <object class="GtkImage" id="image3">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
-    <property name="margin_left">5</property>
-    <property name="margin_right">5</property>
-    <property name="margin_start">5</property>
-    <property name="margin_end">5</property>
-    <property name="pixel_size">30</property>
-    <property name="icon_name">mail-send</property>
-    <property name="icon_size">6</property>
+    <property name="pixbuf">resources/send-icon.png</property>
   </object>
   <object class="GtkImage" id="image4">
     <property name="visible">True</property>
@@ -451,6 +445,9 @@
                 <property name="position">2</property>
               </packing>
             </child>
+            <style>
+              <class name="box_titlebar"/>
+            </style>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -479,7 +476,8 @@
                     <property name="primary_icon_name">edit-find-symbolic</property>
                     <property name="primary_icon_activatable">False</property>
                     <property name="primary_icon_sensitive">False</property>
-                    <signal name="icon-press" handler="mx_sentry_stop" object="box_rooms_list" swapped="no"/>
+                    <signal name="focus-out-event" handler="mx_disable_listbox_filter" object="listbox_rooms" swapped="no"/>
+                    <signal name="icon-press" handler="mx_disable_listbox_filter" swapped="no"/>
                     <signal name="search-changed" handler="mx_search_room" swapped="no"/>
                   </object>
                   <packing>
@@ -559,12 +557,14 @@
                     <property name="can_focus">False</property>
                     <child>
                       <object class="GtkButton" id="btn_stickers">
-                        <property name="width_request">36</property>
+                        <property name="width_request">48</property>
+                        <property name="height_request">48</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="focus_on_click">False</property>
                         <property name="receives_default">True</property>
                         <property name="events"/>
+                        <property name="valign">end</property>
                         <property name="image">image4</property>
                       </object>
                       <packing>
@@ -582,14 +582,13 @@
                         <property name="propagate_natural_height">True</property>
                         <child>
                           <object class="GtkTextView" id="msg_entry">
-                            <property name="height_request">-1</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="wrap_mode">word-char</property>
-                            <property name="left_margin">5</property>
-                            <property name="right_margin">5</property>
-                            <property name="top_margin">5</property>
-                            <property name="bottom_margin">5</property>
+                            <property name="left_margin">10</property>
+                            <property name="right_margin">10</property>
+                            <property name="top_margin">14</property>
+                            <property name="bottom_margin">14</property>
                             <property name="buffer">buffer_message</property>
                           </object>
                         </child>
@@ -602,11 +601,17 @@
                     </child>
                     <child>
                       <object class="GtkButton" id="btn_send_msg">
+                        <property name="width_request">48</property>
+                        <property name="height_request">48</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="focus_on_click">False</property>
                         <property name="receives_default">True</property>
+                        <property name="valign">end</property>
                         <property name="image">image3</property>
+                        <style>
+                          <class name="button_send_message"/>
+                        </style>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -616,10 +621,13 @@
                     </child>
                     <child>
                       <object class="GtkButton" id="btn_edit_msg_apply">
+                        <property name="width_request">48</property>
+                        <property name="height_request">48</property>
                         <property name="can_focus">False</property>
                         <property name="focus_on_click">False</property>
                         <property name="receives_default">True</property>
                         <property name="no_show_all">True</property>
+                        <property name="valign">end</property>
                         <property name="image">image11</property>
                       </object>
                       <packing>
@@ -628,6 +636,9 @@
                         <property name="position">3</property>
                       </packing>
                     </child>
+                    <style>
+                      <class name="box_msg_send"/>
+                    </style>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -658,7 +669,7 @@
                                 <property name="label" translatable="yes">Room Name</property>
                                 <property name="xalign">0</property>
                                 <attributes>
-                                  <attribute name="weight" value="ultraheavy"/>
+                                  <attribute name="weight" value="semibold"/>
                                   <attribute name="foreground" value="#eeeeeeeeecec"/>
                                 </attributes>
                               </object>
@@ -738,6 +749,9 @@
                         <property name="position">0</property>
                       </packing>
                     </child>
+                    <style>
+                      <class name="box_room_header"/>
+                    </style>
                   </object>
                   <packing>
                     <property name="expand">False</property>
