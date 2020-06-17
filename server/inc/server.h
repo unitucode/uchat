@@ -13,11 +13,19 @@
 typedef struct s_chat t_chat;
 typedef struct s_client t_client;
 typedef struct s_info t_info;
+typedef struct s_gclient t_gclient;
 
 struct s_info {
     GList *users;
     sqlite3* database;
     bool (*request_handler[RQ_COUNT_REQUEST])(t_dtp *dtp, t_client *chat);
+};
+
+struct s_gclient {
+    GSocketConnection *conn;
+    GDataOutputStream *out;
+    char *msg;
+    t_info *info;
 };
 
 struct s_chat {

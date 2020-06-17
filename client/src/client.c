@@ -149,10 +149,15 @@ int main(int argc, char **argv) {
 
     /* use the connection */
     // GInputStream * istream = g_io_stream_get_input_stream(G_IO_STREAM (connection));
-    GOutputStream * ostream = g_io_stream_get_output_stream(G_IO_STREAM (connection));
+    GOutputStream *ostream = g_io_stream_get_output_stream(G_IO_STREAM(connection));
     while (1) {
         t_dtp *dtp = mx_sign_up_request("hello", "bye");
-        mx_send(ostream, dtp);
+        gchar *str = g_strjoin("", dtp->str, "\n", NULL);
+        g_print("str = %s\n", str);
+        GDataOutputStream *out = g_data_output_stream_new(ostream);
+
+        g_print("sent = %d\n", g_data_output_stream_put_string(out, str, NULL, NULL));
+        g_free(str);
         g_usleep(1000000);
     }
     /* don't forget to check for errors */
