@@ -54,6 +54,8 @@ struct s_gmsg {
 
 struct s_chat {
     GDataOutputStream *out;
+    GDataInputStream *in;
+    GSocketConnection *conn;
     char *auth_token;
     char *login;
     gsize id;
@@ -62,6 +64,7 @@ struct s_chat {
     GtkBuilder *builder;
     GAsyncQueue *queue;
     GAsyncQueue *to_send;
+    GThread *receiver_thread;
     bool valid;
     void (*error_handler[ER_COUNT_ERRS])(GtkBuilder *builder);
     bool (*request_handler[RQ_COUNT_REQUEST])(t_dtp *dtp, struct s_chat *chat);
@@ -75,10 +78,10 @@ typedef struct s_signal_data {
 
 gssize mx_send(GDataOutputStream *out, t_dtp *dtp);
 int mx_tcp_connect(const char *host, const char *serv);
-t_chat *mx_init_chat(void);
+t_chat *mx_init_chat(GSocketConnection *connection);
 void mx_signup(SSL *ssl);
 void mx_login(SSL *ssl);
-void *mx_receiver(void *arg);
+void mx_receiver(GObject *source_object, GAsyncResult *res, gpointer user_data);
 void mx_init_handlers(t_chat *chat);
 void mx_init_errors(t_chat *chat);
 void mx_get_data(t_chat *chat);

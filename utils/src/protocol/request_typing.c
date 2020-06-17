@@ -46,11 +46,12 @@ static t_dtp *get_filled_dtp(char *str, size_t buf_size) {
 
 t_dtp *mx_request_creation(char *req_body) {
     size_t req_len = strlen(req_body);
-    size_t buf_size = sizeof(int) + req_len + 1;
+    size_t buf_size = sizeof(int) + req_len + 2;
     char str[buf_size];
 
     bzero(str, buf_size);
     strcpy(str + 4, req_body);
+    strcat(str + 4, "\n");
     memcpy(str, &req_len, sizeof(int));
     return get_filled_dtp(str, buf_size);
 }

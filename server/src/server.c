@@ -31,7 +31,8 @@ static void message_ready(GObject *source_object, GAsyncResult *res, gpointer us
         g_error ("%s\n", error->message);
         g_clear_error (&error);
     }
-    g_message("Message was: \"%s\"\n", cli->msg);
+    g_message("received = %s\n", cli->msg);
+    g_message("sent = %d\n", g_data_output_stream_put_string(cli->out, "hello\n", NULL, NULL));
     g_free(cli->msg);
     g_data_input_stream_read_line_async(in, G_PRIORITY_DEFAULT, NULL, message_ready, cli);
 }
@@ -58,7 +59,7 @@ int main(int argc, char **argv) {
     GError *error = NULL;
     GSocketService *service = g_socket_service_new();
     GMainLoop *loop = NULL;
-    t_info *info = mx_malloc(sizeof(t_info));
+    t_info *info = mx_init_info();
 
     mx_change_working_dir();
     info->users = NULL;

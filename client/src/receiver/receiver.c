@@ -6,8 +6,6 @@ void mx_init_errors(t_chat *chat) {
 }
 
 void mx_init_handlers(t_chat *chat) {
-    pthread_t tid;
-
     chat->request_handler[RQ_TOKEN] = mx_authorization_handler;
     chat->request_handler[RQ_ERROR_MSG] = mx_error_handler;
     chat->request_handler[RQ_LOG_IN] = NULL;
@@ -25,38 +23,29 @@ void mx_init_handlers(t_chat *chat) {
     chat->request_handler[RQ_DEL_ROOM] = mx_del_room_handler;
     chat->request_handler[RQ_EDIT_MSG] = mx_edit_msg_handler;
     chat->request_handler[RQ_DEL_MSG] = mx_del_msg_handler;
-    mx_pthread_create(&tid, NULL, mx_receiver, chat);
 }
 
+void mx_receiver(GObject *source_object, GAsyncResult *res, gpointer user_data) {
+    GDataInputStream *in = G_DATA_INPUT_STREAM(source_object);
+    GError *error = NULL;
+    gsize count = 0;
+    t_chat *chat = (t_chat*)user_data;
+    gchar *msg = NULL;
 
-void *mx_receiver(void *arg) {
-    // // t_chat *chat = (t_chat*)arg;
-    // t_dtp *data = NULL;
-
-    // while (true) {
-    //     while ((data = mx_recv(chat->ssl)) && chat->valid) {
-    //         printf("recv = %s", cJSON_Print(data->json));
-    //         if (data->type == RQ_READY) {
-    //             mx_free_request(&data);
-    //             data = g_async_queue_pop(chat->to_send);                
-    //             mx_send(chat->ssl, data);
-    //             mx_free_request(&data);
-    //             continue;
-    //         }
-    //         if (g_async_queue_length(chat->queue) > MX_MAX_LENGTH_QUEUE)
-    //             chat->valid = false;
-    //         g_async_queue_push(chat->queue, data);
-    //         mx_handle_request(chat);
-    //     }
-    //     printf("chat->valid = %d\n", chat->valid);
-    //     SSL_shutdown(chat->ssl);
-    //     if (chat->valid && !mx_reconnect(chat)) {
-    //         printf("Closed receiver\n");
-    //         mx_logger(MX_LOG_FILE, LOGMSG, "Receiver closed\n");
-    //         break;
-    //     }
-    //     mx_logger(MX_LOG_FILE, LOGMSG, "Receiver closed\n");
-    //     break;
-    // }
-    return arg;
+    puts("here");
+    if (!g_socket_connection_is_connected(chat->conn)
+        || g_output_stream_is_closed(G_OUTPUT_STREAM(chat->out))
+        || g_input_stream_is_closed(G_INPUT_STREAM(in))) {
+        return;
+    }
+    msg = g_data_input_stream_read_line_finish(in, res, &count, &error);
+    if (!msg)
+        return;
+    if (error) {
+        g_error ("%s\n", error->message);
+        g_clear_error (&error);
+    }
+    g_message("Recv message =  \"%s\"\n", msg);
+    g_free(msg);
+    g_data_input_stream_read_line_async(in, G_PRIORITY_DEFAULT, NULL, mx_receiver, chat);
 }
