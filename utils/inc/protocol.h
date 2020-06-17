@@ -59,7 +59,6 @@ struct s_ssl_con {
 };
 
 struct s_dtp { // Data Transfer Protocol view
-    char *data;
     char *str;
     cJSON *json;
     size_t len;
