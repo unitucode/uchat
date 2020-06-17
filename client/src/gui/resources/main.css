@@ -254,5 +254,17 @@ dialog headerbar {
 	padding: 8px 230px 0 25px;
 }
 .stack_messages list {
-	margin-top: 7px;
+	margin-top: 8px;
+}
+.sender_login {
+	font-size: 14px;
+}
+.stack_messages list row:selected {
+	background-color: transparent;
+}
+.stack_messages list box:nth-child(2) label:nth-child(2){
+	font-size: 13px;
+    font-weight: 300;
+    color: #919CC0;
+    margin-left: 10px;
 }

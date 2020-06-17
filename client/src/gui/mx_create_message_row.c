@@ -2,7 +2,9 @@
 
 void mx_msgcreate_label_login(GtkWidget *box_main, t_gmsg *gmsg) {
     GtkWidget *label_login = gtk_label_new(gmsg->login);
+    GtkStyleContext *context = gtk_widget_get_style_context(label_login);
 
+    gtk_style_context_add_class(context, "sender_login");
     gtk_box_pack_start(GTK_BOX(box_main), label_login, FALSE, FALSE, 0);
     gtk_widget_set_halign(label_login, GTK_ALIGN_START);
 }
@@ -24,6 +26,7 @@ void mx_msgcreate_label_time(GtkWidget *box_info, t_gmsg *gmsg) {
 
     gtk_box_pack_start(GTK_BOX(box_info), label_time, FALSE, TRUE, 0);
     gtk_widget_set_halign(label_time, GTK_ALIGN_START);
+    gtk_widget_set_valign(label_time, GTK_ALIGN_END);
     gtk_label_set_text(GTK_LABEL(label_time), "13:07");
     gtk_widget_set_tooltip_text(label_time, "24.05.2020    13:37");
     (void)gmsg;
@@ -47,7 +50,6 @@ static GtkWidget *create_box_main(GtkWidget *eventbox) {
 static void create_box_info(GtkWidget *box_main, t_gmsg *gmsg) {
     GtkWidget *box_info = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
 
-    gtk_widget_set_size_request(box_main, 100, -1);
     gtk_box_pack_end(GTK_BOX(box_main), box_info, FALSE, TRUE, 0);
     mx_msgcreate_label_login(box_main, gmsg);
     mx_msgcreate_label_text(box_info, gmsg);
