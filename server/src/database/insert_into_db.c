@@ -1,42 +1,41 @@
 #include "server.h"
 
-// to delete 
-t_db_room *mx_insert_room_into_db(sqlite3 *database, char *room_name, 
-                            char *customer) {
+void mx_insert_room_into_db(sqlite3 *db, t_db_room *room) {
     sqlite3_stmt *stmt;
-    int rv = 0;
+    gint32 rv = 0;
 
-    rv = sqlite3_prepare_v3(database,
-                            "insert into rooms(name, customer, date, desc)"
-                            "values(?1, ?2, ?3, ?4);", -1, 0, &stmt, NULL);
+    room->date = mx_get_time();
+    rv = sqlite3_prepare_v2(db, "insert into rooms(name, customer, date, desc, "
+                                "type)values(?1, ?2, ?3, ?4, ?5);",
+                            -1, &stmt, NULL);
     mx_error_sqlite(rv, "prepare", "insert room");
-    sqlite3_bind_text(stmt, 1, room_name, -1, SQLITE_STATIC);
-    sqlite3_bind_text(stmt, 2, customer, -1, SQLITE_STATIC);
-    sqlite3_bind_int64(stmt, 3, mx_get_time());
-    sqlite3_bind_text(stmt, 4, NULL, -1, SQLITE_STATIC);
+    sqlite3_bind_text(stmt, 1, room->room_name, -1, SQLITE_STATIC);
+    sqlite3_bind_text(stmt, 2, room->customer, -1, SQLITE_STATIC);
+    sqlite3_bind_int64(stmt, 3, room->date);
+    sqlite3_bind_text(stmt, 4, room->desc, -1, SQLITE_STATIC);
+    sqlite3_bind_int(stmt, 5, room->type);
     mx_error_sqlite(sqlite3_step(stmt), "step", "insert room");
     sqlite3_finalize(stmt);
-    return mx_get_room(database, room_name);
+    sqlite3_prepare_v2(db, "select max(id) from rooms", -1, &stmt, NULL);
+    mx_error_sqlite(sqlite3_step(stmt), "step", "get last room id");
+    room->room_id = sqlite3_column_int64(stmt, 0);
+    sqlite3_finalize(stmt);
 }
 
-//to delete
-t_db_user *mx_insert_user_into_db(sqlite3 *db, char *login,
-                            char *pass, char *token) {
+void mx_insert_user_into_db(sqlite3 *db, t_db_user *user) {
     sqlite3_stmt *stmt;
     int rv = 0;
 
-    rv = sqlite3_prepare_v3(db,
+    rv = sqlite3_prepare_v2(db,
                             "insert into users(login, password, token, permis"
                             "sion, date, description) values(?1, ?2, ?3, 0, "
-                            "strftime('%s', 'now'), '');", -1, 0, &stmt, NULL);
+                            "strftime('%s', 'now'), '');", -1, &stmt, NULL);
     mx_error_sqlite(rv, "prepare", "insert user");
     sqlite3_bind_text(stmt, 1, login, -1, SQLITE_STATIC);
     sqlite3_bind_text(stmt, 2, pass, -1, SQLITE_STATIC);
     sqlite3_bind_text(stmt, 3, token, -1, SQLITE_STATIC);
     mx_error_sqlite(sqlite3_step(stmt), "step", "insert user");
     sqlite3_finalize(stmt);
-    // mx_create_table_queue(db, login); 
-    return mx_get_user_by_login(db, login);
 }
 
 void mx_insert_member_into_db(sqlite3 *db, guint64 room_id, guint64 user_id,

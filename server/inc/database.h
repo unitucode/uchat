@@ -5,26 +5,26 @@
 #include <glib.h>
 #include <sys/time.h>
 
-#define MX_CUSTOMER 1
-#define MX_ADMIN 2
-#define MX_MODERATOR 3
-#define MX_USER 4
-
-#define MX_STATUS_MSG_EDIT 1
-#define MX_STATUS_MSG_START 2
-
-#define MX_TEXT_MSG 1
-#define MX_FILE_MSG 2
-
-#define MX_OLD_MESSAGE 2
-#define MX_NEW_MESSAGE 1
-#define MX_CURR_MESSAGE 0
 #define MX_DB "database.db"
 
 typedef struct s_member t_member;
 typedef struct s_db_user t_db_user;
 typedef struct s_db_message t_db_message;
 typedef struct s_db_room t_db_room;
+
+typedef enum s_type_db {
+    CURR_MESSAGE = 0,
+    NEW_MESSAGE,
+    OLD_MESSAGE,
+    CUSTOMER,
+    ADMIN,
+    MODERATOR,
+    SIMPLE,
+    STATUS_MSG_EDIT,
+    STATUS_MSG_START,
+    TEXT_MSG,
+    FILE_MSG
+}            t_type_db;
 
 struct s_member{
     guint64 user_id;
@@ -157,4 +157,5 @@ guint64 mx_get_time();
 void mx_insert_member_into_db(sqlite3 *db, guint64 room_id, guint64 user_id,
                               gint8 permission);
 void mx_insert_message(sqlite3 *db, t_db_message *message);
+
 

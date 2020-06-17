@@ -64,7 +64,8 @@ void mx_create_table_rooms(sqlite3 *database) {
                            "name               text                not null,"
                            "customer           text                not null,"
                            "date               int                 not null,"
-                           "desc               text);",
+                           "desc               text"
+                           "type               int                  not null);",
                         0, 0, 0);
 }
 
