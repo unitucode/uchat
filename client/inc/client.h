@@ -179,6 +179,7 @@ void mx_hide_msg_editing(GtkButton *btn, GtkBuilder *builder);
 void mx_set_room_widgets_visibility(GtkBuilder *builder, bool visibility);
 void mx_switch_room_header(GtkBuilder *builder, int page_index);
 void mx_unselect_curr_room_messages(GtkBuilder *builder);
+void mx_select_msg(gpointer *eventbox, gpointer *event, t_signal_data *data);
 
 
 // gui utils
