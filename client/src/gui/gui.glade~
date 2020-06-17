@@ -358,7 +358,7 @@
   <object class="GtkImage" id="image6">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
-    <property name="pixbuf">resources/rooms-list.png</property>
+    <property name="pixbuf">resources/menushka.png</property>
   </object>
   <object class="GtkImage" id="image7">
     <property name="visible">True</property>
@@ -375,7 +375,7 @@
   <object class="GtkImage" id="image9">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
-    <property name="pixbuf">resources/profile.png</property>
+    <property name="pixbuf">resources/settings.png</property>
     <property name="pixel_size">20</property>
   </object>
   <object class="GtkApplicationWindow" id="wnd_main">
@@ -397,13 +397,13 @@
         <property name="can_focus">False</property>
         <property name="orientation">vertical</property>
         <child>
-          <object class="GtkBox">
+          <object class="GtkBox" id="box_header_main">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <child>
               <object class="GtkButton" id="btn_show_roomlist">
-                <property name="width_request">40</property>
-                <property name="height_request">40</property>
+                <property name="width_request">42</property>
+                <property name="height_request">42</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="focus_on_click">False</property>
@@ -430,8 +430,8 @@
             </child>
             <child>
               <object class="GtkButton">
-                <property name="width_request">40</property>
-                <property name="height_request">40</property>
+                <property name="width_request">42</property>
+                <property name="height_request">42</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="focus_on_click">False</property>
@@ -473,11 +473,10 @@
                     <property name="margin_top">10</property>
                     <property name="margin_bottom">10</property>
                     <property name="max_length">20</property>
-                    <property name="primary_icon_name">edit-find-symbolic</property>
+                    <property name="primary_icon_pixbuf">resources/search.png</property>
                     <property name="primary_icon_activatable">False</property>
                     <property name="primary_icon_sensitive">False</property>
                     <signal name="focus-out-event" handler="mx_disable_listbox_filter" object="listbox_rooms" swapped="no"/>
-                    <signal name="icon-press" handler="mx_disable_listbox_filter" swapped="no"/>
                     <signal name="search-changed" handler="mx_search_room" swapped="no"/>
                   </object>
                   <packing>
