@@ -145,7 +145,7 @@ dialog headerbar {
 }
 .rooms-list label {
 	background-color: rgba(58,70, 107,.8);
-	padding: 25px 0;
+	padding: 25px 20px;
     border-radius: 5px;
     margin: 5px 25px;
 }
@@ -239,4 +239,20 @@ dialog headerbar {
 .box_titlebar {
 	background-color: #323B59;
 	padding: 0 25px;
+}
+.stack_messages list box:nth-child(2) label:nth-child(1){
+	background-color: #424E78;
+	padding: 10px 15px;
+	border-radius: 0 8px 8px 8px;
+	margin-top: 7px;
+	margin-left: 7px; 
+	font-weight: 300;
+	font-size: 14px;
+	color: #B8C2E5; 
+}
+.stack_messages list row {
+	padding: 8px 230px 0 25px;
+}
+.stack_messages list {
+	margin-top: 7px;
 }

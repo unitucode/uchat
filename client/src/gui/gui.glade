@@ -907,6 +907,7 @@
     <property name="width_request">315</property>
     <property name="can_focus">False</property>
     <property name="resizable">False</property>
+    <property name="modal">True</property>
     <property name="window_position">center-on-parent</property>
     <property name="destroy_with_parent">True</property>
     <property name="type_hint">dialog</property>
@@ -914,7 +915,6 @@
     <property name="skip_pager_hint">True</property>
     <property name="deletable">False</property>
     <property name="transient_for">wnd_main</property>
-    <!-- <signal name="focus-out-event" handler="mx_focus_out" swapped="no"/> -->
     <child type="titlebar">
       <object class="GtkHeaderBar">
         <property name="visible">True</property>
@@ -1093,13 +1093,14 @@
     <property name="can_focus">True</property>
     <property name="events">GDK_FOCUS_CHANGE_MASK</property>
     <property name="resizable">False</property>
+    <property name="modal">True</property>
     <property name="window_position">center-on-parent</property>
+    <property name="destroy_with_parent">True</property>
     <property name="type_hint">dialog</property>
     <property name="skip_taskbar_hint">True</property>
     <property name="skip_pager_hint">True</property>
     <property name="deletable">False</property>
     <property name="transient_for">wnd_main</property>
-    <signal name="focus-out-event" handler="mx_focus_out" swapped="no"/>
     <child type="titlebar">
       <object class="GtkHeaderBar">
         <property name="visible">True</property>
@@ -1286,13 +1287,13 @@
     <property name="can_focus">True</property>
     <property name="events">GDK_FOCUS_CHANGE_MASK</property>
     <property name="resizable">False</property>
+    <property name="modal">True</property>
     <property name="window_position">center-on-parent</property>
     <property name="type_hint">dialog</property>
     <property name="skip_taskbar_hint">True</property>
     <property name="skip_pager_hint">True</property>
     <property name="deletable">False</property>
     <property name="transient_for">wnd_main</property>
-    <signal name="focus-out-event" handler="mx_focus_out" swapped="no"/>
     <child type="titlebar">
       <object class="GtkHeaderBar">
         <property name="visible">True</property>
@@ -1319,6 +1320,7 @@
                 <property name="can_focus">True</property>
                 <property name="focus_on_click">False</property>
                 <property name="receives_default">True</property>
+                <signal name="clicked" handler="mx_widget_switch_visibility" object="dialog_room_sett" swapped="no"/>
                 <signal name="clicked" handler="mx_widget_switch_visibility" object="wnd_room_info" swapped="no"/>
               </object>
               <packing>
@@ -1514,6 +1516,7 @@
     <property name="height_request">400</property>
     <property name="can_focus">True</property>
     <property name="resizable">False</property>
+    <property name="modal">True</property>
     <property name="window_position">center-on-parent</property>
     <property name="destroy_with_parent">True</property>
     <property name="skip_taskbar_hint">True</property>
@@ -1521,7 +1524,6 @@
     <property name="deletable">False</property>
     <property name="gravity">static</property>
     <property name="transient_for">wnd_main</property>
-    <signal name="focus-out-event" handler="mx_focus_out" swapped="no"/>
     <child type="titlebar">
       <object class="GtkHeaderBar">
         <property name="visible">True</property>

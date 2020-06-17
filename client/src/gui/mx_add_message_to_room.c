@@ -1,26 +1,4 @@
 #include "client.h"
-// SIGNAL-HANDLERS
-
-void mx_select_msg(GtkWidget *widget, GdkEventButton *event,
-                   t_signal_data *data) {
-    t_groom *groom = mx_get_selected_groom(data->builder);
-
-    if (!mx_widget_is_visible("box_editing_msg", data->builder)) {
-        if (gtk_list_box_row_is_selected(GTK_LIST_BOX_ROW(data->row_msg))) {
-            mx_switch_room_header(data->builder, MX_ROOM_CTRL);
-            gtk_list_box_unselect_row(GTK_LIST_BOX(groom->box_messages),
-                                    GTK_LIST_BOX_ROW(data->row_msg));
-        }
-        else {
-            mx_switch_room_header(data->builder, MX_MSG_CTRL);
-            gtk_list_box_select_row(GTK_LIST_BOX(groom->box_messages),
-                                    GTK_LIST_BOX_ROW(data->row_msg));
-        }
-    }
-    (void)widget;
-    (void)event;
-}
-//==============================
 
 static void add_message_row(t_gmsg *msg, GtkBuilder *builder) {
     GtkWidget *row = gtk_list_box_row_new();
@@ -29,6 +7,8 @@ static void add_message_row(t_gmsg *msg, GtkBuilder *builder) {
     GtkListBox *box = room->box_messages;
     t_signal_data *data = NULL;
 
+    gtk_widget_set_can_focus(row, FALSE);
+    gtk_list_box_row_set_selectable(GTK_LIST_BOX_ROW(row), FALSE);
     data = mx_create_sigdata(builder, NULL, GTK_LIST_BOX_ROW(row));
 
     msg->row_msg = GTK_LIST_BOX_ROW(row);

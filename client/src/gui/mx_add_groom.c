@@ -92,6 +92,7 @@ static void add_room_row(t_groom *room, GtkBuilder *builder) {
     g_signal_connect(event, "button_press_event",
                      G_CALLBACK(mx_select_room), NULL);
 
+    gtk_label_set_ellipsize(GTK_LABEL(label), PANGO_ELLIPSIZE_END);
     gtk_container_add(GTK_CONTAINER(event), label);
     gtk_container_add(GTK_CONTAINER(row), event);
     gtk_widget_set_size_request(row, -1, 80);
