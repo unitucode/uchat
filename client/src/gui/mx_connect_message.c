@@ -24,9 +24,10 @@ static void req_edit_message(GtkButton *btn, t_chat *chat) {
         mx_send(chat->ssl, dtp);
         mx_free_request(&dtp);
     }
+    else
+        mx_switch_room_header(chat->builder, MX_MSG_CTRL);
     mx_clear_buffer_text("buffer_message", chat->builder);
     mx_hide_msg_editing(NULL, chat->builder);
-    mx_switch_room_header(chat->builder, MX_ROOM_CTRL);
     (void)btn;
 }
 
