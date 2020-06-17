@@ -20,8 +20,8 @@ bool mx_log_out_handler(t_dtp *token, t_client *client) {
         return false;
     answer = mx_log_out_request((char*)client->user->token);
     mx_free_user(&client->user);
-    mx_send(client->ssl, answer);
-    mx_update_online(--client->chat->online_users, client);
+    mx_send(client->out, answer);
+    // mx_update_online(--client->chat->online_users, client);
     mx_free_request(&answer);
     return true;
 }

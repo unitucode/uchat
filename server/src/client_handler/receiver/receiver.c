@@ -1,6 +1,6 @@
 #include "server.h"
 
-void mx_init_receiver(t_chat *chat) {
+void mx_init_receiver(t_info *chat) {
     chat->request_handler[RQ_SIGN_UP] = mx_sign_up_handler;
     chat->request_handler[RQ_TOKEN] = mx_log_in_token_handler;
     chat->request_handler[RQ_LOG_IN] = mx_log_in_handler;
@@ -19,30 +19,22 @@ void mx_init_receiver(t_chat *chat) {
     chat->request_handler[RQ_FILE] = mx_upload_file_handler;
 }
 
-void *mx_receiver(void *arg) {
-    t_client *client = (t_client*)arg;
-    t_dtp *data = NULL;
-    // system("leaks -q uchat_server");
+void mx_handle_request(char *request, t_client *client) {
+    t_dtp *data = mx_request_creation(request);
 
-    while ((data = mx_recv(client->ssl))) {
+    if (data) {
         printf("recv = %s\n", cJSON_Print(data->json));
         if (client->user || data->type == RQ_LOG_IN
             || data->type == RQ_SIGN_UP
             || data->type == RQ_TOKEN) {
-            if (!client->chat->request_handler[data->type]
-                || !client->chat->request_handler[data->type](data, client)) {
-                    break;
+            if (!client->info->request_handler[data->type]
+                || !client->info->request_handler[data->type](data, client)) {
+                    return;
             }
         }
         else
-            break;
-        // send_to_all(client->chat->clients, client->chat, client, dtp->str);
+            return;
         mx_free_request(&data);
         usleep(MX_DELAY);
     }
-    mx_free_request(&data);
-    mx_disconnect_client(client);
-    printf("Closed receiver Server\n===============================\n");
-    system("leaks -q uchat");
-    return NULL;
 }

@@ -19,7 +19,7 @@ bool mx_log_in_token_handler(t_dtp *token, t_client *client) { // TODO!!!!!!
 
     if (user_token && cJSON_IsString(user_token)
         && mx_isvalid_token(user_token->valuestring)) {
-        client->user = mx_get_user_by_token(client->chat->database,
+        client->user = mx_get_user_by_token(client->info->database,
                                             user_token->valuestring);
     }
     if (!client->user) {
@@ -30,7 +30,7 @@ bool mx_log_in_token_handler(t_dtp *token, t_client *client) { // TODO!!!!!!
     cJSON_Delete(json);
     mx_logger(MX_LOG_FILE, LOGMSG, "Logged by token %s\n", client->user->login);
     reconnect = mx_reconnect_request(client->user->token, client->user->login);
-    mx_send(client->ssl, reconnect);
+    mx_send(client->out, reconnect);
     mx_free_request(&reconnect);
     return true;
 }

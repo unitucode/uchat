@@ -11,6 +11,6 @@ void mx_send_auth_request(char *login, char *password,
         dtp = mx_log_in_request(login, pass);
     else
         dtp = mx_sign_up_request(login, pass);
-    mx_send_request(chat, dtp);
+    mx_send(chat->out, dtp);
     mx_free_request(&dtp);
 }

@@ -1,54 +1,24 @@
 #include "client.h"
 
-/*
- * Receive first packet with size of next packet
- */
-static int message_size(SSL *ssl) {
-    char buf[sizeof(int)];
-    int bytes = 0;
-    int size = -1;
+t_dtp *mx_recv(GInputStream *in) {
+    GError *error = NULL;
+    GBytes *bytes = NULL;
+    gsize read = 0;
+    gsize size = 0;
 
-    bytes = SSL_read(ssl, buf, sizeof(buf));
-    if (bytes != sizeof(int)) {
-        mx_logger(MX_LOG_FILE, LOGWAR, "Invalid packet. Readed %d\n", bytes);
-        return -1;
-    }
-    if (SSL_write(ssl, MX_RES_OK, strlen(MX_RES_OK)) <= 0) {
-        mx_logger(MX_LOG_FILE, LOGWAR, "Failed response size data\n");
-        return -1;
-    }
-    memcpy(&size, buf, sizeof(int));
-    return size;
-}
+    bytes = g_input_stream_read_bytes(in, sizeof(int), NULL, &error);
+    if (error)
+        mx_logger(MX_LOG_FILE, LOGERR, "Read size error = %s\n", error->message);
+    if (read < 0 || g_bytes_get_size(bytes) != sizeof(int))
+        mx_logger(MX_LOG_FILE, LOGERR, "Read error size bytes = %ld\n", read);
+    memcpy(&size, g_bytes_get_data(bytes, 0), sizeof(int));
+    gchar buf[size + 1];
 
-/*
- * Receive message from ssl socket
- */
-t_dtp *mx_recv(SSL *ssl) {
-    t_dtp *dtp = NULL;
-    int size = 0;
-    long int bytes = MX_RQ_SIZE;
-    long int read = 0;
-
-    if ((size = message_size(ssl)) > 0) {
-        char data[size + 1];
-
-        bzero(data, sizeof(data));
-        if (size < MX_RQ_SIZE)
-            bytes = size;
-        while (read < size && SSL_read(ssl, &data[read], bytes) > 0) {
-            if (SSL_write(ssl, MX_RES_OK, strlen(MX_RES_OK)) <= 0) {
-                mx_logger(MX_LOG_FILE, LOGWAR, "Failed response main data\n");
-                return NULL;
-            }
-            read += bytes;
-            if (size - read < MX_RQ_SIZE)
-                bytes = size - read;
-        }
-        if (read == size)
-            dtp = mx_request_creation(data);
-        else
-            mx_logger(MX_LOG_FILE, LOGWAR, "Invalid len of packet\n");
-    }
-    return dtp;
+    read = g_input_stream_read(in, buf, size, NULL, &error);
+    buf[read] = '\0';
+    if (error)
+        mx_logger(MX_LOG_FILE, LOGERR, "Read error = %s\n", error->message);
+    if (read < 0 || read != size)
+        mx_logger(MX_LOG_FILE, LOGERR, "Read error bytes = %ld\n", read);
+    return mx_request_creation(buf);
 }
