@@ -92,8 +92,6 @@
                   <object class="GtkEntry" id="entry_login_login">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
-                    <property name="margin_start">25</property>
-                    <property name="margin_end">25</property>
                     <property name="buffer">buffer_login</property>
                     <property name="max_length">22</property>
                     <property name="shadow_type">none</property>
@@ -110,8 +108,6 @@
                   <object class="GtkEntry" id="entry_login_password">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
-                    <property name="margin_start">25</property>
-                    <property name="margin_end">25</property>
                     <property name="buffer">buffer_password</property>
                     <property name="max_length">50</property>
                     <property name="visibility">False</property>
@@ -919,7 +915,7 @@
     <property name="skip_pager_hint">True</property>
     <property name="deletable">False</property>
     <property name="transient_for">wnd_main</property>
-    <signal name="focus-out-event" handler="mx_focus_out" swapped="no"/>
+    <!-- <signal name="focus-out-event" handler="mx_focus_out" swapped="no"/> -->
     <child type="titlebar">
       <object class="GtkHeaderBar">
         <property name="visible">True</property>
@@ -1003,8 +999,6 @@
                   <object class="GtkEntry" id="entry_roomname">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
-                    <property name="margin_left">25</property>
-                    <property name="margin_right">25</property>
                     <property name="buffer">buffer_roomname</property>
                     <property name="max_length">20</property>
                     <property name="placeholder_text" translatable="yes">Name</property>
@@ -1063,8 +1057,6 @@
                     <property name="visible">True</property>
                     <property name="sensitive">False</property>
                     <property name="can_focus">True</property>
-                    <property name="margin_left">25</property>
-                    <property name="margin_right">25</property>
                     <property name="margin_bottom">15</property>
                     <property name="buffer">buffer_roompass</property>
                     <property name="max_length">20</property>
@@ -1092,6 +1084,9 @@
         </child>
       </object>
     </child>
+    <style>
+      <class name="dialog_addroom"/>
+    </style>
   </object>
   <object class="GtkDialog" id="dialog_profile_sett">
     <property name="width_request">320</property>

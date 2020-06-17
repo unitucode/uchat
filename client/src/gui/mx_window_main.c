@@ -17,6 +17,9 @@ int mx_start_gui(t_chat *chat) {
     // GObject *button = gtk_builder_get_object(chat->builder, "btn_show_roomlist");
     // gtk_button_set_image(GTK_BUTTON(button), img);
     
+    GtkIconTheme *icon_theme = gtk_icon_theme_get_default();;
+    gtk_icon_theme_add_resource_path(icon_theme, "../src/gui/resources");
+
     gtk_main();
 
     (void)chat;
