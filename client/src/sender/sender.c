@@ -1,44 +1,15 @@
 #include "client.h"
 
-void mx_send_request(t_chat *chat, t_dtp *request) {
-    t_dtp *to_send = mx_request_creation(request->str);
+gssize mx_send(GDataOutputStream *out, t_dtp *dtp) {
+    GError *error = NULL;
+    gsize size = 0;
 
-    g_async_queue_push(chat->to_send, to_send);
-    if (SSL_write(chat->ssl, MX_READY, strlen(MX_READY)) <= 0) {
-        mx_logger(MX_LOG_FILE, LOGWAR, "Failed write ready\n");
+    if (!g_data_output_stream_put_string(out, dtp->str, NULL, &error)) {
+        mx_logger(MX_LOG_FILE, LOGERR, "Write string error\n");
     }
-}
-
-int mx_send(SSL *ssl, t_dtp *dtp) {
-    long int written = 0;
-    char *data = dtp->data;
-    long int bytes = MX_RQ_SIZE;
-    long int len = dtp->len;
-    char response[strlen(MX_RES_OK) + 1];
-
-    bzero(response, sizeof(response));
-    if (SSL_write(ssl, data + written, sizeof(int)) <= 0) {
-        mx_logger(MX_LOG_FILE, LOGWAR, "SSL_write data failed\n");
-        return false;
+    if (error) {
+        mx_logger(MX_LOG_FILE, LOGERR, "Error = %s\n", error->message);
+        g_clear_error(&error);
     }
-    if (SSL_read(ssl, response, sizeof(response) - 1) <= 0 || strcmp(response, MX_RES_OK)) {
-        mx_logger(MX_LOG_FILE, LOGWAR, "Response size data failed\n");
-        return false;
-    }
-    written += sizeof(int);
-    while (written < len) {
-        if (len - written < MX_RQ_SIZE)
-            bytes = len - written;
-        if (SSL_write(ssl, data + written, bytes) <= 0) {
-            mx_logger(MX_LOG_FILE, LOGWAR, "SSL_write data failed\n");
-            return false;
-        }
-        if (SSL_read(ssl, response, sizeof(response) - 1) <= 0 || strcmp(response, MX_RES_OK)) {
-            mx_logger(MX_LOG_FILE, LOGWAR, "Response main data failed\n");
-            return false;
-        }
-        fprintf(stderr, "written = %s\n", data + written);
-        written += bytes;
-    }
-    return true;
+    return size;
 }

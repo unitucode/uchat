@@ -1,10 +1,11 @@
 #pragma once
 
 #include "utils.h"
-#include "protocol.h"
 #include "sqlite3.h"
-#include <gtk/gtk.h>
 #include "protocol.h"
+#include <gtk/gtk.h>
+#include <glib.h>
+#include <gio/gio.h>
 
 #define MX_IMGS_PATH "../src/gui/resources/"
 #define MX_GUI_PATH "../src/gui/gui.glade"
@@ -27,7 +28,6 @@
 typedef struct s_groom t_groom;
 typedef struct s_gmsg t_gmsg;
 typedef struct s_chat t_chat;
-typedef struct s_con_data t_con_data;
 
 struct s_groom {
     GtkListBox *box_rooms;
@@ -52,17 +52,12 @@ struct s_gmsg {
     int message_id;
 };
 
-struct s_con_data {
-    t_ssl_con *ssl;
-    char **argv;
-};
-
 struct s_chat {
+    GDataOutputStream *out;
     char *auth_token;
     char *login;
-    t_con_data *con_data;
+    gsize id;
     t_groom *curr_room;
-    SSL *ssl;
     t_dtp *data;
     GtkBuilder *builder;
     GAsyncQueue *queue;
@@ -78,9 +73,7 @@ typedef struct s_signal_data {
     GtkListBoxRow *row_msg;
 }              t_signal_data;
 
-t_dtp *mx_recv(SSL *ssl);
-int mx_send(SSL *ssl, t_dtp *dtp);
-void mx_send_request(t_chat *chat, t_dtp *request);
+gssize mx_send(GDataOutputStream *out, t_dtp *dtp);
 int mx_tcp_connect(const char *host, const char *serv);
 t_chat *mx_init_chat(void);
 void mx_signup(SSL *ssl);
@@ -89,7 +82,7 @@ void *mx_receiver(void *arg);
 void mx_init_handlers(t_chat *chat);
 void mx_init_errors(t_chat *chat);
 void mx_get_data(t_chat *chat);
-bool mx_connect(t_chat *chat);
+// bool mx_connect(t_chat *chat);
 bool mx_reconnect(t_chat *chat);
 
 //handlers

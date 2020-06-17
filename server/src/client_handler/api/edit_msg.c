@@ -27,7 +27,7 @@ bool mx_edit_msg_handler(t_dtp *msg, t_client *client) {
     if (!msg_str || !cJSON_IsString(msg_str))
         return false;
     //TODO
-    mx_edit_message(client->chat->database, room_id->valueint,
+    mx_edit_message(client->info->database, room_id->valueint,
                     msg_id->valueint, msg_str->valuestring);
     resend = mx_edit_msg_request(msg_str->valuestring, room_id->valueint, msg_id->valueint);
     mx_send_to_all(resend, client);

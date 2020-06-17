@@ -21,7 +21,7 @@ void mx_init_handlers(t_chat *chat) {
     chat->request_handler[RQ_UPD_ROOM_DESC] = mx_upd_room_desc_handler;
     chat->request_handler[RQ_UPD_ROOM_NAME] = mx_upd_room_name_handler;
     chat->request_handler[RQ_UPD_USER_DESC] = mx_upd_user_desc_handler;
-    chat->request_handler[RQ_RECONNECT] = mx_reconnect_hanlder;
+    // chat->request_handler[RQ_RECONNECT] = mx_reconnect_hanlder;
     chat->request_handler[RQ_DEL_ROOM] = mx_del_room_handler;
     chat->request_handler[RQ_EDIT_MSG] = mx_edit_msg_handler;
     chat->request_handler[RQ_DEL_MSG] = mx_del_msg_handler;
@@ -30,33 +30,33 @@ void mx_init_handlers(t_chat *chat) {
 
 
 void *mx_receiver(void *arg) {
-    t_chat *chat = (t_chat*)arg;
-    t_dtp *data = NULL;
+    // // t_chat *chat = (t_chat*)arg;
+    // t_dtp *data = NULL;
 
-    while (true) {
-        while ((data = mx_recv(chat->ssl)) && chat->valid) {
-            printf("recv = %s", cJSON_Print(data->json));
-            if (data->type == RQ_READY) {
-                mx_free_request(&data);
-                data = g_async_queue_pop(chat->to_send);                
-                mx_send(chat->ssl, data);
-                mx_free_request(&data);
-                continue;
-            }
-            if (g_async_queue_length(chat->queue) > MX_MAX_LENGTH_QUEUE)
-                chat->valid = false;
-            g_async_queue_push(chat->queue, data);
-            mx_handle_request(chat);
-        }
-        printf("chat->valid = %d\n", chat->valid);
-        SSL_shutdown(chat->ssl);
-        if (chat->valid && !mx_reconnect(chat)) {
-            printf("Closed receiver\n");
-            mx_logger(MX_LOG_FILE, LOGMSG, "Receiver closed\n");
-            break;
-        }
-        mx_logger(MX_LOG_FILE, LOGMSG, "Receiver closed\n");
-        break;
-    }
-    return NULL;
+    // while (true) {
+    //     while ((data = mx_recv(chat->ssl)) && chat->valid) {
+    //         printf("recv = %s", cJSON_Print(data->json));
+    //         if (data->type == RQ_READY) {
+    //             mx_free_request(&data);
+    //             data = g_async_queue_pop(chat->to_send);                
+    //             mx_send(chat->ssl, data);
+    //             mx_free_request(&data);
+    //             continue;
+    //         }
+    //         if (g_async_queue_length(chat->queue) > MX_MAX_LENGTH_QUEUE)
+    //             chat->valid = false;
+    //         g_async_queue_push(chat->queue, data);
+    //         mx_handle_request(chat);
+    //     }
+    //     printf("chat->valid = %d\n", chat->valid);
+    //     SSL_shutdown(chat->ssl);
+    //     if (chat->valid && !mx_reconnect(chat)) {
+    //         printf("Closed receiver\n");
+    //         mx_logger(MX_LOG_FILE, LOGMSG, "Receiver closed\n");
+    //         break;
+    //     }
+    //     mx_logger(MX_LOG_FILE, LOGMSG, "Receiver closed\n");
+    //     break;
+    // }
+    return arg;
 }

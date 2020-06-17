@@ -10,7 +10,6 @@ static gboolean handle(t_chat *chat) {
             || dtp->type == RQ_TOKEN || dtp->type == RQ_RECONNECT) {
             if (chat->request_handler[dtp->type]) {
                 if (!chat->request_handler[dtp->type](dtp, chat)) {
-                    shutdown(SSL_get_fd(chat->ssl), SHUT_WR);
                     chat->valid = false;
                 }
             }

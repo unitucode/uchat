@@ -67,7 +67,6 @@ struct s_dtp { // Data Transfer Protocol view
 };
 
 //file transfer
-int mx_send(SSL *ssl, t_dtp *dtp);
 t_file *mx_upload_file(char *file_path);
 char *mx_recv_file(SSL *ssl, size_t size);
 int mx_send_file(SSL *ssl, char *data_bytes, size_t size);
