@@ -19,22 +19,22 @@ void mx_init_receiver(t_info *chat) {
     chat->request_handler[RQ_FILE] = mx_upload_file_handler;
 }
 
-void mx_handle_request(char *request, t_client *client) {
+bool mx_handle_request(char *request, t_client *client) {
     t_dtp *data = mx_request_creation(request);
 
     if (data) {
-        printf("recv = %s\n", cJSON_Print(data->json));
         if (client->user || data->type == RQ_LOG_IN
             || data->type == RQ_SIGN_UP
             || data->type == RQ_TOKEN) {
             if (!client->info->request_handler[data->type]
                 || !client->info->request_handler[data->type](data, client)) {
-                    return;
+                    return false;
             }
         }
         else
-            return;
+            return false;
         mx_free_request(&data);
         usleep(MX_DELAY);
     }
+    return true;
 }

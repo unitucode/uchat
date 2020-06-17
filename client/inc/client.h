@@ -88,6 +88,7 @@ void mx_get_data(t_chat *chat);
 // bool mx_connect(t_chat *chat);
 bool mx_reconnect(t_chat *chat);
 
+
 //handlers
 bool mx_error_handler(t_dtp *data, t_chat *chat);
 bool mx_authorization_handler(t_dtp *token, t_chat *chat);
@@ -190,7 +191,7 @@ char *mx_page_name(int id);
 // void mx_widget_show_all(GtkWidget *widget);
 // void mx_widget_destroy(GtkWidget *widget);
 // void mx_widget_show(GtkWidget *widget);
-void mx_handle_request(t_chat *chat);
+bool mx_handle_request(char *request, t_chat *chat);
 void mx_send_auth_request(char *login, char *password,
                           t_chat *chat, t_request_type request_type);
 void css_connect();

@@ -25,7 +25,7 @@ static t_dtp *get_filled_dtp(char *str, size_t buf_size) {
     t_dtp *req = mx_malloc(sizeof(t_dtp));
     int type;
 
-    req->str = str;
+    req->str = strdup(str);
     req->len = buf_size - 1;
     req->json = cJSON_Parse(req->str);
     if ((type = mx_get_type_dtp(req)) < 0 || type >= RQ_COUNT_REQUEST) {

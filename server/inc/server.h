@@ -45,6 +45,7 @@ struct s_chat {
 };
 
 gssize mx_send(GDataOutputStream *out, t_dtp *dtp);
+bool mx_handle_request(char *request, t_client *client);
 
 //api
 t_dtp *mx_token_request(char *token, char *login);

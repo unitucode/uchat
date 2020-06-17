@@ -25,6 +25,23 @@ void mx_init_handlers(t_chat *chat) {
     chat->request_handler[RQ_DEL_MSG] = mx_del_msg_handler;
 }
 
+bool mx_handle_request(char *request, t_chat *chat) {
+    t_dtp *data = mx_request_creation(request);
+
+    if (data) {
+        if (chat->auth_token
+            || data->type == RQ_ERROR_MSG
+            || data->type == RQ_TOKEN) {
+            if (!chat->request_handler[data->type]
+                || !chat->request_handler[data->type](data, chat)) {
+                return false;
+            }
+        }
+        mx_free_request(&data);
+    }
+    return true;
+}
+
 void mx_receiver(GObject *source_object, GAsyncResult *res, gpointer user_data) {
     GDataInputStream *in = G_DATA_INPUT_STREAM(source_object);
     GError *error = NULL;
@@ -32,7 +49,6 @@ void mx_receiver(GObject *source_object, GAsyncResult *res, gpointer user_data) 
     t_chat *chat = (t_chat*)user_data;
     gchar *msg = NULL;
 
-    puts("here");
     if (!g_socket_connection_is_connected(chat->conn)
         || g_output_stream_is_closed(G_OUTPUT_STREAM(chat->out))
         || g_input_stream_is_closed(G_INPUT_STREAM(in))) {
@@ -45,7 +61,10 @@ void mx_receiver(GObject *source_object, GAsyncResult *res, gpointer user_data) 
         g_error ("%s\n", error->message);
         g_clear_error (&error);
     }
-    g_message("Recv message =  \"%s\"\n", msg);
+    if (!mx_handle_request(msg, chat)) {
+        g_free(msg);
+        return;
+    }
     g_free(msg);
     g_data_input_stream_read_line_async(in, G_PRIORITY_DEFAULT, NULL, mx_receiver, chat);
 }

@@ -4,8 +4,7 @@
 static void incorrect_data(t_client *client) {
     t_dtp *dtp = mx_error_msg_request(ER_AUTH_DATA, "The email or password inccorect");
 
-    // mx_send(client->ssl, dtp);
-    client++;
+    mx_send(client->out, dtp);
     mx_free_request(&dtp);
 }
 
