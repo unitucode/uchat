@@ -1,6 +1,6 @@
 #include "server.h"
 
-gssize mx_send(GDataOutputStream *out, t_dtp *dtp) {
+gssize mx_send(GDataOutputStream *out, t_dtp *dtp) { //TODO HANDLE SOCKET
     GError *error = NULL;
     gsize size = 0;
 

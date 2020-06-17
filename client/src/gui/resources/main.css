@@ -2,34 +2,35 @@
 
 * {
     font-family: "Gill Sans", sans-serif;
-    transition: all .3s ease-out;
+    transition: all .07s ease-out;
+    outline-color: rgb(83, 102, 187);
 }
-button, .input, entry, notebook, .dialog_auth .titlebar  {
+button {
+    -gtk-icon-effect: none;
+    -gtk-icon-shadow: none;
+    text-shadow: none;
+    box-shadow: none;
+}
+.dialog_auth entry, .wnd_main entry, .dialog_auth textview, .wnd_main textview {
+    caret-color: #fff;
+    color: #fff;
+}
+button, .input, entry, notebook, .dialog_auth .titlebar, button image  {
     border: none;
 }
-.dialog_auth, .csd {
-    /* background: rgb(20,39,69);
-    background: linear-gradient(173deg, rgba(20,39,69,1) 0%,
-                rgba(0,100,123,1) 49%, rgba(105,114,145,1) 100%); */
-    background: rgb(62,50,107);
-    background-image: linear-gradient(173deg, rgb(62, 50, 107) 0%, rgba(40,34,65,1) 100%);
-}
-
-/* .box-rooms {
+.dialog_auth, .wnd_main {
     background: rgb(57,69,107);
-    background-image: linear-gradient(173deg, rgb(62, 50, 107) 0%, rgba(40,34,65,1) 100%);
-} */
+    background-image: linear-gradient(173deg, rgb(57, 69, 107) 0%, rgb(35,41,65) 100%);
+}
 box stack, entry, .dialog_notebook header {
     background-color: transparent;
 }
-entry {
+.dialog_auth entry, .wnd_main entry {
 	box-shadow: none;
     padding: 0;
     border-bottom: 1px solid rgba(255,255,255,.7);
     border-radius: 0;
-    margin: 0 -25px;
-    caret-color: #fff;
-    color: #fff;
+    /* margin: 0 -25px; */
     font-size: 15px;
 }
 .dialog-action-area {
@@ -41,9 +42,12 @@ entry {
     box-shadow: none;
     padding: 12px 40px;
     border-radius: 2px;
-    color: #104C65;
+    color: #5366BB;
     font-size: 14px;
     font-weight: 500;
+}
+button label {
+    box-shadow: none;
 }
 .dialog-action-area button:first-child {
     margin-right: 5px;
@@ -63,7 +67,7 @@ entry {
     font-size: 13px;
     color: red;
 }
-.dialog_auth .titlebar {
+headerbar {
     min-height: 40px;
 }
 .dialog_auth decoration {
@@ -113,11 +117,12 @@ entry {
 }
 headerbar box label {
 	font-size: 14px;
-	font-weight: 500;
+	font-weight: 400;
 	color: #403E3D; 
 }
 dialog headerbar {
-    background: linear-gradient(178.49deg, #E4E5E5 21.51%, #CDCDCE 78.45%);
+    background: rgb(229,229,229);
+    background: linear-gradient(180deg, rgba(229,229,229,1) 0%, rgba(205,205,205,1) 100%);
     box-shadow: 0 -1px #A8A7A6 inset;
 }
 
@@ -125,77 +130,110 @@ dialog headerbar {
 	background: transparent;
 }
 
-scrolledwindow {
+.wnd_main scrolledwindow {
 	border: none;
 }
-
 .rooms-list row {
-	padding: 5px 25px;
+	padding: 0;
+}
+.rooms-list row, .rooms-list row label {
     color: #fff;
     outline: none;
 }
-.rooms-list row:selected {
-	padding: 8px 15px;
+.rooms-list label {
+	background-color: rgba(58,70, 107,.8);
+	padding: 25px 0;
+    border-radius: 5px;
+    margin: 5px 25px;
 }
-
-.rooms-list row label {
-	background-color: rgba(63,51, 107,.8);
-	padding: 25px 20px;
-	transition: .3s easy;
-	border-radius: 5px;
+.rooms-list row:hover {
+    background-color: transparent;
 }
-
+.rooms-list row:hover label {
+    background-color: rgb(58,70, 107);
+    margin: 5px 20px;
+}
 .rooms-list row:selected label {
-	background-color: rgb(71,59, 120);
-	border-left: 3px solid rgb(88,83,187);
+	background-color: rgb(66,78, 120);
+    border-left: 2px solid rgb(83,102,187);
+    border-right: 2px solid rgb(83,102,187);
+    margin: 5px 15px;
 }
-
 .add-room-button {
 	background: none;
     padding: 17px;
     border-radius: 100px;
-    background-color: rgb(88,83,187);
+    background-color: rgb(83,102,187);
     margin: 20px 0;
 }
 .add-room-button:hover {
-    background-color: rgb(71,59, 120);
+    background-color: rgb(66,78, 120);
 }
-scrolledwindow overshoot, scrolledwindow undershoot {
-	box-shadow: none
+.wnd_main scrolledwindow overshoot, scrolledwindow undershoot {
+	box-shadow: none;
 }
-
-scrolledwindow scrollbar.bottom {
-	box-shadow: 0 -20px 20px #29304b;
+.wnd_main scrolledwindow scrollbar.bottom {
+	box-shadow: 0 -20px 20px #2A324D;
 }
 .box-rooms {
-	box-shadow: 10px 0 10px -2px rgba(0,0,0,.1);
+    box-shadow: 10px 30px 10px -2px rgba(0,0,0,.1);
+	border-right: 1px solid #424E78;
 }
-list {
+.wnd_main list {
     color: #fff;
 }
-srcollbar.hovering slider {
-    background-color: rgba(63,51, 107,.8);
+.wnd_main srcollbar.hovering slider {
+    background-color: rgba(58,70, 107,.8);
 }
-.hovering {
-    background-color: rgb(71,59, 120);
+.wnd_main .hovering {
+    background-color: rgb(66,78, 120);
 	border:none;
 }
-.dragging slider {
-	background-color: rgb(88,83,187);
+.wnd_main .dragging slider {
+	background-color: rgb(83,102,187);
 }
-scrollbar slider {
+.wnd_main scrollbar slider {
 	border-color: transparent;
-	background-color: rgba(88,83,187,.8);
+	background-color: rgba(83,102,187,.8);
 }
 .box-rooms undershoot.bottom {
-	box-shadow: 0 -40px 12px -20px rgba(47,39,78,1) inset;
+	box-shadow: 0 -40px 12px -20px rgb(42,49,77) inset;
 	opacity: 1;
 }
-headerbar button image {
-	-gtk-icon-effect: none;
+.box_titlebar button {
+    background-image: none;
+    padding: 0;
 }
-
-headerbar button:hover {
-	background-image: image(rgba(252,252,252,.75));
-	transition: .1s easy;
+.box_titlebar button:hover {
+    opacity: .7;
+}
+.box_room_header label {
+	margin-left: 25px;
+	font-size: 17px;
+}
+.box_room_header {
+	border-bottom: 1px solid #424E78;
+}
+.box_msg_send {
+	margin: 25px;
+	background-color: #424E78;
+	padding: 15px 25px;
+	border-radius: 8px;
+}
+.button_send_message {
+	background-image: none;
+	background-color: #2F3857;
+	border-radius: 100px;
+	padding: 13px;
+}
+.box_msg_send textview text,  .box_msg_send textview {
+    background-color: transparent;
+    color: #B8C2E5;
+}
+.box_msg_send scrolledwindow {
+	border: 1px solid #424E78;
+}
+.box_titlebar {
+	background-color: #323B59;
+	padding: 0 25px;
 }

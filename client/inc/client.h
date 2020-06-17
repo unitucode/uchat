@@ -18,6 +18,8 @@
 #define MX_ERRMSG_INCCRDATA "The email or password inccorect"
 #define MX_ERRMSG_USEREXIST "User already exist"
 
+#define MX_ROOM_CTRL 0
+#define MX_MSG_CTRL 1
 
 //settings
 #define MX_BUF_MSGS 50
@@ -45,6 +47,8 @@ struct s_groom {
 };
 
 struct s_gmsg {
+    GtkListBoxRow *row_msg;
+    GtkLabel *label_text;
     char *msg;
     char *login;
     long int date;
@@ -148,7 +152,7 @@ void mx_add_groom(t_groom *room, GtkBuilder *builder);
 void mx_delete_groom(t_groom *room);
 t_groom *mx_create_groom(cJSON *room);
 t_gmsg *mx_create_gmsg(cJSON *msg);
-void mx_delete_gmsg(t_gmsg **gmsg);
+void mx_delete_gmsg(t_gmsg *gmsg);
 GtkWidget *mx_create_message_row(t_gmsg *msg);
 void mx_add_message_to_room(t_gmsg *msg, GtkBuilder *builder);
 void mx_logout_client(t_chat *chat);
@@ -160,6 +164,7 @@ void mx_connect_addroom(t_chat *chat);
 void mx_connect_send_message(t_chat *chat);
 void mx_connect_profile_settings(t_chat *chat);
 void mx_connect_room_settings(t_chat *chat);
+void mx_connect_message_ctrl(t_chat *chat);
 void mx_connect_test_request(t_chat *chat); // DELETE
 void mx_errmsg_wrong_authdata(GtkBuilder *builder);
 void mx_errmsg_user_exist(GtkBuilder *builder);
@@ -169,6 +174,16 @@ void mx_set_current_room_sett(GtkBuilder *builder);
 void mx_gupd_room_desc(int id, char *desc, GtkBuilder *builder);
 void mx_gupd_room_name(int id, char *name, GtkBuilder *builder);
 void mx_gdel_room(int id, GtkBuilder *builder);
+void mx_gdel_msg(int msg_id, int room_id, GtkBuilder *builder);
+void mx_gupd_msg_text(int msg_id, int room_id,
+                      char *text, GtkBuilder *builder);
+void mx_reset_messege_room(t_groom *new_selected, GtkBuilder *builder);
+void mx_hide_msg_editing(GtkButton *btn, GtkBuilder *builder);
+void mx_set_room_widgets_visibility(GtkBuilder *builder, bool visibility);
+void mx_switch_room_header(GtkBuilder *builder, int page_index);
+void mx_unselect_curr_room_messages(GtkBuilder *builder);
+void mx_select_msg(gpointer *eventbox, gpointer *event, t_signal_data *data);
+
 
 // gui utils
 void mx_scrlldwnd_connect(char *name, GtkWidget *scroll, GtkBuilder *builder);
@@ -176,16 +191,19 @@ gchar *mx_entry_get_text(char *entry_name, GtkBuilder *builder);
 gchar *mx_get_buffer_text(char *buff_name, GtkBuilder *builder);
 void mx_clear_buffer_text(char *buff_name, GtkBuilder *builder);
 void mx_clear_label_by_name(char *label_name, GtkBuilder *builder);
-void mx_widget_switch_visibility(GtkWidget *usr_ctrl, void *widget);
+void mx_widget_switch_visibility(GtkWidget *usr_ctrl, GtkWidget *widget);
 t_groom *mx_get_selected_groom(GtkBuilder *builder);
 t_groom *mx_get_groom_by_id(int room_id, GtkBuilder *builder);
+t_gmsg *mx_get_selected_gmsg(GtkBuilder *builder);
+t_gmsg *mx_get_gmsg_by_id(int msg_id, int room_id, GtkBuilder *builder);
 void mx_unselect_room(t_groom *groom, GtkBuilder *builder);
 void mx_entry_set_icon_by_path(GtkEntry *entry, char *path,
                                GtkEntryIconPosition icon_pos);
 t_signal_data *mx_create_sigdata(GtkBuilder *builder, t_groom *groom,
                                  GtkListBoxRow *row_msg);
 void mx_free_sigdata(t_signal_data *data);
-char *mx_page_name(int id);
+char *mx_msgpage_name(int id);
+bool mx_widget_is_visible(char *widget_name, GtkBuilder *builder);
 
 // gui wrappers
 // void mx_widget_show_all(GtkWidget *widget);
@@ -194,4 +212,4 @@ char *mx_page_name(int id);
 bool mx_handle_request(char *request, t_chat *chat);
 void mx_send_auth_request(char *login, char *password,
                           t_chat *chat, t_request_type request_type);
-void css_connect();
+void mx_css_connect();

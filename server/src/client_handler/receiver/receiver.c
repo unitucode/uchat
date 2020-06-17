@@ -23,6 +23,7 @@ bool mx_handle_request(char *request, t_client *client) {
     t_dtp *data = mx_request_creation(request);
 
     if (data) {
+        g_print("recv = %s\n", cJSON_Print(data->json));
         if (client->user || data->type == RQ_LOG_IN
             || data->type == RQ_SIGN_UP
             || data->type == RQ_TOKEN) {

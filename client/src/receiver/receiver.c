@@ -29,6 +29,7 @@ bool mx_handle_request(char *request, t_chat *chat) {
     t_dtp *data = mx_request_creation(request);
 
     if (data) {
+        g_print("recv = %s\n", cJSON_Print(data->json));
         if (chat->auth_token
             || data->type == RQ_ERROR_MSG
             || data->type == RQ_TOKEN) {

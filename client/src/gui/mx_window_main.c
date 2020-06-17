@@ -7,12 +7,18 @@ GtkBuilder *mx_init_window(int argc, char **argv) {
     builder = gtk_builder_new();
     gtk_builder_add_from_file(builder, MX_GUI_PATH, NULL);
     gtk_builder_connect_signals(builder, builder);
-    css_connect();
+    mx_css_connect();
     return builder;
 }
 
 int mx_start_gui(t_chat *chat) {
+    // GdkPixbuf *svg = gdk_pixbuf_new_from_file("../src/gui/resources/web-browser.tiff", NULL);
+    // GtkWidget *img = gtk_image_new_from_pixbuf(svg);
+    // GObject *button = gtk_builder_get_object(chat->builder, "btn_show_roomlist");
+    // gtk_button_set_image(GTK_BUTTON(button), img);
+    
     gtk_main();
+
     (void)chat;
     return 0;
 }

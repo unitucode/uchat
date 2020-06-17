@@ -25,9 +25,7 @@ bool mx_edit_msg_handler(t_dtp *data, t_chat *chat) {
         return false;
     if (!msg_id || !cJSON_IsNumber(msg_id))
         return false;
-    // GUI WORK
-    chat++;
-    printf("edited msg_id %d room_id %d new_msg = %s\n", msg_id->valueint, room_id->valueint, msg->valuestring);
-    // GUI WORK
+    mx_gupd_msg_text(msg_id->valueint, room_id->valueint,
+                     msg->valuestring, chat->builder);
     return true;
 }
