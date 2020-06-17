@@ -1325,6 +1325,7 @@
                 <property name="can_focus">True</property>
                 <property name="focus_on_click">False</property>
                 <property name="receives_default">True</property>
+                <signal name="clicked" handler="mx_widget_switch_visibility" object="dialog_room_sett" swapped="no"/>
                 <signal name="clicked" handler="mx_widget_switch_visibility" object="wnd_room_info" swapped="no"/>
               </object>
               <packing>
