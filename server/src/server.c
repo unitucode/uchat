@@ -50,30 +50,26 @@ static void test() {
     // printf("milisec -> %lld\n", mx_get_time());
 
 
-    // cJSON *json = cJSON_CreateObject();
-    // cJSON_AddItemToObject(json, "word", cJSON_CreateString("hello"));
-    sqlite3_str *str = sqlite3_str_new(db);
-    char *request = NULL;
-    // char *json_str = cJSON_Print(json);
-    // cJSON_Minify(json_str);
-    char *result = NULL;
-    const char *error;
-    sqlite3_stmt *stmt;
+    // sqlite3_str *str = sqlite3_str_new(db);
+    // char *request = NULL;
+    // char *result = NULL;
+    // const char *error;
+    // sqlite3_stmt *stmt;
 
     // sqlite3_str_appendf(str, "select name from rooms name like 'name%'");
     // sqlite3_str_appendall(str, "update sqlite set sqlite = (select json_set(sqlite, '$.word', 'change') from sqlite)");
     // sqlite3_str_appendall(str, "insert into sqlite values(json_replae(sqlite, '$.word', 'change'))");
-    request = sqlite3_str_finish(str);
-    int rv = sqlite3_prepare_v2(db, "delete from rooms LIMIT 1", -1, &stmt, &error);
-    printf("%d\n", rv);
-    sqlite3_step(stmt);
-    if(sqlite3_column_text(stmt, 0))
-        result = strdup((char*)sqlite3_column_text(stmt, 0));
-    // int rv = sqlite3_exec(db, request, 0, 0, &error);
-    sqlite3_finalize(stmt);
-    sqlite3_free(request);
-    printf("error -> '%s'\nname -> '%s'\n", error, result);
-    mx_free((void**)&result);
+    // request = sqlite3_str_finish(str);
+    // int rv = sqlite3_prepare_v2(db, "delete from rooms limit 1", -1, &stmt, &error);
+    // printf("%d\n", rv);
+    // sqlite3_step(stmt);
+    // if(sqlite3_column_text(stmt, 0))
+    //     result = strdup((char*)sqlite3_column_text(stmt, 0));
+    // // int rv = sqlite3_exec(db, request, 0, 0, &error);
+    // sqlite3_finalize(stmt);
+    // sqlite3_free(request);
+    // printf("error -> '%s'\nname -> '%s'\n", error, result);
+    // mx_free((void**)&result);
 
 
     // get message by id                Ok
@@ -83,15 +79,15 @@ static void test() {
     // printf("%s\n", cJSON_Print(vlad));
 
     // create room                  Ok
-    t_db_room *room = mx_insert_room_into_db(db, "name7", "customer");
-    if (!room)
-        exit(0);
-    printf("%s\n", room->room_name);
-    printf("%s\n", room->customer);
-    printf("%lld\n", room->date);
-    printf("%d\n", room->id);
-    printf("%s\n", room->description);
-    mx_free_room(&room);
+    // t_db_room *room = mx_insert_room_into_db(db, "name7", "customer");
+    // if (!room)
+    //     exit(0);
+    // printf("%s\n", room->room_name);
+    // printf("%s\n", room->customer);
+    // printf("%lld\n", room->date);
+    // printf("%d\n", room->id);
+    // printf("%s\n", room->description);
+    // mx_free_room(&room);
     // printf("-> -> %zu\n", sizeof(long));
 
     // test valid database                  Ok

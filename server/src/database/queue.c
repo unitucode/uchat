@@ -1,23 +1,33 @@
 #include "server.h"
 
-// void mx_create_table_queue(sqlite3 *db, char *login) {
-//     char *request = NULL;
-//     sqlite3_str *str = sqlite3_str_new(db);
-//     sqlite3_str *str2 = sqlite3_str_new(db);
+void mx_db_push_queue_by_id(sqlite3 *db, guint64 user_id,
+                            gchar *request) {
+    sqlite3_stmt *stmt;
+    gint rv = SQLITE_OK;
 
-//     sqlite3_str_appendf(str, "drop table '%s'; create table %s(id integer pr"
-//                              "imary key not null, request text not null)",
-//                         login, login);
-//     sqlite3_str_appendf(str2, "create table '%s'(id integer primary "
-//                               "key not null, request text not null);", login);
-//     request = sqlite3_str_finish(str);
-//     sqlite3_exec(db, request, 0, 0, 0);
-//     sqlite3_free(request);
-//     request = sqlite3_str_finish(str2);
-//     sqlite3_exec(db, request, 0, 0, 0);
-//     sqlite3_free(request);
-// }
+    rv = sqlite3_prepare_v2(db, "insert into queue(user_id, request, "
+                                "date)values(?1, ?2, ?3);", -1, &stmt, NULL);
+    mx_error_sqlite(rv, "prepare", "insert into queue");
+    sqlite3_bind_int64(stmt, 1, user_id);
+    sqlite3_bind_text(stmt, 2, request, -1, SQLITE_STATIC);
+    sqlite3_bind_int64(stmt, 3, mx_get_time());
+    mx_error_sqlite(sqlite3_step(stmt), "step", "insert into queue");
+    sqlite3_finalize(stmt);
+}
 
+void mx_db_pop_queue_by_id(sqlite3 *db, guint64 user_id) {
+    sqlite3_str *str = sqlite3_str_new(db);
+    gchar *request = NULL;
+
+    sqlite3_str_appendf(str, "delete from queue where user_id = %llu limit 1",
+                        user_id);
+    request = sqlite3_str_finish(str);
+    sqlite3_exec(db, request, 0, 0, NULL);
+    sqlite3_free(request);
+}
+
+
+// to delete
 void mx_db_pop_queue(sqlite3 *db, char *login) {
     sqlite3_str *str = sqlite3_str_new(db);
     char *request = NULL;
@@ -28,6 +38,8 @@ void mx_db_pop_queue(sqlite3 *db, char *login) {
     sqlite3_free(request);
 }
 
+
+// to delete
 void mx_db_push_queue(sqlite3 *db, char *login, char *request) {
     sqlite3_str *str = sqlite3_str_new(db);
     sqlite3_stmt *stmt;
@@ -71,4 +83,6 @@ void mx_clean_queue(sqlite3 *db, char *login) {
     sqlite3_exec(db, sql, 0, 0, 0);
     sqlite3_free(sql);
 }
+
+// void mx_clean
 

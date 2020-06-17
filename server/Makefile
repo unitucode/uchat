@@ -22,13 +22,17 @@ SRCS = $(foreach dir, $(SRCD), $(wildcard $(dir)/*.c))
 OBJS = $(addprefix $(OBJD)/, $(notdir $(SRCS:%.c=%.o)))
 INCS = $(foreach dir, $(INCD), $(wildcard $(dir)/*.h))
 
+GTK_LIBS = -rdynamic `pkg-config --cflags --libs gtk+-3.0`
+
+GTK_INC = `pkg-config --cflags gtk+-3.0`
+
 #compilier
 CC = clang
 
 CFLAGS = -std=c11 $(addprefix -W, all extra error pedantic)
 CPPFLAGS = -DMX_SERVER='"$(SERVER_WD)"' $(UTILS_INC) \
-$(INCD_SERVER) -D_GNU_SOURCE $(INCD_LIBS) -I/usr/local/opt/openssl/include
-LIBS = $(LIBD_LIBS) -L/usr/local/opt/openssl/lib \
+$(INCD_SERVER) -D_GNU_SOURCE $(GTK_INC) $(INCD_LIBS) -I/usr/local/opt/openssl/include
+LIBS = $(LIBD_LIBS) $(GTK_LIBS) -L/usr/local/opt/openssl/lib \
 -lssl -lcjson -lcrypto -lsqlite3 -lpthread -ldl
 
 all: $(SERVER)

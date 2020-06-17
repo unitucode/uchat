@@ -1,7 +1,7 @@
-#include "utils.h"
+#include "server.h"
 
 void mx_close_database(sqlite3 *database) {
-    int stan = sqlite3_close(database);
+    gint8 stan = sqlite3_close(database);
 
     if (stan != SQLITE_OK){
         printf("stan -> %d\n", stan);

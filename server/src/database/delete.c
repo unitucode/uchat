@@ -1,5 +1,48 @@
 #include "server.h"
 
+
+void mx_delete_message_by_id(sqlite3 *db, guint64 id) {
+    sqlite3_stmt *stmt;
+    gint32 rv = SQLITE_OK;
+
+    rv = sqlite3_prepare_v2(db, "delete from messages where message_id "
+                                "= ?1", -1, &stmt, NULL);
+    sqlite3_bind_int(stmt, 1, id);
+    mx_error_sqlite(rv, "prepare", "delete message");
+    mx_error_sqlite(sqlite3_step(stmt), "step", "delete message");
+    sqlite3_finalize(stmt);
+}
+
+void mx_delete_room_by_id(sqlite3 *db, guint64 id) {
+    gchar *request = NULL;
+    sqlite3_str *sqlite_str = sqlite3_str_new(db);
+    gint32 rv = SQLITE_OK;
+
+    sqlite3_str_appendf(sqlite_str, "delete from rooms where id = %lu; delete "
+                                    "from messages where room_id = %lu;",
+                        id, id);
+    request = sqlite3_str_finish(sqlite_str);
+    rv = sqlite3_exec(db, request, 0, 0, 0);
+    mx_error_sqlite(rv, "exec", "delete room");
+    sqlite3_free(request);
+}
+
+void mx_delete_user_by_id(sqlite3 *db, guint64 id) {
+    sqlite3_str *sqlite_str = sqlite3_str_new(db);
+    gint32 rv = SQLITE_OK;
+    gchar *request = NULL;
+
+    sqlite3_str_appendf(sqlite_str, "delete from users where id = %lu; delete "
+                                    "from contacts where user_id = %lu and whe"
+                                    "re user_contact_id = %lu;", id, id, id);
+    request = sqlite3_str_finish(sqlite_str);
+    rv = sqlite3_exec(db, request, 0, 0, 0);
+    mx_error_sqlite(rv, "exec", "delete user");
+    sqlite3_free(request);
+}
+
+
+
 // to delete
 void mx_delete_room(sqlite3 *database, char *name_room) {
     sqlite3_str *str = sqlite3_str_new(database);
@@ -16,28 +59,6 @@ void mx_delete_room(sqlite3 *database, char *name_room) {
     if (rv == SQLITE_ERROR)
         mx_logger(MX_LOG_FILE, LOGWAR, "delete room\n");
     sqlite3_free(request);
-}
-
-void mx_delete_room_by_id(sqlite3 *db, unsigned long long int id) {
-    sqlite3_stmt *stmt;
-    int rv = 0;
-    sqlite3_str *str = sqlite3_str_new(db);
-    char *request = NULL;
-
-    rv = sqlite3_prepare_v2(db, "delete from rooms where id = ?1", 
-                            -1, &stmt, NULL);
-    mx_error_sqlite(rv, "prepare1", "delete room by id");
-    sqlite3_bind_int(stmt, 1, id);
-    mx_error_sqlite(sqlite3_step(stmt), "step1", "delete room by id");
-    sqlite3_finalize(stmt);
-    sqlite3_str_appendall(str, "drop table ");
-    sqlite3_str_appendf(str, "room%d", id);
-    request = sqlite3_str_finish(str);
-    rv = sqlite3_prepare_v2(db, request, -1, &stmt, NULL);
-    mx_error_sqlite(rv, "prepare", "drop room");
-    mx_error_sqlite(sqlite3_step(stmt), "step", "drop room");
-    sqlite3_free(request);
-    sqlite3_finalize(stmt);
 }
 
 void mx_delete_user(sqlite3 *database, char *login) {

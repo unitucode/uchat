@@ -1,6 +1,6 @@
 #include "server.h"
 
-void mx_create_table_member(sqlite3 *database) {
+void mx_create_table_members(sqlite3 *database) {
     sqlite3_exec(database, "create table if not exists members("
                            "user_id        integer not null,"
                            "room_id        integer not null,"
@@ -16,7 +16,8 @@ void mx_create_table_messages(sqlite3 *db) {
                      "date          integer             not null,"
                      "message       text                not null,"
                      "type          integer             not null,"
-                     "format        text                not null);", 0, 0, 0);
+                     "name          text                not null,"
+                     "status        int                 not null);", 0, 0, 0);
 }
 
 void mx_create_table_queue(sqlite3 *db) {
@@ -26,7 +27,7 @@ void mx_create_table_queue(sqlite3 *db) {
                      "date          text    not null);", 0, 0, 0);
 }
 
-void mx_create_table_contact(sqlite3 *db) {
+void mx_create_table_contacts(sqlite3 *db) {
     sqlite3_exec(db, "create table if not exists contacts("
                      "user_id       integer not null,"
                      "contact_id    integer not null,"
@@ -47,7 +48,7 @@ void mx_create_table_users(sqlite3 *database) {
                            "password       text                not null,"
                            "token          text                not null,"
                            "date           integer             not null,"
-                           "description    text                not null);", 0, 0, 0);
+                           "desc           text                not null);", 0, 0, 0);
 }
 
 void mx_create_table_rooms(sqlite3 *database) {

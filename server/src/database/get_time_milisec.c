@@ -1,11 +1,11 @@
 #include "server.h"
 
-long long mx_get_time() {
+guint64 mx_get_time() {
     struct timeval time;
-    long milisec;
+    guint64 milisec;
 
     gettimeofday(&time, 0);
     milisec = (time.tv_sec * 1000) + (time.tv_usec / 1000);
-    fprintf(stderr, " -> -> -> %ld\n", milisec);
+    fprintf(stderr, " -> -> -> %llu\n", milisec);
     return milisec;
 }
