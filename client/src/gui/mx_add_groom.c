@@ -160,6 +160,8 @@ t_groom *mx_create_groom(cJSON *room) {
         mx_delete_groom(groom);
         return NULL;
     }
+    groom->first_gmsg = NULL;
+    groom->last_gmsg = NULL;
     return groom;
 }
 

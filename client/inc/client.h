@@ -38,6 +38,8 @@ struct s_groom {
     GtkStack *stack_msg;
     GtkListBox *box_messages;
     GtkLabel *label_name;
+    t_gmsg *first_gmsg;
+    t_gmsg *last_gmsg;
     int id;
     char *room_name;
     char *customer;
@@ -150,7 +152,7 @@ void mx_delete_groom(t_groom *room);
 t_groom *mx_create_groom(cJSON *room);
 t_gmsg *mx_create_gmsg(cJSON *msg);
 void mx_delete_gmsg(t_gmsg *gmsg);
-GtkWidget *mx_create_message_row(t_gmsg *msg);
+GtkWidget *mx_create_message_row(GtkBuilder *builder, t_gmsg *msg);
 void mx_add_message_to_room(t_gmsg *msg, GtkBuilder *builder);
 void mx_logout_client(t_chat *chat);
 void mx_reset_addroom(GtkButton *btn, GtkBuilder *builder);
