@@ -13,7 +13,7 @@ static void add_message_row(t_gmsg *msg, GtkBuilder *builder) {
 
     msg->row_msg = GTK_LIST_BOX_ROW(row);
     gtk_container_add(GTK_CONTAINER(row), event);
-    g_signal_connect(event, "button_press_event",
+    g_signal_connect(event, "button_release_event",
                      G_CALLBACK(mx_select_msg), data);
     room->is_updated = true;
     gtk_list_box_insert(box, row, -1);
