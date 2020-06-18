@@ -1,5 +1,17 @@
 #include "client.h"
 
+static gboolean is_previous_same_sender(GtkBuilder *builder, t_gmsg *gmsg) {
+    t_groom *groom = mx_get_groom_by_id(gmsg->room_id, builder);
+
+    if (!groom->first_gmsg)
+        return FALSE;
+    else if (groom->last_gmsg
+             && !g_strcmp0(groom->last_gmsg->login, gmsg->login))
+        return TRUE;
+    else
+        return FALSE;    
+}
+
 void mx_msgcreate_label_login(GtkWidget *box_main, t_gmsg *gmsg) {
     GtkWidget *label_login = gtk_label_new(gmsg->login);
     GtkStyleContext *context = gtk_widget_get_style_context(label_login);
@@ -47,19 +59,21 @@ static GtkWidget *create_box_main(GtkWidget *eventbox) {
     return box_main;
 }
 
-static void create_box_info(GtkWidget *box_main, t_gmsg *gmsg) {
+static void create_box_info(GtkBuilder *builder,
+                            GtkWidget *box_main, t_gmsg *gmsg) {
     GtkWidget *box_info = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
 
     gtk_box_pack_end(GTK_BOX(box_main), box_info, FALSE, TRUE, 0);
-    mx_msgcreate_label_login(box_main, gmsg);
+    if (!is_previous_same_sender(builder, gmsg))
+        mx_msgcreate_label_login(box_main, gmsg);
     mx_msgcreate_label_text(box_info, gmsg);
     mx_msgcreate_label_time(box_info, gmsg);
 }
 
-GtkWidget *mx_create_message_row(t_gmsg *msg) {
+GtkWidget *mx_create_message_row(GtkBuilder *builder, t_gmsg *msg) {
     GtkWidget  *eventbox = create_eventbox();
     GtkWidget *box_main = create_box_main(eventbox);
-    create_box_info(box_main, msg);
+    create_box_info(builder, box_main, msg);
 
     return eventbox;
 }

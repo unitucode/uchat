@@ -2,10 +2,14 @@
 
 static void add_message_row(t_gmsg *msg, GtkBuilder *builder) {
     GtkWidget *row = gtk_list_box_row_new();
-    GtkWidget *event = mx_create_message_row(msg);
-    t_groom *room = mx_get_groom_by_id(msg->room_id, builder);
-    GtkListBox *box = room->box_messages;
+    GtkWidget *event = mx_create_message_row(builder, msg);
+    t_groom *groom = mx_get_groom_by_id(msg->room_id, builder);
+    GtkListBox *box = groom->box_messages;
     t_signal_data *data = NULL;
+
+    if (!groom->first_gmsg)
+        groom->first_gmsg = msg;
+    groom->last_gmsg = msg;
 
     gtk_widget_set_can_focus(row, FALSE);
     gtk_list_box_row_set_selectable(GTK_LIST_BOX_ROW(row), FALSE);
@@ -15,10 +19,10 @@ static void add_message_row(t_gmsg *msg, GtkBuilder *builder) {
     gtk_container_add(GTK_CONTAINER(row), event);
     g_signal_connect(event, "button_release_event",
                      G_CALLBACK(mx_select_msg), data);
-    room->is_updated = true;
+    groom->is_updated = true;
     gtk_list_box_insert(box, row, -1);
-    gtk_list_box_row_changed(room->row_room);
-    room->is_updated = false;
+    gtk_list_box_row_changed(groom->row_room);
+    groom->is_updated = false;
     gtk_widget_show_all(GTK_WIDGET(box));
     g_object_set_data_full(G_OBJECT(row), "gmsg", msg,
                            (GDestroyNotify)mx_delete_gmsg);
