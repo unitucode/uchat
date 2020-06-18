@@ -11,14 +11,14 @@ static void incorrect_data(t_client *client) {
 static void sign_up(char *login, char *pass, t_client *client) {
     t_db_user *user = mx_get_user_by_login(client->chat->database, login);
     char token[MX_MD5_BUF_SIZE + 1 + strlen(login)];
-
+pass++;
     if (user) {
         incorrect_data(client);
         mx_logger(MX_LOG_FILE, LOGMSG, "Already exist user %s\n", login);
         return;
     }
     mx_create_token(token, login);
-    client->user = mx_insert_user_into_db(client->chat->database, login, pass, token);
+    // client->user = mx_insert_user_into_db(client->chat->database, login, pass, token);
     if (!client->user) {
         mx_logger(MX_LOG_FILE, LOGMSG, "Failded signup user %s\n", login);
         return;

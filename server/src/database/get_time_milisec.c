@@ -6,6 +6,5 @@ guint64 mx_get_time() {
 
     gettimeofday(&time, 0);
     milisec = (time.tv_sec * 1000) + (time.tv_usec / 1000);
-    fprintf(stderr, " -> -> -> %llu\n", milisec);
     return milisec;
 }

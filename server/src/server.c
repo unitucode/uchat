@@ -16,8 +16,6 @@ static void test();
 
 int main(int argc, char **argv) {
     test();
-    system("leaks -q uchat_server");
-    exit(1);
     t_chat *chat = mx_init_chat(argc, argv);
     t_client *client = NULL;
     t_ssl_con *ssl = NULL;
@@ -44,135 +42,45 @@ int main(int argc, char **argv) {
 
 static void test() {
     sqlite3 *db = mx_open_db(MX_DB);
-    // edit message                     Ok
-    // mx_edit_message(database, 2, 98, "hi snaik, how are you ?");
-
-    // printf("milisec -> %lld\n", mx_get_time());
-
-
-    // sqlite3_str *str = sqlite3_str_new(db);
-    // char *request = NULL;
-    // char *result = NULL;
-    // const char *error;
-    // sqlite3_stmt *stmt;
-
-    // sqlite3_str_appendf(str, "select name from rooms name like 'name%'");
-    // sqlite3_str_appendall(str, "update sqlite set sqlite = (select json_set(sqlite, '$.word', 'change') from sqlite)");
-    // sqlite3_str_appendall(str, "insert into sqlite values(json_replae(sqlite, '$.word', 'change'))");
-    // request = sqlite3_str_finish(str);
-    // int rv = sqlite3_prepare_v2(db, "delete from rooms limit 1", -1, &stmt, &error);
-    // printf("%d\n", rv);
-    // sqlite3_step(stmt);
-    // if(sqlite3_column_text(stmt, 0))
-    //     result = strdup((char*)sqlite3_column_text(stmt, 0));
-    // // int rv = sqlite3_exec(db, request, 0, 0, &error);
-    // sqlite3_finalize(stmt);
-    // sqlite3_free(request);
-    // printf("error -> '%s'\nname -> '%s'\n", error, result);
-    // mx_free((void**)&result);
-
-
-    // get message by id                Ok
-    // cJSON *vlad = mx_get_old_messages_by_id(database, 10, 1591959523, 10000);
-    // cJSON *vlad = mx_get_new_messages_by_id(database, 1, 0, 50);
-    // cJSON *vlad = mx_get_curr_messages_by_id(database, 23, 50);
-    // printf("%s\n", cJSON_Print(vlad));
-
-    // create room                  Ok
-    // t_db_room *room = mx_insert_room_into_db(db, "name7", "customer");
-    // if (!room)
-    //     exit(0);
-    // printf("%s\n", room->room_name);
-    // printf("%s\n", room->customer);
-    // printf("%lld\n", room->date);
-    // printf("%d\n", room->id);
-    // printf("%s\n", room->description);
-    // mx_free_room(&room);
-    // printf("-> -> %zu\n", sizeof(long));
-
-    // test valid database                  Ok
-    // char *request = "";
-    // sqlite3_preparev_2(database);
-
-    // sqlite3_step(stmt);
-
-    // edit room name                Ok
-    // mx_edit_name_room(database, 5, "edit.002");
-
-    // // create message               Ok
-    // for (int i = 0; i < 100; i++) {
-    //     t_db_message *message = mx_insert_message_into_db_by_id(database, "hi baby I am snaik !!! you afreid because I touch you and will kill you", "snaik", 1);
-    //     mx_free_message(&message);  
-    // }
-
-    // delete room by id            Ok
-    // mx_delete_room_by_id(database, 9);
-
-    // if exists room               Ok
-    // printf("->\t%d\n", (int)mx_is_exists_room_by_id(database, 27));
-
-    // delete message               Ok
-    // for (int i = 0; i < 1000; i++) {
-    //     mx_delete_message(database, 23, i);
-    // }
-
-    // edit login                    Ok
-    // mx_edit_name_user(database, "login5", "login1");
-
-    // delete user                    Ok
-    // mx_delete_user(database, "login1");
-
-
-    // get count                Ok 
-    // printf("count rooms ->\t %llu\n", mx_get_count_rooms(database));
-    // printf("count users ->\t %llu\n", mx_get_count_users(database));
-    // printf("count mssgs ->\t %llu\n", mx_get_count_messages(database, 1));
-
-    // count                            Ok
-    // sqlite3_stmt *stmt;
-    // int rv = SQLITE_OK;
     
-    // rv = sqlite3_prepare_v2(database, "select count() from users", -1, &stmt, NULL);
-    // printf("rv prepare -> %d\n", rv);
-    // rv = sqlite3_step(stmt);
-    // printf("rv step    -> %d\n", rv);
-    // printf("count      -> %d\n", sqlite3_column_int(stmt, 0));
-    // sqlite3_finalize(stmt);
+    // t_db_room *room = malloc(sizeof(t_db_room));
+    // room->customer = "customer";
+    // room->desc = NULL;
+    // room->room_name = "name";
+    // room->type = GLOBAL_CHAT;
+    // for (int i = 0; i < 100; i++)
+    //     mx_insert_room_into_db(db, room);
+    // mx_free_room(&room);
+    
+    // t_db_user *user = malloc(sizeof(t_db_user));
+    // user->desc = "desc";
+    // user->login = "login1";
+    // user->name = "name1";
+    // user->pass = "pass";
+    // user->token = "token";
+    // mx_insert_user_into_db(db, user);
 
-    // create user                  Ok 
-    // t_db_user *user = mx_insert_user_into_db(database, "keds", "password", "token");
-    // if (user) {
-    //     printf("login -> %s\n", user->login);
-    //     printf("desc -> %s\n", user->description);
-    //     printf("pass -> %s\n", user->password);
-    //     printf("token -> %s\n", user->token);
-    //     printf("date -> %ld\n\n\n", user->date);
-    //     mx_free_user(&user);
+    // for (int i = 2; i < 20; i++)
+        // mx_insert_member_into_db(db, 1, 1, SIMPLE);
+
+    // t_db_message *message = malloc(sizeof(t_db_message));
+    // message->user_id = 1;
+    // message->room_id = 1;
+    // message->message = "hello";
+    // message->name_file = NULL;
+    // message->size = 0;
+    // message->type = TEXT_MSG;
+    // for (int i = 0; i < 100000; i++) {
+    //     mx_insert_message(db, message);
     // }
 
-    // test queue                       Ok
-    // for(int i = 0; i < 1000; i++)
-    //     mx_db_push_queue(database, "keds", "request3");
-    // printf("request -> %s\n", mx_get_queue(database, "keds"));
-    // mx_db_pop_queue(db, "keds");
-
-    // get user                     Ok
-    // t_db_user *user = mx_get_user_by_login(database, "login8");
-    // if (user) {
-    //     printf("login -> %s\n", user->login);
-    //     printf("desc -> %s\n", user->description);
-    //     printf("pass -> %s\n", user->password);
-    //     printf("token -> %s\n", user->token);
-    //     printf("date -> %ld\n", user->date);
-    //     mx_free_user(&user);
-    // }
-
-    //  update description              Ok
-    // mx_update_description_room_by_id(database, 2, "Hi, I afreid you !! don`t shoot");
-    // mx_update_description_user(database, "giblin gob", "I am rich goblin hahahahahaha");
-
+    // cJSON *json = mx_get_rooms(db, 0, 1);
+    // gchar *string = cJSON_Print(json); 
+    // printf("%s\n", string);
 
     mx_close_database(db);
     printf("Ok\n");
+    system("leaks -q uchat_server");
+    exit(1);
 }
 

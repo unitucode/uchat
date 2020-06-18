@@ -11,10 +11,10 @@ static t_dtp *get_resend_msg(t_db_message *msg) {
         return NULL;
     if (!cJSON_AddNumberToObject(send_msg, "date", msg->date))
         return NULL;
-    if (!cJSON_AddStringToObject(send_msg, "login", MX_J_STR(msg->login)))
-        return NULL;
-    if (!cJSON_AddNumberToObject(send_msg, "message_id", msg->id))
-        return NULL;
+    // if (!cJSON_AddStringToObject(send_msg, "login", MX_J_STR(msg->login)))
+        // return NULL;
+    // if (!cJSON_AddNumberToObject(send_msg, "message_id", msg->id))
+        // return NULL;
     return mx_get_transport_data(send_msg);
 }
 
@@ -29,10 +29,10 @@ bool mx_msg_handler(t_dtp *data, t_client *client) { // TODO leaks
         return false;
     if (!room_id || !cJSON_IsNumber(room_id))
         return false;
-    message = mx_insert_message_into_db_by_id(client->chat->database,
-                                        msg->valuestring, 
-                                        (char*)client->user->login,
-                                        room_id->valueint);
+    // message = mx_insert_message_into_db_by_id(client->chat->database,
+                                        // msg->valuestring, 
+                                        // (char*)client->user->login,
+                                        // room_id->valueint);
     resend = get_resend_msg(message);
     if (!resend)
         return false;
