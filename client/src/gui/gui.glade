@@ -173,8 +173,6 @@
                   <object class="GtkEntry" id="entry_signup_login">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
-                    <property name="margin_start">25</property>
-                    <property name="margin_end">25</property>
                     <property name="buffer">buffer_login</property>
                     <property name="max_length">22</property>
                     <property name="primary_icon_pixbuf">resources/id-card.png</property>
@@ -190,8 +188,6 @@
                   <object class="GtkEntry" id="entry_signup_password">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
-                    <property name="margin_start">25</property>
-                    <property name="margin_end">25</property>
                     <property name="buffer">buffer_password</property>
                     <property name="max_length">50</property>
                     <property name="visibility">False</property>
@@ -214,8 +210,6 @@
                     <property name="visible">True</property>
                     <property name="sensitive">False</property>
                     <property name="can_focus">True</property>
-                    <property name="margin_start">25</property>
-                    <property name="margin_end">25</property>
                     <property name="buffer">buffer_password_confirm</property>
                     <property name="max_length">50</property>
                     <property name="visibility">False</property>
@@ -465,10 +459,6 @@
                   <object class="GtkSearchEntry" id="sentry_rooms">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
-                    <property name="margin_left">10</property>
-                    <property name="margin_right">10</property>
-                    <property name="margin_top">10</property>
-                    <property name="margin_bottom">10</property>
                     <property name="max_length">20</property>
                     <property name="primary_icon_pixbuf">resources/search.png</property>
                     <property name="primary_icon_activatable">False</property>

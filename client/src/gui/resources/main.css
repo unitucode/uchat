@@ -11,6 +11,9 @@ button {
     text-shadow: none;
     box-shadow: none;
 }
+list row {
+    box-shadow: none;   
+}
 .dialog_auth entry, .wnd_main entry, .dialog_auth textview, .wnd_main textview {
     caret-color: #fff;
     color: #fff;
@@ -30,11 +33,12 @@ box stack, entry, .dialog_notebook header {
 }
 .dialog_auth entry, .wnd_main entry, .dialog_addroom entry {
 	box-shadow: none;
-    padding: 0;
-    border-bottom: 1px solid rgba(255,255,255,.7);
-    border-radius: 0;
-    /* margin: 0 -25px; */
     font-size: 15px;
+}
+.dialog_auth entry, .dialog_addroom entry {
+    border-bottom: 1px solid rgba(255,255,255,.7);
+    padding: 0;
+    border-radius: 0;
 }
 .dialog-action-area {
     margin-bottom: 45px;
@@ -240,7 +244,7 @@ dialog headerbar {
 	background-color: #323B59;
 	padding: 0 25px;
 }
-.stack_messages list box:nth-child(2) label:nth-child(1){
+.stack_messages list box:nth-child(2) label:nth-child(1) {
 	background-color: #424E78;
 	padding: 10px 15px;
 	border-radius: 0 8px 8px 8px;
@@ -250,8 +254,8 @@ dialog headerbar {
 	font-size: 14px;
 	color: #B8C2E5; 
 }
-.stack_messages list row {
-	padding: 8px 230px 0 25px;
+.stack_messages list row box:first-child {
+	padding: 8px 180px 0 25px;
 }
 .stack_messages list {
 	margin-top: 8px;
@@ -267,4 +271,21 @@ dialog headerbar {
     font-weight: 300;
     color: #919CC0;
     margin-left: 10px;
+}
+.stack_messages list row:selected box:nth-child(2) label:nth-child(1) {
+    background-color: #6785FF;
+    color: #fff;
+}
+.search {
+	border: 1px solid #424E78;
+	background-color: #3A466B;
+	border-radius: 5px;
+    padding: 1px 8px;
+    margin: 18px 25px 15px 25px;	
+}
+.stack_messages list row label {
+	transition: none;
+}
+.search image {
+    margin-right: 8px;
 }
