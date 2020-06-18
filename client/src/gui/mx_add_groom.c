@@ -63,6 +63,7 @@ static void add_messages_box(t_groom *room, GtkBuilder *builder) {
     GtkWidget *view = gtk_viewport_new(NULL, NULL);
 
     room->box_messages = GTK_LIST_BOX(box);
+    gtk_list_box_set_selection_mode(room->box_messages, GTK_SELECTION_MULTIPLE);
     gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scroll),
                                    GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
     gtk_container_add(GTK_CONTAINER(scroll), view);

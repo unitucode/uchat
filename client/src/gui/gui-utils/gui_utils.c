@@ -28,12 +28,28 @@ void mx_clear_buffer_text(char *buff_name, GtkBuilder *builder) {
         gtk_entry_buffer_delete_text(GTK_ENTRY_BUFFER(buffer), 0, -1);
 }
 
-void mx_widget_switch_visibility(GtkWidget *usr_ctrl, GtkWidget *widget) {
-    if (gtk_widget_is_visible(widget))
-        gtk_widget_hide(widget);
-    else {
+void mx_widget_set_visibility(GtkWidget *widget, gboolean is_visible) {
+    if (is_visible)
         gtk_widget_show(widget);
-    }
+    else
+        gtk_widget_hide(widget);    
+}
+
+void mx_widget_set_visibility_by_name(GtkBuilder *builder,
+                                      gchar *name, gboolean is_visible) {
+    GtkWidget *widget = GTK_WIDGET(gtk_builder_get_object(builder, name));
+
+    mx_widget_set_visibility(widget, is_visible);
+}
+
+void mx_widget_switch_visibility_by_name(GtkBuilder *builder, gchar *name) {
+    GtkWidget *widget = GTK_WIDGET(gtk_builder_get_object(builder, name));
+
+    mx_widget_switch_visibility(NULL, widget);
+}
+
+void mx_widget_switch_visibility(GtkWidget *usr_ctrl, GtkWidget *widget) {
+    mx_widget_set_visibility(widget, !gtk_widget_is_visible(widget));
     (void)usr_ctrl;
 }
 

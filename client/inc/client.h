@@ -190,7 +190,11 @@ gchar *mx_entry_get_text(char *entry_name, GtkBuilder *builder);
 gchar *mx_get_buffer_text(char *buff_name, GtkBuilder *builder);
 void mx_clear_buffer_text(char *buff_name, GtkBuilder *builder);
 void mx_clear_label_by_name(char *label_name, GtkBuilder *builder);
+void mx_widget_set_visibility(GtkWidget *widget, gboolean is_visible);
+void mx_widget_set_visibility_by_name(GtkBuilder *builder,
+                                      gchar *name, gboolean is_visible);
 void mx_widget_switch_visibility(GtkWidget *usr_ctrl, GtkWidget *widget);
+void mx_widget_switch_visibility_by_name(GtkBuilder *builder, gchar *name);
 t_groom *mx_get_selected_groom(GtkBuilder *builder);
 t_groom *mx_get_groom_by_id(int room_id, GtkBuilder *builder);
 t_gmsg *mx_get_selected_gmsg(GtkBuilder *builder);
