@@ -51,6 +51,8 @@ static gboolean incoming_callback (GSocketService *service, GSocketConnection *c
     gclient->info->users = g_list_append(gclient->info->users, out);
     gclient->conn = g_object_ref(connection);
     gclient->user = NULL;
+    gclient->in = g_object_ref(in);
+    gclient->in_s = g_object_ref(in_stream);
     g_data_input_stream_read_line_async(in, G_PRIORITY_DEFAULT, NULL, message_ready, gclient);
     (void)source_object;
     (void)service;

@@ -29,6 +29,8 @@ struct s_info {
 struct s_client {
     GSocketConnection *conn;
     GDataOutputStream *out;
+    GDataInputStream *in;
+    GInputStream *in_s;
     char *msg;
     t_db_user *user;
     t_info *info;

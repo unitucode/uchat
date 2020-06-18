@@ -17,6 +17,7 @@ t_chat *mx_init_chat(GSocketConnection *connection) {
     chat->login = NULL;
     chat->out = g_object_ref(out);
     chat->in = g_object_ref(in);
+    chat->out_s = g_object_ref(out_s);
     mx_init_handlers(chat);
     mx_init_errors(chat);
     g_data_input_stream_read_line_async(in, G_PRIORITY_DEFAULT, NULL, mx_receiver, chat);
