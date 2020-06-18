@@ -209,7 +209,8 @@ dialog headerbar {
 }
 .box_titlebar button {
     background-image: none;
-    padding: 0;
+    background-color: #3A466B;
+
 }
 .box_titlebar button:hover {
     opacity: .7;
@@ -286,6 +287,27 @@ dialog headerbar {
 .stack_messages list row label {
 	transition: none;
 }
+.stack_messages list row:hover {
+    background-color: transparent;
+}
 .search image {
     margin-right: 8px;
+}
+.btnbox_msg_ctrl  {
+	background-color: #6785FF;
+}
+.btnbox_msg_ctrl button {
+	background-image: none;
+	background-color: #5775D9;
+}
+.box_titlebar button {
+	padding: 4px 9px;
+	margin: 7px 0;
+}
+.dialog_auth entry selection, .wnd_main entry selection,
+.dialog_auth textview selection, .wnd_main textview selection{
+	background-color: #6785FF;
+}
+#box_edit_msg {
+	margin: 0 25px;
 }

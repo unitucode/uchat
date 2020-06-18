@@ -295,8 +295,7 @@
   <object class="GtkImage" id="image1">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
-    <property name="pixel_size">20</property>
-    <property name="icon_name">accessories-text-editor</property>
+    <property name="pixbuf">resources/edit.png</property>
   </object>
   <object class="GtkImage" id="image10">
     <property name="visible">True</property>
@@ -325,8 +324,7 @@
   <object class="GtkImage" id="image2">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
-    <property name="pixel_size">20</property>
-    <property name="icon_name">edit-delete</property>
+    <property name="pixbuf">resources/delite.png</property>
   </object>
   <object class="GtkImage" id="image3">
     <property name="visible">True</property>
@@ -348,7 +346,7 @@
   <object class="GtkImage" id="image6">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
-    <property name="pixbuf">resources/menushka.png</property>
+    <property name="pixbuf">resources/rooms-list.png</property>
   </object>
   <object class="GtkImage" id="image7">
     <property name="visible">True</property>
@@ -392,8 +390,8 @@
             <property name="can_focus">False</property>
             <child>
               <object class="GtkButton" id="btn_show_roomlist">
-                <property name="width_request">42</property>
-                <property name="height_request">42</property>
+                <property name="width_request">30</property>
+                <property name="height_request">25</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="focus_on_click">False</property>
@@ -420,8 +418,8 @@
             </child>
             <child>
               <object class="GtkButton">
-                <property name="width_request">42</property>
-                <property name="height_request">42</property>
+                <property name="width_request">30</property>
+                <property name="height_request">25</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="focus_on_click">False</property>
@@ -451,7 +449,7 @@
             <property name="can_focus">False</property>
             <child>
               <object class="GtkBox" id="box_rooms_list">
-                <property name="width_request">300</property>
+                <property name="width_request">280</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="orientation">vertical</property>
@@ -721,6 +719,9 @@
                                 <property name="position">1</property>
                               </packing>
                             </child>
+                            <style>
+                              <class name="btnbox_msg_ctrl"/>
+                            </style>
                           </object>
                           <packing>
                             <property name="name">page_msg_ctrl</property>
@@ -795,8 +796,7 @@
                       <object class="GtkImage">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="icon_name">accessories-text-editor</property>
-                        <property name="icon_size">5</property>
+                            <property name="pixbuf">resources/edit.png</property>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -817,7 +817,7 @@
                             <property name="label" translatable="yes">Edit</property>
                             <property name="xalign">0.0099999997764825821</property>
                             <attributes>
-                              <attribute name="weight" value="heavy"/>
+                              <attribute name="weight" value="semibold"/>
                               <attribute name="foreground" value="#72729f9fcfcf"/>
                             </attributes>
                           </object>
