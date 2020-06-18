@@ -15,12 +15,21 @@ void unselect_msg(GtkButton *btn, GtkBuilder *builder) {
     (void)btn;
 }
 
-static void req_delete_msg(GtkButton *btn, t_chat *chat) {
-    t_gmsg *msg = mx_get_selected_gmsg(chat->builder);
-    t_dtp *dtp = mx_del_msg_request(msg->room_id, msg->message_id);
+static void req_delete_msg(GtkListBox *box, GtkListBoxRow *row, t_chat *chat) {
+    t_gmsg *gmsg = (t_gmsg*)g_object_get_data(G_OBJECT(row), "gmsg");
+    t_dtp *dtp = mx_del_msg_request(gmsg->room_id, gmsg->message_id);
 
     mx_send(chat->ssl, dtp);
     mx_free_request(&dtp);
+    (void)box;
+}
+
+static void delete_selected_msgs(GtkButton *btn, t_chat *chat) {
+    t_groom *groom = mx_get_selected_groom(chat->builder);
+
+    gtk_list_box_selected_foreach(groom->box_messages,
+                                  (GtkListBoxForeachFunc)req_delete_msg,
+                                  chat);
     (void)btn;
 }
 
@@ -28,6 +37,8 @@ static void show_edit_msg(GtkButton *btn, GtkBuilder *builder) {
     GObject *buffer = gtk_builder_get_object(builder, "buffer_message");
     GObject *label_text = gtk_builder_get_object(builder, "label_edit_text");
     t_gmsg *msg = mx_get_selected_gmsg(builder);
+    if (msg)
+        puts("HAVE NO SEGFAULT GMSG != NULL");
 
     gtk_label_set_text(GTK_LABEL(label_text), msg->msg); // DELETE ALL /n
     gtk_text_buffer_set_text(GTK_TEXT_BUFFER(buffer), msg->msg, -1);
@@ -43,7 +54,8 @@ void mx_connect_message_ctrl(t_chat *chat) {
     GObject *btn_unselect = gtk_builder_get_object(chat->builder,
                                                   "btn_unselect_msg");
 
-    g_signal_connect(btn_delete, "clicked", G_CALLBACK(req_delete_msg), chat);
+    g_signal_connect(btn_delete, "clicked",
+                     G_CALLBACK(delete_selected_msgs), chat);
     g_signal_connect(btn_edit, "clicked",
                      G_CALLBACK(show_edit_msg), chat->builder);
     g_signal_connect(btn_unselect, "clicked",
