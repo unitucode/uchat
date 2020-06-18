@@ -1,6 +1,6 @@
 #include "client.h"
 
-t_dtp *mx_upload_file_request(char *name, int size) {
+t_dtp *mx_upload_file_request(char *name, goffset size) {
     cJSON *json_result = cJSON_CreateObject();
 
     if (!cJSON_AddNumberToObject(json_result, "type", RQ_FILE))

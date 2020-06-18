@@ -61,9 +61,10 @@ int main(int argc, char **argv) {
     GError *error = NULL;
     GSocketService *service = g_socket_service_new();
     GMainLoop *loop = NULL;
-    t_info *info = mx_init_info();
+    t_info *info = NULL;
 
     mx_change_working_dir();
+    info = mx_init_info();
     info->users = NULL;
     if (argc != 2) {
         g_printerr("Usage ./uchat_server <port>\n");

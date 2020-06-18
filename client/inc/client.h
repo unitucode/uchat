@@ -137,7 +137,7 @@ t_dtp *mx_edit_msg_request(char *msg, int room_id, int msg_id); // FOR EDIT MSG
 t_dtp *mx_upd_user_name_request(char *name); //TODO
 t_dtp *mx_del_msg_request(int room_id, int msg_id); // FOR DELETE MESSAGE FROM ROOM
 t_dtp *mx_edit_msg_request(char *msg, int room_id, int msg_id); // FOR EDIT MESSAGE IN ROOM
-t_dtp *mx_upload_file_request(char *name, int size); // FOR UPLOAD FILE
+t_dtp *mx_upload_file_request(char *name, goffset size); // FOR UPLOAD FILE
 
 //errors api
 void mx_err_auth_data_handler(GtkBuilder *builder);
@@ -209,6 +209,7 @@ bool mx_widget_is_visible(char *widget_name, GtkBuilder *builder);
 // void mx_widget_show_all(GtkWidget *widget);
 // void mx_widget_destroy(GtkWidget *widget);
 // void mx_widget_show(GtkWidget *widget);
+void mx_upload_file(char *path, t_chat *chat);
 bool mx_handle_request(char *request, t_chat *chat);
 void mx_send_auth_request(char *login, char *password,
                           t_chat *chat, t_request_type request_type);
