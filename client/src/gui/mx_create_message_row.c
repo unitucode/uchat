@@ -14,7 +14,7 @@ void mx_msgcreate_label_login(GtkWidget *box_main, t_gmsg *gmsg) {
     gtk_widget_set_halign(label_login, GTK_ALIGN_START);
 }
 
-void mx_msgcreate_label_text(GtkBuilder *builder, GtkWidget *box_info, t_gmsg *gmsg) {
+void mx_msgcreate_label_text(GtkBuilder *builder, GtkWidget *box_info, t_gmsg *gmsg, gboolean is_own) {
     GtkWidget *label_text = gtk_label_new(NULL);
 
     gtk_box_pack_start(GTK_BOX(box_info), label_text, FALSE, FALSE, 0);
@@ -26,6 +26,7 @@ void mx_msgcreate_label_text(GtkBuilder *builder, GtkWidget *box_info, t_gmsg *g
     gmsg->label_text = GTK_LABEL(label_text);
     g_object_ref(label_text);
     (void)builder;
+    (void)is_own;
 }
 
 void mx_msgcreate_label_time(GtkWidget *box_info, t_gmsg *gmsg) {
@@ -55,21 +56,23 @@ static GtkWidget *create_box_main(GtkWidget *eventbox) {
     return box_main;
 }
 
-static void create_box_info(GtkBuilder *builder,
+static void create_box_info(t_chat *chat,
                             GtkWidget *box_main, t_gmsg *gmsg) {
     GtkWidget *box_info = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
+    gboolean is_own = !g_strcmp0(chat->login, gmsg->login);
 
     mx_widget_set_class(box_info, "box_msg_info");
     gtk_box_pack_end(GTK_BOX(box_main), box_info, FALSE, TRUE, 0);
-    mx_msgcreate_label_login(box_main, gmsg);
-    mx_msgcreate_label_text(builder, box_info, gmsg);
+    if (!is_own)
+        mx_msgcreate_label_login(box_main, gmsg);
+    mx_msgcreate_label_text(chat->builder, box_info, gmsg, is_own);
     mx_msgcreate_label_time(box_info, gmsg);
 }
 
-GtkWidget *mx_create_message_row(GtkBuilder *builder, t_gmsg *msg) {
+GtkWidget *mx_create_message_row(t_chat *chat, t_gmsg *msg) {
     GtkWidget  *eventbox = create_eventbox();
     GtkWidget *box_main = create_box_main(eventbox);
-    create_box_info(builder, box_main, msg);
+    create_box_info(chat, box_main, msg);
 
     return eventbox;
 }

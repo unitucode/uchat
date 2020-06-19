@@ -153,8 +153,8 @@ void mx_delete_groom(t_groom *room);
 t_groom *mx_create_groom(cJSON *room);
 t_gmsg *mx_create_gmsg(cJSON *msg);
 void mx_delete_gmsg(t_gmsg *gmsg);
-GtkWidget *mx_create_message_row(GtkBuilder *builder, t_gmsg *msg);
-void mx_add_message_to_room(t_gmsg *msg, GtkBuilder *builder);
+GtkWidget *mx_create_message_row(t_chat *chat,  t_gmsg *msg);
+void mx_add_message_to_room(t_gmsg *msg, t_chat *chat);
 void mx_logout_client(t_chat *chat);
 void mx_reset_addroom(GtkButton *btn, GtkBuilder *builder);
 void mx_reset_auth(GtkNotebook *note, GtkWidget *page,

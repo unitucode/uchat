@@ -11,7 +11,6 @@ void mx_switch_to_msg_ctrl(GtkButton *btn, GtkBuilder *builder) {
 void unselect_msg(GtkButton *btn, GtkBuilder *builder) {
     mx_unselect_curr_room_messages(builder);
     mx_switch_room_header(builder, MX_ROOM_CTRL);
-    // mx_widget_set_visibility_by_name(builder, "btn_edit_msg", TRUE);
     (void)btn;
 }
 

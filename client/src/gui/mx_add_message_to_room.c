@@ -1,14 +1,14 @@
 #include "client.h"
 
-static void add_message_row(t_gmsg *msg, GtkBuilder *builder) {
+static void add_message_row(t_gmsg *msg, t_chat *chat) {
     GtkWidget *row = gtk_list_box_row_new();
-    GtkWidget *event = mx_create_message_row(builder, msg);
-    t_groom *groom = mx_get_groom_by_id(msg->room_id, builder);
+    GtkWidget *event = mx_create_message_row(chat, msg);
+    t_groom *groom = mx_get_groom_by_id(msg->room_id, chat->builder);
     GtkListBox *box = groom->box_messages;
     t_signal_data *data = NULL;
 
     gtk_widget_set_can_focus(row, FALSE);
-    data = mx_create_sigdata(builder, NULL, GTK_LIST_BOX_ROW(row));
+    data = mx_create_sigdata(chat->builder, NULL, GTK_LIST_BOX_ROW(row));
 
     msg->row_msg = GTK_LIST_BOX_ROW(row);
     g_object_ref(row);
@@ -27,6 +27,6 @@ static void add_message_row(t_gmsg *msg, GtkBuilder *builder) {
                            (GDestroyNotify)mx_free_sigdata);
 }
 
-void mx_add_message_to_room(t_gmsg *msg, GtkBuilder *builder) {
-    add_message_row(msg, builder);
+void mx_add_message_to_room(t_gmsg *msg, t_chat *chat) {
+    add_message_row(msg, chat);
 }
