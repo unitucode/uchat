@@ -10,6 +10,8 @@ static t_dtp *get_resend_room(int room_id) {
     return mx_get_transport_data(send);
 }
 
+
+
 bool mx_del_room_handler(t_dtp *data, t_client *client) { //TODO leaks
     cJSON *room_id = cJSON_GetObjectItemCaseSensitive(data->json,
                                                    "room_id");

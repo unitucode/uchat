@@ -12,7 +12,7 @@ static void incorrect_data(t_client *client) {
 static void sign_up(char *login, char *pass, t_client *client) {
     t_db_user *user = mx_get_user_by_login(client->info->database, login);
     char token[MX_MD5_BUF_SIZE + 1 + strlen(login)];
-
+    (void)pass;
     if (user) {
         incorrect_data(client);
         mx_logger(MX_LOG_FILE, LOGMSG, "Already exist user %s\n", login);
