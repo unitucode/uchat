@@ -98,8 +98,8 @@ void test() {
     
     // t_db_user *user = malloc(sizeof(t_db_user));
     // user->desc = "desc";
-    // user->login = "login1";
-    // user->name = "name1";
+    // user->login = "login5";
+    // user->name = "name5";
     // user->pass = "pass";
     // user->token = "token";
     // mx_insert_user_into_db(db, user);
@@ -114,13 +114,19 @@ void test() {
     // message->name_file = NULL;
     // message->size = 0;
     // message->type = TEXT_MSG;
-    // for (int i = 0; i < 100000; i++) {
+    // for (int i = 0; i < 1000; i++) {
     //     mx_insert_message(db, message);
     // }
+
+    mx_get_user_by_login(db, "login1");
 
     // cJSON *json = mx_get_rooms(db, 0, 1);
     // gchar *string = cJSON_Print(json); 
     // printf("%s\n", string);
+
+    // cJSON *json1 = mx_get_users(db, 0);
+    // gchar *string1 = cJSON_Print(json1);
+    // printf("%s\n", string1);
 
     mx_close_database(db);
     printf("Ok\n");

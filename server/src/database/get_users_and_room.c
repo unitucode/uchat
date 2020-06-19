@@ -12,7 +12,6 @@ static t_db_user *for_get_user(sqlite3_stmt *stmt) {
         user->token = strdup((const char*)sqlite3_column_text(stmt, 4));
         user->date = sqlite3_column_int(stmt, 5);
         user->desc = strdup(MX_J_STR((char*)sqlite3_column_text(stmt, 6)));
-        sqlite3_finalize(stmt);
     }
     sqlite3_finalize(stmt);
     return user;
