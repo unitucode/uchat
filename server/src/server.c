@@ -40,6 +40,7 @@ static void message_ready(GObject *source_object, GAsyncResult *res, gpointer us
 }
 
 static gboolean incoming_callback (GSocketService *service, GSocketConnection *connection, GObject *source_object, gpointer user_data) {
+    g_print("connected!");
     GOutputStream *out_stream = g_io_stream_get_output_stream(G_IO_STREAM(connection));
     GInputStream *in_stream = g_io_stream_get_input_stream(G_IO_STREAM(connection));
     GDataOutputStream *out = g_data_output_stream_new(out_stream);

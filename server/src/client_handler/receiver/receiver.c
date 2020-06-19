@@ -26,7 +26,8 @@ bool mx_handle_request(char *request, t_client *client) {
         g_print("recv = %s\n", cJSON_Print(data->json));
         if (client->user || data->type == RQ_LOG_IN
             || data->type == RQ_SIGN_UP
-            || data->type == RQ_TOKEN) {
+            || data->type == RQ_TOKEN
+            || data->type == RQ_FILE) {
             if (!client->info->request_handler[data->type]
                 || !client->info->request_handler[data->type](data, client)) {
                     return false;

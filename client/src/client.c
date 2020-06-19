@@ -28,8 +28,8 @@ int main(int argc, char **argv) {
         g_printerr("Invalid port or ip\n");
         return -1;
     }
-    chat = mx_init_chat(connection);
-    chat->builder = mx_init_window(argc, argv);
+    chat = mx_init_chat(connection, argc, argv);
+    chat->cli_conn = g_object_ref(client);
     mx_init_gui(chat);
     mx_start_gui(chat);
     return 0;

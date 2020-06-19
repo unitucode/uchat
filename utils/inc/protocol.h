@@ -62,10 +62,6 @@ struct s_dtp { // Data Transfer Protocol view
     int type;
 };
 
-//file transfer
-char *mx_recv_file(SSL *ssl, size_t size);
-int mx_send_file(SSL *ssl, char *data_bytes, size_t size);
-void mx_free_file(t_file **file);
 
 //requests
 t_dtp *mx_delete_room_request(char *room_name);

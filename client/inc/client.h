@@ -59,12 +59,14 @@ struct s_gmsg {
 };
 
 struct s_chat {
-    GOutputStream *out_s;
     GDataOutputStream *out;
     GDataInputStream *in;
     GSocketConnection *conn;
+    GSocketClient *cli_conn;
     char *auth_token;
     char *login;
+    int argc;
+    char **argv;
     gsize id;
     t_groom *curr_room;
     t_dtp *data;
@@ -85,7 +87,7 @@ typedef struct s_signal_data {
 
 gssize mx_send(GDataOutputStream *out, t_dtp *dtp);
 int mx_tcp_connect(const char *host, const char *serv);
-t_chat *mx_init_chat(GSocketConnection *connection);
+t_chat *mx_init_chat(GSocketConnection *connection, int argc, char **argv);
 void mx_signup(SSL *ssl);
 void mx_login(SSL *ssl);
 void mx_receiver(GObject *source_object, GAsyncResult *res, gpointer user_data);
@@ -140,7 +142,7 @@ t_dtp *mx_edit_msg_request(char *msg, int room_id, int msg_id); // FOR EDIT MSG
 t_dtp *mx_upd_user_name_request(char *name); //TODO
 t_dtp *mx_del_msg_request(int room_id, int msg_id); // FOR DELETE MESSAGE FROM ROOM
 t_dtp *mx_edit_msg_request(char *msg, int room_id, int msg_id); // FOR EDIT MESSAGE IN ROOM
-t_dtp *mx_upload_file_request(char *name, goffset size); // FOR UPLOAD FILE
+t_dtp *mx_upload_file_request(char *name, goffset size, char *token); // FOR UPLOAD FILE
 
 //errors api
 void mx_err_auth_data_handler(GtkBuilder *builder);

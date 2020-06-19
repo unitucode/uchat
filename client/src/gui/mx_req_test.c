@@ -1,7 +1,7 @@
 #include "client.h"
 
 static void req_test(GtkButton *btn, t_chat *chat) {
-    mx_upload_file("../Makefile", chat);
+    mx_upload_file("/Users/okhomin/Desktop/ucode/uchat/uchat/client/src/gui/resources/edit.png", chat);
     (void)chat;
     (void)btn;
 }
