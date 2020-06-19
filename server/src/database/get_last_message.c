@@ -20,7 +20,7 @@ static char *create_request(sqlite3 *database, unsigned long long int id) {
 
     sqlite3_str_appendall(str, "select * from ");
     sqlite3_str_appendf(str, "room%d ", id);
-    sqlite3_str_appendall(str, "where login = ?  order by date desc");
+    sqlite3_str_appendall(str, "where login = ?1 order by id_message desc");
     return sqlite3_str_finish(str);
 }
 

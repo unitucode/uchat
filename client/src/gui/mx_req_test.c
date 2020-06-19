@@ -4,7 +4,7 @@ static void req_test(GtkButton *btn, t_chat *chat) {
     t_file *file = mx_upload_file("/Users/okhomin/Desktop/ucode/pngkey.com-telegram-png-2077555.png");
     t_dtp *file_rq = mx_upload_file_request("1.png", (int)file->st.st_size);
 
-    printf("size = %lld\n", file->st.st_size);
+    //printf("size = %lld\n", file->st.st_size);
     mx_send(chat->out, file_rq);
     mx_free_file(&file);
     mx_free_request(&file_rq);
