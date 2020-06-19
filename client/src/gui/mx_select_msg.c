@@ -8,14 +8,12 @@ void mx_select_msg(gpointer *eventbox, gpointer *event, t_signal_data *data) {
         if (gtk_list_box_row_is_selected(GTK_LIST_BOX_ROW(data->row_msg))) {
             gtk_list_box_unselect_row(GTK_LIST_BOX(groom->box_messages),
                                     GTK_LIST_BOX_ROW(data->row_msg));
-            gtk_list_box_row_set_selectable(GTK_LIST_BOX_ROW(data->row_msg), FALSE);
             rows = gtk_list_box_get_selected_rows(groom->box_messages);
             if (!rows)
                 mx_switch_room_header(data->builder, MX_ROOM_CTRL);
 
         }
         else {
-            gtk_list_box_row_set_selectable(GTK_LIST_BOX_ROW(data->row_msg), TRUE);
             gtk_list_box_select_row(GTK_LIST_BOX(groom->box_messages),
                                     GTK_LIST_BOX_ROW(data->row_msg));
             mx_switch_room_header(data->builder, MX_MSG_CTRL);

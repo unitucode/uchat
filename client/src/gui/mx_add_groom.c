@@ -88,6 +88,9 @@ static void add_room_row(t_groom *room, GtkBuilder *builder) {
     room->box_rooms = box;
     room->row_room = GTK_LIST_BOX_ROW(row);
     room->label_name = GTK_LABEL(label);
+    g_object_ref(box);
+    g_object_ref(row);
+    g_object_ref(label);
 
     data = mx_create_sigdata(builder, room, NULL);
     g_signal_connect(event, "button_press_event",
@@ -161,8 +164,6 @@ t_groom *mx_create_groom(cJSON *room) {
         mx_delete_groom(groom);
         return NULL;
     }
-    groom->first_gmsg = NULL;
-    groom->last_gmsg = NULL;
     return groom;
 }
 

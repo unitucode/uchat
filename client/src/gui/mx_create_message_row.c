@@ -6,18 +6,6 @@ static void mx_widget_set_class(GtkWidget *widget, char *class) {
     gtk_style_context_add_class(context, class);
 }
 
-static gboolean is_previous_same_sender(GtkBuilder *builder, t_gmsg *gmsg) {
-    t_groom *groom = mx_get_groom_by_id(gmsg->room_id, builder);
-
-    if (!groom->first_gmsg)
-        return FALSE;
-    else if (groom->last_gmsg
-             && !g_strcmp0(groom->last_gmsg->login, gmsg->login))
-        return TRUE;
-    else
-        return FALSE;    
-}
-
 void mx_msgcreate_label_login(GtkWidget *box_main, t_gmsg *gmsg) {
     GtkWidget *label_login = gtk_label_new(gmsg->login);
 
@@ -29,8 +17,6 @@ void mx_msgcreate_label_login(GtkWidget *box_main, t_gmsg *gmsg) {
 void mx_msgcreate_label_text(GtkBuilder *builder, GtkWidget *box_info, t_gmsg *gmsg) {
     GtkWidget *label_text = gtk_label_new(NULL);
 
-    if (is_previous_same_sender(builder, gmsg))
-        mx_widget_set_class(label_text, "full_border_msg");
     gtk_box_pack_start(GTK_BOX(box_info), label_text, FALSE, FALSE, 0);
     gtk_label_set_xalign(GTK_LABEL(label_text), 0.00);
     gtk_widget_set_halign(label_text, GTK_ALIGN_START);
@@ -38,6 +24,8 @@ void mx_msgcreate_label_text(GtkBuilder *builder, GtkWidget *box_info, t_gmsg *g
     gtk_label_set_line_wrap_mode(GTK_LABEL(label_text), PANGO_WRAP_WORD_CHAR);
     gtk_label_set_text(GTK_LABEL(label_text), gmsg->msg);
     gmsg->label_text = GTK_LABEL(label_text);
+    g_object_ref(label_text);
+    (void)builder;
 }
 
 void mx_msgcreate_label_time(GtkWidget *box_info, t_gmsg *gmsg) {
@@ -73,8 +61,7 @@ static void create_box_info(GtkBuilder *builder,
 
     mx_widget_set_class(box_info, "box_msg_info");
     gtk_box_pack_end(GTK_BOX(box_main), box_info, FALSE, TRUE, 0);
-    if (!is_previous_same_sender(builder, gmsg))
-        mx_msgcreate_label_login(box_main, gmsg);
+    mx_msgcreate_label_login(box_main, gmsg);
     mx_msgcreate_label_text(builder, box_info, gmsg);
     mx_msgcreate_label_time(box_info, gmsg);
 }

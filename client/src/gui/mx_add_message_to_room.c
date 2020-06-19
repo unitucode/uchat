@@ -7,15 +7,12 @@ static void add_message_row(t_gmsg *msg, GtkBuilder *builder) {
     GtkListBox *box = groom->box_messages;
     t_signal_data *data = NULL;
 
-    if (!groom->first_gmsg)
-        groom->first_gmsg = msg;
-    groom->last_gmsg = msg;
-
     gtk_widget_set_can_focus(row, FALSE);
-    gtk_list_box_row_set_selectable(GTK_LIST_BOX_ROW(row), FALSE);
     data = mx_create_sigdata(builder, NULL, GTK_LIST_BOX_ROW(row));
 
     msg->row_msg = GTK_LIST_BOX_ROW(row);
+    g_object_ref(row);
+
     gtk_container_add(GTK_CONTAINER(row), event);
     g_signal_connect(event, "button_release_event",
                      G_CALLBACK(mx_select_msg), data);
