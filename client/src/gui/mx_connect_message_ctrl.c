@@ -37,8 +37,6 @@ static void show_edit_msg(GtkButton *btn, GtkBuilder *builder) {
     GObject *buffer = gtk_builder_get_object(builder, "buffer_message");
     GObject *label_text = gtk_builder_get_object(builder, "label_edit_text");
     t_gmsg *msg = mx_get_selected_gmsg(builder);
-    if (msg)
-        puts("HAVE NO SEGFAULT GMSG != NULL");
 
     gtk_label_set_text(GTK_LABEL(label_text), msg->msg); // DELETE ALL /n
     gtk_text_buffer_set_text(GTK_TEXT_BUFFER(buffer), msg->msg, -1);
