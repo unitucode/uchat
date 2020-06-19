@@ -150,8 +150,9 @@ dialog headerbar {
 .rooms-list label {
 	background-color: rgba(58,70, 107,.8);
 	padding: 25px 20px;
-    border-radius: 5px;
+    border-radius: 8px;
     margin: 5px 25px;
+    font-size: 15px;
 }
 .rooms-list row:hover {
     background-color: transparent;
@@ -285,7 +286,7 @@ dialog headerbar {
 	border: 1px solid #424E78;
 	background-color: #3A466B;
 	border-radius: 5px;
-    padding: 1px 8px;
+    padding: 0 8px;
     margin: 18px 25px 15px 25px;	
 }
 .stack_messages list row label {

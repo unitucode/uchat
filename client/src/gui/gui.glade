@@ -334,8 +334,7 @@
   <object class="GtkImage" id="image4">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
-    <property name="pixel_size">25</property>
-    <property name="icon_name">face-smile-symbolic</property>
+    <property name="pixbuf">resources/attach.png</property>
   </object>
   <object class="GtkImage" id="image5">
     <property name="visible">True</property>
@@ -549,7 +548,7 @@
                         <property name="receives_default">True</property>
                         <property name="events"/>
                         <property name="valign">end</property>
-                        <property name="image">image4</property>
+                        <!-- <property name="image">image4</property> -->
                       </object>
                       <packing>
                         <property name="expand">False</property>
