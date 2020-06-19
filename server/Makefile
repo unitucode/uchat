@@ -24,6 +24,10 @@ SRCS = $(foreach dir, $(SRCD), $(wildcard $(dir)/*.c))
 OBJS = $(addprefix $(OBJD)/, $(notdir $(SRCS:%.c=%.o)))
 INCS = $(foreach dir, $(INCD), $(wildcard $(dir)/*.h))
 
+GTK_LIBS = -rdynamic `pkg-config --cflags --libs gtk+-3.0`
+
+GTK_INC = `pkg-config --cflags gtk+-3.0`
+
 #compilier
 CC = clang
 

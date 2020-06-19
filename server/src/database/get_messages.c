@@ -1,124 +1,68 @@
 #include "server.h"
 
-/*request func flag:
-* 0 -> curr_message
-* 1 -> new_message
-* 2 -> old_message
-*/
 static cJSON *get_object_message(sqlite3_stmt *stmt) {
-    cJSON *object_message = cJSON_CreateObject();
+    cJSON *o_m = cJSON_CreateObject();
 
-    cJSON_AddItemToObject(object_message, "message_id",
-        cJSON_CreateNumber(sqlite3_column_int(stmt, 0)));
-    cJSON_AddItemToObject(object_message, "login",
-        cJSON_CreateString((char *)sqlite3_column_text(stmt, 1)));
-    cJSON_AddItemToObject(object_message, "date",
-        cJSON_CreateNumber(sqlite3_column_int(stmt, 2)));
-    cJSON_AddItemToObject(object_message, "msg",
-        cJSON_CreateString((char *)sqlite3_column_text(stmt, 3)));
-    return object_message;
+    cJSON_AddNumberToObject(o_m, "user_id", sqlite3_column_int64(stmt, 0));
+    cJSON_AddNumberToObject(o_m, "room_id", sqlite3_column_int64(stmt, 1));
+    cJSON_AddNumberToObject(o_m, "message_id", sqlite3_column_int64(stmt, 2));
+    cJSON_AddNumberToObject(o_m, "date", sqlite3_column_int64(stmt, 3));
+    cJSON_AddStringToObject(o_m, "msg", 
+                            MX_J_STR((char*)sqlite3_column_text(stmt, 4)));
+    cJSON_AddNumberToObject(o_m, "type", sqlite3_column_int(stmt, 5));
+    cJSON_AddStringToObject(o_m, "name", 
+                            MX_J_STR((char*)sqlite3_column_text(stmt, 6)));
+    cJSON_AddNumberToObject(o_m, "status", sqlite3_column_int(stmt, 7));
+    return o_m;
 }
 
-static cJSON *get_messages_by_id(sqlite3_stmt *stmt, int id, int count,
-                                 long int date) {
+static cJSON *get_messages_by_id(sqlite3_stmt *stmt, guint64 room_id, 
+                                 gint64 count, guint64 date) {
     cJSON *room = cJSON_CreateObject();
     cJSON *message = cJSON_CreateArray();
-    int rv = 0;
+    gint32 rv = 0;
 
-    sqlite3_bind_int(stmt, 1, date);
-    for (int i = 0; i < count 
+    sqlite3_bind_int64(stmt, 1, date);
+    for (gint64 i = 0; i < count 
                         && (rv = sqlite3_step(stmt)) == SQLITE_ROW; i++) {
         cJSON_AddItemToArray(message, get_object_message(stmt));
     }
-    cJSON_AddItemToObject(room, "id", cJSON_CreateNumber(id));
+    cJSON_AddItemToObject(room, "room_id", cJSON_CreateNumber(room_id));
     cJSON_AddItemToObject(room, "messages", message);
     sqlite3_finalize(stmt);
     return room;
 }
 
-//to delete
-static cJSON *get_messages(sqlite3_stmt *stmt, char *name_room, int count,
-                       long int date) {
-    cJSON *room = cJSON_CreateObject();
-    cJSON *message = cJSON_CreateArray();
-    int rv = 0;
-
-    sqlite3_bind_int(stmt, 1, date);
-    for (int i = 0; i < count 
-                        && (rv = sqlite3_step(stmt)) == SQLITE_ROW; i++) {
-        cJSON_AddItemToArray(message, get_object_message(stmt));
-    }
-    cJSON_AddItemToObject(room, "name_room", cJSON_CreateString(name_room));
-    cJSON_AddItemToObject(room, "messages", message);
-    sqlite3_finalize(stmt);
-    return room;
-}
-
-cJSON *mx_get_new_messages_by_id(sqlite3 *db, unsigned long long int id, 
-                                 long int date, int count) {
+cJSON *mx_get_new_messages_by_id(sqlite3 *db, guint64 room_id, guint64 date,
+                                 gint64 count) {
     sqlite3_stmt *stmt;
-    int rv = SQLITE_OK;
-    char *request = mx_create_request_message_by_id(db, id, 1);
-
-    rv = sqlite3_prepare_v3(db, request, -1, 0, &stmt, NULL);
-    sqlite3_free(request);
-    return get_messages_by_id(stmt, id, count, date);
-}
-
-cJSON *mx_get_old_messages_by_id(sqlite3 *db, unsigned long long int id, 
-                                 long int date, int count) {
-    sqlite3_stmt *stmt;
-    int rv = SQLITE_OK;
-    char *request = mx_create_request_message_by_id(db, id, 2);
-
-    rv = sqlite3_prepare_v3(db, request, -1, 0, &stmt, NULL);
-    sqlite3_free(request);
-    return get_messages_by_id(stmt, id, count, date);
-}
-
-cJSON *mx_get_curr_messages_by_id(sqlite3 *db, unsigned long long int id, 
-                                  int count) {
-    sqlite3_stmt *stmt;
-    int rv = SQLITE_OK;
-    char *request = mx_create_request_message_by_id(db, id, 0);
+    gint32 rv = SQLITE_OK;
+    gchar *request = mx_create_request_message_by_id(db, room_id, NEW_MESSAGE);
 
     printf("%s\n", request);
-    rv = sqlite3_prepare_v3(db, request, -1, 0, &stmt, NULL);
+    sqlite3_prepare_v2(db, request, -1, &stmt, NULL);
+    mx_error_sqlite(rv, "prepare", "get_new_msg");
     sqlite3_free(request);
-    return get_messages_by_id(stmt, id, count, 0);
+    return get_messages_by_id(stmt, room_id, count, date);
 }
 
-// to delete
-cJSON *mx_get_new_messages(sqlite3 *database, char *name_room,
-                           long int date, int count) {
+cJSON *mx_get_old_messages_by_id(sqlite3 *db, guint64 room_id, guint64 date, 
+                                 gint64 count) {
     sqlite3_stmt *stmt;
-    int rv = SQLITE_OK;
-    char *request = mx_create_request_message(database, name_room, 1);
+    gchar *request = mx_create_request_message_by_id(db, room_id, OLD_MESSAGE);
 
-    rv = sqlite3_prepare_v3(database, request, -1, 0, &stmt, NULL);
+    mx_error_sqlite(sqlite3_prepare_v2(db, request, -1, &stmt, NULL), 
+                    "prepare", "get old messages");
+    printf("%s\n%llu\n", request, date);
     sqlite3_free(request);
-    return get_messages(stmt, name_room, count, date);
+    return get_messages_by_id(stmt, room_id, count, date);
 }
-// to delete
-cJSON *mx_get_curr_messages(sqlite3 *database, char *name_room, int count) {
+
+cJSON *mx_get_curr_messages_by_id(sqlite3 *db, guint64 room_id, gint64 count) {
     sqlite3_stmt *stmt;
-    int rv = SQLITE_OK;
-    char *request = mx_create_request_message(database, name_room, 0);
+    gchar *request = mx_create_request_message_by_id(db, room_id, CURR_MESSAGE);
 
-    rv = sqlite3_prepare_v3(database, request, -1, 0, &stmt, NULL);
+    mx_error_sqlite(sqlite3_prepare_v2(db, request, -1, &stmt, NULL), "prepare", "get curr message");
     sqlite3_free(request);
-    return get_messages(stmt, name_room, count, 0);
+    return get_messages_by_id(stmt, room_id, count, 0);
 }
-// to delete
-cJSON *mx_get_old_messages(sqlite3 *database, char *name_room,
-                           long int date, int count) {
-    sqlite3_stmt *stmt;
-    int rv = SQLITE_OK;
-    char *request = mx_create_request_message(database, name_room, 2);
-    
-    rv = sqlite3_prepare_v3(database, request, -1, 0, &stmt, NULL);
-    sqlite3_free(request);
-    return get_messages(stmt, name_room, count, date);
-}
-
-

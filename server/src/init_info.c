@@ -7,7 +7,7 @@ t_info *mx_init_info(void) {
     t_info *info = mx_malloc(sizeof(t_info));
 
     info->users = NULL;
-    info->database = mx_server_data_open(MX_DB);
+    info->database = mx_open_db(MX_DB);
     mx_init_receiver(info);
     srand(time(NULL));
     return info;

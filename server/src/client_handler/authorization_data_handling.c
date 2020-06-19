@@ -1,7 +1,7 @@
 #include "server.h"
 
 void mx_correct_data(char *login, t_client *client) {
-    t_dtp *dtp = mx_token_request((char*)client->user->token, (char*)client->user->login);
+    t_dtp *dtp = mx_token_request((char*)client->user->token, (char*)client->user->name);
 
     mx_send(client->out, dtp);
     mx_logger(MX_LOG_FILE, LOGMSG, "Logged in: %s\n", login);

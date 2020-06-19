@@ -1,10 +1,10 @@
-#include "utils.h"
+#include "server.h"
 
-void mx_close_database(sqlite3 *database) {
-    int stan = sqlite3_close(database);
+void mx_close_database(sqlite3 *db) {
+    gint32 rv = sqlite3_close(db);
 
-    if (stan != SQLITE_OK){
-        printf("stan -> %d\n", stan);
+    if (rv != SQLITE_OK){
+        printf("stan -> %d\n", rv);
         mx_logger(MX_LOG_FILE, LOGWAR, "close database");
     }
 }

@@ -3,50 +3,30 @@
 static cJSON *get_object_room(sqlite3_stmt *stmt) {
     cJSON *room = cJSON_CreateObject();
 
-    cJSON_AddItemToObject(room, "id",
-        cJSON_CreateNumber(sqlite3_column_int(stmt, 0)));
-    cJSON_AddItemToObject(room, "room_name",
-        cJSON_CreateString((char*)sqlite3_column_text(stmt, 1)));
-    cJSON_AddItemToObject(room, "customer",
-        cJSON_CreateString((char*)sqlite3_column_text(stmt, 2)));
-    cJSON_AddItemToObject(room, "date",
-        cJSON_CreateNumber(sqlite3_column_int(stmt, 3)));
-    cJSON_AddItemToObject(room, "desc",
-        cJSON_CreateString((char*)sqlite3_column_text(stmt, 4)));
+    cJSON_AddNumberToObject(room, "id", sqlite3_column_int64(stmt, 0));
+    cJSON_AddStringToObject(room, "name", 
+                            MX_J_STR((char*)sqlite3_column_text(stmt, 1)));
+    cJSON_AddStringToObject(room, "customer", 
+                            MX_J_STR((char*)sqlite3_column_text(stmt, 2)));
+    cJSON_AddNumberToObject(room, "date", sqlite3_column_int64(stmt, 3));
+    cJSON_AddStringToObject(room, "desc", 
+                            MX_J_STR((char*)sqlite3_column_text(stmt, 4)));
+    cJSON_AddNumberToObject(room, "type", sqlite3_column_int(stmt, 5));
     return room;
 }
 
-cJSON *mx_get_rooms(sqlite3 *database, long int date) {
+cJSON *mx_get_rooms(sqlite3 *db, guint64 date, guint64 user_id) {
     cJSON *rooms = cJSON_CreateArray();
     sqlite3_stmt *stmt;
-    int rv = 0;
+    gint32 rv = 0;
 
-    rv = sqlite3_prepare_v3(database, 
-        "SELECT * FROM ROOMS WHERE DATE > ?1 ORDER BY DATE DESC",
-         -1, 0, &stmt, NULL);
-    sqlite3_bind_int(stmt, 1, date);
+    rv = sqlite3_prepare_v2(db, "select * from rooms where id in (select room"
+                                "_id from members where user_id = ?2) and date"
+                                " > ?1 order by date desc", -1, &stmt, NULL);
+    sqlite3_bind_int64(stmt, 1, date);
+    sqlite3_bind_int64(stmt, 2, user_id);
     while ((rv = sqlite3_step(stmt)) == SQLITE_ROW)
         cJSON_AddItemToArray(rooms, get_object_room(stmt));
     sqlite3_finalize(stmt);
     return rooms;
-}
-
-bool mx_is_exists_room_by_id(sqlite3 *db, unsigned long long int id) {
-    sqlite3_stmt *stmt;
-    int rv = 1;
-    char *request = NULL; 
-    sqlite3_str *str = sqlite3_str_new(db);
-
-    sqlite3_str_appendall(str, "select * from sqlite_master where type "
-                                "= 'table' and name = ");
-    sqlite3_str_appendf(str, "'room%d'", id);
-    request = sqlite3_str_finish(str);
-    mx_error_sqlite(sqlite3_prepare_v2(db, request, -1, &stmt, NULL), "prepar",
-                                       "exists room by id");
-    mx_error_sqlite(sqlite3_step(stmt), "step", "delete room by id");
-    if (!sqlite3_column_text(stmt, 0))
-        rv = 0;
-    sqlite3_free(request);
-    sqlite3_finalize(stmt);
-    return rv;
 }

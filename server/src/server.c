@@ -83,3 +83,48 @@ int main(int argc, char **argv) {
     g_main_loop_run(loop);
     return 0;
 }
+
+void test() {
+    sqlite3 *db = mx_open_db(MX_DB);
+    
+    // t_db_room *room = malloc(sizeof(t_db_room));
+    // room->customer = "customer";
+    // room->desc = NULL;
+    // room->room_name = "name";
+    // room->type = GLOBAL_CHAT;
+    // for (int i = 0; i < 100; i++)
+    //     mx_insert_room_into_db(db, room);
+    // mx_free_room(&room);
+    
+    // t_db_user *user = malloc(sizeof(t_db_user));
+    // user->desc = "desc";
+    // user->login = "login1";
+    // user->name = "name1";
+    // user->pass = "pass";
+    // user->token = "token";
+    // mx_insert_user_into_db(db, user);
+
+    // for (int i = 2; i < 20; i++)
+        // mx_insert_member_into_db(db, 1, 1, SIMPLE);
+
+    // t_db_message *message = malloc(sizeof(t_db_message));
+    // message->user_id = 1;
+    // message->room_id = 1;
+    // message->message = "hello";
+    // message->name_file = NULL;
+    // message->size = 0;
+    // message->type = TEXT_MSG;
+    // for (int i = 0; i < 100000; i++) {
+    //     mx_insert_message(db, message);
+    // }
+
+    // cJSON *json = mx_get_rooms(db, 0, 1);
+    // gchar *string = cJSON_Print(json); 
+    // printf("%s\n", string);
+
+    mx_close_database(db);
+    printf("Ok\n");
+    system("leaks -q uchat_server");
+    exit(1);
+}
+

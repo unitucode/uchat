@@ -27,8 +27,8 @@ bool mx_upd_room_name_handler(t_dtp *room, t_client *client) {
         mx_free_room(&room_db);
         return false;
     }
-    mx_edit_name_room(client->info->database, room_id->valueint, room_name->valuestring);
-    resend = mx_upd_room_name_request(room_id->valueint, room_name->valuestring);
+    // mx_edit_name_room(client->chat->database, room_id->valueint, room_name->valuestring);
+    resend = mx_upd_room_desc_request(room_id->valueint, room_name->valuestring);
     if (resend)
         mx_send_to_all(resend, client);
     mx_free_request(&resend);
