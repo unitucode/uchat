@@ -19,6 +19,7 @@ void mx_insert_room_into_db(sqlite3 *db, t_db_room *room) {
     sqlite3_prepare_v2(db, "select max(id) from rooms", -1, &stmt, NULL);
     mx_error_sqlite(sqlite3_step(stmt), "step", "get last room id");
     room->room_id = sqlite3_column_int64(stmt, 0);
+    // mx_insert_member_into_db();
     sqlite3_finalize(stmt);
 }
 
