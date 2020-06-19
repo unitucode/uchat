@@ -38,8 +38,6 @@ struct s_groom {
     GtkStack *stack_msg;
     GtkListBox *box_messages;
     GtkLabel *label_name;
-    t_gmsg *first_gmsg;
-    t_gmsg *last_gmsg;
     int id;
     char *room_name;
     char *customer;
