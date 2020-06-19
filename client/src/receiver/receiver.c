@@ -6,8 +6,6 @@ void mx_init_errors(t_chat *chat) {
 }
 
 void mx_init_handlers(t_chat *chat) {
-    pthread_t tid;
-
     chat->request_handler[RQ_TOKEN] = mx_authorization_handler;
     chat->request_handler[RQ_ERROR_MSG] = mx_error_handler;
     chat->request_handler[RQ_LOG_IN] = NULL;
@@ -21,35 +19,53 @@ void mx_init_handlers(t_chat *chat) {
     chat->request_handler[RQ_UPD_ROOM_DESC] = mx_upd_room_desc_handler;
     chat->request_handler[RQ_UPD_ROOM_NAME] = mx_upd_room_name_handler;
     chat->request_handler[RQ_UPD_USER_DESC] = mx_upd_user_desc_handler;
-    chat->request_handler[RQ_RECONNECT] = mx_reconnect_hanlder;
+    // chat->request_handler[RQ_RECONNECT] = mx_reconnect_hanlder;
     chat->request_handler[RQ_DEL_ROOM] = mx_del_room_handler;
     chat->request_handler[RQ_EDIT_MSG] = mx_edit_msg_handler;
     chat->request_handler[RQ_DEL_MSG] = mx_del_msg_handler;
-    mx_pthread_create(&tid, NULL, mx_receiver, chat);
 }
 
+bool mx_handle_request(char *request, t_chat *chat) {
+    t_dtp *data = mx_request_creation(request);
 
-void *mx_receiver(void *arg) {
-    t_chat *chat = (t_chat*)arg;
-    t_dtp *data = NULL;
-
-    while (true) {
-        while ((data = mx_recv(chat->ssl)) && chat->valid) {
-            printf("recv = %s", cJSON_Print(data->json));
-            if (g_async_queue_length(chat->queue) > MX_MAX_LENGTH_QUEUE)
-                chat->valid = false;
-            g_async_queue_push(chat->queue, data);
-            mx_handle_request(chat);
+    if (data) {
+        g_print("recv = %s\n", cJSON_Print(data->json));
+        if (chat->auth_token
+            || data->type == RQ_ERROR_MSG
+            || data->type == RQ_TOKEN) {
+            if (!chat->request_handler[data->type]
+                || !chat->request_handler[data->type](data, chat)) {
+                return false;
+            }
         }
-        printf("chat->valid = %d\n", chat->valid);
-        SSL_shutdown(chat->ssl);
-        if (chat->valid && !mx_reconnect(chat)) {
-            printf("Closed receiver\n");
-            mx_logger(MX_LOG_FILE, LOGMSG, "Receiver closed\n");
-            break;
-        }
-        mx_logger(MX_LOG_FILE, LOGMSG, "Receiver closed\n");
-        break;
+        mx_free_request(&data);
     }
-    return NULL;
+    return true;
+}
+
+void mx_receiver(GObject *source_object, GAsyncResult *res, gpointer user_data) {
+    GDataInputStream *in = G_DATA_INPUT_STREAM(source_object);
+    GError *error = NULL;
+    gsize count = 0;
+    t_chat *chat = (t_chat*)user_data;
+    gchar *msg = NULL;
+
+    if (!g_socket_connection_is_connected(chat->conn)
+        || g_output_stream_is_closed(G_OUTPUT_STREAM(chat->out))
+        || g_input_stream_is_closed(G_INPUT_STREAM(in))) {
+        return;
+    }
+    msg = g_data_input_stream_read_line_finish(in, res, &count, &error);
+    if (!msg)
+        return;
+    if (error) {
+        g_error ("%s\n", error->message);
+        g_clear_error (&error);
+    }
+    if (!mx_handle_request(msg, chat)) {
+        g_free(msg);
+        return;
+    }
+    g_free(msg);
+    g_data_input_stream_read_line_async(in, G_PRIORITY_DEFAULT, NULL, mx_receiver, chat);
 }

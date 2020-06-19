@@ -19,7 +19,7 @@ static void req_delete_msg(GtkListBox *box, GtkListBoxRow *row, t_chat *chat) {
     t_gmsg *gmsg = (t_gmsg*)g_object_get_data(G_OBJECT(row), "gmsg");
     t_dtp *dtp = mx_del_msg_request(gmsg->room_id, gmsg->message_id);
 
-    mx_send(chat->ssl, dtp);
+    mx_send(chat->out, dtp);
     mx_free_request(&dtp);
     (void)box;
 }

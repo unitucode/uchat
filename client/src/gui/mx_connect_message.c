@@ -7,7 +7,7 @@ static void req_send_message(GtkButton *btn, t_chat *chat) {
 
     if (room) {
         dtp = mx_msg_request(message_text, room->id);
-        mx_send(chat->ssl, dtp);
+        mx_send(chat->out, dtp);
         mx_free_request(&dtp);
         mx_clear_buffer_text("buffer_message", chat->builder);
     }
@@ -21,7 +21,7 @@ static void req_edit_message(GtkButton *btn, t_chat *chat) {
 
     if (strcmp(gmsg->msg, new_text)) {
         dtp = mx_edit_msg_request(new_text, gmsg->room_id, gmsg->message_id);
-        mx_send(chat->ssl, dtp);
+        mx_send(chat->out, dtp);
         mx_free_request(&dtp);
     }
     else

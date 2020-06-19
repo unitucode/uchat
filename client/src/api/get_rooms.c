@@ -23,7 +23,7 @@ static void insert_room(cJSON *room, t_chat *chat) {
     dtp = mx_get_transport_data(dup);
     mx_new_room_handler(dtp, chat);
     msgs = mx_get_new_msgs_request(0, room_id->valueint);
-    mx_send(chat->ssl, msgs);
+    mx_send(chat->out, msgs);
     mx_free_request(&dtp);
 }
 

@@ -29,7 +29,7 @@ bool mx_msg_handler(t_dtp *data, t_client *client) { // TODO leaks
         return false;
     if (!room_id || !cJSON_IsNumber(room_id))
         return false;
-    message = mx_insert_message_into_db_by_id(client->chat->database,
+    message = mx_insert_message_into_db_by_id(client->info->database,
                                         msg->valuestring, 
                                         (char*)client->user->login,
                                         room_id->valueint);

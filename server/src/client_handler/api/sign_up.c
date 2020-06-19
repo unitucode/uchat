@@ -4,12 +4,13 @@
 static void incorrect_data(t_client *client) {
     t_dtp *dtp = mx_error_msg_request(ER_USER_EXST, "User already exist");
 
-    mx_send(client->ssl, dtp);
+    // mx_send(client->ssl, dtp);
+    client++;
     mx_free_request(&dtp);
 }
 
 static void sign_up(char *login, char *pass, t_client *client) {
-    t_db_user *user = mx_get_user_by_login(client->chat->database, login);
+    t_db_user *user = mx_get_user_by_login(client->info->database, login);
     char token[MX_MD5_BUF_SIZE + 1 + strlen(login)];
 
     if (user) {
@@ -18,7 +19,7 @@ static void sign_up(char *login, char *pass, t_client *client) {
         return;
     }
     mx_create_token(token, login);
-    client->user = mx_insert_user_into_db(client->chat->database, login, pass, token);
+    client->user = mx_insert_user_into_db(client->info->database, login, pass, token);
     if (!client->user) {
         mx_logger(MX_LOG_FILE, LOGMSG, "Failded signup user %s\n", login);
         return;

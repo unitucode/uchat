@@ -8,6 +8,7 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <pthread.h>
+#include <libgen.h>
 #include <string.h>
 #include <netdb.h>
 #include <pthread.h>
@@ -16,6 +17,7 @@
 #include <stdarg.h>
 #include <time.h>
 #include <signal.h>
+#include <fcntl.h>
 #include <sys/stat.h>
 #include <openssl/ssl.h>
 #include <openssl/err.h>
@@ -64,15 +66,13 @@ typedef enum e_logtype {
     LOGERR
 }            t_logtype;
 
-// write
-ssize_t SSL_safe_write(SSL *ssl, const void* buf, size_t size);
-
 //Utils
 bool mx_match_search(char *str, char *regex);
 bool mx_match_nsearch(char *str, char *regex, size_t size);
 void mx_randomize_str(char *str, size_t count);
 void *mx_memdup(const void *mem, size_t size);
 long long mx_get_current_time(void);
+
 
 
 //wrappers

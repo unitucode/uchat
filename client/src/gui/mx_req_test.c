@@ -1,18 +1,14 @@
 #include "client.h"
 
 static void req_test(GtkButton *btn, t_chat *chat) {
-    // t_dtp *dtp = mx_del_room_request(1);
-    // mx_send(chat->ssl, dtp);
-    // mx_free_request(&dtp);
-    // t_dtp *dtp = mx_upd_room_desc_request(1, "0000000000");
-    // mx_send(chat->ssl, dtp);
-    // mx_free_request(&dtp);
-    // t_dtp *dtp = mx_del_msg_request(1, 1);
-    // mx_send(chat->ssl, dtp);
-    // mx_free_request(&dtp);
-    t_dtp *dtp = mx_edit_msg_request("000000", 1, 1);
-    mx_send(chat->ssl, dtp);
-    mx_free_request(&dtp);
+    t_file *file = mx_upload_file("/Users/okhomin/Desktop/ucode/pngkey.com-telegram-png-2077555.png");
+    t_dtp *file_rq = mx_upload_file_request("1.png", (int)file->st.st_size);
+
+    printf("size = %lld\n", file->st.st_size);
+    mx_send(chat->out, file_rq);
+    mx_free_file(&file);
+    mx_free_request(&file_rq);
+    (void)chat;
     (void)btn;
 }
 
