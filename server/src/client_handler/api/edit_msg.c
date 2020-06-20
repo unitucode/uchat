@@ -30,7 +30,7 @@ bool mx_edit_msg_handler(t_dtp *msg, t_client *client) {
     // mx_edit_message(client->info->database, room_id->valueint,
     //                 msg_id->valueint, msg_str->valuestring);
     resend = mx_edit_msg_request(msg_str->valuestring, room_id->valueint, msg_id->valueint);
-    mx_send_to_all(resend, client);
+    mx_send_to_all(resend, client, room_id->valueint);
     mx_free_request(&resend);
     //TODO
     return true;

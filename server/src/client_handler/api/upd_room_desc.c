@@ -30,7 +30,7 @@ bool mx_upd_room_desc_handler(t_dtp *room, t_client *client) {
     // mx_update_description_room_by_id(client->chat->database, room_id->valueint, desc->valuestring);
     resend = mx_upd_room_desc_request(room_id->valueint, desc->valuestring);
     if (resend)
-        mx_send_to_all(resend, client);
+        mx_send_to_all(resend, client, room_id->valueint);
     mx_free_request(&resend);
     mx_free_room(&room_db);
     return true;

@@ -19,6 +19,7 @@
 typedef struct s_chat t_chat;
 typedef struct s_client t_client;
 typedef struct s_info t_info;
+typedef struct s_send_helper t_send_helper;
 
 struct s_info {
     GHashTable *users;
@@ -34,6 +35,11 @@ struct s_client {
     char *msg;
     t_db_user *user;
     t_info *info;
+};
+
+struct s_send_helper {
+    GHashTable *table;
+    t_dtp *data;
 };
 
 gssize mx_send(GDataOutputStream *out, t_dtp *dtp);
@@ -77,7 +83,7 @@ void mx_connect_client(t_client *client);
 void mx_disconnect_client(t_client *client);
 void mx_delete_client(void **client);
 void *mx_receiver(void *arg);
-void mx_send_to_all(t_dtp *data, t_client *client);
+void mx_send_to_all(t_dtp *data, t_client *client, guint64 room_id);
 void mx_update_online(int count, t_client *client);
 
 //Authorization
