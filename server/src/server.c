@@ -60,12 +60,12 @@ static gboolean incoming_callback (GSocketService *service, GSocketConnection *c
     return FALSE;
 }
 
-// void test();
+void test();
 
 int main(int argc, char **argv) {
-    // test();
-    // system("leaks -q uchat_server");
-    // exit(1);
+    test();
+    system("leaks -q uchat_server");
+    exit(1);
     GError *error = NULL;
     GSocketService *service = g_socket_service_new();
     GMainLoop *loop = NULL;
@@ -91,6 +91,13 @@ int main(int argc, char **argv) {
 
 void test() {
     sqlite3 *db = mx_open_db(MX_DB);
+
+
+    // mx_edit_members(db, 11, 1, DB_SIMPLE);
+
+
+    // cJSON *json = mx_search_room(db, "nam");
+    // printf("%s\n", cJSON_Print(json));
 
     // if (mx_user_contains(db, 1, 33552))
     //     printf("true\n");
@@ -129,8 +136,8 @@ void test() {
     // room->desc = "";
     // room->room_name = "name";
     // room->type = DB_GLOBAL_CHAT;
+    // mx_insert_room_into_db(db, room);
     // for (int i = 0; i < 10; i++)
-    //     mx_insert_room_into_db(db, room);
     // mx_free_room(&room);
 
     // t_db_user *user = malloc(sizeof(t_db_user));

@@ -52,3 +52,20 @@ GList *mx_get_users_in_room(sqlite3 *db, guint64 room_id) {
     return list;
 }
 
+void mx_edit_members(sqlite3 *db, guint64 room_id, guint64 user_id,
+                       gint8 new_perm) {
+    sqlite3_str *sqlite_str = sqlite3_str_new(db);
+    gchar *request = NULL;
+    gint32 rv = SQLITE_OK;
+
+    sqlite3_str_appendf(sqlite_str, "update members set permission = %d where room_id = "
+                        "%llu and user_id = %llu", new_perm, room_id, user_id);
+    request = sqlite3_str_finish(sqlite_str);
+    rv = sqlite3_exec(db, request, 0, 0, 0);
+    mx_error_sqlite(rv, "exec", "edit members");
+    sqlite3_free(request);
+}
+
+// void mx_delete_members(sqlite3 *db, guint64 room_id, guint64 user_id) {
+
+// }

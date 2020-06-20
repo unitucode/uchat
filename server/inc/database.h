@@ -171,3 +171,7 @@ void mx_insert_member_into_db(sqlite3 *db, guint64 room_id, guint64 user_id,
                               gint8 permission);
 cJSON *mx_users_of_room_in_json(GList *list);
 void mx_destroy_data(gpointer data);
+void mx_edit_members(sqlite3 *db, guint64 room_id, guint64 user_id,
+                     gint8 new_perm);
+
+
