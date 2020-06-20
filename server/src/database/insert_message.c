@@ -23,7 +23,7 @@ void mx_insert_message(sqlite3 *db, t_db_message *message) {
     rv = sqlite3_prepare_v2(db, "insert into messages(room_id, user_id, date, "
                                 "type, message, file_size, file_name, status, "
                                 "date_dead)values(?1, ?2, ?3, ?4, ?5, ?6, ?7, "
-                                "?8)", -1, &stmt, NULL);
+                                "?8, ?9)", -1, &stmt, NULL);
     mx_error_sqlite(rv, "prepare", "insert_msg_file");
     sqlite3_bind_int64(stmt, 1, message->user_id);
     sqlite3_bind_int64(stmt, 2, message->room_id);
