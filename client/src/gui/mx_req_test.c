@@ -1,7 +1,11 @@
 #include "client.h"
 
 static void req_test(GtkButton *btn, t_chat *chat) {
-    mx_upload_file("/Users/okhomin/Desktop/ucode/uchat/uchat/client/src/gui/resources/edit.png", chat);
+    // mx_upload_file("/Users/okhomin/Desktop/ucode/uchat/uchat/client/src/gui/resources/edit.png", chat);
+    // t_dtp *request = mx_search_rooms_request("hello");
+    t_dtp *request = mx_join_room_request(4);
+    mx_send(chat->out, request);
+    mx_free_request(&request);
     (void)chat;
     (void)btn;
 }

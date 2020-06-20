@@ -38,6 +38,8 @@ typedef enum s_request_type {
     RQ_EDIT_MSG,
     RQ_DEL_MSG,
     RQ_FILE,
+    RQ_SEARCH_CH,
+    RQ_JOIN_ROOM,
     RQ_COUNT_REQUEST,
 }            t_request_type;
 

@@ -50,7 +50,7 @@ void mx_insert_user_into_db(sqlite3 *db, t_db_user *user) {
     mx_error_sqlite(sqlite3_step(stmt), "step", "insert user");
     sqlite3_finalize(stmt);
     get_id_user(db, user);
-    mx_insert_member_into_db(db, 1, user->user_id, DB_STATUS_MSG_START);
+    // mx_insert_member_into_db(db, 1, user->user_id, DB_STATUS_MSG_START);
 }
 
 void mx_insert_member_into_db(sqlite3 *db, guint64 room_id, guint64 user_id,

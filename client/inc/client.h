@@ -115,6 +115,8 @@ bool mx_del_room_handler(t_dtp *data, t_chat *chat);  // HANDLER FOR DELETE ROOM
 bool mx_edit_msg_handler(t_dtp *data, t_chat *chat); // HANDLER FOR EDIT MSG
 bool mx_del_msg_handler(t_dtp *data, t_chat *chat); // HANDLER FOR DEL MSG
 bool mx_upload_file_handler(t_dtp *data, t_chat *chat); // HANDLER FOR GET FILE
+bool mx_search_rooms_handler(t_dtp *data, t_chat *chat); //HANDLER FOR SEARCHING
+bool mx_join_room_handler(t_dtp *data, t_chat *chat); //HANDLER FOR JOIN ROOM
 
 
 /*
@@ -143,6 +145,8 @@ t_dtp *mx_upd_user_name_request(char *name); //TODO
 t_dtp *mx_del_msg_request(int room_id, int msg_id); // FOR DELETE MESSAGE FROM ROOM
 t_dtp *mx_edit_msg_request(char *msg, int room_id, int msg_id); // FOR EDIT MESSAGE IN ROOM
 t_dtp *mx_upload_file_request(char *name, goffset size, char *token); // FOR UPLOAD FILE
+t_dtp *mx_search_rooms_request(char *room_name); // FOR SEARCHING CHANNEL
+t_dtp *mx_join_room_request(int room_id); //FOR JOIN TO ROOM
 
 //errors api
 void mx_err_auth_data_handler(GtkBuilder *builder);
