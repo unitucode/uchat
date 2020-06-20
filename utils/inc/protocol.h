@@ -47,6 +47,11 @@ typedef enum s_room_type {
     DB_LS_CHAT
 }            t_room_type;
 
+typedef enum s_message_type {
+    DB_STATUS_MSG_START = 0,
+    DB_STATUS_MSG_EDIT
+}            t_message_type;
+
 struct s_file {
     char *bytes;
     char *name;

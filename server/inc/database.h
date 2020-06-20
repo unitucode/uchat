@@ -21,8 +21,6 @@ typedef enum s_type_db {
     DB_ADMIN,
     DB_MODERATOR,
     DB_SIMPLE,
-    DB_STATUS_MSG_EDIT,
-    DB_STATUS_MSG_START,
     DB_TEXT_MSG,
     DB_FILE_MSG,
     DB_FILE_TEXT_MSG,
@@ -141,8 +139,6 @@ void mx_delete_room_by_id(sqlite3 *db, guint64 room_id);
 
 // insert yes
 void mx_insert_room_into_db(sqlite3 *db, t_db_room *room);
-void mx_insert_member_into_db(sqlite3 *db, guint64 room_id, guint64 user_id,
-                              gint8 permission);
 void mx_insert_user_into_db(sqlite3 *db, t_db_user *user);
 void mx_insert_message(sqlite3 *db, t_db_message *message);
 
@@ -163,3 +159,10 @@ void mx_get_contact_(sqlite3 *db, guint64 user_id, gint8 type);
 gboolean mx_check_user_by_login(sqlite3 *db, gchar *login);
 cJSON *mx_search_room(sqlite3 *db, gchar *str_search);
 cJSON *mx_search_user(sqlite3 *db, gchar *str_search);
+
+
+//members
+GList *mx_get_users_in_room(sqlite3 *db, guint64 room_id);
+void mx_insert_member_into_db(sqlite3 *db, guint64 room_id, guint64 user_id,
+                              gint8 permission);
+cJSON *mx_users_of_room_conv_in_json(GList *list);
