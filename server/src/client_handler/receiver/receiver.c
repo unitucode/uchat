@@ -1,6 +1,6 @@
 #include "server.h"
 
-void mx_init_receiver(t_chat *chat) {
+void mx_init_receiver(t_info *chat) {
     chat->request_handler[RQ_SIGN_UP] = mx_sign_up_handler;
     chat->request_handler[RQ_TOKEN] = mx_log_in_token_handler;
     chat->request_handler[RQ_LOG_IN] = mx_log_in_handler;
@@ -12,32 +12,31 @@ void mx_init_receiver(t_chat *chat) {
     chat->request_handler[RQ_UPD_ROOM_DESC] = mx_upd_room_desc_handler;
     chat->request_handler[RQ_UPD_ROOM_NAME] = mx_upd_room_name_handler;
     chat->request_handler[RQ_UPD_USER_DESC] = mx_upd_user_desc_handler;
+    chat->request_handler[RQ_DEL_ROOM] = mx_del_room_handler;
+    chat->request_handler[RQ_RECONNECT] = NULL;
+    chat->request_handler[RQ_DEL_MSG] = mx_del_msg_handler;
+    chat->request_handler[RQ_EDIT_MSG] = mx_edit_msg_handler;
+    chat->request_handler[RQ_FILE] = mx_upload_file_handler;
 }
 
-void *mx_receiver(void *arg) {
-    t_client *client = (t_client*)arg;
-    t_dtp *data = NULL;
-    // system("leaks -q uchat_server");
+bool mx_handle_request(char *request, t_client *client) {
+    t_dtp *data = mx_request_creation(request);
 
-    while ((data = mx_recv(client->ssl))) {
-        printf("recv = %s\n", cJSON_Print(data->json));
+    if (data) {
+        g_print("recv = %s\n", cJSON_Print(data->json));
         if (client->user || data->type == RQ_LOG_IN
             || data->type == RQ_SIGN_UP
-            || data->type == RQ_TOKEN) {
-            if (!client->chat->request_handler[data->type]
-                || !client->chat->request_handler[data->type](data, client)) {
-                    break;
+            || data->type == RQ_TOKEN
+            || data->type == RQ_FILE) {
+            if (!client->info->request_handler[data->type]
+                || !client->info->request_handler[data->type](data, client)) {
+                    return false;
             }
         }
         else
-            break;
-        // send_to_all(client->chat->clients, client->chat, client, dtp->str);
+            return false;
         mx_free_request(&data);
         usleep(MX_DELAY);
     }
-    mx_free_request(&data);
-    mx_disconnect_client(client);
-    printf("Closed receiver Server\n===============================\n");
-    system("leaks -q uchat");
-    return NULL;
+    return true;
 }

@@ -1,7 +1,7 @@
 #include "client.h"
 
 void mx_send_auth_request(char *login, char *password,
-                          SSL *ssl, t_request_type request_type) {
+                          t_chat *chat, t_request_type request_type) {
     char pass[33]; 
     t_dtp *dtp = NULL;
 
@@ -11,6 +11,6 @@ void mx_send_auth_request(char *login, char *password,
         dtp = mx_log_in_request(login, pass);
     else
         dtp = mx_sign_up_request(login, pass);
-    mx_send(ssl, dtp);
+    mx_send(chat->out, dtp);
     mx_free_request(&dtp);
 }

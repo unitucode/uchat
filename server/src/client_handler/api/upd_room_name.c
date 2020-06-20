@@ -1,13 +1,13 @@
 #include "server.h"
 
-t_dtp *mx_upd_room_name_request(int room_id, char *desc) {
+t_dtp *mx_upd_room_name_request(int room_id, char *room_name) {
     cJSON *json_result = cJSON_CreateObject();
 
     if (!cJSON_AddNumberToObject(json_result, "type", RQ_UPD_ROOM_NAME))
         return NULL;
     if (!cJSON_AddNumberToObject(json_result, "room_id", room_id))
         return NULL;
-    if (!cJSON_AddStringToObject(json_result, "desc", desc))
+    if (!cJSON_AddStringToObject(json_result, "room_name", room_name))
         return NULL;
     return mx_get_transport_data(json_result);
 }
@@ -22,7 +22,7 @@ bool mx_upd_room_name_handler(t_dtp *room, t_client *client) {
         return false;
     if (!room_name || !cJSON_IsString(room_name))
         return false;
-    room_db = mx_get_room_by_id(client->chat->database, room_id->valueint);
+    // room_db = mx_get_room_by_id(client->info->database, room_id->valueint);
     // if (!room_db || strcmp(room_db->customer, client->user->login)) {
     //     mx_free_room(&room_db);
     //     return false;

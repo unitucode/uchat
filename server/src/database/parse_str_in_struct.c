@@ -25,10 +25,7 @@ t_db_user *mx_parse_json_user(cJSON *user_j) {
     if (!(json = mx_json_is_valid(user_j, "pass", cJSON_IsString)))
         return NULL;
     user->pass = strdup(json->valuestring);
-    if (!(json = mx_json_is_valid(user_j, "token", cJSON_IsString)))
-        return NULL;
-    user->token = strdup(json->valuestring);
-    cJSON_Delete(user_j);
+    user->token = NULL;
     return user;
 }
 

@@ -14,47 +14,36 @@ void mx_make_private(GtkToggleButton *btn, GtkWidget *widget) {
     gtk_widget_set_sensitive(widget, gtk_toggle_button_get_active(btn));
 }
 
-void mx_unselect_curr_room_messages(GtkListBox *box, GtkListBoxRow *row,
-                                    GtkBuilder *builder) {
-    t_groom *groom = NULL;
-
-    if (row)
-        groom = (t_groom *)g_object_get_data(G_OBJECT(row), "groom");
-    if (groom)
-        gtk_list_box_unselect_all(groom->box_messages);
-    (void)box;
-    (void)builder;
-}
-
-static void set_current_room_prefs(GtkBuilder *builder) {
+void mx_set_current_room_sett(GtkBuilder *builder) {
     t_groom *groom = mx_get_selected_groom(builder);
     GObject *name = gtk_builder_get_object(builder, "label_prefs_roomname");
     GObject *customer = gtk_builder_get_object(builder,
                                                "label_prefs_customer");
-    GObject *header = gtk_builder_get_object(builder, "header_main");
+    GObject *desc = gtk_builder_get_object(builder, "buffer_room_desc");
+    GObject *header_name = gtk_builder_get_object(builder,
+                                                  "label_header_roomname");
 
     gtk_label_set_text(GTK_LABEL(name), groom->room_name);
-    gtk_header_bar_set_title(GTK_HEADER_BAR(header), groom->room_name);
+    gtk_text_buffer_set_text(GTK_TEXT_BUFFER(desc), groom->desc, -1);
     gtk_label_set_text(GTK_LABEL(customer), groom->customer);
+    gtk_label_set_text(GTK_LABEL(header_name), groom->room_name);
 }
 
-void mx_select_room(GtkWidget *widget, GdkEventButton *event,
-                    t_signal_data *data) {
+void mx_select_room(GtkWidget *event_box, GdkEventButton *event,
+                    gpointer *user_data) {
+    t_signal_data *data = g_object_get_data(G_OBJECT(event_box), "sigdata");
+
+    mx_reset_messege_room(data->groom, data->builder);
     gtk_stack_set_visible_child(data->groom->stack_msg,
                                 GTK_WIDGET(data->groom->page));
     gtk_list_box_select_row(data->groom->box_rooms,
                             data->groom->row_room);
-    set_current_room_prefs(data->builder);
-    (void)widget;
+    mx_set_current_room_sett(data->builder);
+    mx_set_room_widgets_visibility(data->builder, true);
     (void)event;
+    (void)user_data;
 }
 
-void mx_hide_msg_ctrl(GtkListBox *box, GtkListBoxRow *row,
-                      GtkButtonBox *control) {
-    gtk_widget_hide(GTK_WIDGET(control));
-    (void)box;
-    (void)row;
-}
 //================================
 
 gint mx_room_sort(GtkListBoxRow *row1, GtkListBoxRow *row2) {
@@ -79,7 +68,7 @@ static void add_messages_box(t_groom *room, GtkBuilder *builder) {
     gtk_container_add(GTK_CONTAINER(scroll), view);
     gtk_container_add(GTK_CONTAINER(view), box);
 
-    gtk_stack_add_named(GTK_STACK(stack), scroll, room->room_name);
+    gtk_stack_add_named(GTK_STACK(stack), scroll, mx_msgpage_name(room->id));
     room->stack_msg = GTK_STACK(stack);
     room->page = GTK_SCROLLED_WINDOW(scroll);
     gtk_widget_show_all(scroll);
@@ -92,26 +81,31 @@ static void add_room_row(t_groom *room, GtkBuilder *builder) {
     GtkWidget *row = gtk_list_box_row_new();
     GtkWidget *label = gtk_label_new(room->room_name);
     GtkWidget *event = gtk_event_box_new();
-    gtk_event_box_set_above_child(GTK_EVENT_BOX(event), false);
+    t_signal_data *data = NULL;
 
-    g_object_set_data_full(G_OBJECT(row), "groom", room,
-                           (GDestroyNotify)mx_delete_groom);
+
     room->box_rooms = box;
     room->row_room = GTK_LIST_BOX_ROW(row);
+    room->label_name = GTK_LABEL(label);
 
-    t_signal_data *data = (t_signal_data*)malloc(sizeof(t_signal_data));
-    data->builder = builder;
-    data->groom = room;
+    data = mx_create_sigdata(builder, room, NULL);
     g_signal_connect(event, "button_press_event",
-                     G_CALLBACK(mx_select_room), data);
+                     G_CALLBACK(mx_select_room), NULL);
 
+    gtk_label_set_ellipsize(GTK_LABEL(label), PANGO_ELLIPSIZE_END);
     gtk_container_add(GTK_CONTAINER(event), label);
     gtk_container_add(GTK_CONTAINER(row), event);
     gtk_widget_set_size_request(row, -1, 80);
     gtk_list_box_set_sort_func(box, (GtkListBoxSortFunc)mx_room_sort, NULL, NULL);
     room->is_updated = false;
+
     gtk_list_box_insert(box, row, -1);
     gtk_widget_show_all(GTK_WIDGET(box));
+
+    g_object_set_data_full(G_OBJECT(row), "groom", room,
+                           (GDestroyNotify)mx_delete_groom);
+    g_object_set_data_full(G_OBJECT(event), "sigdata", data,
+                            (GDestroyNotify)mx_free_sigdata);
 }
 
 void mx_add_groom(t_groom *room, GtkBuilder *builder) {
@@ -119,28 +113,64 @@ void mx_add_groom(t_groom *room, GtkBuilder *builder) {
     add_room_row(room, builder);
 }
 
-t_groom *mx_create_groom(char *room_name, char *customer, int id,
-                         long int date) {
+static t_groom *mx_init_groom() {
     t_groom *room = mx_malloc(sizeof(t_groom));
 
-    room->room_name = strdup(room_name);
-    room->customer = strdup(customer);
+    room->room_name = NULL;
+    room->customer = NULL;
     room->box_rooms = NULL;
     room->box_messages = NULL;
     room->page = NULL;
     room->row_room = NULL;
     room->stack_msg = NULL;
-    room->id = id;
-    room->date = date;
+    room->id = -1;
+    room->date = -1;
     room->is_updated = true;
     room->desc = NULL;
     return room;
 }
 
+void mx_free_sigdata(t_signal_data *data) {
+    mx_free((void **)&data);
+}
+
+static bool get_data(cJSON *msg, cJSON **data, char *field) { // TO FIX IN GMSG GET_DATA
+    *data = cJSON_GetObjectItemCaseSensitive(msg, field);
+    if (!*data)
+        return false;
+    return true;
+}
+
+t_groom *mx_create_groom(cJSON *room) {
+    t_groom *groom = mx_init_groom();
+    cJSON *data = NULL;
+    bool valid = true;
+
+    if ((valid = get_data(room, &data, "room_name")) && cJSON_IsString(data))
+        groom->room_name = strdup(data->valuestring);
+    if ((valid = get_data(room, &data, "customer")) && cJSON_IsString(data))
+        groom->customer = strdup(data->valuestring);
+    if ((valid = get_data(room, &data, "id")) && cJSON_IsNumber(data))
+        groom->id = data->valueint;
+    if ((valid = get_data(room, &data, "date")) && cJSON_IsNumber(data))
+        groom->date = data->valueint;
+    if ((valid = get_data(room, &data, "desc")) && cJSON_IsString(data))
+        groom->desc = strdup(data->valuestring);
+    if (!valid) {
+        mx_delete_groom(groom);
+        return NULL;
+    }
+    groom->first_gmsg = NULL;
+    groom->last_gmsg = NULL;
+    return groom;
+}
+
 void mx_delete_groom(t_groom *room) {
     if (room) {
-        mx_free((void**)&room->room_name);
-        mx_free((void**)&room->customer);
+        mx_free((void**)&(room->room_name));
+        mx_free((void**)&(room->customer));
+        mx_free((void**)&(room->desc));
         mx_free((void**)&room);
+        room = NULL;
     }
 }

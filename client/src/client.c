@@ -1,48 +1,5 @@
 #include "client.h"
 
-// static int sockfd;
-// static int done;
-
-// void *copyto(void *arg) {
-//     char sendline[1024];
-//     t_dtp *request = NULL;
-//     SSL *ssl = (SSL*)arg;
-//     system("leaks -q uchat");
-//     while (fgets(sendline, 1024, fp)) {
-//         if (!strcmp("signup\n", sendline))
-//             mx_signup(ssl);
-//         else if (!strcmp("login\n", sendline))
-//             mx_login(ssl);
-//         else {
-//             request = mx_msg_request(1, NULL, sendline);
-//             // printf("req = %s len = %zu len = %zu\n", request->str, strlen(request->str), request->len);
-//             mx_send(ssl, request);
-//             mx_free_request(&request);
-//             bzero(sendline, sizeof(sendline));
-//         }
-//     }
-//     shutdown(sockfd, SHUT_WR);
-//     done = 1;
-//     return NULL;
-// }
-
-// void str_cli(FILE *fp_arg, SSL *ssl) {
-//     // pthread_t tid;
-//     char buf[1025];
-//     t_dtp *dtp = NULL;
-
-//     bzero(&buf, sizeof(buf));
-//     fp = fp_arg;
-//     // mx_pthread_create(&tid, NULL, copyto, ssl);
-//     while ((dtp = mx_recv(ssl))) {
-//         printf("%s\n", dtp->str);
-//         mx_free_request(&dtp);
-//     }
-
-//     if (done == 0)
-//         exit(1);
-// }
-
 static void change_working_dir(void) {
     #ifdef MX_CLIENT
     if (chdir(MX_CLIENT)) {
@@ -54,40 +11,26 @@ static void change_working_dir(void) {
     #endif
 }
 
-void test(t_chat *chat) {
-    // char *login = "admin4";
-    char pass[33];
-
-    pass[32] = '\0';
-    mx_md5(pass, (const unsigned char*)"admin", 5);
-    t_dtp *signup = mx_token_request("89f234ad6490edeec3f09057afc2dbaf123456789");
-    mx_send(chat->ssl, signup);
-    mx_free_request(&signup);
-}
 
 int main(int argc, char **argv) {
-    int sockfd;
-    t_ssl_con *ssl = NULL;
-    t_chat *chat = mx_init_chat();
+    GError *error = NULL;
+    GSocketConnection *connection = NULL;
+    GSocketClient *client = g_socket_client_new();
+    t_chat *chat = NULL;
 
     change_working_dir();
     if (argc != 3) {
-        printf("usage\n");
-        exit(1);
+        g_printerr("Usage: ./uchat <ip,domen> <port>\n");
+        return -1;
     }
-    ssl = mx_init_ssl(CLIENT);
-    mx_logger(MX_LOG_FILE, LOGMSG, "started client: %s %s\n", argv[1], argv[2]);
-    sockfd = mx_tcp_connect(argv[1], argv[2]);
-    ssl->ssl = SSL_new(ssl->ctx);
-    chat->ssl = ssl->ssl;
-    SSL_set_fd(ssl->ssl, sockfd);
-    if (SSL_connect(ssl->ssl) == -1) {
-        mx_elogger(MX_LOG_FILE, LOGERR, "SSL_connect failded\n");
+    connection = g_socket_client_connect_to_host(client, argv[1], g_ascii_strtoll(argv[2], NULL, 10), NULL, &error);
+    if (!connection || error) {
+        g_printerr("Invalid port or ip\n");
+        return -1;
     }
-    chat->builder = mx_init_window(argc, argv);
+    chat = mx_init_chat(connection, argc, argv);
+    chat->cli_conn = g_object_ref(client);
     mx_init_gui(chat);
-    mx_init_errors(chat);
-    mx_init_handlers(chat);
-    // test(chat);
     mx_start_gui(chat);
+    return 0;
 }

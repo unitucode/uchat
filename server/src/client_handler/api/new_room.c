@@ -13,12 +13,15 @@ static t_dtp *get_resend_room(t_db_room *room) {
         // return NULL;
     if (!cJSON_AddNumberToObject(send, "date", room->date))
         return NULL;
+    // if (!cJSON_AddStringToObject(send, "desc", room->description))
+    //     return NULL;
     return mx_get_transport_data(send);
 }
 
 bool mx_new_room_handler(t_dtp *data, t_client *client) { //TODO leaks
     cJSON *room = cJSON_GetObjectItemCaseSensitive(data->json,
                                                    "room_name");
+    // cJSON *desc = cJSON_GetObjectItemCaseSensitive(data->json, "desc");
     t_db_room *new_room = NULL;
     t_dtp *resend = NULL;
 
@@ -29,6 +32,7 @@ bool mx_new_room_handler(t_dtp *data, t_client *client) { //TODO leaks
     //                                   (char*)client->user->login);
     if (!new_room)
         return false;
+    // mx_update_description_room_by_id(client->info->database, new_room->id, desc->valuestring);
     resend = get_resend_room(new_room);
     if (!resend)
         return false;
