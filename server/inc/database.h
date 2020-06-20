@@ -165,4 +165,4 @@ cJSON *mx_search_user(sqlite3 *db, gchar *str_search);
 GList *mx_get_users_in_room(sqlite3 *db, guint64 room_id);
 void mx_insert_member_into_db(sqlite3 *db, guint64 room_id, guint64 user_id,
                               gint8 permission);
-cJSON *mx_users_of_room_conv_in_json(GList *list);
+cJSON *mx_users_of_room_in_json(GList *list);

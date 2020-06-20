@@ -87,6 +87,17 @@ int main(int argc, char **argv) {
 void test() {
     sqlite3 *db = mx_open_db(MX_DB);
 
+   
+    // mx_insert_member_into_db(db, 10, 2, DB_SIMPLE);
+    // mx_insert_member_into_db(db, 10, 3, DB_SIMPLE);
+    // mx_insert_member_into_db(db, 10, 4, DB_SIMPLE);
+    // mx_insert_member_into_db(db, 10, 5, DB_SIMPLE);
+    // mx_insert_member_into_db(db, 10, 6, DB_SIMPLE);
+    // GList *list = mx_get_users_in_room(db, 10);
+    // cJSON *json = mx_users_of_room_in_json(list);
+    // char *json_str = cJSON_Print(json);
+    // printf("%s\n", json_str);
+
     // if (mx_check_user_by_login(db, "login5"))
     //     printf("true\n");
     // else
@@ -100,13 +111,13 @@ void test() {
     // mx_db_pop_queue_by_id(db, 6);
     // printf("%s\n", mx_get_queue(db, 6));
 
-    t_db_room *room = malloc(sizeof(t_db_room));
-    room->customer_id = 1;
-    room->desc = "";
-    room->room_name = "name";
-    room->type = DB_GLOBAL_CHAT;
-    for (int i = 0; i < 10; i++)
-        mx_insert_room_into_db(db, room);
+    // t_db_room *room = malloc(sizeof(t_db_room));
+    // room->customer_id = 1;
+    // room->desc = "";
+    // room->room_name = "name";
+    // room->type = DB_GLOBAL_CHAT;
+    // for (int i = 0; i < 10; i++)
+    //     mx_insert_room_into_db(db, room);
     // mx_free_room(&room);
     
     // t_db_user *user = malloc(sizeof(t_db_user));
@@ -120,14 +131,15 @@ void test() {
     // for (int i = 2; i < 20; i++)
         // mx_insert_member_into_db(db, 1, 1, SIMPLE);
 
-    // t_db_message *message = malloc(sizeof(t_db_message));
+    // t_db_message *message = g_malloc(sizeof(t_db_message));
     // message->user_id = 1;
     // message->room_id = 1;
     // message->message = "hello";
     // message->file_name = NULL;
     // message->file_size = 0;
     // message->type = DB_TEXT_MSG;
-    // for (int i = 0; i < 1000; i++) {
+    // message->date_dead = 1023442542;
+    // for (int i = 0; i < 10; i++) {
     //     mx_insert_message(db, message);
     // }
 
