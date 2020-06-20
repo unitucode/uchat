@@ -7,7 +7,7 @@ static t_dtp *get_resend_room(t_db_room *room) {
         return NULL;
     if (!cJSON_AddStringToObject(send, "name", MX_J_STR(room->room_name)))
         return NULL;
-    if (!cJSON_AddStringToObject(send, "customer_id", MX_J_STR(room->customer_id)))
+    if (!cJSON_AddNumberToObject(send, "customer_id", room->customer_id))
         return NULL;
     if (!cJSON_AddNumberToObject(send, "id", room->room_id))
         return NULL;
