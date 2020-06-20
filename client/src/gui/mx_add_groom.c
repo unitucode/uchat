@@ -63,6 +63,7 @@ static void add_messages_box(t_groom *room, GtkBuilder *builder) {
     GtkWidget *view = gtk_viewport_new(NULL, NULL);
 
     room->box_messages = GTK_LIST_BOX(box);
+    gtk_list_box_set_selection_mode(room->box_messages, GTK_SELECTION_MULTIPLE);
     gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scroll),
                                    GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
     gtk_container_add(GTK_CONTAINER(scroll), view);
@@ -87,6 +88,9 @@ static void add_room_row(t_groom *room, GtkBuilder *builder) {
     room->box_rooms = box;
     room->row_room = GTK_LIST_BOX_ROW(row);
     room->label_name = GTK_LABEL(label);
+    g_object_ref(box);
+    g_object_ref(row);
+    g_object_ref(label);
 
     data = mx_create_sigdata(builder, room, NULL);
     g_signal_connect(event, "button_press_event",
@@ -160,8 +164,6 @@ t_groom *mx_create_groom(cJSON *room) {
         mx_delete_groom(groom);
         return NULL;
     }
-    groom->first_gmsg = NULL;
-    groom->last_gmsg = NULL;
     return groom;
 }
 

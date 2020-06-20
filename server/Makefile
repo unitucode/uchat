@@ -14,6 +14,8 @@ LIBD_LIBS = -L../libraries/lib
 INCD_SERVER = -Iinc/
 UTILS_INC = -I../utils/inc
 UTILS_LIB = ../utils/libutils.a
+GTK_INC = `pkg-config --cflags gtk+-3.0`
+GTK_LIBS = -rdynamic `pkg-config --cflags --libs gtk+-3.0`
 
 SRCD = src src/client_handler src/client_handler/receiver \
 src/client_handler/api src/database
@@ -27,14 +29,14 @@ CC = clang
 
 CFLAGS = -std=c11 $(addprefix -W, all extra error pedantic)
 CPPFLAGS = -DMX_SERVER='"$(SERVER_WD)"' $(UTILS_INC) \
-$(INCD_SERVER) -D_GNU_SOURCE $(INCD_LIBS) -I/usr/local/opt/openssl/include
-LIBS = $(LIBD_LIBS) -L/usr/local/opt/openssl/lib \
+$(INCD_SERVER) -D_GNU_SOURCE $(INCD_LIBS) $(GTK_INC) -I/usr/local/opt/openssl/include
+LIBS = $(LIBD_LIBS) $(GTK_LIBS) -L/usr/local/opt/openssl/lib \
 -lssl -lcjson -lcrypto -lsqlite3 -lpthread -ldl
 
 all: $(SERVER)
 
 $(SERVER): $(OBJS)
-	@$(CC) -fsanitize=address -o $@ $^ $(UTILS_LIB) $(LIBS)
+	@$(CC) -fsanitize=address -g -o $@ $^ $(UTILS_LIB) $(LIBS)
 	@printf "\033[32;1m$@ created\033[0m\n"
 
 $(OBJS): obj/%.o: %.c $(INCS) | $(OBJD)

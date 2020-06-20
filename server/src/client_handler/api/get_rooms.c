@@ -8,7 +8,7 @@ bool mx_get_rooms_handler(t_dtp *data, t_client *client) {
     if (!date || !cJSON_IsNumber(date))
         return false;
     if (!cJSON_AddItemReferenceToObject(rooms_json, "rooms",
-                                        mx_get_rooms(client->chat->database,
+                                        mx_get_rooms(client->info->database,
                                              date->valueint))) {
         cJSON_Delete(rooms_json);
         return false;
@@ -18,7 +18,7 @@ bool mx_get_rooms_handler(t_dtp *data, t_client *client) {
         return false;
     }
     rooms = mx_get_transport_data(rooms_json);
-    mx_send(client->ssl, rooms);
+    mx_send(client->out, rooms);
     mx_free_request(&rooms);
     return true;
 }

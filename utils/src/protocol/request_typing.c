@@ -17,7 +17,6 @@ int mx_get_type_dtp(t_dtp *dtp) {
 void mx_free_request(t_dtp **request) {
     if (request && *request) {
         cJSON_Delete((*request)->json);
-        mx_free((void **)(&(*request)->data));
         mx_free((void**)request);
     }
 }
@@ -26,8 +25,7 @@ static t_dtp *get_filled_dtp(char *str, size_t buf_size) {
     t_dtp *req = mx_malloc(sizeof(t_dtp));
     int type;
 
-    req->data = (char*)mx_memdup(str, buf_size);
-    req->str = req->data + 4;
+    req->str = strdup(str);
     req->len = buf_size - 1;
     req->json = cJSON_Parse(req->str);
     if ((type = mx_get_type_dtp(req)) < 0 || type >= RQ_COUNT_REQUEST) {
@@ -46,11 +44,11 @@ static t_dtp *get_filled_dtp(char *str, size_t buf_size) {
 
 t_dtp *mx_request_creation(char *req_body) {
     size_t req_len = strlen(req_body);
-    size_t buf_size = sizeof(int) + req_len + 1;
+    size_t buf_size = req_len + 2;
     char str[buf_size];
 
     bzero(str, buf_size);
-    strcpy(str + 4, req_body);
-    memcpy(str, &req_len, sizeof(int));
+    strcpy(str, req_body);
+    str[buf_size - 2] = '\n';
     return get_filled_dtp(str, buf_size);
 }

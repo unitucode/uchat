@@ -14,9 +14,9 @@ t_dtp *mx_users_online_request(int count, int all) {
 
 void mx_update_online(int count, t_client *client) {
     t_dtp *users = NULL;
-    int all_users = mx_get_count_users(client->chat->database);
+    int all_users = mx_get_count_users(client->info->database);
 
     users = mx_users_online_request(count, all_users);
-    mx_send_to_all(users, client);
+    // mx_send_to_all(users, client);
     mx_free_request(&users);
 }
