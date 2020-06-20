@@ -64,6 +64,8 @@ static gboolean incoming_callback (GSocketService *service, GSocketConnection *c
 
 int main(int argc, char **argv) {
     // test();
+    // system("leaks -q uchat_server");
+    // exit(1);
     GError *error = NULL;
     GSocketService *service = g_socket_service_new();
     GMainLoop *loop = NULL;
@@ -102,9 +104,13 @@ void test() {
     // mx_insert_member_into_db(db, 10, 6, DB_SIMPLE);
     // GList *list = mx_get_users_in_room(db, 10);
     // cJSON *json = mx_users_of_room_in_json(list);
+    // cJSON_Delete(json);
     // char *json_str = cJSON_Print(json);
     // printf("%s\n", json_str);
-
+    // g_free(&json_str);
+    // g_list_free_full(list, mx_destroy_data);
+    // g_list_free(list);
+    // list = NULL;
     // if (mx_check_user_by_login(db, "login5"))
     //     printf("true\n");
     // else
@@ -126,7 +132,7 @@ void test() {
     // for (int i = 0; i < 10; i++)
     //     mx_insert_room_into_db(db, room);
     // mx_free_room(&room);
-    
+
     // t_db_user *user = malloc(sizeof(t_db_user));
     // user->desc = "desc";
     // user->login = "login5";
@@ -136,7 +142,7 @@ void test() {
     // mx_insert_user_into_db(db, user);
 
     // for (int i = 2; i < 20; i++)
-        // mx_insert_member_into_db(db, 1, 1, SIMPLE);
+    // mx_insert_member_into_db(db, 1, 1, SIMPLE);
 
     // t_db_message *message = g_malloc(sizeof(t_db_message));
     // message->user_id = 1;
@@ -223,7 +229,7 @@ void test() {
     // printf("%llu\n", mx_get_time(DB_MICROSECOND));
 
     // cJSON *json = mx_get_rooms(db, 0, 1);
-    // gchar *string = cJSON_Print(json); 
+    // gchar *string = cJSON_Print(json);
     // printf("%s\n", string);
 
     // cJSON *json1 = mx_get_users(db, 0);
@@ -232,7 +238,5 @@ void test() {
 
     mx_close_db(db);
     printf("Ok\n");
-    // system("leaks -q uchat_server");
-    exit(1);
 }
 

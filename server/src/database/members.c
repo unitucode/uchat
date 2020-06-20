@@ -28,6 +28,10 @@ cJSON *mx_users_of_room_in_json(GList *list) {
     return array_j;
 }
 
+void mx_destroy_data(gpointer data) {
+    g_free(data);
+}
+
 GList *mx_get_users_in_room(sqlite3 *db, guint64 room_id) {
     sqlite3_stmt *stmt;
     gint rv = SQLITE_OK;
