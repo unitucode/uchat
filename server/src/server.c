@@ -60,7 +60,10 @@ static gboolean incoming_callback (GSocketService *service, GSocketConnection *c
     return FALSE;
 }
 
+void test();
+
 int main(int argc, char **argv) {
+    test();
     GError *error = NULL;
     GSocketService *service = g_socket_service_new();
     GMainLoop *loop = NULL;
@@ -100,13 +103,13 @@ void test() {
     // mx_db_pop_queue_by_id(db, 6);
     // printf("%s\n", mx_get_queue(db, 6));
 
-    // t_db_room *room = malloc(sizeof(t_db_room));
-    // room->customer_id = 1;
-    // room->desc = NULL;
-    // room->room_name = "name";
-    // room->type = GLOBAL_CHAT;
-    // for (int i = 0; i < 100; i++)
-    //     mx_insert_room_into_db(db, room);
+    t_db_room *room = malloc(sizeof(t_db_room));
+    room->customer_id = 1;
+    room->desc = "";
+    room->room_name = "name";
+    room->type = DB_GLOBAL_CHAT;
+    for (int i = 0; i < 10; i++)
+        mx_insert_room_into_db(db, room);
     // mx_free_room(&room);
     
     // t_db_user *user = malloc(sizeof(t_db_user));
@@ -191,7 +194,7 @@ void test() {
     //     printf("name        \t->)-<>-(-> %s\n", room->room_name);
     //     printf("desc        \t->)-<>-(-> %s\n", room->desc);
     //     printf("customer_id \t->)-<>-(-> %llu\n", room->customer_id);
-    //     printf("pass        \t->)-<>-(-> %d\n", room->type);
+    //     printf("type        \t->)-<>-(-> %d\n", room->type);
     //     mx_insert_room_into_db(db, room);
     // }
 
@@ -213,7 +216,7 @@ void test() {
 
     mx_close_db(db);
     printf("Ok\n");
-    system("leaks -q uchat_server");
+    // system("leaks -q uchat_server");
     exit(1);
 }
 
