@@ -46,7 +46,7 @@ void mx_create_table_users(sqlite3 *db) {
     // check_correct_table(database, stmt);
     sqlite3_exec(db, "create table if not exists users("
                            "id             integer primary key not null,"
-                           "name           text  unique        not null,"
+                           "name           text                not null,"
                            "login          text  unique        not null,"
                            "pass           text                not null,"
                            "token          text                not null,"
