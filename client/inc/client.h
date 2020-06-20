@@ -53,7 +53,7 @@ struct s_gmsg {
     GtkLabel *label_text;
     char *msg;
     char *login;
-    long int date;
+    guint64 date;
     int room_id;
     int message_id;
 };

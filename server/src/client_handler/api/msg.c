@@ -45,10 +45,10 @@ bool mx_msg_handler(t_dtp *data, t_client *client) { // TODO leaks
 
     if (!msg)
         return false; //ADD CONTAINS IN ROOM
+    if (!mx_users_)
     msg->user_id = client->user->user_id;
     mx_insert_message(client->info->database, msg);
     resend = get_resend_msg(msg);
-    g_print("send = %s\n", cJSON_Print(resend->json));
     mx_send(client->out, resend); //REPLACE TO SEND TO ALL
     mx_free_request(&resend);
     return true;
