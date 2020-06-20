@@ -11,7 +11,6 @@ void mx_select_msg(gpointer *eventbox, gpointer *event, t_signal_data *data) {
             rows = gtk_list_box_get_selected_rows(groom->box_messages);
             if (!rows)
                 mx_switch_room_header(data->builder, MX_ROOM_CTRL);
-
         }
         else {
             gtk_list_box_select_row(GTK_LIST_BOX(groom->box_messages),

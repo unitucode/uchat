@@ -183,9 +183,17 @@ void mx_set_room_widgets_visibility(GtkBuilder *builder, bool visibility);
 void mx_switch_room_header(GtkBuilder *builder, int page_index);
 void mx_unselect_curr_room_messages(GtkBuilder *builder);
 void mx_select_msg(gpointer *eventbox, gpointer *event, t_signal_data *data);
-GtkWidget *mx_create_reg_message_row(GtkBuilder *builder, t_gmsg *gmsg);
-GtkWidget *mx_create_own_message_row(GtkBuilder *builder, t_gmsg *gmsg);
-
+GtkWidget *mx_create_reg_message_row(t_gmsg *gmsg, gboolean is_own);
+GtkWidget *mx_msgcreate_eventbox();
+GtkWidget *mx_msgcreate_box_main(GtkWidget *eventbox, gboolean is_own);
+void mx_msgcreate_box_info(GtkWidget *box_main,
+                           t_gmsg *gmsg, gboolean is_own);
+GtkWidget *mx_create_reg_message_row(t_gmsg *gmsg, gboolean is_own);
+void mx_msgcreate_label_login(GtkWidget *box_main, t_gmsg *gmsg);
+void mx_msgcreate_label_text(GtkWidget *box_info,
+                             t_gmsg *gmsg, gboolean is_own);
+void mx_msgcreate_label_time(GtkWidget *box_info,
+                             t_gmsg *gmsg, gboolean is_own);
 
 // gui utils
 void mx_scrlldwnd_connect(char *name, GtkWidget *scroll, GtkBuilder *builder);
