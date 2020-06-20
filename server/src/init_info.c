@@ -6,7 +6,7 @@
 t_info *mx_init_info(void) {
     t_info *info = mx_malloc(sizeof(t_info));
 
-    info->users = NULL;
+    info->users = g_hash_table_new(g_direct_hash, g_str_equal);
     info->database = mx_open_db(MX_DB);
     mx_init_receiver(info);
     srand(time(NULL));

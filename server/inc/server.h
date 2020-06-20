@@ -21,7 +21,7 @@ typedef struct s_client t_client;
 typedef struct s_info t_info;
 
 struct s_info {
-    GList *users;
+    GHashTable *users;
     sqlite3* database;
     bool (*request_handler[RQ_COUNT_REQUEST])(t_dtp *dtp, t_client *chat);
 };
@@ -34,16 +34,6 @@ struct s_client {
     char *msg;
     t_db_user *user;
     t_info *info;
-};
-
-struct s_chat {
-    int listen_fd;
-    t_dl_list *clients;
-    socklen_t len;
-    pthread_mutex_t mutex;
-    bool (*request_handler[RQ_COUNT_REQUEST])(t_dtp *dtp, t_client *client);
-    sqlite3* database;
-    int online_users;
 };
 
 gssize mx_send(GDataOutputStream *out, t_dtp *dtp);

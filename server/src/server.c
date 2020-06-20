@@ -21,7 +21,7 @@ static void message_ready(GObject *source_object, GAsyncResult *res, gpointer us
     if (!g_socket_connection_is_connected(cli->conn)
         || g_output_stream_is_closed(G_OUTPUT_STREAM(cli->out))
         || g_input_stream_is_closed(G_INPUT_STREAM(in))) {
-        cli->info->users = g_list_remove(cli->info->users, cli->out);
+        g_hash_table_remove(cli->info->users, cli->out);
         return;
     }
     cli->msg = g_data_input_stream_read_line_finish(in, res, &count, &error);
@@ -40,7 +40,6 @@ static void message_ready(GObject *source_object, GAsyncResult *res, gpointer us
 }
 
 static gboolean incoming_callback (GSocketService *service, GSocketConnection *connection, GObject *source_object, gpointer user_data) {
-    g_print("connected!");
     GOutputStream *out_stream = g_io_stream_get_output_stream(G_IO_STREAM(connection));
     GInputStream *in_stream = g_io_stream_get_input_stream(G_IO_STREAM(connection));
     GDataOutputStream *out = g_data_output_stream_new(out_stream);
@@ -49,7 +48,6 @@ static gboolean incoming_callback (GSocketService *service, GSocketConnection *c
 
     gclient->out = g_object_ref(out);
     gclient->info = (t_info*)user_data;
-    gclient->info->users = g_list_append(gclient->info->users, out);
     gclient->conn = g_object_ref(connection);
     gclient->user = NULL;
     gclient->in = g_object_ref(in);
@@ -63,7 +61,7 @@ static gboolean incoming_callback (GSocketService *service, GSocketConnection *c
 void test();
 
 int main(int argc, char **argv) {
-    test();
+    // test();
     GError *error = NULL;
     GSocketService *service = g_socket_service_new();
     GMainLoop *loop = NULL;
@@ -71,7 +69,6 @@ int main(int argc, char **argv) {
 
     mx_change_working_dir();
     info = mx_init_info();
-    info->users = NULL;
     if (argc != 2) {
         g_printerr("Usage ./uchat_server <port>\n");
         return -1;

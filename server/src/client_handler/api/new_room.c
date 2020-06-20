@@ -13,7 +13,7 @@ static t_dtp *get_resend_room(t_db_room *room) {
         return NULL;
     if (!cJSON_AddNumberToObject(send, "date", room->date))
         return NULL;
-    if (!cJSON_AddStringToObject(send, "desc", room->desc))
+    if (!cJSON_AddStringToObject(send, "desc", MX_J_STR(room->desc)))
         return NULL;
     return mx_get_transport_data(send);
 }
@@ -30,7 +30,7 @@ bool mx_new_room_handler(t_dtp *data, t_client *client) { //TODO leaks
     mx_free_room(&room);
     if (!resend)
         return false;
-    mx_send_to_all(resend, client);
+    mx_send(client->out, resend);
     mx_free_request(&resend);
     return true;
 }

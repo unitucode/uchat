@@ -5,6 +5,7 @@ void mx_correct_data(t_client *client) {
 
     mx_send(client->out, dtp);
     mx_logger(MX_LOG_FILE, LOGMSG, "Logged in: %s\n", client->user->login);
+    g_hash_table_insert(client->info->users, client->user->login, client->out);
     mx_free_request(&dtp);
 }
 
