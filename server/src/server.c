@@ -42,7 +42,15 @@ int main(int argc, char **argv) {
 
 static void test() {
     sqlite3 *db = mx_open_db(MX_DB);
-    
+
+    // mx_insert_contact(db, 1, 2, DB_BLACKLIST);
+    // mx_delete_contact(db, 1, 2);
+
+    // for (int i = 0; i < 10; i++)
+    //     mx_db_push_queue_by_id(db, 6, "request1");
+    // mx_db_pop_queue_by_id(db, 6);
+    // printf("%s\n", mx_get_queue(db, 6));
+
     // t_db_room *room = malloc(sizeof(t_db_room));
     // room->customer_id = 1;
     // room->desc = NULL;
@@ -67,12 +75,24 @@ static void test() {
     // message->user_id = 1;
     // message->room_id = 1;
     // message->message = "hello";
-    // message->name_file = NULL;
-    // message->size = 0;
-    // message->type = TEXT_MSG;
+    // message->file_name = NULL;
+    // message->file_size = 0;
+    // message->type = DB_TEXT_MSG;
     // for (int i = 0; i < 1000; i++) {
     //     mx_insert_message(db, message);
     // }
+
+    // cJSON *json_om = mx_get_old_messages_by_id(db, 1, 1592614114621, 5);
+    // char *str_om = cJSON_Print(json_om);
+    // printf("%s\n", str_om);
+
+    // cJSON *json_nm = mx_get_new_messages_by_id(db, 1, 1592614114541, 5);
+    // char *str_nm = cJSON_Print(json_nm);
+    // printf("%s\n", str_nm);
+
+    // cJSON *json_cm = mx_get_curr_messages_by_id(db, 1, 5);
+    // char *str_cm = cJSON_Print(json_cm);
+    // printf("%s\n", str_cm);
 
     // mx_get_user_by_login(db, "login1");
 

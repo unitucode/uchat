@@ -74,6 +74,9 @@ t_db_message *mx_parse_message(cJSON *message_j) {
     if (!(json = mx_json_is_valid(message_j, "file_name", cJSON_IsString)))
         return NULL;
     message->file_name = strdup(json->valuestring);
+    if (!(json = mx_json_is_valid(message_j, "date_dead", cJSON_IsNumber)))
+        return NULL;
+    message->date_dead = json->valueint;
     cJSON_Delete(message_j);
     return message;
 }

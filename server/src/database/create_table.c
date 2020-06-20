@@ -16,9 +16,10 @@ void mx_create_table_messages(sqlite3 *db) {
                      "date          integer             not null,"
                      "message       text                        ,"
                      "type          integer             not null,"
-                     "file_size          integer                     ,"
-                     "file_name          text                        ,"
-                     "status        int                 not null);", 0, 0, 0);
+                     "file_size     integer                     ,"
+                     "file_name     text                        ,"
+                     "status        integer             not null,"
+                     "date_dead     integer             not null);", 0, 0, 0);
 }
 
 void mx_create_table_queue(sqlite3 *db) {

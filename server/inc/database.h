@@ -30,7 +30,9 @@ typedef enum s_type_db {
     DB_TWO_CHAT,
     DB_SECOND,
     DB_MILISECOND,
-    DB_MICROSECOND
+    DB_MICROSECOND,
+    DB_FRIENDS,
+    DB_BLACKLIST
 }            t_type_db;
 
 struct s_member{
@@ -54,6 +56,7 @@ struct s_db_message {
     guint64 user_id;
     guint64 room_id;
     guint64 message_id;
+    guint64 date_dead;
     guint64 date;
     gint8 status;
     gint8 type;
@@ -151,3 +154,9 @@ void mx_insert_message(sqlite3 *db, t_db_message *message);
 void mx_free_room(t_db_room **room);
 void mx_free_message(t_db_message **message);
 void mx_free_user(t_db_user **user);
+
+
+//contact
+void mx_insert_contact(sqlite3 *db, guint64 user_id, guint64 contact_id,
+                       gint8 type);
+void mx_delete_contact(sqlite3 *db, guint64 user_id, guint64 contact_id);

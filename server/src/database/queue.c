@@ -32,7 +32,7 @@ gchar *mx_get_queue(sqlite3 *db, guint64 user_id) {
     gchar *request = NULL; 
     gchar *sql = NULL;
 
-    sqlite3_str_appendf(str, "select request from queue where user id = %d", 
+    sqlite3_str_appendf(str, "select request from queue where user_id = %llu", 
                         user_id);
     sql = sqlite3_str_finish(str);
     mx_error_sqlite(sqlite3_prepare_v2(db, sql, -1, &stmt, NULL),
