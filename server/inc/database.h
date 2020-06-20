@@ -155,6 +155,9 @@ void mx_delete_contact(sqlite3 *db, guint64 user_id, guint64 contact_id);
 void mx_get_contact_(sqlite3 *db, guint64 user_id, gint8 type);
 
 
+// user
+gboolean mx_user_contains(sqlite3 *db, guint64 user_id, guint64 room_id);
+
 // search
 gboolean mx_check_user_by_login(sqlite3 *db, gchar *login);
 cJSON *mx_search_room(sqlite3 *db, gchar *str_search);

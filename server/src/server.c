@@ -60,10 +60,10 @@ static gboolean incoming_callback (GSocketService *service, GSocketConnection *c
     return FALSE;
 }
 
-void test();
+// void test();
 
 int main(int argc, char **argv) {
-    test();
+    // test();
     GError *error = NULL;
     GSocketService *service = g_socket_service_new();
     GMainLoop *loop = NULL;
@@ -90,7 +90,11 @@ int main(int argc, char **argv) {
 void test() {
     sqlite3 *db = mx_open_db(MX_DB);
 
-   
+    // if (mx_user_contains(db, 1, 33552))
+    //     printf("true\n");
+    // else
+    //     printf("false\n");
+
     // mx_insert_member_into_db(db, 10, 2, DB_SIMPLE);
     // mx_insert_member_into_db(db, 10, 3, DB_SIMPLE);
     // mx_insert_member_into_db(db, 10, 4, DB_SIMPLE);

@@ -1,9 +1,5 @@
 #include "server.h"
 
-void mx_get_room_user() {
-    
-}
-
 gboolean mx_user_contains(sqlite3 *db, guint64 user_id, guint64 room_id) {
     sqlite3_stmt *stmt;
     gint32 rv = SQLITE_OK;
