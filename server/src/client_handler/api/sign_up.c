@@ -9,12 +9,10 @@ static void incorrect_data(t_client *client) {
 }
 
 static bool sign_up(t_db_user *user, t_client *client) {
-    t_db_user *check_user = mx_get_user_by_login(client->info->database, user->login);
     char token[MX_MD5_BUF_SIZE + 1 + strlen(user->login)];
 
-    if (check_user) {
+    if (mx_check_user_by_login(client->info->database, user->login)) {
         incorrect_data(client);
-        mx_free_user(&check_user);
         mx_logger(MX_LOG_FILE, LOGMSG, "Already exist user %s\n", user->login);
         return false;
     }
@@ -23,7 +21,7 @@ static bool sign_up(t_db_user *user, t_client *client) {
     mx_insert_user_into_db(client->info->database, user);
     mx_logger(MX_LOG_FILE, LOGMSG, "Success signup user %s\n", user->login);
     client->user = user;
-    mx_correct_data(user->login, client);
+    mx_correct_data(client);
     return true;
 }
 

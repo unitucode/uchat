@@ -93,5 +93,5 @@ void mx_update_online(int count, t_client *client);
 //Authorization
 bool mx_valid_authorization_data(t_dtp *data, char **login,
                                  char **pass, t_client *client);
-void mx_correct_data(char *login, t_client *client);
+void mx_correct_data(t_client *client);
 

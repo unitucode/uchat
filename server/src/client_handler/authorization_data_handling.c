@@ -1,13 +1,11 @@
 #include "server.h"
 
-void mx_correct_data(char *login, t_client *client) {
+void mx_correct_data(t_client *client) {
     t_dtp *dtp = mx_token_request((char*)client->user->token, (char*)client->user->login);
 
     mx_send(client->out, dtp);
-    mx_logger(MX_LOG_FILE, LOGMSG, "Logged in: %s\n", login);
+    mx_logger(MX_LOG_FILE, LOGMSG, "Logged in: %s\n", client->user->login);
     mx_free_request(&dtp);
-    // client->chat->online_users++;
-    // mx_update_online(client->chat->online_users, client);
 }
 
 static char *get_login_str(t_dtp *data) {
