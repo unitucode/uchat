@@ -44,7 +44,7 @@ static void test() {
     sqlite3 *db = mx_open_db(MX_DB);
     
     // t_db_room *room = malloc(sizeof(t_db_room));
-    // room->customer = "customer";
+    // room->customer_id = 1;
     // room->desc = NULL;
     // room->room_name = "name";
     // room->type = GLOBAL_CHAT;
@@ -74,7 +74,65 @@ static void test() {
     //     mx_insert_message(db, message);
     // }
 
-    mx_get_user_by_login(db, "login1");
+    // mx_get_user_by_login(db, "login1");
+
+    // cJSON *json_1 = cJSON_CreateObject();
+    // cJSON_AddStringToObject(json_1, "name", "my first and last name");
+    // cJSON_AddStringToObject(json_1, "pass", "password");
+    // cJSON_AddStringToObject(json_1, "login", "login13");
+    // cJSON_AddStringToObject(json_1, "token", "token144");
+    // cJSON_AddStringToObject(json_1, "desc", "desc553");
+    // t_db_user *user = mx_parse_json_user(json_1);
+    // if (user) {
+    //     printf("name \t->)-<>-(-> %s\n", user->name);
+    //     printf("login\t->)-<>-(-> %s\n", user->login);
+    //     printf("desc \t->)-<>-(-> %s\n", user->desc);
+    //     printf("pass \t->)-<>-(-> %s\n", user->pass);
+    //     printf("token\t->)-<>-(-> %s\n", user->token);
+    //     mx_insert_user_into_db(db, user);
+    // }
+
+    // cJSON *message_j = cJSON_CreateObject();
+    // cJSON_AddNumberToObject(message_j, "room_id", 1);
+    // cJSON_AddNumberToObject(message_j, "user_id", 1);
+    // cJSON_AddNumberToObject(message_j, "type", DB_FILE_MSG);
+    // cJSON_AddNumberToObject(message_j, "file_size", 0);
+    // cJSON_AddStringToObject(message_j, "message", "");
+    // cJSON_AddStringToObject(message_j, "file_name", "name_file");
+    // t_db_message *message = mx_parse_message(message_j);
+    // if (message) {
+    //     printf("parse Ok !\n");
+    //     printf("file_size\t->)-<>-(-> %s\n", message->file_name);
+    //     printf("file_size\t->)-<>-(-> %llu\n", message->file_size);
+    //     printf("message  \t->)-<>-(-> %s\n", message->message);
+    //     printf("room_id  \t->)-<>-(-> %llu\n", message->room_id);
+    //     printf("user_id  \t->)-<>-(-> %llu\n", message->user_id);
+    //     printf("type     \t->)-<>-(-> %d\n", message->type);
+    //     mx_insert_message(db, message);
+    // }
+
+    // cJSON *room_j = cJSON_CreateObject();
+    // cJSON_AddStringToObject(room_j, "name", "room_name");
+    // cJSON_AddStringToObject(room_j, "desc", "");
+    // cJSON_AddNumberToObject(room_j, "customer_id", 1);
+    // cJSON_AddNumberToObject(room_j, "type", DB_PRIVAT_CHAT);
+    // t_db_room *room = mx_parse_json_room(room_j);
+    // if (room) {
+    //     printf("create !\n");
+    //     printf("name        \t->)-<>-(-> %s\n", room->room_name);
+    //     printf("desc        \t->)-<>-(-> %s\n", room->desc);
+    //     printf("customer_id \t->)-<>-(-> %llu\n", room->customer_id);
+    //     printf("pass        \t->)-<>-(-> %d\n", room->type);
+    //     mx_insert_room_into_db(db, room);
+    // }
+
+    // cJSON *json0 = mx_search_room(db, "n");
+    // gchar *string0 = cJSON_Print(json0);
+    // printf("%s\n", string0);
+
+    // printf("%llu\n", mx_get_time(DB_SECOND));
+    // printf("%llu\n", mx_get_time(DB_MILISECOND));
+    // printf("%llu\n", mx_get_time(DB_MICROSECOND));
 
     // cJSON *json = mx_get_rooms(db, 0, 1);
     // gchar *string = cJSON_Print(json); 
@@ -84,7 +142,7 @@ static void test() {
     // gchar *string1 = cJSON_Print(json1);
     // printf("%s\n", string1);
 
-    mx_close_database(db);
+    mx_close_db(db);
     printf("Ok\n");
     system("leaks -q uchat_server");
     exit(1);

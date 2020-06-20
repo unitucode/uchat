@@ -1,6 +1,6 @@
 #include "server.h"
 
-void mx_close_database(sqlite3 *db) {
+void mx_close_db(sqlite3 *db) {
     gint32 rv = sqlite3_close(db);
 
     if (rv != SQLITE_OK){

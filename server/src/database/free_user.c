@@ -20,8 +20,6 @@ void mx_free_user(t_db_user **user) {
 void mx_free_room(t_db_room **room) {
     if (!room || !*room)
         return;
-    if ((*room)->customer)
-        mx_free((void**)&(*room)->customer);
     if ((*room)->room_name)
         mx_free((void**)&(*room)->room_name);
     if ((*room)->desc)
@@ -35,8 +33,8 @@ void mx_free_message(t_db_message **message) {
         return;
     if ((*message)->message)
         mx_free((void **)&(*message)->message);
-    if ((*message)->name_file)
-        mx_free((void **)&(*message)->name_file);
+    if ((*message)->file_name)
+        mx_free((void **)&(*message)->file_name);
     mx_free((void**)message);
     message = NULL;
 }

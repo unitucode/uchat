@@ -62,7 +62,7 @@ t_db_room *mx_get_room_by_id(sqlite3 *db, guint64 id) {
         room = malloc(sizeof(t_db_room));
         room->room_id = sqlite3_column_int64(stmt, 0);
         room->room_name = strdup((const char*)sqlite3_column_text(stmt, 1));
-        room->customer = strdup((const char*)sqlite3_column_text(stmt, 2));
+        room->customer_id = sqlite3_column_int64(stmt, 2);
         room->date = sqlite3_column_int64(stmt, 3);
         room->desc = strdup(MX_J_STR((char*)sqlite3_column_text(stmt, 4)));
         room->type = sqlite3_column_int(stmt, 5);

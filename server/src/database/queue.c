@@ -10,7 +10,7 @@ void mx_db_push_queue_by_id(sqlite3 *db, guint64 user_id,
     mx_error_sqlite(rv, "prepare", "insert into queue");
     sqlite3_bind_int64(stmt, 1, user_id);
     sqlite3_bind_text(stmt, 2, request, -1, SQLITE_STATIC);
-    sqlite3_bind_int64(stmt, 3, mx_get_time());
+    sqlite3_bind_int64(stmt, 3, mx_get_time(DB_MILISECOND));
     mx_error_sqlite(sqlite3_step(stmt), "step", "insert into queue");
     sqlite3_finalize(stmt);
 }
