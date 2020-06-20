@@ -38,8 +38,14 @@ typedef enum s_request_type {
     RQ_EDIT_MSG,
     RQ_DEL_MSG,
     RQ_FILE,
-    RQ_COUNT_REQUEST
+    RQ_COUNT_REQUEST,
 }            t_request_type;
+
+typedef enum s_room_type {
+    DB_PRIVAT_CHAT = 0,
+    DB_GLOBAL_CHAT,
+    DB_LS_CHAT
+}            t_room_type;
 
 struct s_file {
     char *bytes;
