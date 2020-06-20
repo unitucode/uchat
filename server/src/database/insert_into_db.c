@@ -5,9 +5,9 @@ void mx_insert_room_into_db(sqlite3 *db, t_db_room *room) {
     gint32 rv = SQLITE_OK;
 
     room->date = mx_get_time(DB_MILISECOND);
-    rv = sqlite3_prepare_v2(db, "insert into rooms(name, customer, date, desc, "
-                                "type)values(?1, ?2, ?3, ?4, ?5);",
-                            -1, &stmt, NULL);
+    rv = sqlite3_prepare_v2(db, "insert into rooms(name, customer_id, date, "
+                                "desc, type)values(?1, ?2, ?3, ?4, ?5);",
+                            -1, &stmt, 0);
     mx_error_sqlite(rv, "prepare", "insert room");
     sqlite3_bind_text(stmt, 1, room->room_name, -1, SQLITE_STATIC);
     sqlite3_bind_int64(stmt, 2, room->customer_id);
