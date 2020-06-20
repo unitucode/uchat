@@ -338,8 +338,7 @@
     <property name="visible">True</property>
     <property name="can_focus">False</property>
     <property name="pixel_size">24</property>
-    <property name="icon_name">application-exit</property>
-    <property name="icon_size">3</property>
+    <property name="icon_name">close-symbolic</property>
   </object>
   <object class="GtkImage" id="image9">
     <property name="visible">True</property>
@@ -368,8 +367,7 @@
     <property name="visible">True</property>
     <property name="can_focus">False</property>
     <property name="pixel_size">24</property>
-    <property name="icon_name">application-exit</property>
-    <property name="icon_size">3</property>
+    <property name="icon_name">close-symbolic</property>
   </object>
   <object class="GtkApplicationWindow" id="wnd_main">
     <property name="width_request">960</property>
@@ -840,7 +838,8 @@
                       <object class="GtkImage">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="pixbuf">resources/edit.png</property>
+                        <property name="icon_name">edit</property>
+                        <property name="pixel_size">17</property>
                       </object>
                       <packing>
                         <property name="expand">False</property>
