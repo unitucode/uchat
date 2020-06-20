@@ -112,8 +112,6 @@ gchar *mx_get_queue(sqlite3 *db, guint64 user_id);
 void mx_clean_queue(sqlite3 *db, guint64 user_id);
 
 // get yes
-cJSON *mx_search_room(sqlite3 *db, gchar *str_search);
-cJSON *mx_search_user(sqlite3 *db, gchar *str_search);
 cJSON *mx_get_object_room(sqlite3_stmt *stmt);
 cJSON *mx_get_object_user(sqlite3_stmt *stmt);
 t_db_user *mx_get_user_by_login(sqlite3 *db, gchar *login);
@@ -160,3 +158,10 @@ void mx_free_user(t_db_user **user);
 void mx_insert_contact(sqlite3 *db, guint64 user_id, guint64 contact_id,
                        gint8 type);
 void mx_delete_contact(sqlite3 *db, guint64 user_id, guint64 contact_id);
+void mx_get_contact_(sqlite3 *db, guint64 user_id, gint8 type);
+
+
+// search
+gboolean mx_check_user_by_login(sqlite3 *db, gchar *login);
+cJSON *mx_search_room(sqlite3 *db, gchar *str_search);
+cJSON *mx_search_user(sqlite3 *db, gchar *str_search);

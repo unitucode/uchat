@@ -35,3 +35,20 @@ cJSON *mx_search_room(sqlite3 *db, gchar *str_search) {
     sqlite3_finalize(stmt);
     return rooms;
 }
+
+gboolean mx_check_user_by_login(sqlite3 *db, gchar *login) {
+    sqlite3_stmt *stmt;
+    gint32 rv = SQLITE_OK;
+
+    sqlite3_prepare_v2(db, "select * from users where login = ?1",
+                       -1, &stmt, 0);
+    rv = mx_error_sqlite(rv, "prepare", "check_user");
+    sqlite3_bind_text(stmt, 1, login, -1, SQLITE_STATIC);
+    if ((rv = sqlite3_step(stmt)) == SQLITE_ROW) {
+        sqlite3_finalize(stmt);
+        return true;
+    }
+    mx_error_sqlite(rv, "step", "check_user");
+    sqlite3_finalize(stmt);
+    return false;
+}
