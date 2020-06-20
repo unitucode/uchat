@@ -153,7 +153,7 @@ void mx_delete_groom(t_groom *room);
 t_groom *mx_create_groom(cJSON *room);
 t_gmsg *mx_create_gmsg(cJSON *msg);
 void mx_delete_gmsg(t_gmsg *gmsg);
-GtkWidget *mx_create_message_row(t_chat *chat,  t_gmsg *msg);
+GtkWidget *mx_create_message_row(t_chat *chat,  t_gmsg *gmsg);
 void mx_add_message_to_room(t_gmsg *msg, t_chat *chat);
 void mx_logout_client(t_chat *chat);
 void mx_reset_addroom(GtkButton *btn, GtkBuilder *builder);
@@ -183,6 +183,8 @@ void mx_set_room_widgets_visibility(GtkBuilder *builder, bool visibility);
 void mx_switch_room_header(GtkBuilder *builder, int page_index);
 void mx_unselect_curr_room_messages(GtkBuilder *builder);
 void mx_select_msg(gpointer *eventbox, gpointer *event, t_signal_data *data);
+GtkWidget *mx_create_reg_message_row(GtkBuilder *builder, t_gmsg *gmsg);
+GtkWidget *mx_create_own_message_row(GtkBuilder *builder, t_gmsg *gmsg);
 
 
 // gui utils
@@ -208,6 +210,7 @@ t_signal_data *mx_create_sigdata(GtkBuilder *builder, t_groom *groom,
 void mx_free_sigdata(t_signal_data *data);
 char *mx_msgpage_name(int id);
 bool mx_widget_is_visible(char *widget_name, GtkBuilder *builder);
+void mx_widget_set_class(GtkWidget *widget, char *class);
 
 // gui wrappers
 // void mx_widget_show_all(GtkWidget *widget);
