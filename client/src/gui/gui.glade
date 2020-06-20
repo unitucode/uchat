@@ -1519,6 +1519,7 @@
                 <property name="receives_default">True</property>
                 <property name="margin_left">50</property>
                 <property name="margin_right">50</property>
+                <signal name="clicked" handler="mx_widget_switch_visibility" object="dialog_room_sett" swapped="no"/>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -1705,6 +1706,7 @@
             <property name="receives_default">True</property>
             <property name="image">image10</property>
             <signal name="clicked" handler="mx_widget_switch_visibility" object="dialog_room_sett" swapped="no"/>
+            <signal name="clicked" handler="mx_widget_switch_visibility" object="wnd_room_info" swapped="no"/>
           </object>
           <packing>
             <property name="expand">False</property>
