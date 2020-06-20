@@ -12,10 +12,10 @@ t_gmsg *mx_create_gmsg(cJSON *msg) {
     cJSON *data = NULL;
     bool valid = true;
 
-    if ((valid = get_data(msg, &data, "msg")) && cJSON_IsString(data))
+    if ((valid = get_data(msg, &data, "message")) && cJSON_IsString(data))
         gmsg->msg = strdup(data->valuestring);
-    if ((valid = get_data(msg, &data, "login")) && cJSON_IsString(data))
-        gmsg->login = strdup(data->valuestring);
+    if ((valid = get_data(msg, &data, "user_id")) && cJSON_IsNumber(data))
+        gmsg->login = strdup("TODO USER_ID");
     if ((valid = get_data(msg, &data, "room_id")) && cJSON_IsNumber(data))
         gmsg->room_id = data->valueint;
     if ((valid = get_data(msg, &data, "date")) && cJSON_IsNumber(data))

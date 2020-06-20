@@ -5,7 +5,7 @@ static t_dtp *get_resend_msg(t_db_message *msg) {
 
     if (!cJSON_AddNumberToObject(send_msg, "type", RQ_MSG))
         return NULL;
-    if (!cJSON_AddStringToObject(send_msg, "msg", MX_J_STR(msg->message)))
+    if (!cJSON_AddStringToObject(send_msg, "message", MX_J_STR(msg->message)))
         return NULL;
     if (!cJSON_AddNumberToObject(send_msg, "room_id", msg->room_id))
         return NULL;
@@ -13,8 +13,10 @@ static t_dtp *get_resend_msg(t_db_message *msg) {
         return NULL;
     if (!cJSON_AddNumberToObject(send_msg, "message_id", msg->message_id))
         return NULL;
-    if (!cJSON_AddNumberToObject(send_msg, "status", msg->status))
+    if (!cJSON_AddNumberToObject(send_msg, "user_id", msg->user_id))
         return NULL;
+    // if (!cJSON_AddNumberToObject(send_msg, "status", msg->status))
+    //     return NULL;
     return mx_get_transport_data(send_msg);
 }
 
@@ -42,10 +44,11 @@ bool mx_msg_handler(t_dtp *data, t_client *client) { // TODO leaks
     t_dtp *resend = NULL;
 
     if (!msg)
-        return false;
+        return false; //ADD CONTAINS IN ROOM
     msg->user_id = client->user->user_id;
     mx_insert_message(client->info->database, msg);
     resend = get_resend_msg(msg);
+    g_print("send = %s\n", cJSON_Print(resend->json));
     mx_send(client->out, resend); //REPLACE TO SEND TO ALL
     mx_free_request(&resend);
     return true;
