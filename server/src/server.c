@@ -87,6 +87,11 @@ int main(int argc, char **argv) {
 void test() {
     sqlite3 *db = mx_open_db(MX_DB);
 
+    // if (mx_check_user_by_login(db, "login5"))
+    //     printf("true\n");
+    // else
+    //     printf("false\n");
+
     // mx_insert_contact(db, 1, 2, DB_BLACKLIST);
     // mx_delete_contact(db, 1, 2);
 

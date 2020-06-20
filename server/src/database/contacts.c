@@ -26,7 +26,18 @@ void mx_delete_contact(sqlite3 *db, guint64 user_id, guint64 contact_id) {
     sqlite3_free(request);
 }
 
-// void mx_get_contact_() {
+// cJSON *mx_get_contact_(sqlite3 *db, guint64 user_id, gint8 type) {
+//     sqlite3_stmt *stmt;
+//     gint32 rv = SQLITE_OK;
 
+
+//     rv = sqlite3_prepare_v2(db, "select * from contacts where user_id = ?1 "
+//                                 "and type = ?2", -1, &stmt, 0);
+//     mx_error_sqlite(rv, "prepare", "get contact of user");
+//     sqlite3_bind_int64(stmt, 1, user_id);
+//     sqlite3_bind_int(stmt, 2, type);
+//     while ((rv = sqlite3_step(stmt) == SQLITE_ROW)) {
+
+//     }
 // }
 
