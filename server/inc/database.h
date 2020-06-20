@@ -2,6 +2,7 @@
 
 #include "utils.h"
 #include "sqlite3.h"
+#include "protocol.h"
 #include <glib.h>
 #include <sys/time.h>
 
@@ -25,9 +26,6 @@ typedef enum s_type_db {
     DB_TEXT_MSG,
     DB_FILE_MSG,
     DB_FILE_TEXT_MSG,
-    DB_PRIVAT_CHAT,
-    DB_GLOBAL_CHAT,
-    DB_TWO_CHAT,
     DB_SECOND,
     DB_MILISECOND,
     DB_MICROSECOND,
