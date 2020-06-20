@@ -1,6 +1,6 @@
 #include "server.h"
 
-void mx_update_permission_of_user(sqlite3 *db, guint64 user_id, guint64 room_id,
+void mx_edit_permission_of_user(sqlite3 *db, guint64 user_id, guint64 room_id,
                                   gint8 new) {
     sqlite3_str *sqlite_str = sqlite3_str_new(db);
     gchar *request = NULL;
@@ -13,7 +13,7 @@ void mx_update_permission_of_user(sqlite3 *db, guint64 user_id, guint64 room_id,
                      "update permission");
 }
 
-void mx_update_token(sqlite3 *db, guint64 user_id, gchar *new) {
+void mx_edit_token(sqlite3 *db, guint64 user_id, gchar *new) {
     sqlite3_stmt *stmt;
     gint32 rv = SQLITE_OK;
 
@@ -26,7 +26,7 @@ void mx_update_token(sqlite3 *db, guint64 user_id, gchar *new) {
     sqlite3_finalize(stmt);
 }
 
-void mx_update_desc_room_by_id(sqlite3 *db, guint64 room_id, gchar *new) {
+void mx_edit_desc_room_by_id(sqlite3 *db, guint64 room_id, gchar *new) {
     sqlite3_stmt *stmt;
     gint32 rv = SQLITE_OK;
 
@@ -39,7 +39,7 @@ void mx_update_desc_room_by_id(sqlite3 *db, guint64 room_id, gchar *new) {
     sqlite3_finalize(stmt);
 }
 
-void mx_update_desc_user(sqlite3 *db, guint64 user_id, gchar *new) {
+void mx_edit_desc_user(sqlite3 *db, guint64 user_id, gchar *new) {
     sqlite3_stmt *stmt;
     gint32 rv = SQLITE_OK;
     

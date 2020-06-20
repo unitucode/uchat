@@ -17,7 +17,8 @@ t_info *mx_init_info(void) {
  * Deinitializates chat variables
  */
 void mx_deinit_info(t_info **info) {
-    mx_close_database((*info)->database);
+    // mx_close_database((*info)->database);
+    mx_close_db((*info)->database);
     free(*info);
     *info = NULL;
 }

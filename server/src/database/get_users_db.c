@@ -1,6 +1,6 @@
 #include "server.h"
 
-static cJSON *get_object_user(sqlite3_stmt *stmt) {
+cJSON *mx_get_object_user(sqlite3_stmt *stmt) {
     cJSON *user = cJSON_CreateObject();
 
     cJSON_AddNumberToObject(user, "id", sqlite3_column_int64(stmt, 0));
@@ -23,7 +23,7 @@ cJSON *mx_get_users(sqlite3 *db, guint64 date) {
                                 "date desc", -1, &stmt, NULL);
     sqlite3_bind_int(stmt, 1, date);
     while ((rv = sqlite3_step(stmt)) == SQLITE_ROW)
-        cJSON_AddItemToArray(users, get_object_user(stmt));
+        cJSON_AddItemToArray(users, mx_get_object_user(stmt));
     sqlite3_finalize(stmt);
     return users;
 }

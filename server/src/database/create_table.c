@@ -16,9 +16,10 @@ void mx_create_table_messages(sqlite3 *db) {
                      "date          integer             not null,"
                      "message       text                        ,"
                      "type          integer             not null,"
-                     "size          integer                     ,"
-                     "name          text                        ,"
-                     "status        int                 not null);", 0, 0, 0);
+                     "file_size     integer                     ,"
+                     "file_name     text                        ,"
+                     "status        integer             not null,"
+                     "date_dead     integer             not null);", 0, 0, 0);
 }
 
 void mx_create_table_queue(sqlite3 *db) {
@@ -64,7 +65,7 @@ void mx_create_table_rooms(sqlite3 *db) {
     sqlite3_exec(db, "create table if not exists rooms("
                            "id                 integer primary key not null,"
                            "name               text                not null,"
-                           "customer           text                not null,"
+                           "customer_id        integer             not null,"
                            "date               int                 not null,"
                            "desc               text,"
                            "type               int                  not null);",

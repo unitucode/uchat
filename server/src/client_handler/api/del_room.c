@@ -20,11 +20,11 @@ bool mx_del_room_handler(t_dtp *data, t_client *client) { //TODO leaks
 
     if (!room_id || !cJSON_IsNumber(room_id))
         return false;
-    room = mx_get_room_by_id(client->info->database, room_id->valueint);
-    if (room && !strcmp(room->customer, client->user->login))
-        mx_delete_room_by_id(client->info->database, room_id->valueint);
-    else
-        return false;
+    // room = mx_get_room_by_id(client->info->database, room_id->valueint);
+    // if (room && !strcmp(room->customer, client->user->login))
+    //     mx_delete_room_by_id(client->info->database, room_id->valueint);
+    // else
+    //     return false;
     resend = get_resend_room(room_id->valueint);
     mx_send_to_all(resend, client);
     mx_free_request(&resend);

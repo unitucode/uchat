@@ -31,6 +31,10 @@ t_dtp *mx_sign_up_request(char *login, char *pass) {
         return NULL;
     if (!cJSON_AddStringToObject(json_result, "pass", MX_J_STR(pass)))
         return NULL;
+    if (!cJSON_AddStringToObject(json_result, "name", ""))
+        return NULL;
+    if (!cJSON_AddStringToObject(json_result, "desc", ""))
+        return NULL;
     return mx_get_transport_data(json_result);
 }
 
