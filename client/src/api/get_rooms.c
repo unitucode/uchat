@@ -13,6 +13,7 @@ t_dtp *mx_get_rooms_request(long int date) {
 static void insert_room(cJSON *room, t_chat *chat) { //TODO HANDLE ROOMS
     t_dtp *dtp = NULL;
     t_dtp *msgs = NULL;
+    t_dtp *members = NULL;
     cJSON *dup = cJSON_Duplicate(room, cJSON_True);
     cJSON *room_id = cJSON_GetObjectItemCaseSensitive(room, "id");
 
@@ -22,9 +23,13 @@ static void insert_room(cJSON *room, t_chat *chat) { //TODO HANDLE ROOMS
         return;
     dtp = mx_get_transport_data(dup);
     mx_new_room_handler(dtp, chat);
+    members = mx_get_members_request(room_id->valueint);
+    mx_send(chat->out, members);
     msgs = mx_get_new_msgs_request(0, room_id->valueint);
     mx_send(chat->out, msgs);
     mx_free_request(&dtp);
+    mx_free_request(&msgs);
+    mx_free_request(&members);
 }
 
 bool mx_rooms_hanlder(t_dtp *data, t_chat *chat) {

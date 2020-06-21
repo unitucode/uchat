@@ -20,5 +20,3 @@ bool mx_get_rooms_handler(t_dtp *data, t_client *client) {
     mx_free_request(&rooms);
     return true;
 }
-
-

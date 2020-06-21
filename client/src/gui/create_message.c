@@ -7,17 +7,19 @@ static bool get_data(cJSON *msg, cJSON **data, char *field) {
     return true;
 }
 
-t_gmsg *mx_create_gmsg(cJSON *msg) {
+t_gmsg *mx_create_gmsg(cJSON *msg, t_chat *chat) {
     t_gmsg *gmsg = mx_malloc(sizeof(t_gmsg));
     cJSON *data = NULL;
     bool valid = true;
+    t_groom *groom = NULL;
 
     if ((valid = get_data(msg, &data, "message")) && cJSON_IsString(data))
         gmsg->msg = strdup(data->valuestring);
-    if ((valid = get_data(msg, &data, "user_id")) && cJSON_IsNumber(data))
-        gmsg->login = strdup("TODO USER_ID");
     if ((valid = get_data(msg, &data, "room_id")) && cJSON_IsNumber(data))
         gmsg->room_id = data->valueint;
+    groom = mx_get_groom_by_id(data->valueint, chat->builder);
+    if ((valid = get_data(msg, &data, "user_id")) && cJSON_IsNumber(data))
+        gmsg->login = g_strdup(MX_J_STR(g_hash_table_lookup(groom->members, GINT_TO_POINTER(data->valueint))));
     if ((valid = get_data(msg, &data, "date")) && cJSON_IsNumber(data))
         gmsg->date = data->valueint;
     if ((valid = get_data(msg, &data, "message_id")) && cJSON_IsNumber(data))
