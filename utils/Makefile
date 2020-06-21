@@ -14,6 +14,9 @@ LIBD_LIBS = -L../libraries/lib
 INCD := inc inc/protocol
 INCD_UTILS := $(addprefix -I, $(INCD))
 INCS = $(foreach dir, $(INCD), $(wildcard $(dir)/*.h))
+GTK_INC = `pkg-config --cflags gtk+-3.0`
+GTK_LIBS = -rdynamic `pkg-config --cflags --libs gtk+-3.0`
+
 
 SRCD := src src/wrappers src/config src/logger \
 src/protocol src/ssl src/database src/file_transfer
@@ -24,9 +27,9 @@ OBJS = $(addprefix $(OBJD)/, $(notdir $(SRCS:%.c=%.o)))
 CC = clang
 
 CFLAGS = -std=c11 $(addprefix -W, all extra error pedantic)
-CPPFLAGS = $(INCD_UTILS) \
+CPPFLAGS = $(INCD_UTILS) $(GTK_INC) \
 -D_GNU_SOURCE $(INCD_LIBS) -I/usr/local/opt/openssl/include
-LIBS = $(LIBD_LIBS) -L/usr/local/opt/openssl/lib \
+LIBS = $(LIBD_LIBS) $(GTK_LIBS) -L/usr/local/opt/openssl/lib \
 -lssl -lcjson -lcrypto -lsqlite3 -lpthread
 
 all: $(UTILS)

@@ -11,8 +11,6 @@ t_chat *mx_init_chat(GSocketConnection *connection, int argc, char **argv) {
     chat->conn = g_object_ref(connection);
     chat->curr_room = NULL;
     chat->auth_token = NULL;
-    chat->queue = g_async_queue_new();
-    chat->to_send = g_async_queue_new();
     chat->valid = true;
     chat->login = NULL;
     chat->out = g_object_ref(out);

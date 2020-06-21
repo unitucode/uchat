@@ -19,12 +19,9 @@
 #include <signal.h>
 #include <fcntl.h>
 #include <sys/stat.h>
-#include <openssl/ssl.h>
-#include <openssl/err.h>
-#include <openssl/md5.h>
-#include <openssl/rand.h>
 #include <regex.h>
 #include <time.h>
+#include <gmodule.h>
 #include "sqlite3.h"
 #include "cJSON.h"
 #include "list.h"
@@ -34,10 +31,8 @@
 
 #define MX_LIST_BACK 0
 #define MX_LOG_FILE "info.log"
-#define MX_CONFIG "config.json"
-#define MX_DEFAULT_CONFIG "{\n\n}\n"
 #define MX_REQ_REGEX "([0-9]+[|][0-9]+[|]).+" 
-#define MX_HASH_REGEX "^[a-f0-9]{32}$"
+#define MX_HASH_REGEX "^[A-Fa-f0-9]{64}$"
 #define MX_LOGIN_REGEX "^[a-z0-9_-]{3,22}$"
 
 #define MX_CERT_FILE "certificate.crt"
@@ -46,19 +41,12 @@
 
 #define MX_BUF_SIZE 1024
 #define MX_MD5_BUF_SIZE 32
+#define MX_SHA256_LENGTH 64
 
 typedef enum e_app_type {
     CLIENT,
     SERVER
 }            t_app_type;
-
-typedef struct s_sockopt {
-    int socket;
-    int level;
-    int option_name;
-    const void *option_value;
-    socklen_t option_len;
-}              t_sockopt;
 
 typedef enum e_logtype {
     LOGMSG,
@@ -79,21 +67,7 @@ long long mx_get_current_time(void);
 char *mx_strdup(char *str);
 void *mx_malloc(size_t size);
 void mx_free(void **ptr);
-int mx_socket(int domain, int type, int protocol);
-int mx_setsockopt(t_sockopt *sockopt);
 int mx_close(int fd);
-int mx_listen(int socket, int backlog);
-int mx_accept(int socket, struct sockaddr *restrict address,
-              socklen_t *restrict address_len);
-int mx_pthread_create(pthread_t *thread, const pthread_attr_t *attr,
-                   void *(*start_routine)(void *), void *arg);
-int mx_getaddrinfo(const char *hostname, const char *servname,
-                   const struct addrinfo *hints, struct addrinfo **res);
-int mx_pthread_mutex_init(pthread_mutex_t *mutex,
-                          const pthread_mutexattr_t *attr);
-int mx_pthread_mutex_destroy(pthread_mutex_t *mutex);
-int mx_pthread_mutex_lock(pthread_mutex_t *mutex);
-int mx_pthread_mutex_unlock(pthread_mutex_t *mutex);
 FILE *mx_fopen(const char * restrict path, const char * restrict mode);
 int mx_fclose(FILE *stream);
 
