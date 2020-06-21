@@ -498,13 +498,66 @@
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <child>
-                          <object class="GtkListBox" id="listbox_rooms">
+                          <object class="GtkBox">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="activate_on_single_click">False</property>
-                            <style>
-                              <class name="rooms-list"/>
-                            </style>
+                            <property name="orientation">vertical</property>
+                            <child>
+                              <object class="GtkLabel" id="label_local_search_result">
+                                <property name="height_request">25</property>
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="label" translatable="yes">Search result of your rooms</property>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">True</property>
+                                <property name="position">0</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkListBox" id="listbox_rooms">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="activate_on_single_click">False</property>
+                                <style>
+                                  <class name="rooms-list"/>
+                                </style>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">True</property>
+                                <property name="position">1</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkLabel" id="label_global_search_result">
+                                <property name="height_request">25</property>
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="label" translatable="yes">Global search result of rooms</property>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">True</property>
+                                <property name="position">2</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkListBox" id="listbox_global_rooms">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="activate_on_single_click">False</property>
+                                <style>
+                                  <class name="rooms-list"/>
+                                </style>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">True</property>
+                                <property name="position">3</property>
+                              </packing>
+                            </child>
                           </object>
                         </child>
                       </object>
@@ -937,6 +990,7 @@
                         <property name="can_focus">False</property>
                         <property name="focus_on_click">False</property>
                         <property name="receives_default">True</property>
+                        <property name="halign">end</property>
                         <property name="valign">start</property>
                         <property name="image">image12</property>
                         <signal name="clicked" handler="mx_hide_msg_editing" swapped="no"/>
