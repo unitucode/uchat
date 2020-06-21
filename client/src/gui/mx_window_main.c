@@ -11,7 +11,7 @@ GtkBuilder *mx_init_window(int argc, char **argv) {
     return builder;
 }
 
-int mx_start_gui(t_chat *chat) {
+gint mx_start_gui(t_chat *chat) {
     const gchar *path[] = {"../src/gui/resources"};
     gtk_icon_theme_set_search_path(gtk_icon_theme_get_default(), path, 1);
 
