@@ -156,7 +156,8 @@ void mx_get_contact_(sqlite3 *db, guint64 user_id, gint8 type);
 
 
 // user
-gboolean mx_user_contains(sqlite3 *db, guint64 user_id, guint64 room_id);
+gboolean mx_is_member(sqlite3 *db, guint64 user_id, guint64 room_id);
+
 
 // search
 gboolean mx_check_user_by_login(sqlite3 *db, gchar *login);
@@ -165,7 +166,12 @@ cJSON *mx_search_user(sqlite3 *db, gchar *str_search);
 
 
 //members
-GList *mx_get_users_in_room(sqlite3 *db, guint64 room_id);
+cJSON *mx_get_json_members(sqlite3 *db, guint64 room_id);
+GList *mx_get_log_members(sqlite3 *db, guint64 room_id);
 void mx_insert_member_into_db(sqlite3 *db, guint64 room_id, guint64 user_id,
                               gint8 permission);
-cJSON *mx_users_of_room_in_json(GList *list);
+void mx_destroy_data(gpointer data);
+void mx_edit_perm_member(sqlite3 *db, guint64 room_id, guint64 user_id,
+                         gint8 new_perm);
+gint8 mx_get_type_member(sqlite3 *db, guint64 user_id, guint64 room_id);
+

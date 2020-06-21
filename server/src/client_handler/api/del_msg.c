@@ -21,7 +21,7 @@ bool mx_del_msg_handler(t_dtp *msg, t_client *client) { // ADD CHECK OWNER OF ME
         return false;
     if (!msg_id || !cJSON_IsNumber(msg_id))
         return false;
-    if (!mx_user_contains(client->info->database, client->user->user_id, room_id->valueint))
+    if (!mx_is_member(client->info->database, client->user->user_id, room_id->valueint))
         return false;
     mx_delete_message_by_id(client->info->database, msg_id->valueint);
     resend = mx_del_msg_request(room_id->valueint, msg_id->valueint);

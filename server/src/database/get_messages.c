@@ -42,7 +42,6 @@ cJSON *mx_get_new_messages_by_id(sqlite3 *db, guint64 room_id, guint64 date,
     gchar *request = mx_create_request_message_by_id(db, room_id,
                                                      DB_NEW_MESSAGE);
 
-    printf("%s\n", request);
     sqlite3_prepare_v2(db, request, -1, &stmt, NULL);
     mx_error_sqlite(rv, "prepare", "get_new_msg");
     sqlite3_free(request);
@@ -57,7 +56,6 @@ cJSON *mx_get_old_messages_by_id(sqlite3 *db, guint64 room_id, guint64 date,
 
     mx_error_sqlite(sqlite3_prepare_v2(db, request, -1, &stmt, NULL), 
                     "prepare", "get old messages");
-    printf("%s\n%llu\n", request, date);
     sqlite3_free(request);
     return get_messages_by_id(stmt, room_id, count, date);
 }

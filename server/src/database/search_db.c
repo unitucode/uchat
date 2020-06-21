@@ -10,7 +10,8 @@ cJSON *mx_search_user(sqlite3 *db, gchar *str_search) {
     sqlite3_str_appendf(sql_str, "select * from users where name like '%s%%'", 
                         str_search);
     request = sqlite3_str_finish(sql_str);
-    mx_error_sqlite(sqlite3_prepare_v2(db, request, -1, &stmt, 0), "prepare", "search user");
+    mx_error_sqlite(sqlite3_prepare_v2(db, request, -1, &stmt, 0), "prepare",
+                    "search user");
     while ((rv = sqlite3_step(stmt)) == SQLITE_ROW)
         cJSON_AddItemToArray(users, mx_get_object_user(stmt));
     sqlite3_free(request);

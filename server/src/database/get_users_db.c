@@ -27,3 +27,4 @@ cJSON *mx_get_users(sqlite3 *db, guint64 date) {
     sqlite3_finalize(stmt);
     return users;
 }
+

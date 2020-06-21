@@ -26,7 +26,7 @@ bool mx_msg_handler(t_dtp *data, t_client *client) { // TODO leaks
 
     if (!msg)
         return false; //ADD CONTAINS IN ROOM
-    if (!mx_user_contains(client->info->database, client->user->user_id, msg->room_id)) {
+    if (!mx_is_member(client->info->database, client->user->user_id, msg->room_id)) {
         mx_free_message(&msg);
         return false;
     }
