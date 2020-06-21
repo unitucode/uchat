@@ -310,18 +310,20 @@
   <object class="GtkImage" id="image10">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
-    <property name="icon_name">applications-engineering</property>
+    <property name="icon_name">room-settings</property>
+    <property name="pixel_size">15</property>
   </object>
   <object class="GtkImage" id="image11">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
-    <property name="icon_name">emblem-default</property>
-    <property name="icon_size">5</property>
+    <property name="icon_name">done</property>
+    <property name="pixel_size">18</property>
   </object>
   <object class="GtkImage" id="image12">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
-    <property name="icon_name">emblem-unreadable</property>
+    <property name="icon_name">close</property>
+    <property name="pixel_size">12</property>
   </object>
   <object class="GtkImage" id="image13">
     <property name="visible">True</property>
@@ -685,6 +687,9 @@
                         <property name="no_show_all">True</property>
                         <property name="valign">end</property>
                         <property name="image">image11</property>
+                        <style>
+                          <class name="btn_confirm_changes"/>
+                        </style>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -737,6 +742,23 @@
                               </packing>
                             </child>
                             <child>
+                              <object class="GtkButton" id="btn_show_room_sett">
+                                <property name="width_request">35</property>
+                                <property name="height_request">35</property>
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="receives_default">True</property>
+                                <property name="valign">center</property>
+                                <property name="image">image10</property>
+                                <signal name="clicked" handler="mx_widget_switch_visibility" object="dialog_room_sett" swapped="no"/>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">True</property>
+                                <property name="position">1</property>
+                              </packing>
+                            </child>
+                            <child>
                               <object class="GtkButton" id="btn_show_room_info">
                                 <property name="width_request">35</property>
                                 <property name="height_request">35</property>
@@ -748,23 +770,6 @@
                                 <property name="image">image7</property>
                                 <property name="relief">none</property>
                                 <signal name="clicked" handler="mx_widget_switch_visibility" object="wnd_room_info" swapped="no"/>
-                              </object>
-                              <packing>
-                                <property name="expand">False</property>
-                                <property name="fill">True</property>
-                                <property name="position">1</property>
-                              </packing>
-                            </child>
-                            <child>
-                              <object class="GtkButton" id="btn_show_room_sett">
-                                <property name="width_request">35</property>
-                                <property name="height_request">35</property>
-                                <property name="visible">True</property>
-                                <property name="can_focus">False</property>
-                                <property name="receives_default">True</property>
-                                <property name="valign">center</property>
-                                <property name="image">image10</property>
-                                <signal name="clicked" handler="mx_widget_switch_visibility" object="dialog_room_sett" swapped="no"/>
                               </object>
                               <packing>
                                 <property name="expand">False</property>
@@ -925,10 +930,11 @@
                     <property name="can_focus">False</property>
                     <child>
                       <object class="GtkImage">
+                        <property name="name">image_edit_msg</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="valign">start</property>
-                        <property name="pixel_size">17</property>
+                        <property name="pixel_size">16</property>
                         <property name="icon_name">edit</property>
                       </object>
                       <packing>
@@ -949,10 +955,6 @@
                             <property name="can_focus">False</property>
                             <property name="label" translatable="yes">Edit</property>
                             <property name="xalign">0</property>
-                            <attributes>
-                              <attribute name="weight" value="semibold"/>
-                              <attribute name="foreground" value="#72729f9fcfcf"/>
-                            </attributes>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -967,9 +969,6 @@
                             <property name="label" translatable="yes">Message Text</property>
                             <property name="ellipsize">end</property>
                             <property name="xalign">0</property>
-                            <attributes>
-                              <attribute name="foreground" value="#eeeeeeeeecec"/>
-                            </attributes>
                           </object>
                           <packing>
                             <property name="expand">True</property>
