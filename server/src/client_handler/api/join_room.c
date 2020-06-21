@@ -18,7 +18,7 @@ static t_dtp *get_resend_room(t_db_room *room) {
     return mx_get_transport_data(send);
 }
 
-bool mx_join_room_handler(t_dtp *room, t_client *client) { // TODO!!!!!!
+bool mx_join_room_handler(t_dtp *room, t_client *client) {
     cJSON *room_id = cJSON_GetObjectItemCaseSensitive(room->json, "room_id");
     t_db_room *db_room = NULL;
     t_dtp *answer = NULL;
@@ -27,7 +27,6 @@ bool mx_join_room_handler(t_dtp *room, t_client *client) { // TODO!!!!!!
         return false;
     if (mx_is_member(client->info->database, client->user->user_id, room_id->valueint))
         return false;
-    g_print("here");
     mx_insert_member_into_db(client->info->database, room_id->valueint, client->user->user_id, DB_SIMPLE);
     db_room = mx_get_room_by_id(client->info->database, room_id->valueint);
     answer = get_resend_room(db_room);
