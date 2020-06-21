@@ -373,3 +373,8 @@ dialog headerbar {
 .stack_messages list .box_msg_info label.full_border_msg {
 	border-top-left-radius: 8px;
 }
+.label_search_result {
+    background-color: #424E78;
+    color: #919CC0;
+    font-size: 14px;
+}

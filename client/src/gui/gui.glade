@@ -2,15 +2,6 @@
 <!-- Generated with glade 3.22.2 -->
 <interface>
   <requires lib="gtk+" version="3.22"/>
-  <object class="GtkWindow">
-    <property name="can_focus">False</property>
-    <child type="titlebar">
-      <placeholder/>
-    </child>
-    <child>
-      <placeholder/>
-    </child>
-  </object>
   <object class="GtkEntryBuffer" id="buffer_login"/>
   <object class="GtkTextBuffer" id="buffer_message"/>
   <object class="GtkEntryBuffer" id="buffer_password">
@@ -310,20 +301,20 @@
   <object class="GtkImage" id="image10">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
-    <property name="icon_name">room-settings</property>
     <property name="pixel_size">15</property>
+    <property name="icon_name">room-settings</property>
   </object>
   <object class="GtkImage" id="image11">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
-    <property name="icon_name">done</property>
     <property name="pixel_size">18</property>
+    <property name="icon_name">done</property>
   </object>
   <object class="GtkImage" id="image12">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
-    <property name="icon_name">close</property>
     <property name="pixel_size">12</property>
+    <property name="icon_name">close</property>
   </object>
   <object class="GtkImage" id="image13">
     <property name="visible">True</property>
@@ -507,9 +498,11 @@
                             <child>
                               <object class="GtkLabel" id="label_local_search_result">
                                 <property name="height_request">25</property>
-                                <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="label" translatable="yes">Search result of your rooms</property>
+                                <style>
+                                  <class name="label_search_result"/>
+                                </style>
                               </object>
                               <packing>
                                 <property name="expand">False</property>
@@ -535,9 +528,11 @@
                             <child>
                               <object class="GtkLabel" id="label_global_search_result">
                                 <property name="height_request">25</property>
-                                <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="label" translatable="yes">Global search result of rooms</property>
+                                <style>
+                                  <class name="label_search_result"/>
+                                </style>
                               </object>
                               <packing>
                                 <property name="expand">False</property>
