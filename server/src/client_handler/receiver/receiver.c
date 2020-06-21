@@ -17,6 +17,8 @@ void mx_init_receiver(t_info *chat) {
     chat->request_handler[RQ_DEL_MSG] = mx_del_msg_handler;
     chat->request_handler[RQ_EDIT_MSG] = mx_edit_msg_handler;
     chat->request_handler[RQ_FILE] = mx_upload_file_handler;
+    chat->request_handler[RQ_SEARCH_CH] = mx_search_rooms_handler;
+    chat->request_handler[RQ_JOIN_ROOM] = mx_join_room_handler;
 }
 
 bool mx_handle_request(char *request, t_client *client) {
@@ -26,7 +28,8 @@ bool mx_handle_request(char *request, t_client *client) {
         g_print("recv = %s\n", cJSON_Print(data->json));
         if (client->user || data->type == RQ_LOG_IN
             || data->type == RQ_SIGN_UP
-            || data->type == RQ_TOKEN) {
+            || data->type == RQ_TOKEN
+            || data->type == RQ_FILE) {
             if (!client->info->request_handler[data->type]
                 || !client->info->request_handler[data->type](data, client)) {
                     return false;

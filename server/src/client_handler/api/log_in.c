@@ -8,35 +8,42 @@ static void incorrect_data(t_client *client) {
     mx_free_request(&dtp);
 }
 
-static void log_in(char *login, char *pass, t_client *client) {
-    t_db_user *user = mx_get_user_by_login(client->info->database, login);
+static bool log_in(t_db_user *user, t_client *client) {
+    t_db_user *check_user = mx_get_user_by_login(client->info->database, user->login);
 
-    if (!user) {
+    if (!check_user) {
         incorrect_data(client);
-        mx_logger(MX_LOG_FILE, LOGMSG, "user not found %s\n", login);
+        mx_logger(MX_LOG_FILE, LOGMSG, "user not found %s\n", user->login);
+        return true;
     }
-    else if (strcmp(user->password, pass)) {
-        printf("%s\n%s\n", user->password, pass);
+    else if (strcmp(check_user->pass, user->pass)) {
         incorrect_data(client);
-        mx_logger(MX_LOG_FILE, LOGMSG, "Inccorect password %s\n", login);
-        mx_free_user(&user);
+        mx_logger(MX_LOG_FILE, LOGMSG, "Inccorect password %s\n", user->login);
+        mx_free_user(&check_user);
+        return true;
     }
-    else {
-        client->user = user;
-        mx_correct_data(login, client);
-    }
+    client->user = check_user;
+    mx_correct_data(client);
+    return true;
 }
 
-bool mx_log_in_handler(t_dtp *login_data, t_client *client) {
-    char md5_pass[MX_MD5_BUF_SIZE + 1];
-    char *login_str;
-    char *pass_str;
+bool mx_log_in_handler(t_dtp *login_data, t_client *client) { //ADD ENCRYPT
+    t_db_user *user = mx_parse_json_user(login_data->json);
 
-    if (!mx_valid_authorization_data(login_data, &login_str,
-                                     &pass_str, client)) {
+    if (!user)
+        return false;
+    if (!mx_match_search(user->login, MX_LOGIN_REGEX)) {
+        mx_free_user(&user);
         return false;
     }
-    mx_md5(md5_pass, (const unsigned char*)pass_str, strlen(pass_str));
-    log_in(login_str, md5_pass, client);
+    if (!mx_match_search(user->pass, MX_HASH_REGEX)) {
+        mx_free_user(&user);
+        return false;
+    }
+    if (!log_in(user, client)) {
+        mx_free_user(&user);
+        return false;
+    }
+    mx_free_user(&user);
     return true;
 }

@@ -51,7 +51,7 @@ struct s_gmsg {
     GtkLabel *label_text;
     char *msg;
     char *login;
-    long int date;
+    guint64 date;
     int room_id;
     int message_id;
 };
@@ -60,15 +60,15 @@ struct s_chat {
     GDataOutputStream *out;
     GDataInputStream *in;
     GSocketConnection *conn;
+    GSocketClient *cli_conn;
     char *auth_token;
     char *login;
+    int argc;
+    char **argv;
     gsize id;
     t_groom *curr_room;
     t_dtp *data;
     GtkBuilder *builder;
-    GAsyncQueue *queue;
-    GAsyncQueue *to_send;
-    GThread *receiver_thread;
     bool valid;
     void (*error_handler[ER_COUNT_ERRS])(GtkBuilder *builder);
     bool (*request_handler[RQ_COUNT_REQUEST])(t_dtp *dtp, struct s_chat *chat);
@@ -82,9 +82,7 @@ typedef struct s_signal_data {
 
 gssize mx_send(GDataOutputStream *out, t_dtp *dtp);
 int mx_tcp_connect(const char *host, const char *serv);
-t_chat *mx_init_chat(GSocketConnection *connection);
-void mx_signup(SSL *ssl);
-void mx_login(SSL *ssl);
+t_chat *mx_init_chat(GSocketConnection *connection, int argc, char **argv);
 void mx_receiver(GObject *source_object, GAsyncResult *res, gpointer user_data);
 void mx_init_handlers(t_chat *chat);
 void mx_init_errors(t_chat *chat);
@@ -110,6 +108,8 @@ bool mx_del_room_handler(t_dtp *data, t_chat *chat);  // HANDLER FOR DELETE ROOM
 bool mx_edit_msg_handler(t_dtp *data, t_chat *chat); // HANDLER FOR EDIT MSG
 bool mx_del_msg_handler(t_dtp *data, t_chat *chat); // HANDLER FOR DEL MSG
 bool mx_upload_file_handler(t_dtp *data, t_chat *chat); // HANDLER FOR GET FILE
+bool mx_search_rooms_handler(t_dtp *data, t_chat *chat); //HANDLER FOR SEARCHING
+bool mx_join_room_handler(t_dtp *data, t_chat *chat); //HANDLER FOR JOIN ROOM
 
 
 /*
@@ -121,7 +121,7 @@ bool mx_upload_file_handler(t_dtp *data, t_chat *chat); // HANDLER FOR GET FILE
  * 
  */
 //api
-t_dtp *mx_new_room_request(char *room_name, char *desc);
+t_dtp *mx_new_room_request(char *room_name, char *desc, t_room_type type);
 t_dtp *mx_msg_request(char *msg, int room_id);
 t_dtp *mx_token_request(char *token);
 t_dtp *mx_log_in_request(char *login, char *pass);
@@ -137,7 +137,9 @@ t_dtp *mx_edit_msg_request(char *msg, int room_id, int msg_id); // FOR EDIT MSG
 t_dtp *mx_upd_user_name_request(char *name); //TODO
 t_dtp *mx_del_msg_request(int room_id, int msg_id); // FOR DELETE MESSAGE FROM ROOM
 t_dtp *mx_edit_msg_request(char *msg, int room_id, int msg_id); // FOR EDIT MESSAGE IN ROOM
-t_dtp *mx_upload_file_request(char *name, int size); // FOR UPLOAD FILE
+t_dtp *mx_upload_file_request(char *name, goffset size, char *token); // FOR UPLOAD FILE
+t_dtp *mx_search_rooms_request(char *room_name); // FOR SEARCHING CHANNEL
+t_dtp *mx_join_room_request(int room_id); //FOR JOIN TO ROOM
 
 //errors api
 void mx_err_auth_data_handler(GtkBuilder *builder);
@@ -224,6 +226,7 @@ void mx_widget_set_class(GtkWidget *widget, char *class);
 // void mx_widget_show_all(GtkWidget *widget);
 // void mx_widget_destroy(GtkWidget *widget);
 // void mx_widget_show(GtkWidget *widget);
+void mx_upload_file(char *path, t_chat *chat);
 bool mx_handle_request(char *request, t_chat *chat);
 void mx_send_auth_request(char *login, char *password,
                           t_chat *chat, t_request_type request_type);

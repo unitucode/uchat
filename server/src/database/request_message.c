@@ -1,41 +1,28 @@
 #include "server.h"
 
 static void message_old(sqlite3_str **str) {
-    sqlite3_str_appendall(*str, "' WHERE DATE < ?1");
+    sqlite3_str_appendall(*str, " and date < ?1");
+    sqlite3_str_appendall(*str, " order by date desc");
 }
 
 static void message_new(sqlite3_str **str) {
-    sqlite3_str_appendall(*str, "' WHERE DATE > ?1");
+    sqlite3_str_appendall(*str, " and date > ?1");
+    sqlite3_str_appendall(*str, " order by date asc");
 }
 
 static void message_curr(sqlite3_str **str) {
-    sqlite3_str_appendall(*str, "'");
+    sqlite3_str_appendall(*str, " order by date desc");
 }
 
-// to delete
-char *mx_create_request_message(sqlite3 *database, char *name_room, int flag) {
-    sqlite3_str *str = sqlite3_str_new(database);
-    char *request = NULL;
+gchar *mx_create_request_message_by_id(sqlite3 *db, guint64 room_id,
+                                      gint8 type) {
+    sqlite3_str *str = sqlite3_str_new(db);
+    gchar *request = NULL;
     void (*func[])(sqlite3_str **) = {message_curr, message_new, message_old};
 
-    sqlite3_str_appendall(str, "SELECT * FROM '");
-    sqlite3_str_appendall(str, name_room);
-    func[flag](&str);
-    // sqlite3_str_appendall(str, "' ORDER BY DATE DESC");
-    request = sqlite3_str_finish(str);
-    return request;
-}
-
-char *mx_create_request_message_by_id(sqlite3 *database, 
-                                      unsigned long long int id, int flag) {
-    sqlite3_str *str = sqlite3_str_new(database);
-    char *request = NULL;
-    void (*func[])(sqlite3_str **) = {message_curr, message_new, message_old};
-
-    sqlite3_str_appendall(str, "select * from ");
-    sqlite3_str_appendf(str, "'room%d", id);
-    func[flag](&str);
-    sqlite3_str_appendall(str, " order by id_message asc");
+    sqlite3_str_appendf(str, "select * from messages where room_id = %llu",
+                        room_id);
+    func[type](&str);
     request = sqlite3_str_finish(str);
     return request;
 }

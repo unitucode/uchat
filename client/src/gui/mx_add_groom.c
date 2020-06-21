@@ -150,10 +150,10 @@ t_groom *mx_create_groom(cJSON *room) {
     cJSON *data = NULL;
     bool valid = true;
 
-    if ((valid = get_data(room, &data, "room_name")) && cJSON_IsString(data))
+    if ((valid = get_data(room, &data, "name")) && cJSON_IsString(data))
         groom->room_name = strdup(data->valuestring);
-    if ((valid = get_data(room, &data, "customer")) && cJSON_IsString(data))
-        groom->customer = strdup(data->valuestring);
+    if ((valid = get_data(room, &data, "customer_id")) && cJSON_IsNumber(data))
+        groom->customer = strdup("TODO ID");
     if ((valid = get_data(room, &data, "id")) && cJSON_IsNumber(data))
         groom->id = data->valueint;
     if ((valid = get_data(room, &data, "date")) && cJSON_IsNumber(data))

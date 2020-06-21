@@ -4,41 +4,43 @@
 static void incorrect_data(t_client *client) {
     t_dtp *dtp = mx_error_msg_request(ER_USER_EXST, "User already exist");
 
-    // mx_send(client->ssl, dtp);
-    client++;
+    mx_send(client->out, dtp);
     mx_free_request(&dtp);
 }
 
-static void sign_up(char *login, char *pass, t_client *client) {
-    t_db_user *user = mx_get_user_by_login(client->info->database, login);
-    char token[MX_MD5_BUF_SIZE + 1 + strlen(login)];
+static bool sign_up(t_db_user *user, t_client *client) {
+    char *token;
 
-    if (user) {
+    if (mx_check_user_by_login(client->info->database, user->login)) {
         incorrect_data(client);
-        mx_logger(MX_LOG_FILE, LOGMSG, "Already exist user %s\n", login);
-        return;
+        mx_logger(MX_LOG_FILE, LOGMSG, "Already exist user %s\n", user->login);
+        return false;
     }
-    mx_create_token(token, login);
-    client->user = mx_insert_user_into_db(client->info->database, login, pass, token);
-    if (!client->user) {
-        mx_logger(MX_LOG_FILE, LOGMSG, "Failded signup user %s\n", login);
-        return;
-    }
-    mx_logger(MX_LOG_FILE, LOGMSG, "Success signup user %s\n", login);
-    mx_correct_data(login, client);
-    return;
+    mx_create_token(&token, user->login);
+    user->token = token;
+    mx_insert_user_into_db(client->info->database, user);
+    mx_logger(MX_LOG_FILE, LOGMSG, "Success signup user %s\n", user->login);
+    client->user = user;
+    mx_correct_data(client);
+    return true;
 }
 
 bool mx_sign_up_handler(t_dtp *signup_data, t_client *client) {
-    char md5_pass[MX_MD5_BUF_SIZE + 1];
-    char *login_str;
-    char *pass_str;
+    t_db_user *user = mx_parse_json_user(signup_data->json);
 
-    if (!mx_valid_authorization_data(signup_data, &login_str,
-                                     &pass_str, client)) {
+    if (!user)
+        return false;
+    if (!mx_match_search(user->login, MX_LOGIN_REGEX)) {
+        mx_free_user(&user);
         return false;
     }
-    mx_md5(md5_pass, (const unsigned char*)pass_str, strlen(pass_str));
-    sign_up(login_str, md5_pass, client);
+    if (!mx_match_search(user->pass, MX_HASH_REGEX)) {
+        mx_free_user(&user);
+        return false;
+    }
+    if (!sign_up(user, client)) {
+        mx_free_user(&user);
+        return false;
+    }
     return true;
 }

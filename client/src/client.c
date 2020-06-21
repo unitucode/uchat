@@ -24,13 +24,12 @@ int main(int argc, char **argv) {
         return -1;
     }
     connection = g_socket_client_connect_to_host(client, argv[1], g_ascii_strtoll(argv[2], NULL, 10), NULL, &error);
-    g_printerr("2");
     if (!connection || error) {
         g_printerr("Invalid port or ip\n");
         return -1;
     }
-    chat = mx_init_chat(connection);
-    chat->builder = mx_init_window(argc, argv);
+    chat = mx_init_chat(connection, argc, argv);
+    chat->cli_conn = g_object_ref(client);
     mx_init_gui(chat);
     mx_start_gui(chat);
     return 0;

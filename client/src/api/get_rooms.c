@@ -10,7 +10,7 @@ t_dtp *mx_get_rooms_request(long int date) {
     return mx_get_transport_data(json_result);
 }
 
-static void insert_room(cJSON *room, t_chat *chat) {
+static void insert_room(cJSON *room, t_chat *chat) { //TODO HANDLE ROOMS
     t_dtp *dtp = NULL;
     t_dtp *msgs = NULL;
     cJSON *dup = cJSON_Duplicate(room, cJSON_True);

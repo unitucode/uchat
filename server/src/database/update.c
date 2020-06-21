@@ -1,68 +1,54 @@
 #include "server.h"
 
-void update(sqlite3_stmt *stmt, char *new, char *name, char *error) {
-    sqlite3_bind_text(stmt, 1, new, -1, SQLITE_STATIC);
-    sqlite3_bind_text(stmt, 2, name, -1, SQLITE_STATIC);
-    mx_error_sqlite(sqlite3_step(stmt), "step", error);
-    sqlite3_finalize(stmt);
+void mx_edit_permission_of_user(sqlite3 *db, guint64 user_id, guint64 room_id,
+                                  gint8 new) {
+    sqlite3_str *sqlite_str = sqlite3_str_new(db);
+    gchar *request = NULL;
+
+    sqlite3_str_appendf(sqlite_str, "update members set permission = %d where"
+                                    " user_id = %llu and where room_id = %llu", 
+                        new, user_id, room_id);
+    request = sqlite3_str_finish(sqlite_str);
+    mx_error_sqlite(sqlite3_exec(db, request, 0, 0, 0), "exec",
+                     "update permission");
 }
 
-void mx_update_permission_of_user(sqlite3 *database, char *login,
-                                  unsigned int new) {
+void mx_edit_token(sqlite3 *db, guint64 user_id, gchar *new) {
     sqlite3_stmt *stmt;
-    int rv;
+    gint32 rv = SQLITE_OK;
 
-    rv = sqlite3_prepare_v3(database, 
-                            "UPDATE USERS SET PERMISSION = ?1 WHERE login = ?2",
-                            -1, 0, &stmt, NULL);
-    sqlite3_bind_int(stmt, 1, new);
-    sqlite3_bind_text(stmt, 2, login, -1, SQLITE_STATIC);
-    mx_error_sqlite(sqlite3_step(stmt), "step", "update permission");
-    sqlite3_finalize(stmt);
-}
-
-void mx_update_token(sqlite3 *database, char *login, char *new) {
-    sqlite3_stmt *stmt;
-    int rv;
-
-    rv = sqlite3_prepare_v3(database, 
-                       "UPDATE USERS SET TOKEN = ?1 WHERE login = ?2",
-                       -1, 0, &stmt, NULL);
+    rv = sqlite3_prepare_v2(db, "update users set token = ?1 where "
+                                "user_id = ?2", -1, &stmt, NULL);
     mx_error_sqlite(rv, "prepare", "update token");
-    update(stmt, new, login, "update token");
+    sqlite3_bind_text(stmt, 1, new, -1, SQLITE_STATIC);
+    sqlite3_bind_int64(stmt, 2, user_id);
+    mx_error_sqlite(sqlite3_step(stmt), "step", "update token");
+    sqlite3_finalize(stmt);
 }
 
-void mx_update_description_room_by_id(sqlite3 *db, unsigned long long int id,
-                                      char *new) {
+void mx_edit_desc_room_by_id(sqlite3 *db, guint64 room_id, gchar *new) {
     sqlite3_stmt *stmt;
-    int rv = SQLITE_OK;
+    gint32 rv = SQLITE_OK;
 
-    rv = sqlite3_prepare_v3(db, "update rooms set description = ?1 "
-                       "where id = ?2", -1, 0, &stmt, NULL);
+    rv = sqlite3_prepare_v2(db, "update rooms set desc = ?1 "
+                                "where id = ?2", -1, &stmt, NULL);
     mx_error_sqlite(rv, "prepare", "update description");
     sqlite3_bind_text(stmt, 1, new, -1, SQLITE_STATIC);
-    sqlite3_bind_int(stmt, 2, id);
+    sqlite3_bind_int(stmt, 2, room_id);
     mx_error_sqlite(sqlite3_step(stmt), "step", "update room");
     sqlite3_finalize(stmt);
 }
 
-// to delete
-void mx_update_description_room(sqlite3 *database, char *name, char *new) {
+void mx_edit_desc_user(sqlite3 *db, guint64 user_id, gchar *new) {
     sqlite3_stmt *stmt;
-    int rv = SQLITE_OK;
-
-    rv = sqlite3_prepare_v3(database, "UPDATE ROOMS SET DESCRIPTION = ?1 "
-                       "WHERE NAME_ROOM = ?2", -1, 0, &stmt, NULL);
-    mx_error_sqlite(rv, "prepare", "update description");
-    update(stmt, new, name, "update room desc");
-}
-
-void mx_update_description_user(sqlite3 *database, char *login, char *new) {
-    sqlite3_stmt *stmt;
-    int rv = SQLITE_OK;
+    gint32 rv = SQLITE_OK;
     
-    rv = sqlite3_prepare_v3(database, "update users set description = ?1"
-                            " where login = ?2", -1, 0, &stmt, NULL);
+    rv = sqlite3_prepare_v2(db, "update users set desc = ?1" 
+                                " where user_id = ?2", -1, &stmt, NULL);
     mx_error_sqlite(rv, "prepare", "update user");
-    update(stmt, new, login, "update user desc");
+    sqlite3_bind_text(stmt, 1, new, -1, SQLITE_STATIC);
+    sqlite3_bind_int64(stmt, 2, user_id);
+    mx_error_sqlite(sqlite3_step(stmt), "step", "update desc user");
+    sqlite3_finalize(stmt);
 }
+

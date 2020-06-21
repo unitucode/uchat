@@ -3,12 +3,8 @@
 #include "utils.h"
 
 #define MX_J_STR(m) (m) ? (m) : "(null)"
-#define MX_RQ_SIZE 2048
 #define MX_MAX_FILE_SIZE 50000000
-#define MX_RES_OK "OK"
-#define MX_READY "READY"
 
-typedef struct s_ssl_con t_ssl_con;
 typedef struct s_dtp t_dtp;
 typedef struct s_file t_file;
 
@@ -40,22 +36,26 @@ typedef enum s_request_type {
     RQ_EDIT_MSG,
     RQ_DEL_MSG,
     RQ_FILE,
-    RQ_READY,
-    RQ_COUNT_REQUEST
+    RQ_SEARCH_CH,
+    RQ_JOIN_ROOM,
+    RQ_COUNT_REQUEST,
 }            t_request_type;
+
+typedef enum s_room_type {
+    DB_PRIVAT_CHAT = 0,
+    DB_GLOBAL_CHAT,
+    DB_LS_CHAT
+}            t_room_type;
+
+typedef enum s_message_type {
+    DB_STATUS_MSG_START = 0,
+    DB_STATUS_MSG_EDIT
+}            t_message_type;
 
 struct s_file {
     char *bytes;
     char *name;
     struct stat st;
-};
-
-struct s_ssl_con {
-    SSL_CTX *ctx;
-    SSL *ssl;
-    char *cert_file;
-    char *key_file;
-    char *password;
 };
 
 struct s_dtp { // Data Transfer Protocol view
@@ -65,23 +65,16 @@ struct s_dtp { // Data Transfer Protocol view
     int type;
 };
 
-//file transfer
-t_file *mx_upload_file(char *file_path);
-char *mx_recv_file(SSL *ssl, size_t size);
-int mx_send_file(SSL *ssl, char *data_bytes, size_t size);
-void mx_free_file(t_file **file);
 
 //requests
 t_dtp *mx_delete_room_request(char *room_name);
 t_dtp *mx_get_transport_data(cJSON *json_result);
 
 //SSL
-t_ssl_con *mx_init_ssl(t_app_type type);
-void mx_md5(char *buf, const unsigned char *str, size_t len);
 bool mx_isvalid_hash(char *hash);
 bool mx_isvalid_login(char *login);
 bool mx_isvalid_token(char *token);
-void mx_create_token(char *token, char *login);
+void mx_create_token(char **token, char *login);
 
 //Protocol
 int mx_get_type_dtp(t_dtp *dtp);

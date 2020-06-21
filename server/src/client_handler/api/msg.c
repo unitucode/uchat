@@ -5,39 +5,35 @@ static t_dtp *get_resend_msg(t_db_message *msg) {
 
     if (!cJSON_AddNumberToObject(send_msg, "type", RQ_MSG))
         return NULL;
-    if (!cJSON_AddStringToObject(send_msg, "msg", MX_J_STR(msg->message)))
+    if (!cJSON_AddStringToObject(send_msg, "message", MX_J_STR(msg->message)))
         return NULL;
     if (!cJSON_AddNumberToObject(send_msg, "room_id", msg->room_id))
         return NULL;
     if (!cJSON_AddNumberToObject(send_msg, "date", msg->date))
         return NULL;
-    if (!cJSON_AddStringToObject(send_msg, "login", MX_J_STR(msg->login)))
+    if (!cJSON_AddNumberToObject(send_msg, "message_id", msg->message_id))
         return NULL;
-    if (!cJSON_AddNumberToObject(send_msg, "message_id", msg->id))
+    if (!cJSON_AddNumberToObject(send_msg, "user_id", msg->user_id))
         return NULL;
+    // if (!cJSON_AddNumberToObject(send_msg, "status", msg->status))
+    //     return NULL;
     return mx_get_transport_data(send_msg);
 }
 
 bool mx_msg_handler(t_dtp *data, t_client *client) { // TODO leaks
-    cJSON *msg = cJSON_GetObjectItemCaseSensitive(data->json, "msg");
-    cJSON *room_id = cJSON_GetObjectItemCaseSensitive(data->json,
-                                                        "room_id");
-    t_db_message *message = NULL;
+    t_db_message *msg = mx_parse_message(data->json);
     t_dtp *resend = NULL;
 
-    if (!msg || !cJSON_IsString(msg))
+    if (!msg)
+        return false; //ADD CONTAINS IN ROOM
+    if (!mx_is_member(client->info->database, client->user->user_id, msg->room_id)) {
+        mx_free_message(&msg);
         return false;
-    if (!room_id || !cJSON_IsNumber(room_id))
-        return false;
-    message = mx_insert_message_into_db_by_id(client->info->database,
-                                        msg->valuestring, 
-                                        (char*)client->user->login,
-                                        room_id->valueint);
-    if (message)
-        resend = get_resend_msg(message);
-    if (!resend)
-        return false;
-    mx_send_to_all(resend, client);
+    }
+    msg->user_id = client->user->user_id;
+    mx_insert_message(client->info->database, msg);
+    resend = get_resend_msg(msg);
+    mx_send_to_all(resend, client, msg->room_id);
     mx_free_request(&resend);
     return true;
 }

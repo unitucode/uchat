@@ -2,127 +2,176 @@
 
 #include "utils.h"
 #include "sqlite3.h"
+#include "protocol.h"
+#include <glib.h>
+#include <sys/time.h>
 
-#define MX_OLD_MESSAGE 2
-#define MX_NEW_MESSAGE 1
-#define MX_CURR_MESSAGE 0
 #define MX_DB "database.db"
 
-typedef struct s_members_room {
-    char *login;
-    char *name_room;
-    struct s_members_room *next;
-}              t_members_room;
+typedef struct s_member t_member;
+typedef struct s_db_user t_db_user;
+typedef struct s_db_message t_db_message;
+typedef struct s_db_room t_db_room;
 
-typedef struct s_db_user {
-    unsigned int permission;
-    long int date;
-    char *password;
-    char *token;
-    char *login;
-    char *description;
-}              t_db_user;
+typedef enum s_type_db {
+    DB_CURR_MESSAGE = 0,
+    DB_NEW_MESSAGE,
+    DB_OLD_MESSAGE,
+    DB_CUSTOMER,
+    DB_ADMIN,
+    DB_MODERATOR,
+    DB_SIMPLE,
+    DB_TEXT_MSG,
+    DB_FILE_MSG,
+    DB_FILE_TEXT_MSG,
+    DB_SECOND,
+    DB_MILISECOND,
+    DB_MICROSECOND,
+    DB_FRIENDS,
+    DB_BLACKLIST
+}            t_type_db;
 
-typedef struct s_db_message {
-    unsigned int id;
-    unsigned int room_id;
-    long int date;
-    char *name_room;
-    char *login;
-    char *message;
-}              t_db_message;
+struct s_member{
+    guint64 user_id;
+    guint64 room_id;
+    guint64 date;
+    gint8   prm;
+};
 
-typedef struct s_db_room {
-    long int date;
-    unsigned int id;
-    char *description;
-    char *room_name;
-    char *customer;
-}              t_db_room;
+struct s_db_user {
+    guint64 user_id;
+    guint64 date;
+    gchar *pass;
+    gchar *token;
+    gchar *name;
+    gchar *login;
+    gchar *desc;
+};
 
-sqlite3 *mx_server_data_open(char *name_db);
-void mx_close_database(sqlite3 *database);
-void mx_free_user(t_db_user **user);
-void mx_delete_room(sqlite3 *database, char *name_room);
-void mx_delete_user(sqlite3 *database, char *login);
-void mx_delete_message(sqlite3 *database, unsigned long long int id,
-                       unsigned long long int id_message);
-void mx_delete_room_by_id(sqlite3 *db, unsigned long long int id);
-void mx_db_pop_queue(sqlite3 *db, char *login);
+struct s_db_message {
+    guint64 user_id;
+    guint64 room_id;
+    guint64 message_id;
+    guint64 date_dead;
+    guint64 date;
+    gint8 status;
+    gint8 type;
+    guint64 file_size;
+    gchar *message;
+    gchar *file_name;
+};
 
-void mx_create_table_users(sqlite3 *database);
-void mx_create_table_rooms(sqlite3 *database);
-void mx_create_table_member(sqlite3 *database);
-void mx_create_table_room(sqlite3 *database, unsigned long long int id);
-void mx_create_table_queue(sqlite3 *db, char *login);
+struct s_db_room {
+    guint64 date;
+    guint64 room_id;
+    guint64 customer_id;
+    gint8 type;
+    gchar *desc;
+    gchar *room_name;
+};
 
-char *mx_get_queue(sqlite3 *db, char *login);
-t_db_user *mx_get_user_by_login(sqlite3 *database, char *login);
-t_db_user *mx_get_user_by_token(sqlite3 *database, char *token);
-t_db_room *mx_get_room(sqlite3 *database, char *name);
-t_db_room *mx_get_room_by_id(sqlite3 *database, unsigned long long int id);
-unsigned long long int mx_get_roomid_by_name(sqlite3 *db, char *name);
+// yes
+cJSON *mx_json_is_valid(cJSON *data, gchar *str,
+                        cJSON_bool (*check_valid)(const cJSON *const));
+t_db_user *mx_parse_json_user(cJSON *user_j);
+t_db_room *mx_parse_json_room(cJSON *room_j);
+t_db_message *mx_parse_message(cJSON *message_j);
 
-void mx_free_room(t_db_room **room);
-void mx_free_message(t_db_message **message);
+//create table yes
+void mx_create_table_users(sqlite3 *db);
+void mx_create_table_rooms(sqlite3 *db);
+void mx_create_table_member(sqlite3 *db);
+void mx_create_table_queue(sqlite3 *db);
+void mx_create_table_messages(sqlite3 *db);
+void mx_create_table_contacts(sqlite3 *db);
 
+// function yes
+guint64 mx_get_time(gint8 type);
+sqlite3 *mx_open_db(gchar *name_db);
+void mx_close_db(sqlite3 *db);
+gchar *mx_create_request_message_by_id(sqlite3 *db, guint64 room_id,
+                                       gint8 type);
 
-void mx_update_permission_of_user(sqlite3 *database, char *login, 
-                                  unsigned int new);
-void mx_update_token(sqlite3 *database, char *login, char *new);
-void mx_update_description_user(sqlite3 *database, char *login, char *new);
-void mx_update_description_room(sqlite3 *database, char *name, char *new);
-void mx_update_description_room_by_id(sqlite3 *db, unsigned long long int id,
-                                      char *new);
-void update(sqlite3_stmt *stmt, char *new, char *name, char *error);
-void mx_edit_name_room(sqlite3 *database, unsigned long long int id, char *new);
-void mx_edit_name_user(sqlite3 *database, char *login, char *new);
-void mx_edit_message(sqlite3 *db, unsigned long long id_room,
-                     unsigned long long id, char *new);
-
-t_db_message *mx_insert_message_into_db_by_id(sqlite3 *db, char *message_str,
-                                              char *login,
-                                              unsigned long long int id);
-void mx_insert_to_room(sqlite3 *database, t_db_message *room, char *name_room);
-t_db_message *mx_insert_message_into_db(sqlite3 * database, char *message_str,
-                                            char *login, char *name_room);
-t_db_room *mx_insert_room_into_db(sqlite3 * database, char *name_room,
-                                      char *customer);
-t_db_user *mx_insert_user_into_db(sqlite3 * database, char *login,
-                                      char *pass, char *token);
-void mx_insert_member_into_db(sqlite3 * database,
-                                  char *login, char *name_room);
-void mx_db_push_queue(sqlite3 *db, char *login, char *request);
-
-cJSON *mx_get_new_messages(sqlite3 *database, char *name_room,
-                               long int date, int count);
-cJSON *mx_get_old_messages(sqlite3 * database, char *name_room,
-                               long int date, int count);
-cJSON *mx_get_curr_messages(sqlite3 * database, char *name_room, int count);
-char *mx_create_request_message(sqlite3 * database, char *name_room, int flag);
-char *mx_create_request_message_by_id(sqlite3 * database,
-                                          unsigned long long int id, int flag);
-cJSON *mx_get_curr_messages_by_id(sqlite3 *db, unsigned long long int id, int count);
-cJSON *mx_get_old_messages_by_id(sqlite3 *db, unsigned long long int id, 
-                                 long int date, int count);
-cJSON *mx_get_new_messages_by_id(sqlite3 *db, unsigned long long int id,
-                                 long int date, int count);
-
-t_db_message *mx_get_last_message(sqlite3 *database, unsigned long long int id,
-                                  char *login);
-cJSON *mx_get_rooms(sqlite3 * database, long int date);
-
-void mx_test_json();
-void mx_json();
-
-//count 
-
-unsigned long long int mx_get_count_users(sqlite3 *db);
-unsigned long long int mx_get_count_rooms(sqlite3 *db);
-unsigned long long int mx_get_count_messages(sqlite3 *db,
-                                             unsigned long long int id);
-
+//count yes
+guint64 mx_get_count_users(sqlite3 *db);
+guint64 mx_get_count_rooms(sqlite3 *db);
+guint64 mx_get_count_messages(sqlite3 *db, guint64 id);
 
 // error
-int mx_error_sqlite(int rv, char *error, char *where_error);
-bool mx_is_exists_room_by_id(sqlite3 *db, unsigned long long int id);
+gboolean mx_error_sqlite(gint32 rv, gchar *error, gchar *where_error);
+
+// queue  yes
+void mx_db_push_queue_by_id(sqlite3 *db, guint64 user_id,
+                            gchar *request);
+void mx_db_pop_queue_by_id(sqlite3 *db, guint64 user_id);
+gchar *mx_get_queue(sqlite3 *db, guint64 user_id);
+void mx_clean_queue(sqlite3 *db, guint64 user_id);
+
+// get yes
+cJSON *mx_get_object_room(sqlite3_stmt *stmt);
+cJSON *mx_get_object_user(sqlite3_stmt *stmt);
+t_db_user *mx_get_user_by_login(sqlite3 *db, gchar *login);
+t_db_user *mx_get_user_by_token(sqlite3 *db, gchar *token);
+t_db_user *mx_get_user_by_id(sqlite3 *db, guint64 user_id);
+t_db_room *mx_get_room_by_id(sqlite3 *db, guint64 id);
+cJSON *mx_get_users(sqlite3 *db, guint64 date);
+cJSON *mx_get_rooms(sqlite3 * db, guint64 date, guint64 user_id);
+cJSON *mx_get_new_messages_by_id(sqlite3 *db, guint64 room_id, guint64 date,
+                                 gint64 count);
+cJSON *mx_get_old_messages_by_id(sqlite3 *db, guint64 room_id, guint64 date,
+                                 gint64 count);
+cJSON *mx_get_curr_messages_by_id(sqlite3 *db, guint64 room_id, gint64 count);
+
+// edit yes
+void mx_edit_user_name_by_id(sqlite3 *db, guint64 id, gchar *new_name);
+void mx_edit_room_name_by_id(sqlite3 *db, guint64 id, gchar *new_name);
+void mx_edit_message_by_id(sqlite3 *db, guint64 id, gchar *new);
+void mx_edit_token(sqlite3 *db, guint64 user_id, gchar *new);
+void mx_edit_desc_user(sqlite3 *db, guint64 user_id, gchar *new);
+void mx_edit_desc_room_by_id(sqlite3 *db, guint64 room_id, gchar *new);
+void mx_edit_permission_of_user(sqlite3 *db, guint64 user_id, guint64 room_id,
+                                 gint8 new);
+
+// delete yes
+void mx_delete_message_by_id(sqlite3 *db, guint64 id);
+void mx_delete_user_by_id(sqlite3 *db, guint64 id);
+void mx_delete_room_by_id(sqlite3 *db, guint64 room_id);
+
+// insert yes
+void mx_insert_room_into_db(sqlite3 *db, t_db_room *room);
+void mx_insert_user_into_db(sqlite3 *db, t_db_user *user);
+void mx_insert_message(sqlite3 *db, t_db_message *message);
+
+// free struct
+void mx_free_room(t_db_room **room);
+void mx_free_message(t_db_message **message);
+void mx_free_user(t_db_user **user);
+
+
+//contact
+void mx_insert_contact(sqlite3 *db, guint64 user_id, guint64 contact_id,
+                       gint8 type);
+void mx_delete_contact(sqlite3 *db, guint64 user_id, guint64 contact_id);
+void mx_get_contact_(sqlite3 *db, guint64 user_id, gint8 type);
+
+
+// user
+gboolean mx_is_member(sqlite3 *db, guint64 user_id, guint64 room_id);
+
+
+// search
+gboolean mx_check_user_by_login(sqlite3 *db, gchar *login);
+cJSON *mx_search_room(sqlite3 *db, gchar *str_search);
+cJSON *mx_search_user(sqlite3 *db, gchar *str_search);
+
+
+//members
+cJSON *mx_get_json_members(sqlite3 *db, guint64 room_id);
+GList *mx_get_log_members(sqlite3 *db, guint64 room_id);
+void mx_insert_member_into_db(sqlite3 *db, guint64 room_id, guint64 user_id,
+                              gint8 permission);
+void mx_destroy_data(gpointer data);
+void mx_edit_perm_member(sqlite3 *db, guint64 room_id, guint64 user_id,
+                         gint8 new_perm);
+gint8 mx_get_type_member(sqlite3 *db, guint64 user_id, guint64 room_id);
+
