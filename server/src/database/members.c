@@ -50,18 +50,25 @@ void mx_edit_perm_member(sqlite3 *db, guint64 room_id, guint64 user_id,
     sqlite3_free(request);
 }
 
+static cJSON *get_object_user(sqlite3_stmt *stmt) {
+    cJSON *user = cJSON_CreateObject();
+
+    cJSON_AddNumberToObject(user, "id", sqlite3_column_int64(stmt, 0));
+    cJSON_AddStringToObject(user, "login", (char *)sqlite3_column_text(stmt, 1));
+    return user;
+}
+
 cJSON *mx_get_json_members(sqlite3 *db, guint64 room_id) {
     cJSON *users = cJSON_CreateArray();
     sqlite3_stmt *stmt;
     gint32 rv = 0;
 
-    rv = sqlite3_prepare_v2(db, "select id, name, login, pass, token, "
-                                "users.date, desc from users inner join members"
-                                " on users.id = members.user_id where "
+    rv = sqlite3_prepare_v2(db, "select id, login from users inner join "
+                                "members on users.id = members.user_id where "
                                 "room_id = ?1", -1, &stmt, NULL);
     sqlite3_bind_int64(stmt, 1, room_id);
     while ((rv = sqlite3_step(stmt)) == SQLITE_ROW)
-        cJSON_AddItemToArray(users, mx_get_object_user(stmt));
+        cJSON_AddItemToArray(users, get_object_user(stmt));
     sqlite3_finalize(stmt);
     return users;
 }
