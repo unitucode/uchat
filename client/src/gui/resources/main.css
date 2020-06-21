@@ -46,7 +46,7 @@ box stack, entry, .dialog_notebook header {
 }
 .dialog-action-area button, .dialog-action-area button:hover,
 .box_titlebar button, .button_send_message, .btnbox_msg_ctrl button,
-.btn_attachment, #box_edit_msg button {
+.btn_attachment, #box_edit_msg button, .btn_confirm_changes {
     background-image: none;
 }
 .dialog-action-area button {
@@ -244,7 +244,7 @@ dialog headerbar {
 	padding: 15px 33px 15px 25px;
 	border-radius: 8px;
 }
-.button_send_message {
+.button_send_message, .btn_confirm_changes {
 	background-color: #2F3857;
 	border-radius: 100px;
 	padding: 13px;
