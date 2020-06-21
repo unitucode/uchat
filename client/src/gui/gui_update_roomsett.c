@@ -19,8 +19,6 @@ void mx_gupd_room_name(int id, char *name, GtkBuilder *builder) {
 
 void mx_gdel_room(int id, GtkBuilder *builder) {
     t_groom *groom = mx_get_groom_by_id(id, builder);
-    GObject *room_sett = gtk_builder_get_object(builder, "dialog_room_sett");
 
     mx_delete_row_room(groom->row_room, builder);
-    mx_widget_switch_visibility(NULL, GTK_WIDGET(room_sett));
 }
