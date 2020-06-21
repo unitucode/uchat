@@ -48,11 +48,11 @@ bool mx_authorization_handler(t_dtp *token, t_chat *chat) {
 
     if (chat->auth_token)
         return false;
-    if (!auth_token || !cJSON_IsString(auth_token)
+    if (!cJSON_IsString(auth_token)
         || !mx_isvalid_token(auth_token->valuestring)) {
         return false;
     }
-    if (!login || !cJSON_IsString(login)
+    if (!cJSON_IsString(login)
         || !mx_match_search(login->valuestring, MX_LOGIN_REGEX)) {
         return false;
     }

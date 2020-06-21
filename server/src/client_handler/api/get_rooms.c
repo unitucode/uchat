@@ -5,7 +5,7 @@ bool mx_get_rooms_handler(t_dtp *data, t_client *client) {
     cJSON *rooms_json = cJSON_CreateObject();
     t_dtp *rooms = NULL;
 
-    if (!date || !cJSON_IsNumber(date))
+    if (!cJSON_IsNumber(date))
         return false;
     if (!cJSON_AddItemReferenceToObject(rooms_json, "rooms", mx_get_rooms(client->info->database, date->valueint, client->user->user_id))) {
         cJSON_Delete(rooms_json);

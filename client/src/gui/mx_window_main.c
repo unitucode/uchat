@@ -11,14 +11,9 @@ GtkBuilder *mx_init_window(int argc, char **argv) {
     return builder;
 }
 
-int mx_start_gui(t_chat *chat) {
-    // GdkPixbuf *svg = gdk_pixbuf_new_from_file("../src/gui/resources/web-browser.tiff", NULL);
-    // GtkWidget *img = gtk_image_new_from_pixbuf(svg);
-    // GObject *button = gtk_builder_get_object(chat->builder, "btn_show_roomlist");
-    // gtk_button_set_image(GTK_BUTTON(button), img);
-    
-    GtkIconTheme *icon_theme = gtk_icon_theme_get_default();;
-    gtk_icon_theme_add_resource_path(icon_theme, "../src/gui/resources");
+gint mx_start_gui(t_chat *chat) {
+    const gchar *path[] = {"../src/gui/resources"};
+    gtk_icon_theme_set_search_path(gtk_icon_theme_get_default(), path, 1);
 
     gtk_main();
 

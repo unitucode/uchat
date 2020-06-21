@@ -148,7 +148,7 @@ void mx_err_user_exist_handler(GtkBuilder *builder);
 //gui
 GtkBuilder *mx_init_window(int argc, char **argv);
 void mx_init_gui(t_chat *chat);
-int mx_start_gui(t_chat *chat);
+gint mx_start_gui(t_chat *chat);
 void mx_start_main_window(t_chat *chat);
 void mx_add_groom(t_groom *room, GtkBuilder *builder);
 void mx_delete_groom(t_groom *room);

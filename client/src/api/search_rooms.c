@@ -28,7 +28,7 @@ bool mx_search_rooms_handler(t_dtp *data, t_chat *chat) {
     cJSON *rooms = cJSON_GetObjectItemCaseSensitive(data->json, "rooms");
     cJSON *room = NULL;
 
-    if (!rooms || !cJSON_IsArray(rooms))
+    if (!cJSON_IsArray(rooms))
         return false;
     for (int i = 0; i < cJSON_GetArraySize(rooms); i++) {
         room = cJSON_GetArrayItem(rooms, i);

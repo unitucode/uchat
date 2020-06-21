@@ -23,7 +23,7 @@ bool mx_join_room_handler(t_dtp *room, t_client *client) {
     t_db_room *db_room = NULL;
     t_dtp *answer = NULL;
 
-    if (!room_id || !cJSON_IsNumber(room_id))
+    if (!cJSON_IsNumber(room_id))
         return false;
     if (mx_is_member(client->info->database, client->user->user_id, room_id->valueint))
         return false;

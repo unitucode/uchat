@@ -32,9 +32,9 @@ bool mx_new_msgs_hanlder(t_dtp *data, t_chat *chat) {
     cJSON *msgs = cJSON_GetObjectItemCaseSensitive(data->json, "messages");
     cJSON *msg = NULL;
 
-    if (!room_id || !cJSON_IsNumber(room_id))
+    if (!cJSON_IsNumber(room_id))
         return false;
-    if (!msgs || !cJSON_IsArray(msgs))
+    if (!cJSON_IsArray(msgs))
         return false;
     for (int i = 0; i < cJSON_GetArraySize(msgs); i++) {
         msg = cJSON_GetArrayItem(msgs, i);

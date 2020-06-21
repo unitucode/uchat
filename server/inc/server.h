@@ -52,7 +52,7 @@ t_dtp *mx_users_online_request(int count, int all);
 t_dtp *mx_log_out_request(char *token);
 t_dtp *mx_upd_room_desc_request(int room_id, char *room_name);
 t_dtp *mx_upd_room_name_request(int room_id, char *room_name);
-t_dtp *mx_upd_user_desc_request(char *name, char *desc);
+t_dtp *mx_upd_user_desc_request(char *desc);
 t_dtp *mx_reconnect_request(char *token, char *login);
 t_dtp *mx_search_rooms_request(cJSON *array);
 

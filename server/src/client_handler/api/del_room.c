@@ -15,7 +15,7 @@ bool mx_del_room_handler(t_dtp *data, t_client *client) {
                                                    "room_id");
     t_dtp *resend = NULL;
 
-    if (!room_id || !cJSON_IsNumber(room_id))
+    if (!cJSON_IsNumber(room_id))
         return false;
     if (mx_get_type_member(client->info->database, client->user->user_id, room_id->valueint) != DB_CUSTOMER)
         return false;
