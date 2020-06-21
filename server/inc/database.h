@@ -175,3 +175,5 @@ void mx_edit_perm_member(sqlite3 *db, guint64 room_id, guint64 user_id,
                          gint8 new_perm);
 gint8 mx_get_type_member(sqlite3 *db, guint64 user_id, guint64 room_id);
 
+// message
+gboolean mx_is_owner_msg(sqlite3 *db, guint64 user_id, guint64 msg_id);
