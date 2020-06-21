@@ -8,62 +8,7 @@
       <placeholder/>
     </child>
     <child>
-      <object class="GtkBox">
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <property name="spacing">5</property>
-        <child>
-          <object class="GtkEntry">
-            <property name="visible">True</property>
-            <property name="can_focus">True</property>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">0</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkButton">
-            <property name="label" translatable="yes">button</property>
-            <property name="visible">True</property>
-            <property name="can_focus">True</property>
-            <property name="receives_default">True</property>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">1</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkButton">
-            <property name="label" translatable="yes">button</property>
-            <property name="visible">True</property>
-            <property name="can_focus">True</property>
-            <property name="receives_default">True</property>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">2</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkButton">
-            <property name="label" translatable="yes">button</property>
-            <property name="visible">True</property>
-            <property name="can_focus">True</property>
-            <property name="receives_default">True</property>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="pack_type">end</property>
-            <property name="position">3</property>
-          </packing>
-        </child>
-      </object>
+      <placeholder/>
     </child>
   </object>
   <object class="GtkEntryBuffer" id="buffer_login"/>
@@ -362,6 +307,11 @@
     <property name="pixel_size">17</property>
     <property name="icon_name">edit</property>
   </object>
+  <object class="GtkImage" id="image10">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="icon_name">applications-engineering</property>
+  </object>
   <object class="GtkImage" id="image11">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
@@ -378,6 +328,11 @@
     <property name="can_focus">False</property>
     <property name="pixel_size">16</property>
     <property name="icon_name">close</property>
+  </object>
+  <object class="GtkImage" id="image14">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="stock">gtk-missing-image</property>
   </object>
   <object class="GtkImage" id="image2">
     <property name="visible">True</property>
@@ -755,6 +710,7 @@
                                 <property name="can_focus">False</property>
                                 <property name="receives_default">True</property>
                                 <property name="valign">center</property>
+                                <property name="image">image10</property>
                                 <signal name="clicked" handler="mx_widget_switch_visibility" object="dialog_room_sett" swapped="no"/>
                               </object>
                               <packing>
@@ -773,76 +729,76 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkButtonBox" id="btnbox_msg_ctrl">
+                          <object class="GtkBox" id="box_msg_ctrl">
+                            <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="spacing">5</property>
-                            <property name="layout_style">center</property>
+                            <child>
+                              <object class="GtkBox">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="spacing">5</property>
+                                <child>
+                                  <object class="GtkButton" id="btn_edit_msg">
+                                    <property name="width_request">60</property>
+                                    <property name="height_request">40</property>
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">True</property>
+                                    <property name="receives_default">True</property>
+                                    <property name="no_show_all">True</property>
+                                    <property name="valign">center</property>
+                                    <property name="image">image1</property>
+                                    <signal name="clicked" handler="mx_widget_switch_visibility" object="box_editing_msg" swapped="no"/>
+                                    <signal name="clicked" handler="mx_widget_switch_visibility" object="btn_edit_msg_apply" swapped="no"/>
+                                    <signal name="clicked" handler="mx_widget_switch_visibility" object="btn_send_msg" swapped="no"/>
+                                  </object>
+                                  <packing>
+                                    <property name="expand">True</property>
+                                    <property name="fill">True</property>
+                                    <property name="position">0</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <object class="GtkButton" id="btn_delete_msg">
+                                    <property name="width_request">60</property>
+                                    <property name="height_request">40</property>
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">True</property>
+                                    <property name="receives_default">True</property>
+                                    <property name="valign">center</property>
+                                    <property name="image">image2</property>
+                                  </object>
+                                  <packing>
+                                    <property name="expand">True</property>
+                                    <property name="fill">True</property>
+                                    <property name="pack_type">end</property>
+                                    <property name="position">1</property>
+                                  </packing>
+                                </child>
+                              </object>
+                              <packing>
+                                <property name="expand">True</property>
+                                <property name="fill">False</property>
+                                <property name="position">1</property>
+                              </packing>
+                            </child>
                             <child>
                               <object class="GtkButton" id="btn_unselect_msg">
-                                <property name="label" translatable="yes">unselect</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">True</property>
+                                <property name="halign">center</property>
+                                <property name="valign">center</property>
+                                <property name="image">image14</property>
                               </object>
                               <packing>
-                                <property name="expand">True</property>
-                                <property name="fill">True</property>
+                                <property name="expand">False</property>
+                                <property name="fill">False</property>
                                 <property name="pack_type">end</property>
-                                <property name="position">0</property>
-                                <property name="secondary">True</property>
-                              </packing>
-                            </child>
-                            <child>
-                              <object class="GtkLabel" id="label_selected_msg_num">
-                                <property name="visible">True</property>
-                                <property name="can_focus">False</property>
-                                <attributes>
-                                  <attribute name="weight" value="ultraheavy"/>
-                                  <attribute name="foreground" value="#cbf1eae4ffff"/>
-                                  <attribute name="absolute-size" value="20000"/>
-                                </attributes>
-                              </object>
-                              <packing>
-                                <property name="expand">True</property>
-                                <property name="fill">True</property>
-                                <property name="pack_type">end</property>
-                                <property name="position">1</property>
-                                <property name="secondary">True</property>
-                              </packing>
-                            </child>
-                            <child>
-                              <object class="GtkButton" id="btn_edit_msg">
-                                <property name="visible">True</property>
-                                <property name="can_focus">False</property>
-                                <property name="receives_default">True</property>
-                                <property name="no_show_all">True</property>
-                                <property name="image">image1</property>
-                                <signal name="clicked" handler="mx_widget_switch_visibility" object="box_editing_msg" swapped="no"/>
-                                <signal name="clicked" handler="mx_widget_switch_visibility" object="btn_edit_msg_apply" swapped="no"/>
-                                <signal name="clicked" handler="mx_widget_switch_visibility" object="btn_send_msg" swapped="no"/>
-                              </object>
-                              <packing>
-                                <property name="expand">True</property>
-                                <property name="fill">True</property>
                                 <property name="position">2</property>
                               </packing>
                             </child>
-                            <child>
-                              <object class="GtkButton" id="btn_delete_msg">
-                                <property name="visible">True</property>
-                                <property name="can_focus">False</property>
-                                <property name="receives_default">True</property>
-                                <property name="image">image2</property>
-                              </object>
-                              <packing>
-                                <property name="expand">True</property>
-                                <property name="fill">True</property>
-                                <property name="pack_type">end</property>
-                                <property name="position">3</property>
-                              </packing>
-                            </child>
                             <style>
-                              <class name="btnbox_msg_ctrl"/>
+                              <class name="box_msg_ctrl"/>
                             </style>
                           </object>
                           <packing>
@@ -855,7 +811,7 @@
                       <packing>
                         <property name="expand">True</property>
                         <property name="fill">True</property>
-                        <property name="position">0</property>
+                        <property name="position">-1</property>
                       </packing>
                     </child>
                     <style>

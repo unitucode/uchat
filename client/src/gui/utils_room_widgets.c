@@ -7,7 +7,7 @@ void mx_switch_room_header(GtkBuilder *builder, int page_index) {
     if (page_index == MX_ROOM_CTRL)
         page = gtk_builder_get_object(builder, "box_room_ctrl");
     else if (page_index == MX_MSG_CTRL)
-        page = gtk_builder_get_object(builder, "btnbox_msg_ctrl");
+        page = gtk_builder_get_object(builder, "box_msg_ctrl");
     gtk_stack_set_visible_child(GTK_STACK(stack), GTK_WIDGET(page));
 }
 

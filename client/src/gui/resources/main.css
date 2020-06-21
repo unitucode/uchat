@@ -45,7 +45,7 @@ box stack, entry, .dialog_notebook header {
     margin-bottom: 45px;
 }
 .dialog-action-area button, .dialog-action-area button:hover,
-.box_titlebar button, .button_send_message, .btnbox_msg_ctrl button,
+.box_titlebar button, .button_send_message, .box_msg_ctrl button,
 .btn_attachment {
     background-image: none;
 }
@@ -334,11 +334,11 @@ dialog headerbar {
 .search image {
     margin-right: 8px;
 }
-.btnbox_msg_ctrl  {
+.box_msg_ctrl  {
     background-color: #6785FF;
     padding: 0 25px;
 }
-.btnbox_msg_ctrl button {
+.box_msg_ctrl button {
 	background-color: #5775D9;
 }
 .dialog_auth entry selection, .wnd_main entry selection,
