@@ -255,8 +255,21 @@ dialog headerbar {
 	font-size: 14px;
 	color: #B8C2E5; 
 }
+.stack_messages list .box_own_msg_info label:nth-child(2) {
+	background-color: rgb(86, 102, 160);
+	padding: 10px 15px;
+	border-radius: 8px 8px 0 8px;
+	margin-top: 7px;
+	margin-left: 7px; 
+	font-weight: 300;
+	font-size: 14px;
+	color: #B8C2E5; 
+}
 .main_msg_box {
 	padding: 0 180px 0 0;
+}
+.main_own_msg_box {
+	padding: 0 0 0 180px;
 }
 .stack_messages list {
 	margin: 7px 25px 25px 25px;
@@ -277,7 +290,17 @@ dialog headerbar {
     color: #919CC0;
     margin-left: 10px;
 }
+.stack_messages list .box_own_msg_info label:nth-child(1){
+	font-size: 13px;
+    font-weight: 300;
+    color: #919CC0;
+    margin-right: 10px;
+}
 .stack_messages list row:selected .box_msg_info label:nth-child(1) {
+    background-color: #6785FF;
+    color: #fff;
+}
+.stack_messages list row:selected .box_own_msg_info label:nth-child(2) {
     background-color: #6785FF;
     color: #fff;
 }

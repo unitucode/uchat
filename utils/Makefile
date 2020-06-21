@@ -15,7 +15,7 @@ INCD := inc inc/protocol
 INCD_UTILS := $(addprefix -I, $(INCD))
 INCS = $(foreach dir, $(INCD), $(wildcard $(dir)/*.h))
 
-SRCD := src src/wrappers src/list src/config src/logger \
+SRCD := src src/wrappers src/config src/logger \
 src/protocol src/ssl src/database src/file_transfer
 SRCS = $(foreach dir, $(SRCD), $(wildcard $(dir)/*.c))
 OBJS = $(addprefix $(OBJD)/, $(notdir $(SRCS:%.c=%.o)))

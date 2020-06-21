@@ -17,6 +17,6 @@ bool mx_msg_handler(t_dtp *data, t_chat *chat) {
 
     if (!gmsg)
         return false;
-    mx_add_message_to_room(gmsg, chat->builder);
+    mx_add_message_to_room(gmsg, chat);
     return true;
 }
