@@ -16,7 +16,7 @@ static void insert_room(cJSON *room, t_chat *chat) { //TODO HANDLE ROOMS
     cJSON *dup = cJSON_Duplicate(room, cJSON_True);
     cJSON *room_id = cJSON_GetObjectItemCaseSensitive(room, "id");
 
-    if (!room_id || !cJSON_IsNumber(room_id))
+    if (!cJSON_IsNumber(room_id))
         return;
     if (!cJSON_AddNumberToObject(dup, "type", RQ_NEW_ROOM))
         return;
@@ -31,7 +31,7 @@ bool mx_rooms_hanlder(t_dtp *data, t_chat *chat) {
     cJSON *rooms = cJSON_GetObjectItemCaseSensitive(data->json, "rooms");
     cJSON *room = NULL;
 
-    if (!rooms || !cJSON_IsArray(rooms))
+    if (!cJSON_IsArray(rooms))
         return false;
     for (int i = 0; i < cJSON_GetArraySize(rooms); i++) {
         room = cJSON_GetArrayItem(rooms, i);

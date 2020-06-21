@@ -38,9 +38,7 @@ bool mx_sign_up_handler(t_dtp *signup_data, t_client *client) {
         mx_free_user(&user);
         return false;
     }
-    if (!sign_up(user, client)) {
+    if (!sign_up(user, client))
         mx_free_user(&user);
-        return false;
-    }
     return true;
 }

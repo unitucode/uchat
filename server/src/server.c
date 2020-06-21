@@ -87,6 +87,12 @@ int main(int argc, char **argv) {
 void test() {
     sqlite3 *db = mx_open_db(MX_DB);
 
+    // if (mx_is_owner_msg(db, 1, 1)) {
+    //     g_print("true\n");
+    // }
+    // else
+    //     g_print("false\n");
+
 
     // mx_edit_members(db, 11, 1, DB_SIMPLE);
 

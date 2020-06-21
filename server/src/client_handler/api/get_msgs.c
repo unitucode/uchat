@@ -7,11 +7,11 @@ bool mx_get_msgs_handler(t_dtp *data, t_client *client) {
     t_dtp *msgs = NULL;
     cJSON *msgs_json = NULL;
 
-    if (!date || !cJSON_IsNumber(date))
+    if (!cJSON_IsNumber(date))
         return false;
-    if (!count || !cJSON_IsNumber(count))
+    if (!cJSON_IsNumber(count))
         return false;
-    if (!room_id || !cJSON_IsNumber(room_id))
+    if (!cJSON_IsNumber(room_id))
         return false;
     msgs_json = mx_get_new_messages_by_id(client->info->database, room_id->valueint, date->valueint, count->valueint);
     if (!cJSON_AddNumberToObject(msgs_json, "type", RQ_GET_NEW_MSGS)) {

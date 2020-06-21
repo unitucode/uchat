@@ -42,11 +42,11 @@ bool mx_upload_file_handler(t_dtp *data, t_client *client) {
     cJSON *name = cJSON_GetObjectItemCaseSensitive(data->json, "name");
     cJSON *token = cJSON_GetObjectItemCaseSensitive(data->json, "token");
 
-    if (!size || !cJSON_IsNumber(size))
+    if (!cJSON_IsNumber(size))
         return false;
-    if (!name || !cJSON_IsString(name))
+    if (!cJSON_IsString(name))
         return false;
-    if (!token || !cJSON_IsString(token))
+    if (!cJSON_IsString(token))
         return false;
     client->user = mx_get_user_by_token(client->info->database, token->valuestring);
     g_print("start_handle\n");

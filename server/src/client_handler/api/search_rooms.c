@@ -14,7 +14,7 @@ bool mx_search_rooms_handler(t_dtp *data, t_client *client) {
     cJSON *name = cJSON_GetObjectItemCaseSensitive(data->json, "name");
     t_dtp *answer = NULL;
 
-    if (!name || !cJSON_IsString(name))
+    if (!cJSON_IsString(name))
         return false;
     answer = mx_search_rooms_request(mx_search_room(client->info->database, name->valuestring));
     mx_send(client->out, answer);

@@ -13,7 +13,7 @@ t_dtp *mx_log_out_request(char *token) {
 bool mx_log_out_handler(t_dtp *token, t_chat *chat) {
     cJSON *tok = cJSON_GetObjectItemCaseSensitive(token->json, "token");
 
-    if (!tok || !cJSON_IsString(tok) || !mx_isvalid_token(tok->valuestring))
+    if (!cJSON_IsString(tok) || !mx_isvalid_token(tok->valuestring))
         return false;
     if (strcmp(chat->auth_token, tok->valuestring))
         return false;

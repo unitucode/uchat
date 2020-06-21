@@ -14,9 +14,9 @@ bool mx_upd_user_desc_handler(t_dtp *data, t_chat *chat) {
     cJSON *desc = cJSON_GetObjectItemCaseSensitive(data->json, "desc");
     cJSON *login = cJSON_GetObjectItemCaseSensitive(data->json, "name");
 
-    if (!desc || !cJSON_IsString(desc))
+    if (!cJSON_IsString(desc))
         return false;
-    if (!login || !cJSON_IsString(login))
+    if (!cJSON_IsString(login))
         return false;
     //WORKING WITH GUI
     chat++;

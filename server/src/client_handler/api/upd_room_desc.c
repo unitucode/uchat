@@ -18,9 +18,9 @@ bool mx_upd_room_desc_handler(t_dtp *room, t_client *client) {
     t_db_room *room_db = NULL;
     t_dtp *resend = NULL;
 
-    if (!room_id || !cJSON_IsNumber(room_id))
+    if (!cJSON_IsNumber(room_id))
         return false;
-    if (!desc || !cJSON_IsString(desc))
+    if (!cJSON_IsString(desc))
         return false;
     if (mx_get_type_member(client->info->database, client->user->user_id, room_id->valueint) != DB_CUSTOMER)
         return false;

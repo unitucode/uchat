@@ -16,9 +16,9 @@ bool mx_upd_room_name_handler(t_dtp *data, t_chat *chat) {
     cJSON *room_id = cJSON_GetObjectItemCaseSensitive(data->json, "room_id");
     cJSON *room_name = cJSON_GetObjectItemCaseSensitive(data->json, "room_name");
 
-    if (!room_id || !cJSON_IsNumber(room_id))
+    if (!cJSON_IsNumber(room_id))
         return false;
-    if (!room_name || !cJSON_IsString(room_name))
+    if (!cJSON_IsString(room_name))
         return false;
     mx_gupd_room_name(room_id->valueint, room_name->valuestring,
                       chat->builder);

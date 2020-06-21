@@ -20,13 +20,15 @@ bool mx_edit_msg_handler(t_dtp *msg, t_client *client) {
     cJSON *msg_str = cJSON_GetObjectItemCaseSensitive(msg->json, "msg");
     t_dtp *resend = NULL;
 
-    if (!room_id || !cJSON_IsNumber(room_id))
+    if (!cJSON_IsNumber(room_id))
         return false;
-    if (!msg_id || !cJSON_IsNumber(msg_id))
+    if (!cJSON_IsNumber(msg_id))
         return false;
-    if (!msg_str || !cJSON_IsString(msg_str))
+    if (!cJSON_IsString(msg_str))
         return false;
     if (!mx_is_member(client->info->database, client->user->user_id, room_id->valueint))
+        return false;
+    if (!mx_is_owner_msg(client->info->database, client->user->user_id, msg_id->valueint))
         return false;
     mx_edit_message_by_id(client->info->database, msg_id->valueint, msg_str->valuestring);
     resend = mx_edit_msg_request(msg_str->valuestring, room_id->valueint, msg_id->valueint);

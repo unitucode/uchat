@@ -1,7 +1,7 @@
 #include "client.h"
 
 static void req_addroom(GtkButton *btn, t_chat *chat) {
-    char *room_name = mx_get_buffer_text("buffer_roomname", chat->builder);
+    gchar *room_name = mx_get_buffer_text("buffer_roomname", chat->builder);
     t_dtp *dtp = mx_new_room_request(room_name, "", DB_GLOBAL_CHAT);
 
     mx_send(chat->out, dtp);
