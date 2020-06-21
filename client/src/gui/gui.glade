@@ -376,7 +376,8 @@
   <object class="GtkImage" id="image12">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
-    <property name="icon_name">emblem-unreadable</property>
+    <property name="icon_name">close</property>
+    <property name="pixel_size">12</property>
   </object>
   <object class="GtkImage" id="image13">
     <property name="visible">True</property>
@@ -922,10 +923,11 @@
                     <property name="can_focus">False</property>
                     <child>
                       <object class="GtkImage">
+                        <property name="name">image_edit_msg</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="valign">start</property>
-                        <property name="pixel_size">17</property>
+                        <property name="pixel_size">16</property>
                         <property name="icon_name">edit</property>
                       </object>
                       <packing>
@@ -946,10 +948,6 @@
                             <property name="can_focus">False</property>
                             <property name="label" translatable="yes">Edit</property>
                             <property name="xalign">0</property>
-                            <attributes>
-                              <attribute name="weight" value="semibold"/>
-                              <attribute name="foreground" value="#72729f9fcfcf"/>
-                            </attributes>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -964,9 +962,6 @@
                             <property name="label" translatable="yes">Message Text</property>
                             <property name="ellipsize">end</property>
                             <property name="xalign">0</property>
-                            <attributes>
-                              <attribute name="foreground" value="#eeeeeeeeecec"/>
-                            </attributes>
                           </object>
                           <packing>
                             <property name="expand">True</property>
