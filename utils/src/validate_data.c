@@ -9,8 +9,8 @@ bool mx_isvalid_hash(char *hash) {
 }
 
 bool mx_isvalid_token(char *token) {
-    if (mx_match_nsearch(token, MX_HASH_REGEX, MX_MD5_BUF_SIZE)
-        && mx_match_search(token + MX_MD5_BUF_SIZE, MX_LOGIN_REGEX)) {
+    if (mx_match_nsearch(token, MX_HASH_REGEX, MX_SHA256_LENGTH)
+        && mx_match_search(token + MX_SHA256_LENGTH, MX_LOGIN_REGEX)) {
         return true;
     }
     return false;
