@@ -86,8 +86,6 @@ typedef struct s_signal_data {
 gssize mx_send(GDataOutputStream *out, t_dtp *dtp);
 int mx_tcp_connect(const char *host, const char *serv);
 t_chat *mx_init_chat(GSocketConnection *connection, int argc, char **argv);
-void mx_signup(SSL *ssl);
-void mx_login(SSL *ssl);
 void mx_receiver(GObject *source_object, GAsyncResult *res, gpointer user_data);
 void mx_init_handlers(t_chat *chat);
 void mx_init_errors(t_chat *chat);

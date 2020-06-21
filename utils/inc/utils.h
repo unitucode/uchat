@@ -19,12 +19,9 @@
 #include <signal.h>
 #include <fcntl.h>
 #include <sys/stat.h>
-#include <openssl/ssl.h>
-#include <openssl/err.h>
-#include <openssl/md5.h>
-#include <openssl/rand.h>
 #include <regex.h>
 #include <time.h>
+#include <gmodule.h>
 #include "sqlite3.h"
 #include "cJSON.h"
 #include "list.h"
@@ -50,14 +47,6 @@ typedef enum e_app_type {
     CLIENT,
     SERVER
 }            t_app_type;
-
-typedef struct s_sockopt {
-    int socket;
-    int level;
-    int option_name;
-    const void *option_value;
-    socklen_t option_len;
-}              t_sockopt;
 
 typedef enum e_logtype {
     LOGMSG,
