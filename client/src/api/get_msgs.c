@@ -28,7 +28,7 @@ static void insert_msg(cJSON *room, t_chat *chat, int room_id) {
 }
 
 bool mx_new_msgs_hanlder(t_dtp *data, t_chat *chat) {
-    cJSON *room_id = cJSON_GetObjectItemCaseSensitive(data->json, "id");
+    cJSON *room_id = cJSON_GetObjectItemCaseSensitive(data->json, "room_id");
     cJSON *msgs = cJSON_GetObjectItemCaseSensitive(data->json, "messages");
     cJSON *msg = NULL;
 

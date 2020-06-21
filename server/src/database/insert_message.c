@@ -25,8 +25,8 @@ void mx_insert_message(sqlite3 *db, t_db_message *message) {
                                 "date_dead)values(?1, ?2, ?3, ?4, ?5, ?6, ?7, "
                                 "?8, ?9)", -1, &stmt, NULL);
     mx_error_sqlite(rv, "prepare", "insert_msg_file");
-    sqlite3_bind_int64(stmt, 1, message->user_id);
-    sqlite3_bind_int64(stmt, 2, message->room_id);
+    sqlite3_bind_int64(stmt, 1, message->room_id);
+    sqlite3_bind_int64(stmt, 2, message->user_id);
     sqlite3_bind_int64(stmt, 3, message->date);
     sqlite3_bind_int(stmt, 4, message->type);
     sqlite3_bind_text(stmt, 5, message->message, -1, SQLITE_STATIC);

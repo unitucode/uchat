@@ -20,8 +20,8 @@ bool mx_upd_user_desc_handler(t_dtp *desc_data, t_client *client) {
         return false;
     // mx_update_description_user(client->chat->database, client->user->login, desc->valuestring);
     resend = mx_upd_user_desc_request(client->user->login, desc->valuestring);
-    if (resend)
-        mx_send_to_all(resend, client);
+    // if (resend)
+    //     mx_send_to_all(resend, client);
     mx_free_request(&resend);
     return true;
 }

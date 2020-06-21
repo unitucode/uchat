@@ -36,16 +36,12 @@ t_db_room *mx_parse_json_room(cJSON *room_j) {
     if (!(json = mx_json_is_valid(room_j, "name", cJSON_IsString)))
         return NULL;
     room->room_name = strdup(json->valuestring);
-    if (!(json = mx_json_is_valid(room_j, "customer_id", cJSON_IsNumber)))
-        return NULL;
-    room->customer_id = json->valueint;
     if (!(json = mx_json_is_valid(room_j, "desc", cJSON_IsString)))
         return NULL;
     room->desc = strdup(json->valuestring);
     if (!(json = mx_json_is_valid(room_j, "type", cJSON_IsNumber)))
         return NULL;
     room->type = json->valueint;
-    cJSON_Delete(room_j);
     return room;
 }
 
@@ -56,25 +52,24 @@ t_db_message *mx_parse_message(cJSON *message_j) {
     if (!(json = mx_json_is_valid(message_j, "room_id", cJSON_IsNumber)))
         return NULL;
     message->room_id = json->valueint;
-    if (!(json = mx_json_is_valid(message_j, "user_id", cJSON_IsNumber)))
-        return NULL;
-    message->user_id = json->valueint;
-    if (!(json = mx_json_is_valid(message_j, "type", cJSON_IsNumber)))
-        return NULL;
-    message->type = json->valueint;
-    if (!(json = mx_json_is_valid(message_j, "file_size", cJSON_IsNumber)))
-        return NULL;
-    message->file_size = json->valueint;
+    // if (!(json = mx_json_is_valid(message_j, "user_id", cJSON_IsNumber)))
+    //     return NULL;
+    // message->user_id = json->valueint;
+    // if (!(json = mx_json_is_valid(message_j, "type", cJSON_IsNumber)))
+    //     return NULL;
+    message->type = DB_STATUS_MSG_START;
+    // if (!(json = mx_json_is_valid(message_j, "file_size", cJSON_IsNumber)))
+    //     return NULL;
+    message->file_size = 0;
     if (!(json = mx_json_is_valid(message_j, "message", cJSON_IsString)))
         return NULL;
     message->message = strdup(json->valuestring);
-    if (!(json = mx_json_is_valid(message_j, "file_name", cJSON_IsString)))
-        return NULL;
-    message->file_name = strdup(json->valuestring);
-    if (!(json = mx_json_is_valid(message_j, "date_dead", cJSON_IsNumber)))
-        return NULL;
-    message->date_dead = json->valueint;
-    cJSON_Delete(message_j);
+    // if (!(json = mx_json_is_valid(message_j, "file_name", cJSON_IsString)))
+    //     return NULL;
+    message->file_name = strdup("");
+    // if (!(json = mx_json_is_valid(message_j, "date_dead", cJSON_IsNumber)))
+    //     return NULL;
+    message->date_dead = 0;
     return message;
 }
 
