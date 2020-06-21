@@ -13,7 +13,7 @@ t_dtp *mx_msg_request(char *msg, int room_id) {
 }
 
 bool mx_msg_handler(t_dtp *data, t_chat *chat) {
-    t_gmsg *gmsg = mx_create_gmsg(data->json);
+    t_gmsg *gmsg = mx_create_gmsg(data->json, chat);
 
     if (!gmsg)
         return false;

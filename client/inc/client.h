@@ -38,6 +38,7 @@ struct s_groom {
     GtkStack *stack_msg;
     GtkListBox *box_messages;
     GtkLabel *label_name;
+    GHashTable *members;
     int id;
     char *room_name;
     char *customer;
@@ -110,6 +111,7 @@ bool mx_del_msg_handler(t_dtp *data, t_chat *chat); // HANDLER FOR DEL MSG
 bool mx_upload_file_handler(t_dtp *data, t_chat *chat); // HANDLER FOR GET FILE
 bool mx_search_rooms_handler(t_dtp *data, t_chat *chat); //HANDLER FOR SEARCHING
 bool mx_join_room_handler(t_dtp *data, t_chat *chat); //HANDLER FOR JOIN ROOM
+bool mx_get_members_handler(t_dtp *data, t_chat *chat); //HANDLER FOR USERS
 
 
 /*
@@ -140,6 +142,7 @@ t_dtp *mx_edit_msg_request(char *msg, int room_id, int msg_id); // FOR EDIT MESS
 t_dtp *mx_upload_file_request(char *name, goffset size, char *token); // FOR UPLOAD FILE
 t_dtp *mx_search_rooms_request(char *room_name); // FOR SEARCHING CHANNEL
 t_dtp *mx_join_room_request(int room_id); //FOR JOIN TO ROOM
+t_dtp *mx_get_members_request(int room_id); //FOR MEMEBERS
 
 //errors api
 void mx_err_auth_data_handler(GtkBuilder *builder);
@@ -153,7 +156,7 @@ void mx_start_main_window(t_chat *chat);
 void mx_add_groom(t_groom *room, GtkBuilder *builder);
 void mx_delete_groom(t_groom *room);
 t_groom *mx_create_groom(cJSON *room);
-t_gmsg *mx_create_gmsg(cJSON *msg);
+t_gmsg *mx_create_gmsg(cJSON *msg, t_chat *chat);
 void mx_delete_gmsg(t_gmsg *gmsg);
 GtkWidget *mx_create_message_row(t_chat *chat,  t_gmsg *gmsg);
 void mx_add_message_to_room(t_gmsg *msg, t_chat *chat);

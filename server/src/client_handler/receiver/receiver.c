@@ -19,6 +19,7 @@ void mx_init_receiver(t_info *chat) {
     chat->request_handler[RQ_FILE] = mx_upload_file_handler;
     chat->request_handler[RQ_SEARCH_CH] = mx_search_rooms_handler;
     chat->request_handler[RQ_JOIN_ROOM] = mx_join_room_handler;
+    chat->request_handler[RQ_GET_MEMBERS] = mx_get_members_handler;
 }
 
 bool mx_handle_request(char *request, t_client *client) {

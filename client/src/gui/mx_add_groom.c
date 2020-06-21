@@ -131,6 +131,7 @@ static t_groom *mx_init_groom() {
     room->date = -1;
     room->is_updated = true;
     room->desc = NULL;
+    room->members = g_hash_table_new(g_direct_hash, g_direct_equal);
     return room;
 }
 
