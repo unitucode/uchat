@@ -55,6 +55,7 @@ t_dtp *mx_upd_room_name_request(int room_id, char *room_name);
 t_dtp *mx_upd_user_desc_request(char *desc);
 t_dtp *mx_reconnect_request(char *token, char *login);
 t_dtp *mx_search_rooms_request(cJSON *array);
+t_dtp *mx_member_info_request(t_db_user *user);
 
 //data protocol handler functions
 bool mx_log_in_handler(t_dtp *login, t_client *client);
@@ -75,6 +76,7 @@ bool mx_upload_file_handler(t_dtp *data, t_client *client); //TODO
 bool mx_search_rooms_handler(t_dtp *data, t_client *client);
 bool mx_join_room_handler(t_dtp *room, t_client *client);
 bool mx_get_members_handler(t_dtp *data, t_client *client);
+bool mx_member_info_handler(t_dtp *id, t_client *client);
 
 t_info *mx_init_info(void);
 void mx_deinit_info(t_info **info);

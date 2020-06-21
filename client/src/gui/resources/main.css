@@ -45,7 +45,7 @@ box stack, entry, .dialog_notebook header {
     margin-bottom: 45px;
 }
 .dialog-action-area button, .dialog-action-area button:hover,
-.box_titlebar button, .button_send_message, .btnbox_msg_ctrl button,
+.box_titlebar button, .button_send_message, .box_msg_ctrl button,
 .btn_attachment, #box_edit_msg button, .btn_confirm_changes {
     background-image: none;
 }

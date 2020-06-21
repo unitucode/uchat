@@ -63,10 +63,10 @@ t_db_message *mx_parse_message(cJSON *message_j) {
     message->file_size = 0;
     if (!(json = mx_json_is_valid(message_j, "message", cJSON_IsString)))
         return NULL;
-    message->message = strdup(json->valuestring);
+    message->message = g_strstrip(g_strdup(json->valuestring));
     // if (!(json = mx_json_is_valid(message_j, "file_name", cJSON_IsString)))
     //     return NULL;
-    message->file_name = strdup("");
+    message->file_name = g_strdup("");
     // if (!(json = mx_json_is_valid(message_j, "date_dead", cJSON_IsNumber)))
     //     return NULL;
     message->date_dead = 0;

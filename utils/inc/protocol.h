@@ -39,6 +39,8 @@ typedef enum s_request_type {
     RQ_SEARCH_CH,
     RQ_JOIN_ROOM,
     RQ_GET_MEMBERS,
+    RQ_MEMBER_INFO,
+    RQ_NEW_MEMBER,
     RQ_COUNT_REQUEST,
 }            t_request_type;
 
