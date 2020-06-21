@@ -1,6 +1,6 @@
 #include "server.h"
 
-gboolean mx_user_contains(sqlite3 *db, guint64 user_id, guint64 room_id) {
+gboolean mx_is_members(sqlite3 *db, guint64 user_id, guint64 room_id) {
     sqlite3_stmt *stmt;
     gint32 rv = SQLITE_OK;
 
@@ -69,3 +69,4 @@ void mx_edit_members(sqlite3 *db, guint64 room_id, guint64 user_id,
 // void mx_delete_members(sqlite3 *db, guint64 room_id, guint64 user_id) {
 
 // }
+

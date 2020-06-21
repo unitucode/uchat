@@ -156,7 +156,7 @@ void mx_get_contact_(sqlite3 *db, guint64 user_id, gint8 type);
 
 
 // user
-gboolean mx_user_contains(sqlite3 *db, guint64 user_id, guint64 room_id);
+gboolean mx_is_members(sqlite3 *db, guint64 user_id, guint64 room_id);
 
 
 // search

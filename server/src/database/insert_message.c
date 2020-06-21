@@ -20,7 +20,7 @@ void mx_insert_message(sqlite3 *db, t_db_message *message) {
 
     message->date = mx_get_time(DB_MILISECOND);
     message->status = DB_STATUS_MSG_START;
-    rv = sqlite3_prepare_v2(db, "insert into messages(room_id, user_id, date, "
+    rv = sqlite3_prepare_v2(db, "insert into messages(user_id, room_id, date, "
                                 "type, message, file_size, file_name, status, "
                                 "date_dead)values(?1, ?2, ?3, ?4, ?5, ?6, ?7, "
                                 "?8, ?9)", -1, &stmt, NULL);
