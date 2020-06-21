@@ -24,7 +24,6 @@ int main(int argc, char **argv) {
         return -1;
     }
     connection = g_socket_client_connect_to_host(client, argv[1], g_ascii_strtoll(argv[2], NULL, 10), NULL, &error);
-    g_printerr("2");
     if (!connection || error) {
         g_printerr("Invalid port or ip\n");
         return -1;

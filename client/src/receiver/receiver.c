@@ -58,7 +58,6 @@ void mx_receiver(GObject *source_object, GAsyncResult *res, gpointer user_data) 
         return;
     }
     msg = g_data_input_stream_read_line_finish(in, res, &count, &error);
-    g_print("msg = %s\n", msg);
     if (!msg)
         return;
     if (error) {

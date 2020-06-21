@@ -3,7 +3,6 @@
 #include "utils.h"
 
 #define MX_J_STR(m) (m) ? (m) : "(null)"
-#define MX_RQ_SIZE 2048
 #define MX_MAX_FILE_SIZE 50000000
 
 typedef struct s_dtp t_dtp;

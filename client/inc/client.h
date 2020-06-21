@@ -69,9 +69,6 @@ struct s_chat {
     t_groom *curr_room;
     t_dtp *data;
     GtkBuilder *builder;
-    GAsyncQueue *queue;
-    GAsyncQueue *to_send;
-    GThread *receiver_thread;
     bool valid;
     void (*error_handler[ER_COUNT_ERRS])(GtkBuilder *builder);
     bool (*request_handler[RQ_COUNT_REQUEST])(t_dtp *dtp, struct s_chat *chat);
