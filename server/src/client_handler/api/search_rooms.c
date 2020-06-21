@@ -16,7 +16,7 @@ bool mx_search_rooms_handler(t_dtp *data, t_client *client) {
 
     if (!name || !cJSON_IsString(name))
         return false;
-    answer = mx_search_rooms_request(mx_search_room(client->info->database, name->valuestring));
+    answer = mx_search_rooms_request(mx_search_room(client->info->database, name->valuestring, 1));
     mx_send(client->out, answer);
     mx_free_request(&answer);
     return true;

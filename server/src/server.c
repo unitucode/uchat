@@ -93,6 +93,10 @@ void test() {
     // else
     //     g_print("false\n");
 
+    // cJSON *json_search = mx_search_room(db, "nam", 1);
+    // gchar *str_search = cJSON_Print(json_search);
+    // g_print("%s\n", str_search);
+
 
     // mx_edit_members(db, 11, 1, DB_SIMPLE);
 

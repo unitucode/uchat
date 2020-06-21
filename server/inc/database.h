@@ -161,7 +161,7 @@ gboolean mx_is_member(sqlite3 *db, guint64 user_id, guint64 room_id);
 
 // search
 gboolean mx_check_user_by_login(sqlite3 *db, gchar *login);
-cJSON *mx_search_room(sqlite3 *db, gchar *str_search);
+cJSON *mx_search_room(sqlite3 *db, gchar *str_search, guint64 user_id);
 cJSON *mx_search_user(sqlite3 *db, gchar *str_search);
 
 
