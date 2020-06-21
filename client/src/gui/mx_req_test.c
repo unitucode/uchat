@@ -3,8 +3,9 @@
 static void req_test(GtkButton *btn, t_chat *chat) {
     // mx_upload_file("/Users/okhomin/Desktop/ucode/uchat/uchat/client/src/gui/resources/edit.png", chat);
     // t_dtp *request = mx_search_rooms_request("1");
-    // t_dtp *request = mx_join_room_request(2);
-    t_dtp *request = mx_get_members_request(2);
+    t_dtp *request = mx_join_room_request(2);
+    // t_dtp *request = mx_get_members_request(2);
+    // t_dtp *request = mx_member_info_request(2);
     mx_send(chat->out, request);
     mx_free_request(&request);
     (void)chat;
