@@ -26,7 +26,7 @@ bool mx_edit_msg_handler(t_dtp *msg, t_client *client) {
         return false;
     if (!msg_str || !cJSON_IsString(msg_str))
         return false;
-    if (!mx_user_contains(client->info->database, client->user->user_id, room_id->valueint))
+    if (!mx_is_member(client->info->database, client->user->user_id, room_id->valueint))
         return false;
     mx_edit_message_by_id(client->info->database, msg_id->valueint, msg_str->valuestring);
     resend = mx_edit_msg_request(msg_str->valuestring, room_id->valueint, msg_id->valueint);

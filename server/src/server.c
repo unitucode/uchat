@@ -92,6 +92,11 @@ void test() {
 
     // mx_edit_members(db, 11, 1, DB_SIMPLE);
 
+    // cJSON *members_json = mx_get_json_members(db, 11);
+    // gchar *members = cJSON_Print(members_json);
+    // g_print("%s\n", members);
+
+    // g_print("%d\n", mx_get_type_member(db, 1, 11));
 
     // cJSON *json = mx_search_room(db, "nam");
     // printf("%s\n", cJSON_Print(json));
@@ -106,7 +111,11 @@ void test() {
     // mx_insert_member_into_db(db, 10, 4, DB_SIMPLE);
     // mx_insert_member_into_db(db, 10, 5, DB_SIMPLE);
     // mx_insert_member_into_db(db, 10, 6, DB_SIMPLE);
-    // GList *list = mx_get_users_in_room(db, 10);
+    // system("leaks -q uchat_server");
+    // GList *list = mx_get_log_members(db, 11);
+    // g_object_unref(list);
+    // list = NULL;
+    // system("leaks -q uchat_server");
     // cJSON *json = mx_users_of_room_in_json(list);
     // cJSON_Delete(json);
     // char *json_str = cJSON_Print(json);

@@ -28,6 +28,3 @@ cJSON *mx_get_users(sqlite3 *db, guint64 date) {
     return users;
 }
 
-// cJSON *mx_get_members_in_room() {
-
-// }

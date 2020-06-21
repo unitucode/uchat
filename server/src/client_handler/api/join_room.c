@@ -25,7 +25,7 @@ bool mx_join_room_handler(t_dtp *room, t_client *client) { // TODO!!!!!!
 
     if (!room_id || !cJSON_IsNumber(room_id))
         return false;
-    if (mx_user_contains(client->info->database, client->user->user_id, room_id->valueint))
+    if (mx_is_member(client->info->database, client->user->user_id, room_id->valueint))
         return false;
     g_print("here");
     mx_insert_member_into_db(client->info->database, room_id->valueint, client->user->user_id, DB_SIMPLE);

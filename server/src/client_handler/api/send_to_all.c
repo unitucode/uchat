@@ -11,7 +11,7 @@ static void send_to_all(gpointer data, gpointer user_data) {
 }
 
 void mx_send_to_all(t_dtp *data, t_client *client, guint64 room_id) {
-    GList *list = mx_get_users_in_room(client->info->database, room_id);
+    GList *list = mx_get_log_members(client->info->database, room_id);
     t_send_helper *send_helper = g_malloc0(sizeof(t_send_helper));
 
     send_helper->data = data;

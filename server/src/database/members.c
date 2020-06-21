@@ -1,6 +1,6 @@
 #include "server.h"
 
-gboolean mx_is_members(sqlite3 *db, guint64 user_id, guint64 room_id) {
+gboolean mx_is_member(sqlite3 *db, guint64 user_id, guint64 room_id) {
     sqlite3_stmt *stmt;
     gint32 rv = SQLITE_OK;
 
@@ -18,21 +18,7 @@ gboolean mx_is_members(sqlite3 *db, guint64 user_id, guint64 room_id) {
     return false;
 }
 
-cJSON *mx_users_of_room_in_json(GList *list) {
-    cJSON *array_j = cJSON_CreateArray();
-
-    while (list != NULL) {
-        cJSON_AddItemToArray(array_j, cJSON_CreateString((gchar*)list->data));
-        list = list->next;
-    }
-    return array_j;
-}
-
-void mx_destroy_data(gpointer data) {
-    g_free(data);
-}
-
-GList *mx_get_users_in_room(sqlite3 *db, guint64 room_id) {
+GList *mx_get_log_members(sqlite3 *db, guint64 room_id) {
     sqlite3_stmt *stmt;
     gint rv = SQLITE_OK;
     GList *list = NULL;
@@ -44,15 +30,13 @@ GList *mx_get_users_in_room(sqlite3 *db, guint64 room_id) {
     mx_error_sqlite(rv, "prepare", "get_users_in_room");
     sqlite3_bind_int64(stmt, 1, room_id);
     while ((rv = sqlite3_step(stmt)) == SQLITE_ROW)
-        list = g_list_append(list,
-                             (gpointer)strdup((char*)sqlite3_column_text(stmt,
-                                                                         0)));
+        list = g_list_append(list, strdup((char*)sqlite3_column_text(stmt, 0)));
     mx_error_sqlite(rv, "step", "get_users_in_room");
     sqlite3_finalize(stmt);
     return list;
 }
 
-void mx_edit_members(sqlite3 *db, guint64 room_id, guint64 user_id,
+void mx_edit_perm_member(sqlite3 *db, guint64 room_id, guint64 user_id,
                        gint8 new_perm) {
     sqlite3_str *sqlite_str = sqlite3_str_new(db);
     gchar *request = NULL;
@@ -66,7 +50,41 @@ void mx_edit_members(sqlite3 *db, guint64 room_id, guint64 user_id,
     sqlite3_free(request);
 }
 
-// void mx_delete_members(sqlite3 *db, guint64 room_id, guint64 user_id) {
+cJSON *mx_get_json_members(sqlite3 *db, guint64 room_id) {
+    cJSON *users = cJSON_CreateArray();
+    sqlite3_stmt *stmt;
+    gint32 rv = 0;
 
-// }
+    rv = sqlite3_prepare_v2(db, "select id, name, login, pass, token, "
+                                "users.date, desc from users inner join members"
+                                " on users.id = members.user_id where "
+                                "room_id = ?1", -1, &stmt, NULL);
+    sqlite3_bind_int64(stmt, 1, room_id);
+    while ((rv = sqlite3_step(stmt)) == SQLITE_ROW)
+        cJSON_AddItemToArray(users, mx_get_object_user(stmt));
+    sqlite3_finalize(stmt);
+    return users;
+}
+
+
+/*
+* повертає тип прав користувача в кімнаті
+* якщо користувач не зареєсрований учасником кімнати повертає -1
+*/
+gint8 mx_get_type_member(sqlite3 *db, guint64 user_id, guint64 room_id) {
+    sqlite3_stmt *stmt;
+    gint32 rv = 0;
+    gint8 perm_user = -1;
+
+    rv = sqlite3_prepare_v2(db, "select permission from members where "
+                                "room_id = ?1 and user_id = ?2 ", 
+                            -1, &stmt, NULL);
+    sqlite3_bind_int64(stmt, 1, room_id);
+    sqlite3_bind_int64(stmt, 2, user_id);
+    if ((rv = sqlite3_step(stmt)) == SQLITE_ROW)
+        perm_user = sqlite3_column_int(stmt, 0);
+    mx_error_sqlite(rv, "step", "get type members");
+    sqlite3_finalize(stmt);
+    return perm_user;
+}
 
