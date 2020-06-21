@@ -152,12 +152,10 @@ void mx_free_user(t_db_user **user);
 void mx_insert_contact(sqlite3 *db, guint64 user_id, guint64 contact_id,
                        gint8 type);
 void mx_delete_contact(sqlite3 *db, guint64 user_id, guint64 contact_id);
-void mx_get_contact_(sqlite3 *db, guint64 user_id, gint8 type);
-
+cJSON *mx_get_contacts(sqlite3 *db, guint64 user_id, gint8 type);
 
 // user
 gboolean mx_is_member(sqlite3 *db, guint64 user_id, guint64 room_id);
-
 
 // search
 gboolean mx_check_user_by_login(sqlite3 *db, gchar *login);
