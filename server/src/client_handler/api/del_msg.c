@@ -12,7 +12,7 @@ t_dtp *mx_del_msg_request(int room_id, int msg_id) {
     return mx_get_transport_data(json_result);
 }
 
-bool mx_del_msg_handler(t_dtp *msg, t_client *client) {
+bool mx_del_msg_handler(t_dtp *msg, t_client *client) { // ADD CHECK OWNER OF MESSAGE
     cJSON *room_id = cJSON_GetObjectItemCaseSensitive(msg->json, "room_id");
     cJSON *msg_id = cJSON_GetObjectItemCaseSensitive(msg->json, "msg_id");
     t_dtp *resend = NULL;
@@ -21,7 +21,9 @@ bool mx_del_msg_handler(t_dtp *msg, t_client *client) {
         return false;
     if (!msg_id || !cJSON_IsNumber(msg_id))
         return false;
-    // mx_delete_message(client->info->database, room_id->valueint, msg_id->valueint);
+    if (!mx_user_contains(client->info->database, client->user->user_id, room_id->valueint))
+        return false;
+    mx_delete_message_by_id(client->info->database, msg_id->valueint);
     resend = mx_del_msg_request(room_id->valueint, msg_id->valueint);
     mx_send_to_all(resend, client, room_id->valueint);
     mx_free_request(&resend);

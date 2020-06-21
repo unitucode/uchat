@@ -10,8 +10,30 @@ t_dtp *mx_search_rooms_request(char *room_name) {
     return mx_get_transport_data(json_result);
 }
 
+static bool handle_room(cJSON *room, t_chat *chat) {
+    t_groom *groom = mx_create_groom(room);
+
+    if (!groom)
+        return false;
+    //GUI
+    g_print("room = %s\n", groom->room_name);
+    //GUI
+    (void)chat;
+    (void)groom;
+    return true;
+}
+
 bool mx_search_rooms_handler(t_dtp *data, t_chat *chat) {
     g_print("data = %s\n", cJSON_Print(data->json));
-    (void)chat;
+    cJSON *rooms = cJSON_GetObjectItemCaseSensitive(data->json, "rooms");
+    cJSON *room = NULL;
+
+    if (!rooms || !cJSON_IsArray(rooms))
+        return false;
+    for (int i = 0; i < cJSON_GetArraySize(rooms); i++) {
+        room = cJSON_GetArrayItem(rooms, i);
+        if (!handle_room(room, chat))
+            return false;
+    }
     return true;
 }
