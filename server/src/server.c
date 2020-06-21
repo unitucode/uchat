@@ -61,7 +61,7 @@ static gboolean incoming_callback (GSocketService *service, GSocketConnection *c
 void test();
 
 int main(int argc, char **argv) {
-    // test();
+    test();
     GError *error = NULL;
     GSocketService *service = g_socket_service_new();
     GMainLoop *loop = NULL;
@@ -86,6 +86,10 @@ int main(int argc, char **argv) {
 
 void test() {
     sqlite3 *db = mx_open_db(MX_DB);
+
+    printf("%llu\n", mx_get_time(DB_SECOND));
+    printf("%llu\n", mx_get_time(DB_MILISECOND));
+    printf("%llu\n", mx_get_time(DB_MICROSECOND));
 
     // if (mx_is_owner_msg(db, 1, 1)) {
     //     g_print("true\n");
