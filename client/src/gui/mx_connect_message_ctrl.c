@@ -36,7 +36,7 @@ static void show_edit_msg(GtkButton *btn, GtkBuilder *builder) {
     GObject *buffer = gtk_builder_get_object(builder, "buffer_message");
     GObject *label_text = gtk_builder_get_object(builder, "label_edit_text");
     t_gmsg *msg = mx_get_selected_gmsg(builder);
-    gchar *old_text = g_strdelimit(g_strdup(msg->msg),"\n", ' ');
+    gchar *old_text = g_strdelimit(g_strdup(msg->msg), "\n", ' ');  
 
     gtk_label_set_text(GTK_LABEL(label_text), old_text);
     gtk_text_buffer_set_text(GTK_TEXT_BUFFER(buffer), msg->msg, -1);
