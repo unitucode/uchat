@@ -56,6 +56,7 @@ static cJSON *get_object_user(sqlite3_stmt *stmt) {
 
     cJSON_AddNumberToObject(user, "id", sqlite3_column_int64(stmt, 0));
     cJSON_AddStringToObject(user, "login", (char *)sqlite3_column_text(stmt, 1));
+    cJSON_AddNumberToObject(user, "type", sqlite3_column_int(stmt, 0));
     return user;
 }
 
@@ -64,7 +65,7 @@ cJSON *mx_get_json_members(sqlite3 *db, guint64 room_id) {
     sqlite3_stmt *stmt;
     gint32 rv = 0;
 
-    rv = sqlite3_prepare_v2(db, "select id, login from users inner join "
+    rv = sqlite3_prepare_v2(db, "select id, login, type from users inner join "
                                 "members on users.id = members.user_id where "
                                 "room_id = ?1", -1, &stmt, NULL);
     sqlite3_bind_int64(stmt, 1, room_id);
