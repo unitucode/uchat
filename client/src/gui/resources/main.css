@@ -321,12 +321,6 @@ dialog headerbar {
     color: #919CC0;
     margin-right: 10px;
 }
-.stack_messages list .box_sticker_info label:nth-child(2){
-	font-size: 13px;
-    font-weight: 300;
-    color: #919CC0;
-    margin-left: 10px;
-}
 .stack_messages list .box_own_sticker_info image:nth-child(2){
     margin-top: 7px;
 }
@@ -346,7 +340,7 @@ dialog headerbar {
     border-radius: 5px;
 }
 .stack_messages list row:selected .box_sticker_info image:nth-child(1) {
-    border-right: 8px solid #6785FF;
+    border-left: 8px solid #6785FF;
     border-radius: 5px;
 }
 .search {
