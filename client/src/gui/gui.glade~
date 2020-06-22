@@ -470,8 +470,8 @@
                     <property name="primary_icon_pixbuf">resources/search.png</property>
                     <property name="primary_icon_activatable">False</property>
                     <property name="primary_icon_sensitive">False</property>
-                    <signal name="focus-out-event" handler="mx_disable_listbox_filter" object="listbox_rooms" swapped="no"/>
-                    <signal name="search-changed" handler="mx_search_room" swapped="no"/>
+                    <signal name="focus-out-event" handler="mx_stop_search_room" swapped="no"/>
+                    <signal name="stop-search" handler="mx_stop_search_room" swapped="no"/>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -496,9 +496,8 @@
                             <property name="can_focus">False</property>
                             <property name="orientation">vertical</property>
                             <child>
-                              <object class="GtkLabel" id="label_local_search_result">
+                              <object class="GtkLabel" id="label_search_delim_local">
                                 <property name="height_request">25</property>
-                                <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="label" translatable="yes">Search result of your rooms</property>
                                 <style>
@@ -527,9 +526,23 @@
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkLabel" id="label_global_search_result">
+                              <object class="GtkLabel" id="label_search_nothing_local">
+                                <property name="height_request">60</property>
+                                <property name="can_focus">False</property>
+                                <property name="label" translatable="yes">Nothing found for this request</property>
+                                <attributes>
+                                  <attribute name="foreground" value="#bababdbdb6b6"/>
+                                </attributes>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">True</property>
+                                <property name="position">2</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkLabel" id="label_search_delim_global">
                                 <property name="height_request">25</property>
-                                <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="label" translatable="yes">Global search result of rooms</property>
                                 <style>
@@ -539,7 +552,7 @@
                               <packing>
                                 <property name="expand">False</property>
                                 <property name="fill">True</property>
-                                <property name="position">2</property>
+                                <property name="position">3</property>
                               </packing>
                             </child>
                             <child>
@@ -554,7 +567,22 @@
                               <packing>
                                 <property name="expand">False</property>
                                 <property name="fill">True</property>
-                                <property name="position">3</property>
+                                <property name="position">4</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkLabel" id="label_search_nothing_global">
+                                <property name="height_request">60</property>
+                                <property name="can_focus">False</property>
+                                <property name="label" translatable="yes">Nothing found for this request</property>
+                                <attributes>
+                                  <attribute name="foreground" value="#bababdbdb6b6"/>
+                                </attributes>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">True</property>
+                                <property name="position">5</property>
                               </packing>
                             </child>
                           </object>

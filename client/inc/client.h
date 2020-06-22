@@ -21,6 +21,9 @@
 #define MX_ROOM_CTRL 0
 #define MX_MSG_CTRL 1
 
+#define MX_LISTBOX_LOCAL_ROOMS "listbox_rooms"
+#define MX_LISTBOX_GLOBAL_ROOMS "listbox_global_rooms"
+
 //settings
 #define MX_BUF_MSGS 50
 #define MX_MAX_LENGTH_QUEUE 30
@@ -30,6 +33,8 @@
 typedef struct s_groom t_groom;
 typedef struct s_gmsg t_gmsg;
 typedef struct s_chat t_chat;
+typedef struct s_filter_data t_filter_data;
+typedef struct s_signal_data t_signal_data;
 
 struct s_groom {
     GtkListBox *box_rooms;
@@ -75,11 +80,16 @@ struct s_chat {
     bool (*request_handler[RQ_COUNT_REQUEST])(t_dtp *dtp, struct s_chat *chat);
 };
 
-typedef struct s_signal_data {
+struct s_signal_data {
     t_groom *groom;
     GtkBuilder *builder;
     GtkListBoxRow *row_msg;
-}              t_signal_data;
+};
+
+struct s_filter_data {
+    gboolean is_found_rooms;
+    gchar *search_name;
+};
 
 gssize mx_send(GDataOutputStream *out, t_dtp *dtp);
 int mx_tcp_connect(const char *host, const char *serv);
@@ -173,6 +183,7 @@ void mx_connect_send_message(t_chat *chat);
 void mx_connect_profile_settings(t_chat *chat);
 void mx_connect_room_settings(t_chat *chat);
 void mx_connect_message_ctrl(t_chat *chat);
+void mx_connect_search(t_chat *chat);
 void mx_connect_test_request(t_chat *chat); // DELETE
 void mx_errmsg_wrong_authdata(GtkBuilder *builder);
 void mx_errmsg_user_exist(GtkBuilder *builder);
@@ -202,6 +213,13 @@ void mx_msgcreate_label_text(GtkWidget *box_info,
                              t_gmsg *gmsg, gboolean is_own);
 void mx_msgcreate_label_time(GtkWidget *box_info,
                              t_gmsg *gmsg, gboolean is_own);
+void mx_search_delim_set_visibility(GtkBuilder *builder, gboolean is_visible);
+gboolean mx_stop_search_room(gpointer *entry,
+                             gpointer *data, GtkBuilder *builder);
+void mx_search_local_rooms(GtkBuilder *builder, t_filter_data *data);
+void mx_search_global_rooms(GtkBuilder *builder);
+void mx_add_room_row(t_groom *room, GtkBuilder *builder, gchar *listbox_name);
+void mx_clear_global_search(GtkBuilder *builder);
 
 // gui utils
 void mx_scrlldwnd_connect(gchar *name, GtkWidget *scroll, GtkBuilder *builder);
@@ -227,6 +245,8 @@ void mx_free_sigdata(t_signal_data *data);
 char *mx_msgpage_name(gint id);
 gboolean mx_widget_is_visible(gchar *widget_name, GtkBuilder *builder);
 void mx_widget_set_class(GtkWidget *widget, gchar *class);
+t_filter_data *mx_create_filter_data(gchar *search_name);
+void mx_free_filter_data(t_filter_data *filter_data);
 
 // gui wrappers
 // void mx_widget_show_all(GtkWidget *widget);

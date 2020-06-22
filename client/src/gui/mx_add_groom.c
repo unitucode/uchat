@@ -44,6 +44,18 @@ void mx_select_room(GtkWidget *event_box, GdkEventButton *event,
     (void)user_data;
 }
 
+void mx_join_to_room(GtkWidget *event_box, GdkEventButton *event,
+                     gpointer *user_data) {
+    t_signal_data *data = g_object_get_data(G_OBJECT(event_box), "sigdata");
+
+    mx_reset_messege_room(data->groom, data->builder);
+    gtk_list_box_select_row(data->groom->box_rooms,
+                            data->groom->row_room);
+    puts("JOINING TO ROOM");
+    (void)event;
+    (void)user_data;
+}
+
 //================================
 
 gint mx_room_sort(GtkListBoxRow *row1, GtkListBoxRow *row2) {
@@ -76,9 +88,9 @@ static void add_messages_box(t_groom *room, GtkBuilder *builder) {
     mx_scrlldwnd_connect(NULL, scroll, builder);
 }
 
-static void add_room_row(t_groom *room, GtkBuilder *builder) {
+void mx_add_room_row(t_groom *room, GtkBuilder *builder, gchar *listbox_name) {
     GtkListBox *box = GTK_LIST_BOX(gtk_builder_get_object(builder,
-                                                          "listbox_rooms"));
+                                                          listbox_name));
     GtkWidget *row = gtk_list_box_row_new();
     GtkWidget *label = gtk_label_new(room->room_name);
     GtkWidget *event = gtk_event_box_new();
@@ -93,8 +105,14 @@ static void add_room_row(t_groom *room, GtkBuilder *builder) {
     g_object_ref(label);
 
     data = mx_create_sigdata(builder, room, NULL);
-    g_signal_connect(event, "button_press_event",
-                     G_CALLBACK(mx_select_room), NULL);
+    if (!g_strcmp0(listbox_name, MX_LISTBOX_LOCAL_ROOMS)) {
+        g_signal_connect(event, "button_press_event",
+                        G_CALLBACK(mx_select_room), NULL);
+    }
+    else {
+        g_signal_connect(event, "button_press_event",
+                         G_CALLBACK(mx_join_to_room), NULL);
+    }
 
     gtk_label_set_ellipsize(GTK_LABEL(label), PANGO_ELLIPSIZE_END);
     gtk_container_add(GTK_CONTAINER(event), label);
@@ -114,7 +132,7 @@ static void add_room_row(t_groom *room, GtkBuilder *builder) {
 
 void mx_add_groom(t_groom *room, GtkBuilder *builder) {
     add_messages_box(room, builder);
-    add_room_row(room, builder);
+    mx_add_room_row(room, builder, MX_LISTBOX_LOCAL_ROOMS);
 }
 
 static t_groom *mx_init_groom() {
