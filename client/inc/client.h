@@ -219,7 +219,8 @@ GtkWidget *mx_create_reg_message_row(t_gmsg *gmsg, gboolean is_own);
 void mx_msgcreate_label_login(GtkWidget *box_main, t_gmsg *gmsg);
 void mx_msgcreate_label_text(GtkWidget *box_info,
                              t_gmsg *gmsg, gboolean is_own);
-void mx_msgcreate_img_sticker(GtkWidget *box_info, gboolean is_own);
+void mx_msgcreate_img_sticker(GtkWidget *box_info,
+                              t_gmsg *gmsg, gboolean is_own);
 void mx_msgcreate_label_time(GtkWidget *box_info,
                              t_gmsg *gmsg, gboolean is_own);
 void mx_search_delim_set_visibility(GtkBuilder *builder, gboolean is_visible);

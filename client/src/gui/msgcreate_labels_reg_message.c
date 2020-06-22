@@ -8,13 +8,16 @@ void mx_msgcreate_label_login(GtkWidget *box_main, t_gmsg *gmsg) {
     gtk_widget_set_halign(label_login, GTK_ALIGN_START);
 }
 
-void mx_msgcreate_img_sticker(GtkWidget *box_info, gboolean is_own) {
-    GtkWidget *sticker = gtk_image_new_from_file(MX_STICKER_PATH"sticker1.svg");
+void mx_msgcreate_img_sticker(GtkWidget *box_info,
+                              t_gmsg *gmsg, gboolean is_own) {
+    gchar *sticker_path = g_strjoin("", MX_STICKER_PATH, gmsg->msg, NULL);
+    GtkWidget *sticker = gtk_image_new_from_file(sticker_path);
 
     if (is_own)
         gtk_box_pack_end(GTK_BOX(box_info), sticker, FALSE, FALSE, 0);
     else
         gtk_box_pack_start(GTK_BOX(box_info), sticker, FALSE, FALSE, 0);
+    g_free(sticker_path);
 }
 
 void mx_msgcreate_label_text(GtkWidget *box_info,

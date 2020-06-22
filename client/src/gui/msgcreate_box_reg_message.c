@@ -29,7 +29,7 @@ void mx_msgcreate_box_info(GtkWidget *box_main,
         }
         else {
             mx_widget_set_class(box_info, "box_own_sticker_info");
-            mx_msgcreate_img_sticker(box_info, is_own);
+            mx_msgcreate_img_sticker(box_info, gmsg, is_own);
         }
     }
     else {
@@ -38,7 +38,8 @@ void mx_msgcreate_box_info(GtkWidget *box_main,
             mx_msgcreate_label_text(box_info, gmsg, is_own);
         }
         else {
-            mx_msgcreate_img_sticker(box_info, is_own);
+            mx_widget_set_class(box_info, "box_sticker_info");
+            mx_msgcreate_img_sticker(box_info, gmsg, is_own);
         }
         mx_msgcreate_label_login(box_main, gmsg);
     }
