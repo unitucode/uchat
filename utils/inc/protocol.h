@@ -41,7 +41,9 @@ typedef enum s_request_type {
     RQ_GET_MEMBERS,
     RQ_MEMBER_INFO,
     RQ_NEW_MEMBER,
-    RQ_COUNT_REQUEST,
+    RQ_BAN_MEMBER,
+    RQ_STICKER,
+    RQ_COUNT_REQUEST
 }            t_request_type;
 
 typedef enum s_room_type {
@@ -50,9 +52,29 @@ typedef enum s_room_type {
     DB_LS_CHAT
 }            t_room_type;
 
+typedef enum s_member_type {
+    DB_CUSTOMER = 0,
+    DB_ADMIN,
+    DB_MODERATOR,
+    DB_SIMPLE,
+    DB_BANNED
+}            t_member_type;
+
+typedef enum s_message_status {
+    DB_MSG_START = 0,
+    DB_MSG_EDIT,
+}            t_message_status;
+
+typedef enum s_contact_type {
+    DB_FRIENDS = 0,
+    DB_BLACKLIST
+}            t_contact_type;
+
 typedef enum s_message_type {
-    DB_STATUS_MSG_START = 0,
-    DB_STATUS_MSG_EDIT
+    DB_TEXT_MSG = 0,
+    DB_FILE_MSG,
+    DB_FILE_TEXT_MSG,
+    DB_STICKER
 }            t_message_type;
 
 struct s_file {
@@ -70,7 +92,6 @@ struct s_dtp { // Data Transfer Protocol view
 
 
 //requests
-t_dtp *mx_delete_room_request(char *room_name);
 t_dtp *mx_get_transport_data(cJSON *json_result);
 
 //SSL
