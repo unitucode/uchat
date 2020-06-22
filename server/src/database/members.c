@@ -56,7 +56,7 @@ static cJSON *get_object_user(sqlite3_stmt *stmt) {
 
     cJSON_AddNumberToObject(user, "id", sqlite3_column_int64(stmt, 0));
     cJSON_AddStringToObject(user, "login", (char *)sqlite3_column_text(stmt, 1));
-    cJSON_AddNumberToObject(user, "type", sqlite3_column_int(stmt, 0));
+    cJSON_AddNumberToObject(user, "type", sqlite3_column_int(stmt, 2));
     return user;
 }
 
