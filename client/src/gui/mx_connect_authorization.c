@@ -1,23 +1,24 @@
 #include "client.h"
 
-static bool is_valid_auth_data(char *login, char *pass, GtkLabel *label) {
+static gboolean is_valid_auth_data(gchar *login,
+                                   gchar *pass, GtkLabel *label) {
     if (*login == '\0' || *pass == '\0') {
         gtk_label_set_text(label, MX_ERRMSG_NODATA);
-        return false;
+        return FALSE;
     }
     else if (!mx_match_search(login, MX_LOGIN_REGEX)) {
         gtk_label_set_text(label, MX_ERRMSG_INVALID_LOGIN);
-        return false;
+        return FALSE;
     }
-    return true;
+    return TRUE;
 }
 
 static void req_signup(t_chat *chat) {
     GObject *label_error = gtk_builder_get_object(chat->builder,
                                                   "label_autherror_signup");
-    char *login = mx_get_buffer_text("buffer_login", chat->builder);
-    char *password = mx_get_buffer_text("buffer_password", chat->builder);
-    char *confirm = mx_get_buffer_text("buffer_password_confirm",
+    gchar *login = mx_get_buffer_text("buffer_login", chat->builder);
+    gchar *password = mx_get_buffer_text("buffer_password", chat->builder);
+    gchar *confirm = mx_get_buffer_text("buffer_password_confirm",
                                        chat->builder);
 
     if (is_valid_auth_data(login, password, GTK_LABEL(label_error))) {
@@ -31,12 +32,11 @@ static void req_signup(t_chat *chat) {
 static void req_login(t_chat *chat) {
     GObject *label_error = gtk_builder_get_object(chat->builder,
                                                   "label_autherror_login");
-    char *login = mx_get_buffer_text("buffer_login", chat->builder);
-    char *password = mx_get_buffer_text("buffer_password", chat->builder);
+    gchar *login = mx_get_buffer_text("buffer_login", chat->builder);
+    gchar *password = mx_get_buffer_text("buffer_password", chat->builder);
 
-    if (is_valid_auth_data(login, password, GTK_LABEL(label_error))) {
+    if (is_valid_auth_data(login, password, GTK_LABEL(label_error)))
         mx_send_auth_request(login, password, chat, RQ_LOG_IN);
-    }
 }
 
 static void choose_auth(GtkButton *btn, t_chat *chat) {

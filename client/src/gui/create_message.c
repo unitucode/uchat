@@ -24,6 +24,8 @@ t_gmsg *mx_create_gmsg(cJSON *msg, t_chat *chat) {
         gmsg->date = data->valueint;
     if ((valid = get_data(msg, &data, "message_id")) && cJSON_IsNumber(data))
         gmsg->message_id = data->valueint;
+    if ((valid = get_data(msg, &data, "msg_type")) && cJSON_IsNumber(data))
+        gmsg->type = data->valueint;
     if (!valid) {
         mx_delete_gmsg(gmsg);
         return NULL;

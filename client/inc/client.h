@@ -21,6 +21,9 @@
 #define MX_ROOM_CTRL 0
 #define MX_MSG_CTRL 1
 
+#define MX_LISTBOX_LOCAL_ROOMS "listbox_rooms"
+#define MX_LISTBOX_GLOBAL_ROOMS "listbox_global_rooms"
+
 //settings
 #define MX_BUF_MSGS 50
 #define MX_MAX_LENGTH_QUEUE 30
@@ -30,6 +33,9 @@
 typedef struct s_groom t_groom;
 typedef struct s_gmsg t_gmsg;
 typedef struct s_chat t_chat;
+typedef struct s_filter_data t_filter_data;
+typedef struct s_signal_data t_signal_data;
+typedef struct s_gsticker t_gsticker;
 
 struct s_groom {
     GtkListBox *box_rooms;
@@ -50,6 +56,7 @@ struct s_groom {
 struct s_gmsg {
     GtkListBoxRow *row_msg;
     GtkLabel *label_text;
+    gint type;
     char *msg;
     char *login;
     guint64 date;
@@ -75,11 +82,16 @@ struct s_chat {
     bool (*request_handler[RQ_COUNT_REQUEST])(t_dtp *dtp, struct s_chat *chat);
 };
 
-typedef struct s_signal_data {
+struct s_signal_data {
     t_groom *groom;
     GtkBuilder *builder;
     GtkListBoxRow *row_msg;
-}              t_signal_data;
+};
+
+struct s_filter_data {
+    gboolean is_found_rooms;
+    gchar *search_name;
+};
 
 gssize mx_send(GDataOutputStream *out, t_dtp *dtp);
 int mx_tcp_connect(const char *host, const char *serv);
@@ -115,6 +127,7 @@ bool mx_get_members_handler(t_dtp *data, t_chat *chat); //HANDLER FOR USERS
 bool mx_member_info_handler(t_dtp *data, t_chat *chat); //HANDLER FOR INFO MEMBER
 bool mx_new_member_handler(t_dtp *data, t_chat *chat); //HANDLER FOR NEW MEMBER
 bool mx_ban_member_handler(t_dtp *data, t_chat *chat); //HANDLER FOR BAN MEMBER
+bool mx_search_msgs_handler(t_dtp *data, t_chat *chat); //HANDLER FOR SEARCH MSG
 
 
 /*
@@ -148,6 +161,8 @@ t_dtp *mx_join_room_request(int room_id); //FOR JOIN TO ROOM
 t_dtp *mx_get_members_request(int room_id); //FOR MEMEBERS
 t_dtp *mx_member_info_request(int user_id); //FOR INFO ABOUT MEMBER
 t_dtp *mx_ban_member_request(int room_id, int user_id); // FOR BAN MEMBER
+t_dtp *mx_sticker_request(char *sticker, int room_id); // FOR STICKER
+t_dtp *mx_search_msgs_request(char *msg, int room_id); // FOR SEARCH MSGS
 
 //errors api
 void mx_err_auth_data_handler(GtkBuilder *builder);
@@ -175,22 +190,23 @@ void mx_connect_send_message(t_chat *chat);
 void mx_connect_profile_settings(t_chat *chat);
 void mx_connect_room_settings(t_chat *chat);
 void mx_connect_message_ctrl(t_chat *chat);
+void mx_connect_search(t_chat *chat);
 void mx_connect_test_request(t_chat *chat); // DELETE
 void mx_errmsg_wrong_authdata(GtkBuilder *builder);
 void mx_errmsg_user_exist(GtkBuilder *builder);
 void mx_delete_row_room(GtkListBoxRow *row, GtkBuilder *builder);
 void mx_set_default_room_sett(GtkBuilder *builder);
 void mx_set_current_room_sett(GtkBuilder *builder);
-void mx_gupd_room_desc(int id, char *desc, GtkBuilder *builder);
-void mx_gupd_room_name(int id, char *name, GtkBuilder *builder);
-void mx_gdel_room(int id, GtkBuilder *builder);
-void mx_gdel_msg(int msg_id, int room_id, GtkBuilder *builder);
-void mx_gupd_msg_text(int msg_id, int room_id,
-                      char *text, GtkBuilder *builder);
+void mx_gupd_room_desc(gint id, gchar *desc, GtkBuilder *builder);
+void mx_gupd_room_name(gint id, gchar *name, GtkBuilder *builder);
+void mx_gdel_room(gint id, GtkBuilder *builder);
+void mx_gdel_msg(gint msg_id, gint room_id, GtkBuilder *builder);
+void mx_gupd_msg_text(gint msg_id, gint room_id,
+                      gchar *text, GtkBuilder *builder);
 void mx_reset_messege_room(t_groom *new_selected, GtkBuilder *builder);
 void mx_hide_msg_editing(GtkButton *btn, GtkBuilder *builder);
 void mx_set_room_widgets_visibility(GtkBuilder *builder, bool visibility);
-void mx_switch_room_header(GtkBuilder *builder, int page_index);
+void mx_switch_room_header(GtkBuilder *builder, gint page_index);
 void mx_unselect_curr_room_messages(GtkBuilder *builder);
 void mx_select_msg(gpointer *eventbox, gpointer *event, t_signal_data *data);
 GtkWidget *mx_create_reg_message_row(t_gmsg *gmsg, gboolean is_own);
@@ -204,31 +220,40 @@ void mx_msgcreate_label_text(GtkWidget *box_info,
                              t_gmsg *gmsg, gboolean is_own);
 void mx_msgcreate_label_time(GtkWidget *box_info,
                              t_gmsg *gmsg, gboolean is_own);
+void mx_search_delim_set_visibility(GtkBuilder *builder, gboolean is_visible);
+gboolean mx_stop_search_room(gpointer *entry,
+                             gpointer *data, GtkBuilder *builder);
+void mx_search_local_rooms(GtkBuilder *builder, t_filter_data *data);
+void mx_search_global_rooms(GtkBuilder *builder);
+void mx_add_room_row(t_groom *room, GtkBuilder *builder, gchar *listbox_name);
+void mx_clear_global_search(GtkBuilder *builder);
 
 // gui utils
-void mx_scrlldwnd_connect(char *name, GtkWidget *scroll, GtkBuilder *builder);
-gchar *mx_entry_get_text(char *entry_name, GtkBuilder *builder);
-gchar *mx_get_buffer_text(char *buff_name, GtkBuilder *builder);
-void mx_clear_buffer_text(char *buff_name, GtkBuilder *builder);
-void mx_clear_label_by_name(char *label_name, GtkBuilder *builder);
+void mx_scrlldwnd_connect(gchar *name, GtkWidget *scroll, GtkBuilder *builder);
+gchar *mx_entry_get_text(gchar *entry_name, GtkBuilder *builder);
+gchar *mx_get_buffer_text(gchar *buff_name, GtkBuilder *builder);
+void mx_clear_buffer_text(gchar *buff_name, GtkBuilder *builder);
+void mx_clear_label_by_name(gchar *label_name, GtkBuilder *builder);
 void mx_widget_set_visibility(GtkWidget *widget, gboolean is_visible);
 void mx_widget_set_visibility_by_name(GtkBuilder *builder,
                                       gchar *name, gboolean is_visible);
 void mx_widget_switch_visibility(GtkWidget *usr_ctrl, GtkWidget *widget);
 void mx_widget_switch_visibility_by_name(GtkBuilder *builder, gchar *name);
 t_groom *mx_get_selected_groom(GtkBuilder *builder);
-t_groom *mx_get_groom_by_id(int room_id, GtkBuilder *builder);
+t_groom *mx_get_groom_by_id(gint room_id, GtkBuilder *builder);
 t_gmsg *mx_get_selected_gmsg(GtkBuilder *builder);
-t_gmsg *mx_get_gmsg_by_id(int msg_id, int room_id, GtkBuilder *builder);
+t_gmsg *mx_get_gmsg_by_id(gint msg_id, gint room_id, GtkBuilder *builder);
 void mx_unselect_room(t_groom *groom, GtkBuilder *builder);
-void mx_entry_set_icon_by_path(GtkEntry *entry, char *path,
+void mx_entry_set_icon_by_path(GtkEntry *entry, gchar *path,
                                GtkEntryIconPosition icon_pos);
 t_signal_data *mx_create_sigdata(GtkBuilder *builder, t_groom *groom,
                                  GtkListBoxRow *row_msg);
 void mx_free_sigdata(t_signal_data *data);
-char *mx_msgpage_name(int id);
-bool mx_widget_is_visible(char *widget_name, GtkBuilder *builder);
-void mx_widget_set_class(GtkWidget *widget, char *class);
+char *mx_msgpage_name(gint id);
+gboolean mx_widget_is_visible(gchar *widget_name, GtkBuilder *builder);
+void mx_widget_set_class(GtkWidget *widget, gchar *class);
+t_filter_data *mx_create_filter_data(gchar *search_name);
+void mx_free_filter_data(t_filter_data *filter_data);
 
 // gui wrappers
 // void mx_widget_show_all(GtkWidget *widget);

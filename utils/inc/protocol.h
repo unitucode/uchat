@@ -42,7 +42,9 @@ typedef enum s_request_type {
     RQ_MEMBER_INFO,
     RQ_NEW_MEMBER,
     RQ_BAN_MEMBER,
-    RQ_COUNT_REQUEST,
+    RQ_STICKER,
+    RQ_SEARCH_MSG,
+    RQ_COUNT_REQUEST
 }            t_request_type;
 
 typedef enum s_room_type {
@@ -73,7 +75,7 @@ typedef enum s_message_type {
     DB_TEXT_MSG = 0,
     DB_FILE_MSG,
     DB_FILE_TEXT_MSG,
-    DB_STIKER
+    DB_STICKER
 }            t_message_type;
 
 struct s_file {

@@ -28,15 +28,11 @@
 #define MX_IN_ITOA(m) #m
 #define MX_ITOA(m) MX_IN_ITOA(m)
 
-#define MX_LIST_BACK 0
 #define MX_LOG_FILE "info.log"
 #define MX_REQ_REGEX "([0-9]+[|][0-9]+[|]).+" 
 #define MX_HASH_REGEX "^[A-Fa-f0-9]{64}$"
 #define MX_LOGIN_REGEX "^[a-z0-9_-]{3,22}$"
 
-#define MX_CERT_FILE "certificate.crt"
-#define MX_KEY_FILE "private_key.pem"
-#define MX_KEY_PASSWORD "12345678"
 
 #define MX_BUF_SIZE 1024
 #define MX_MD5_BUF_SIZE 32

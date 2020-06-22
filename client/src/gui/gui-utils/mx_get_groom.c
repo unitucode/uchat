@@ -3,14 +3,14 @@
 /*
  * Returns groom by id, if not found NULL is returned
  */
-t_groom *mx_get_groom_by_id(int room_id, GtkBuilder *builder) {
+t_groom *mx_get_groom_by_id(gint room_id, GtkBuilder *builder) {
     GObject *list = gtk_builder_get_object(builder,
                                            "listbox_rooms");
     GtkListBoxRow *row = NULL;
     t_groom *groom = NULL;
     bool flag = true;
 
-    for (int i = 0; flag; i++) {
+    for (gint i = 0; flag; i++) {
         row = gtk_list_box_get_row_at_index(GTK_LIST_BOX(list), i);
         if (row == NULL)
             flag = false;

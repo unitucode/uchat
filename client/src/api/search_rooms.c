@@ -15,11 +15,7 @@ static bool handle_room(cJSON *room, t_chat *chat) {
 
     if (!groom)
         return false;
-    //GUI
-    g_print("room = %s\n", groom->room_name);
-    //GUI
-    (void)chat;
-    (void)groom;
+    mx_add_room_row(groom, chat->builder, MX_LISTBOX_GLOBAL_ROOMS);
     return true;
 }
 
@@ -34,6 +30,10 @@ bool mx_search_rooms_handler(t_dtp *data, t_chat *chat) {
         room = cJSON_GetArrayItem(rooms, i);
         if (!handle_room(room, chat))
             return false;
+    }
+    if (!cJSON_GetArraySize(rooms)) {
+        mx_widget_set_visibility_by_name(chat->builder,
+                                         "label_search_nothing_global", TRUE);
     }
     return true;
 }
