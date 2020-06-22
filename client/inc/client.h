@@ -193,6 +193,7 @@ void mx_connect_profile_settings(t_chat *chat);
 void mx_connect_room_settings(t_chat *chat);
 void mx_connect_message_ctrl(t_chat *chat);
 void mx_connect_search(t_chat *chat);
+void mx_connect_join_to_room(t_chat *chat);
 void mx_connect_stickers(t_chat *chat);
 void mx_connect_test_request(t_chat *chat); // DELETE
 void mx_errmsg_wrong_authdata(GtkBuilder *builder);
@@ -242,7 +243,7 @@ void mx_widget_set_visibility_by_name(GtkBuilder *builder,
                                       gchar *name, gboolean is_visible);
 void mx_widget_switch_visibility(GtkWidget *usr_ctrl, GtkWidget *widget);
 void mx_widget_switch_visibility_by_name(GtkBuilder *builder, gchar *name);
-t_groom *mx_get_selected_groom(GtkBuilder *builder);
+t_groom *mx_get_selected_groom(GtkBuilder *builder, gchar *list_name);
 t_groom *mx_get_groom_by_id(gint room_id, GtkBuilder *builder);
 t_gmsg *mx_get_selected_gmsg(GtkBuilder *builder);
 t_gmsg *mx_get_gmsg_by_id(gint msg_id, gint room_id, GtkBuilder *builder);
