@@ -61,7 +61,7 @@ static gboolean incoming_callback (GSocketService *service, GSocketConnection *c
 void test();
 
 int main(int argc, char **argv) {
-    test();
+    // test();
     GError *error = NULL;
     GSocketService *service = g_socket_service_new();
     GMainLoop *loop = NULL;
@@ -107,7 +107,7 @@ void test() {
     // else
     //     g_print("false\n");
 
-    // cJSON *json_search = mx_search_room(db, "nam", 1);
+    // cJSON *json_search = mx_search_room(db, "use", 2);
     // gchar *str_search = cJSON_Print(json_search);
     // g_print("%s\n", str_search);
 
@@ -159,25 +159,28 @@ void test() {
     // mx_db_pop_queue_by_id(db, 6);
     // printf("%s\n", mx_get_queue(db, 6));
 
-    // t_db_room *room = malloc(sizeof(t_db_room));
-    // room->customer_id = 1;
-    // room->desc = "";
-    // room->room_name = "name";
-    // room->type = DB_GLOBAL_CHAT;
-    // mx_insert_room_into_db(db, room);
     // for (int i = 0; i < 10; i++)
     // mx_free_room(&room);
 
     // t_db_user *user = malloc(sizeof(t_db_user));
     // user->desc = "desc";
-    // user->login = "login5";
-    // user->name = "name5";
+    // user->login = "login4";
+    // user->name = "user4";
     // user->pass = "pass";
     // user->token = "token";
     // mx_insert_user_into_db(db, user);
 
+    // t_db_room *room = malloc(sizeof(t_db_room));
+    // room->customer_id = 2;
+    // room->desc = "";
+    // room->room_name = "admin_name";
+    // room->type = DB_GLOBAL_CHAT;
+    // mx_insert_room_into_db(db, room);
+
+
+    // mx_insert_member_into_db(db, 2, 2, DB_SIMPLE);
+
     // for (int i = 2; i < 20; i++)
-    // mx_insert_member_into_db(db, 1, 1, SIMPLE);
 
     // t_db_message *message = g_malloc(sizeof(t_db_message));
     // message->user_id = 1;
