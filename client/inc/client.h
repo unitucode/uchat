@@ -30,6 +30,16 @@
 typedef struct s_groom t_groom;
 typedef struct s_gmsg t_gmsg;
 typedef struct s_chat t_chat;
+typedef struct s_signal_data t_signal_data;
+typedef struct s_gsticker t_gsticker;
+
+struct s_gsticker {
+    guint id;
+    guint room_id;
+    guint message_id;
+    guint64 data;
+    char *login;
+};
 
 struct s_groom {
     GtkListBox *box_rooms;
@@ -75,11 +85,11 @@ struct s_chat {
     bool (*request_handler[RQ_COUNT_REQUEST])(t_dtp *dtp, struct s_chat *chat);
 };
 
-typedef struct s_signal_data {
+struct s_signal_data {
     t_groom *groom;
     GtkBuilder *builder;
     GtkListBoxRow *row_msg;
-}              t_signal_data;
+};
 
 gssize mx_send(GDataOutputStream *out, t_dtp *dtp);
 int mx_tcp_connect(const char *host, const char *serv);

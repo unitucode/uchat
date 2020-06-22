@@ -42,7 +42,8 @@ typedef enum s_request_type {
     RQ_MEMBER_INFO,
     RQ_NEW_MEMBER,
     RQ_BAN_MEMBER,
-    RQ_COUNT_REQUEST,
+    RQ_STICKER,
+    RQ_COUNT_REQUEST
 }            t_request_type;
 
 typedef enum s_room_type {
