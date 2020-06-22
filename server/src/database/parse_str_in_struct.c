@@ -55,7 +55,7 @@ t_db_message *mx_parse_message(cJSON *message_j) {
     // if (!(json = mx_json_is_valid(message_j, "user_id", cJSON_IsNumber)))
     //     return NULL;
     // message->user_id = json->valueint;
-    if (!(json = mx_json_is_valid(message_j, "type", cJSON_IsNumber)))
+    if (!(json = mx_json_is_valid(message_j, "msg_type", cJSON_IsNumber)))
         return NULL;
     message->type = json->valueint;
     // if (!(json = mx_json_is_valid(message_j, "file_size", cJSON_IsNumber)))

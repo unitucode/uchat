@@ -9,7 +9,7 @@ static cJSON *get_object_message(sqlite3_stmt *stmt) {
     cJSON_AddNumberToObject(o_m, "date", sqlite3_column_int64(stmt, 3));
     cJSON_AddStringToObject(o_m, "message",
                             MX_J_STR((char*)sqlite3_column_text(stmt, 4)));
-    cJSON_AddNumberToObject(o_m, "type", sqlite3_column_int(stmt, 5));
+    cJSON_AddNumberToObject(o_m, "msg_type", sqlite3_column_int(stmt, 5));
     cJSON_AddNumberToObject(o_m, "file_size", sqlite3_column_int(stmt, 6));
     cJSON_AddStringToObject(o_m, "file_name",
                             MX_J_STR((char*)sqlite3_column_text(stmt, 7)));

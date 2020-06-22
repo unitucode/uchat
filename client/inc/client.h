@@ -33,14 +33,6 @@ typedef struct s_chat t_chat;
 typedef struct s_signal_data t_signal_data;
 typedef struct s_gsticker t_gsticker;
 
-struct s_gsticker {
-    guint id;
-    guint room_id;
-    guint message_id;
-    guint64 data;
-    char *login;
-};
-
 struct s_groom {
     GtkListBox *box_rooms;
     GtkScrolledWindow *page;
@@ -60,6 +52,7 @@ struct s_groom {
 struct s_gmsg {
     GtkListBoxRow *row_msg;
     GtkLabel *label_text;
+    gint type;
     char *msg;
     char *login;
     guint64 date;
@@ -158,6 +151,7 @@ t_dtp *mx_join_room_request(int room_id); //FOR JOIN TO ROOM
 t_dtp *mx_get_members_request(int room_id); //FOR MEMEBERS
 t_dtp *mx_member_info_request(int user_id); //FOR INFO ABOUT MEMBER
 t_dtp *mx_ban_member_request(int room_id, int user_id); // FOR BAN MEMBER
+t_dtp *mx_sticker_request(char *sticker, int room_id); // FOR STICKER
 
 //errors api
 void mx_err_auth_data_handler(GtkBuilder *builder);

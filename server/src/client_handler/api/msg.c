@@ -15,8 +15,8 @@ static t_dtp *get_resend_msg(t_db_message *msg) {
         return NULL;
     if (!cJSON_AddNumberToObject(send_msg, "user_id", msg->user_id))
         return NULL;
-    // if (!cJSON_AddNumberToObject(send_msg, "status", msg->status))
-    //     return NULL;
+    if (!cJSON_AddNumberToObject(send_msg, "msg_type", msg->type))
+        return NULL;
     return mx_get_transport_data(send_msg);
 }
 

@@ -16,10 +16,15 @@ t_dtp *mx_new_room_request(char *room_name, char *desc, t_room_type type) {
 
 bool mx_new_room_handler(t_dtp *data, t_chat *chat) {
     t_groom *room = NULL;
+    t_dtp *members = NULL;
 
     room = mx_create_groom(data->json);
     if (!room)
         return false;
+    members = mx_get_members_request(room->id);
+    mx_send(chat->out, members);
+    mx_free_request(&members);
     mx_add_groom(room, chat->builder);
+    
     return true;
 }
