@@ -165,12 +165,12 @@ cJSON *mx_search_user(sqlite3 *db, gchar *str_search);
 
 //members
 cJSON *mx_get_json_members(sqlite3 *db, guint64 room_id);
-GList *mx_get_log_members(sqlite3 *db, guint64 room_id);
+GList *mx_get_login_members(sqlite3 *db, guint64 room_id);
 void mx_insert_member_into_db(sqlite3 *db, guint64 room_id, guint64 user_id,
                               gint8 permission);
 void mx_destroy_data(gpointer data);
-void mx_edit_perm_member(sqlite3 *db, guint64 room_id, guint64 user_id,
-                         gint8 new_perm);
+void mx_edit_type_member(sqlite3 *db, guint64 room_id, guint64 user_id,
+                         gint8 new_type);
 gint8 mx_get_type_member(sqlite3 *db, guint64 user_id, guint64 room_id);
 
 // message
