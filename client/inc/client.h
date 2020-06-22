@@ -8,6 +8,7 @@
 #include <gio/gio.h>
 
 #define MX_IMGS_PATH "../src/gui/resources/"
+#define MX_STICKER_PATH MX_IMGS_PATH"stickers/"
 #define MX_GUI_PATH "../src/gui/gui.glade"
 #define MX_IMG_EYE MX_IMGS_PATH"eye.png"
 #define MX_IMG_CLOSEDEYE MX_IMGS_PATH"closed-eye.png"
@@ -69,6 +70,7 @@ struct s_chat {
     GDataInputStream *in;
     GSocketConnection *conn;
     GSocketClient *cli_conn;
+    GHashTable *stickers;
     char *auth_token;
     char *login;
     int argc;
@@ -209,15 +211,16 @@ void mx_set_room_widgets_visibility(GtkBuilder *builder, bool visibility);
 void mx_switch_room_header(GtkBuilder *builder, gint page_index);
 void mx_unselect_curr_room_messages(GtkBuilder *builder);
 void mx_select_msg(gpointer *eventbox, gpointer *event, t_signal_data *data);
-GtkWidget *mx_create_reg_message_row(t_gmsg *gmsg, gboolean is_own);
+GtkWidget *mx_create_reg_message_row(t_gmsg *gmsg, t_chat *chat, gboolean is_own);
 GtkWidget *mx_msgcreate_eventbox();
 GtkWidget *mx_msgcreate_box_main(GtkWidget *eventbox, gboolean is_own);
-void mx_msgcreate_box_info(GtkWidget *box_main,
+void mx_msgcreate_box_info(GtkWidget *box_main, t_chat *chat,
                            t_gmsg *gmsg, gboolean is_own);
-GtkWidget *mx_create_reg_message_row(t_gmsg *gmsg, gboolean is_own);
+GtkWidget *mx_create_reg_message_row(t_gmsg *gmsg, t_chat *chat, gboolean is_own);
 void mx_msgcreate_label_login(GtkWidget *box_main, t_gmsg *gmsg);
 void mx_msgcreate_label_text(GtkWidget *box_info,
                              t_gmsg *gmsg, gboolean is_own);
+void mx_msgcreate_img_sticker(GtkWidget *box_info, t_chat *chat, gchar *sticker, gboolean is_own);
 void mx_msgcreate_label_time(GtkWidget *box_info,
                              t_gmsg *gmsg, gboolean is_own);
 void mx_search_delim_set_visibility(GtkBuilder *builder, gboolean is_visible);

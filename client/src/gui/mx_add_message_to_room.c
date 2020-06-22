@@ -27,11 +27,6 @@ static void add_message_row(t_gmsg *msg, t_chat *chat) {
                            (GDestroyNotify)mx_free_sigdata);
 }
 
-
-
 void mx_add_message_to_room(t_gmsg *msg, t_chat *chat) {
-    if (msg->type == DB_STICKER)
-        g_message("ADD STICKER mx_add_message_to_room.c %s\n", msg->msg);
-    //else if (msg->type == DB_TEXT_MSG)
-        add_message_row(msg, chat);
+    add_message_row(msg, chat);
 }

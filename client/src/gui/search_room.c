@@ -43,6 +43,8 @@ void mx_clear_global_search(GtkBuilder *builder) {
     GObject *box = (gtk_builder_get_object(builder, "listbox_global_rooms"));
     GtkListBoxRow *row = gtk_list_box_get_row_at_index((GTK_LIST_BOX(box)), 0);
 
+    mx_widget_set_visibility_by_name(builder,
+                                     "label_search_nothing_global", FALSE);
     while (row) {
         mx_delete_row_room(row, builder);
         row = gtk_list_box_get_row_at_index(GTK_LIST_BOX(box), 0);
@@ -60,8 +62,6 @@ gboolean mx_stop_search_room(gpointer *entry,
     gtk_list_box_invalidate_filter(GTK_LIST_BOX(listbox));
     mx_widget_set_visibility_by_name(builder,
                                      "label_search_nothing_local", FALSE);
-    mx_widget_set_visibility_by_name(builder,
-                                     "label_search_nothing_global", FALSE);
     mx_clear_global_search(builder);
     (void)data;
     return FALSE;
