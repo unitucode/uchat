@@ -61,7 +61,7 @@ static gboolean incoming_callback (GSocketService *service, GSocketConnection *c
 void test();
 
 int main(int argc, char **argv) {
-    // test();
+    test();
     GError *error = NULL;
     GSocketService *service = g_socket_service_new();
     GMainLoop *loop = NULL;
@@ -86,6 +86,10 @@ int main(int argc, char **argv) {
 
 void test() {
     sqlite3 *db = mx_open_db(MX_DB);
+
+    // cJSON *messages = mx_search_message(db, "he", 1);
+    // gchar *messages_str = cJSON_Print(messages);
+    // g_print("%s\n", messages_str);
 
     // printf("%llu\n", mx_get_time(DB_SECOND));
     // printf("%llu\n", mx_get_time(DB_MILISECOND));
@@ -178,7 +182,7 @@ void test() {
     // t_db_message *message = g_malloc(sizeof(t_db_message));
     // message->user_id = 1;
     // message->room_id = 1;
-    // message->message = "hello";
+    // message->message = "hedsllo";
     // message->file_name = NULL;
     // message->file_size = 0;
     // message->type = DB_TEXT_MSG;

@@ -35,6 +35,7 @@ cJSON *mx_search_room(sqlite3 *db, gchar *str_search, guint64 user_id) {
                     "search room");
     while ((rv = sqlite3_step(stmt)) == SQLITE_ROW)
         cJSON_AddItemToArray(rooms, mx_get_object_room(stmt));
+    mx_error_sqlite(rv, "step", "search room");
     sqlite3_free(request);
     sqlite3_finalize(stmt);
     return rooms;
@@ -55,4 +56,25 @@ gboolean mx_check_user_by_login(sqlite3 *db, gchar *login) {
     mx_error_sqlite(rv, "step", "check_user");
     sqlite3_finalize(stmt);
     return false;
+}
+
+cJSON *mx_search_message(sqlite3 *db, gchar *str_search, guint64 room_id) {
+    sqlite3_str *sql_str = sqlite3_str_new(db);
+    gint32 rv = SQLITE_OK;
+    gchar *request = NULL;
+    sqlite3_stmt *stmt;
+    cJSON *messages = cJSON_CreateArray();
+
+    sqlite3_str_appendf(sql_str, "select * from messages where room_id = %llu"
+                                 " and message like'%s%%'",
+                        room_id, str_search);
+    request = sqlite3_str_finish(sql_str);
+    mx_error_sqlite(sqlite3_prepare_v2(db, request, -1, &stmt, NULL), "prepare",
+                    "search message");
+    while ((rv = sqlite3_step(stmt)) == SQLITE_ROW)
+        cJSON_AddItemToArray(messages, mx_get_object_message(stmt));
+    mx_error_sqlite(rv, "step", "search message");
+    sqlite3_free(request);
+    sqlite3_finalize(stmt);
+    return messages;
 }

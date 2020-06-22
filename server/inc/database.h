@@ -152,7 +152,7 @@ gboolean mx_is_member(sqlite3 *db, guint64 user_id, guint64 room_id);
 gboolean mx_check_user_by_login(sqlite3 *db, gchar *login);
 cJSON *mx_search_room(sqlite3 *db, gchar *str_search, guint64 user_id);
 cJSON *mx_search_user(sqlite3 *db, gchar *str_search);
-
+cJSON *mx_search_message(sqlite3 *db, gchar *str_search, guint64 room_id);
 
 //members
 cJSON *mx_get_json_members(sqlite3 *db, guint64 room_id);
@@ -166,3 +166,5 @@ gint8 mx_get_type_member(sqlite3 *db, guint64 user_id, guint64 room_id);
 
 // message
 gboolean mx_is_owner_msg(sqlite3 *db, guint64 user_id, guint64 msg_id);
+cJSON *mx_get_object_message(sqlite3_stmt *stmt);
+

@@ -1,6 +1,6 @@
 #include "server.h"
 
-static cJSON *get_object_message(sqlite3_stmt *stmt) {
+cJSON *mx_get_object_message(sqlite3_stmt *stmt) {
     cJSON *o_m = cJSON_CreateObject();
 
     cJSON_AddNumberToObject(o_m, "user_id", sqlite3_column_int64(stmt, 0));
@@ -27,7 +27,7 @@ static cJSON *get_messages_by_id(sqlite3_stmt *stmt, guint64 room_id,
     sqlite3_bind_int64(stmt, 1, date);
     for (gint64 i = 0; i < count 
                         && (rv = sqlite3_step(stmt)) == SQLITE_ROW; i++) {
-        cJSON_AddItemToArray(message, get_object_message(stmt));
+        cJSON_AddItemToArray(message, mx_get_object_message(stmt));
     }
     cJSON_AddItemToObject(room, "room_id", cJSON_CreateNumber(room_id));
     cJSON_AddItemToObject(room, "messages", message);
