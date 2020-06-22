@@ -57,6 +57,7 @@ t_dtp *mx_search_rooms_request(cJSON *array);
 t_dtp *mx_member_info_request(t_db_user *user);
 t_dtp *mx_delete_room_request(int room_id);
 t_dtp *mx_ban_member_request(int room_id, int user_id);
+t_dtp *mx_search_msgs_request(cJSON *array);
 
 //data protocol handler functions
 bool mx_log_in_handler(t_dtp *login, t_client *client);
@@ -79,6 +80,7 @@ bool mx_join_room_handler(t_dtp *room, t_client *client);
 bool mx_get_members_handler(t_dtp *data, t_client *client);
 bool mx_member_info_handler(t_dtp *id, t_client *client);
 bool mx_ban_member_handler(t_dtp *ban, t_client *client);
+bool mx_search_msgs_handler(t_dtp *data, t_client *client);
 
 t_info *mx_init_info(void);
 void mx_deinit_info(t_info **info);

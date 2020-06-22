@@ -303,6 +303,12 @@ dialog headerbar {
     color: #919CC0;
     margin-left: 10px;
 }
+.stack_messages list .box_sticker_info label:nth-child(2){
+	font-size: 13px;
+    font-weight: 300;
+    color: #919CC0;
+    margin-left: 10px;
+}
 .stack_messages list .box_own_msg_info label:nth-child(1){
 	font-size: 13px;
     font-weight: 300;

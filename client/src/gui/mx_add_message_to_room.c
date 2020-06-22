@@ -28,8 +28,5 @@ static void add_message_row(t_gmsg *msg, t_chat *chat) {
 }
 
 void mx_add_message_to_room(t_gmsg *msg, t_chat *chat) {
-    // if (msg->type == DB_STICKER)
-    //     add_sticker_row(msg, chat->builder);
-    // else if (msg->type == DB_TEXT_MSG)
-        add_message_row(msg, chat);
+    add_message_row(msg, chat);
 }
