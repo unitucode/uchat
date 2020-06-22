@@ -8,8 +8,9 @@ void mx_msgcreate_label_login(GtkWidget *box_main, t_gmsg *gmsg) {
     gtk_widget_set_halign(label_login, GTK_ALIGN_START);
 }
 
-void mx_msgcreate_img_sticker(GtkWidget *box_info, gboolean is_own) {
-    GtkWidget *sticker = gtk_image_new_from_file(MX_STICKER_PATH"sticker1.svg");
+void mx_msgcreate_img_sticker(GtkWidget *box_info, t_chat *chat,
+                              gchar *sticker_str, gboolean is_own) {
+    GtkWidget *sticker = GTK_WIDGET(g_hash_table_lookup(chat->stickers, sticker_str));
 
     if (is_own)
         gtk_box_pack_end(GTK_BOX(box_info), sticker, FALSE, FALSE, 0);
