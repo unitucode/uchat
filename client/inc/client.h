@@ -114,6 +114,7 @@ bool mx_join_room_handler(t_dtp *data, t_chat *chat); //HANDLER FOR JOIN ROOM
 bool mx_get_members_handler(t_dtp *data, t_chat *chat); //HANDLER FOR USERS
 bool mx_member_info_handler(t_dtp *data, t_chat *chat); //HANDLER FOR INFO MEMBER
 bool mx_new_member_handler(t_dtp *data, t_chat *chat); //HANDLER FOR NEW MEMBER
+bool mx_ban_member_handler(t_dtp *data, t_chat *chat); //HANDLER FOR BAN MEMBER
 
 
 /*
@@ -146,6 +147,7 @@ t_dtp *mx_search_rooms_request(char *room_name); // FOR SEARCHING CHANNEL
 t_dtp *mx_join_room_request(int room_id); //FOR JOIN TO ROOM
 t_dtp *mx_get_members_request(int room_id); //FOR MEMEBERS
 t_dtp *mx_member_info_request(int user_id); //FOR INFO ABOUT MEMBER
+t_dtp *mx_ban_member_request(int room_id, int user_id); // FOR BAN MEMBER
 
 //errors api
 void mx_err_auth_data_handler(GtkBuilder *builder);

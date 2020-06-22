@@ -2,7 +2,6 @@
 
 #include "utils.h"
 #include "protocol.h"
-#include "list.h"
 #include "sqlite3.h"
 #include "database.h"
 #include <glib.h>
@@ -56,6 +55,8 @@ t_dtp *mx_upd_user_desc_request(char *desc);
 t_dtp *mx_reconnect_request(char *token, char *login);
 t_dtp *mx_search_rooms_request(cJSON *array);
 t_dtp *mx_member_info_request(t_db_user *user);
+t_dtp *mx_delete_room_request(int room_id);
+t_dtp *mx_ban_member_request(int room_id, int user_id);
 
 //data protocol handler functions
 bool mx_log_in_handler(t_dtp *login, t_client *client);
@@ -77,6 +78,7 @@ bool mx_search_rooms_handler(t_dtp *data, t_client *client);
 bool mx_join_room_handler(t_dtp *room, t_client *client);
 bool mx_get_members_handler(t_dtp *data, t_client *client);
 bool mx_member_info_handler(t_dtp *id, t_client *client);
+bool mx_ban_member_handler(t_dtp *ban, t_client *client);
 
 t_info *mx_init_info(void);
 void mx_deinit_info(t_info **info);

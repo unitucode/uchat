@@ -41,6 +41,7 @@ typedef enum s_request_type {
     RQ_GET_MEMBERS,
     RQ_MEMBER_INFO,
     RQ_NEW_MEMBER,
+    RQ_BAN_MEMBER,
     RQ_COUNT_REQUEST,
 }            t_request_type;
 
@@ -70,7 +71,6 @@ struct s_dtp { // Data Transfer Protocol view
 
 
 //requests
-t_dtp *mx_delete_room_request(char *room_name);
 t_dtp *mx_get_transport_data(cJSON *json_result);
 
 //SSL

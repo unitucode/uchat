@@ -25,11 +25,13 @@ bool mx_msg_handler(t_dtp *data, t_client *client) { // TODO leaks
     t_dtp *resend = NULL;
 
     if (!msg)
-        return false; //ADD CONTAINS IN ROOM
+        return false;
     if (!mx_is_member(client->info->database, client->user->user_id, msg->room_id)) {
         mx_free_message(&msg);
         return false;
     }
+    if (mx_get_type_member(client->info->database, client->user->user_id, msg->room_id) == DB_BANNED)
+        return false;
     msg->user_id = client->user->user_id;
     mx_insert_message(client->info->database, msg);
     resend = get_resend_msg(msg);

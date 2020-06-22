@@ -19,6 +19,7 @@ typedef enum s_type_db {
     DB_OLD_MESSAGE,
     DB_CUSTOMER,
     DB_ADMIN,
+    DB_BANNED,
     DB_MODERATOR,
     DB_SIMPLE,
     DB_TEXT_MSG,
