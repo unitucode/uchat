@@ -9,7 +9,7 @@ void mx_msgcreate_label_login(GtkWidget *box_main, t_gmsg *gmsg) {
 }
 
 void mx_msgcreate_img_sticker(GtkWidget *box_info, gboolean is_own) {
-    GtkWidget *sticker = gtk_image_new_from_file(MX_IMGS_PATH "sticker.png");
+    GtkWidget *sticker = gtk_image_new_from_file(MX_STICKER_PATH"sticker1.svg");
 
     if (is_own)
         gtk_box_pack_end(GTK_BOX(box_info), sticker, FALSE, FALSE, 0);

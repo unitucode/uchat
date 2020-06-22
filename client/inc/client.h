@@ -8,6 +8,7 @@
 #include <gio/gio.h>
 
 #define MX_IMGS_PATH "../src/gui/resources/"
+#define MX_STICKER_PATH MX_IMGS_PATH"stickers/"
 #define MX_GUI_PATH "../src/gui/gui.glade"
 #define MX_IMG_EYE MX_IMGS_PATH"eye.png"
 #define MX_IMG_CLOSEDEYE MX_IMGS_PATH"closed-eye.png"
