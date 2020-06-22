@@ -43,6 +43,7 @@ typedef enum s_request_type {
     RQ_NEW_MEMBER,
     RQ_BAN_MEMBER,
     RQ_STICKER,
+    RQ_SEARCH_MSG,
     RQ_COUNT_REQUEST
 }            t_request_type;
 
