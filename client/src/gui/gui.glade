@@ -325,7 +325,8 @@
   <object class="GtkImage" id="image14">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
-    <property name="stock">gtk-missing-image</property>
+    <property name="pixel_size">12</property>
+    <property name="icon_name">close</property>
   </object>
   <object class="GtkImage" id="image2">
     <property name="visible">True</property>
@@ -643,6 +644,8 @@
                             <property name="top_margin">14</property>
                             <property name="bottom_margin">14</property>
                             <property name="buffer">buffer_message</property>
+                            <signal name="focus-in-event" handler="mx_unset_placeholder" swapped="no"/>
+                            <signal name="focus-out-event" handler="mx_set_placeholder" swapped="no"/>
                           </object>
                         </child>
                       </object>
@@ -1208,7 +1211,7 @@
     </style>
   </object>
   <object class="GtkDialog" id="dialog_profile_sett">
-    <property name="width_request">320</property>
+    <property name="width_request">350</property>
     <property name="height_request">260</property>
     <property name="can_focus">True</property>
     <property name="events">GDK_FOCUS_CHANGE_MASK</property>
@@ -1251,9 +1254,8 @@
         <child internal-child="action_area">
           <object class="GtkButtonBox">
             <property name="can_focus">False</property>
-            <property name="orientation">vertical</property>
             <property name="homogeneous">True</property>
-            <property name="layout_style">end</property>
+            <property name="layout_style">center</property>
             <child>
               <object class="GtkButton" id="btn_edit_profile">
                 <property name="label" translatable="yes">Edit profile</property>
@@ -1306,9 +1308,9 @@
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="label" translatable="yes">Login</property>
-                    <property name="xalign">0.05000000074505806</property>
+                    <property name="xalign">0</property>
                     <attributes>
-                      <attribute name="weight" value="bold"/>
+                      <attribute name="weight" value="semibold"/>
                     </attributes>
                   </object>
                   <packing>
@@ -1323,7 +1325,7 @@
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="label" translatable="yes">login</property>
-                    <property name="xalign">0.10000000149011612</property>
+                    <property name="xalign">0</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -1349,9 +1351,9 @@
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="label" translatable="yes">Status</property>
-                    <property name="xalign">0.05000000074505806</property>
+                    <property name="xalign">0</property>
                     <attributes>
-                      <attribute name="weight" value="bold"/>
+                      <attribute name="weight" value="semibold"/>
                     </attributes>
                   </object>
                   <packing>
@@ -1364,8 +1366,6 @@
                   <object class="GtkScrolledWindow">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
-                    <property name="margin_left">10</property>
-                    <property name="margin_right">10</property>
                     <property name="shadow_type">in</property>
                     <property name="max_content_height">90</property>
                     <property name="propagate_natural_height">True</property>
@@ -1489,7 +1489,7 @@
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="label" translatable="yes">Room name</property>
-                    <property name="xalign">0.15000000596046448</property>
+                    <property name="xalign">0</property>
                     <attributes>
                       <attribute name="foreground" value="#eeeeeeeeecec"/>
                     </attributes>
@@ -1504,8 +1504,6 @@
                   <object class="GtkEntry" id="entry_roomsett_name">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
-                    <property name="margin_left">25</property>
-                    <property name="margin_right">25</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -1531,7 +1529,7 @@
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="label" translatable="yes">Description</property>
-                    <property name="xalign">0.15000000596046448</property>
+                    <property name="xalign">0</property>
                     <attributes>
                       <attribute name="foreground" value="#eeeeeeeeecec"/>
                     </attributes>
@@ -1546,8 +1544,6 @@
                   <object class="GtkScrolledWindow">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
-                    <property name="margin_left">25</property>
-                    <property name="margin_right">25</property>
                     <property name="shadow_type">in</property>
                     <property name="max_content_height">100</property>
                     <property name="propagate_natural_height">True</property>
@@ -1595,8 +1591,6 @@
                 <property name="can_focus">True</property>
                 <property name="focus_on_click">False</property>
                 <property name="receives_default">True</property>
-                <property name="margin_left">50</property>
-                <property name="margin_right">50</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -1612,8 +1606,6 @@
                 <property name="can_focus">True</property>
                 <property name="focus_on_click">False</property>
                 <property name="receives_default">True</property>
-                <property name="margin_left">50</property>
-                <property name="margin_right">50</property>
                 <signal name="clicked" handler="mx_widget_switch_visibility" object="dialog_room_sett" swapped="no"/>
               </object>
               <packing>

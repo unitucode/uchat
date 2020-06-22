@@ -50,7 +50,6 @@ box stack, entry, .dialog_notebook header {
     background-image: none;
 }
 .dialog-action-area button {
-    
     background-color: #fff;
     box-shadow: none;
     padding: 12px 40px;
@@ -377,4 +376,7 @@ dialog headerbar {
     background-color: #424E78;
     color: #919CC0;
     font-size: 14px;
+}
+#dialog_profile_prefs .dialog-action-area button {
+	padding: 12px 30px;
 }
