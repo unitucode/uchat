@@ -17,20 +17,10 @@ typedef enum s_type_db {
     DB_CURR_MESSAGE = 0,
     DB_NEW_MESSAGE,
     DB_OLD_MESSAGE,
-    DB_CUSTOMER,
-    DB_ADMIN,
-    DB_BANNED,
-    DB_MODERATOR,
-    DB_SIMPLE,
-    DB_TEXT_MSG,
-    DB_FILE_MSG,
-    DB_FILE_TEXT_MSG,
     DB_SECOND,
     DB_MILISECOND,
-    DB_MICROSECOND,
-    DB_FRIENDS,
-    DB_BLACKLIST
-}            t_type_db;
+    DB_MICROSECOND
+} t_type_db;
 
 struct s_member{
     guint64 user_id;
