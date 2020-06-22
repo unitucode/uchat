@@ -61,7 +61,7 @@ static gboolean incoming_callback (GSocketService *service, GSocketConnection *c
 void test();
 
 int main(int argc, char **argv) {
-    test();
+    // test();
     GError *error = NULL;
     GSocketService *service = g_socket_service_new();
     GMainLoop *loop = NULL;
