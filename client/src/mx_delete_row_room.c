@@ -2,8 +2,10 @@
 
 void mx_unselect_room(t_groom *groom, GtkBuilder *builder) {
     mx_set_default_room_sett(builder);
-    gtk_widget_hide(GTK_WIDGET(groom->page));
-    gtk_widget_hide(GTK_WIDGET(groom->row_room));
+    if (groom->page)
+        gtk_widget_hide(GTK_WIDGET(groom->page));
+    if (groom->row_room)
+        gtk_widget_hide(GTK_WIDGET(groom->row_room));
     mx_set_room_widgets_visibility(builder, false);
 }
 
@@ -12,6 +14,7 @@ void mx_delete_row_room(GtkListBoxRow *row, GtkBuilder *builder) {
 
     if (gtk_list_box_row_is_selected(row))
         mx_unselect_room(groom, builder);
-    gtk_widget_destroy(GTK_WIDGET(groom->page));
+    if (groom->page)
+        gtk_widget_destroy(GTK_WIDGET(groom->page));
     gtk_widget_destroy(GTK_WIDGET(row));
 }

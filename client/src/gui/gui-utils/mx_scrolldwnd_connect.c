@@ -13,7 +13,8 @@ static void mx_scroll_to_end(GtkAdjustment *adj) {
  * Do GtkScrolledWindow autoscroll to down by name or pointer
  */
 
-void mx_scrlldwnd_connect(char *name, GtkWidget *scroll, GtkBuilder *builder) {
+void mx_scrlldwnd_connect(gchar *name,
+                          GtkWidget *scroll, GtkBuilder *builder) {
     GtkWidget *scrlldwnd = NULL;
     GtkAdjustment *adj = NULL;
 
