@@ -7,7 +7,8 @@ static void req_test(GtkButton *btn, t_chat *chat) {
     // t_dtp *request = mx_get_members_request(2);
     // t_dtp *request = mx_member_info_request(2);
     // t_dtp *request = mx_ban_member_request(2, 3);
-    t_dtp *request = mx_sticker_request("hello.png", 1);
+    // t_dtp *request = mx_sticker_request("hello.png", 1);
+    t_dtp *request = mx_search_msgs_request("hello", 1);
     mx_send(chat->out, request);
     mx_free_request(&request);
     (void)chat;
