@@ -114,7 +114,7 @@ void test() {
 
     // mx_edit_members(db, 11, 1, DB_SIMPLE);
 
-    // cJSON *members_json = mx_get_json_members(db, 11);
+    // cJSON *members_json = mx_get_json_members(db, 1);
     // gchar *members = cJSON_Print(members_json);
     // g_print("%s\n", members);
 
@@ -128,9 +128,9 @@ void test() {
     // else
     //     printf("false\n");
 
-    // mx_insert_member_into_db(db, 10, 2, DB_SIMPLE);
-    // mx_insert_member_into_db(db, 10, 3, DB_SIMPLE);
-    // mx_insert_member_into_db(db, 10, 4, DB_SIMPLE);
+    // mx_insert_member_into_db(db, 1, 1, DB_SIMPLE);
+    // mx_insert_member_into_db(db, 1, 2, DB_SIMPLE);
+    // mx_insert_member_into_db(db, 1, 3, DB_SIMPLE);
     // mx_insert_member_into_db(db, 10, 5, DB_SIMPLE);
     // mx_insert_member_into_db(db, 10, 6, DB_SIMPLE);
     // system("leaks -q uchat_server");
