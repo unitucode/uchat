@@ -31,6 +31,13 @@
 #define MX_RECONN_ATTEMPTS 6
 #define MX_RECONN_DELAY_S 4
 
+//formatting
+#define MX_FT_SCRATCH "~~"
+#define MX_FT_BOLD "**"
+#define MX_FT_IMPORTANT "``"
+#define MX_FT_ITALIC "##"
+#define MX_FT_UNDER "__"
+
 typedef struct s_groom t_groom;
 typedef struct s_gmsg t_gmsg;
 typedef struct s_chat t_chat;
@@ -268,3 +275,5 @@ bool mx_handle_request(char *request, t_chat *chat);
 void mx_send_auth_request(char *login, char *password,
                           t_chat *chat, t_request_type request_type);
 void mx_css_connect();
+void mx_format_text(GtkTextBuffer *buffer);
+void mx_text_buffer_set_tags(GtkTextBuffer *buffer);
