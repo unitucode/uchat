@@ -1,19 +1,16 @@
 #include "server.h"
 
 static void message_old(sqlite3_str **str) {
-    printf("message old\n");
     sqlite3_str_appendall(*str, " and date < ?1");
     sqlite3_str_appendall(*str, " order by date desc");
 }
 
 static void message_new(sqlite3_str **str) {
-    printf("message new\n");
     sqlite3_str_appendall(*str, " and date > ?1");
     sqlite3_str_appendall(*str, " order by date desc");
 }
 
 static void message_curr(sqlite3_str **str) {
-    printf("message curr\n");
     sqlite3_str_appendall(*str, " order by date desc");
 }
 

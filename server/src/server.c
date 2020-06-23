@@ -86,6 +86,23 @@ int main(int argc, char **argv) {
 
 void test() {
     sqlite3 *db = mx_open_db(MX_DB);
+ 
+    // guint64 time = g_get_real_time();
+    // GDateTime *second = g_date_time_new_from_unix_utc(time / 1000000);
+    // printf("->%lld\n", (long long)time);
+    // printf("->%lld\n", (long long)second);
+    // g_print("%s\n", g_date_time_format(second, "%d.%m.%Y %H:%M"));
+
+    // g_print("%s\n", mx_get_string_time(time / 1000, MX_TIME_LONG));
+    // g_print("%s\n", mx_get_string_time(time / 1000, MX_TIME_SHORT));
+
+    // time_t sec = date / 1000000;
+
+    // char timestr[100];
+    // struct tm ts;
+    // ts = *localtime(&sec);
+    // strftime(timestr, 100, "%d.%m.%Y %H:%M ", &ts);
+    // printf("%s\n", timestr);
 
     // cJSON *messages = mx_search_message(db, "he", 1);
     // gchar *messages_str = cJSON_Print(messages);
@@ -107,14 +124,14 @@ void test() {
     // else
     //     g_print("false\n");
 
-    // cJSON *json_search = mx_search_room(db, "nam", 1);
+    // cJSON *json_search = mx_search_room(db, "use", 2);
     // gchar *str_search = cJSON_Print(json_search);
     // g_print("%s\n", str_search);
 
 
     // mx_edit_members(db, 11, 1, DB_SIMPLE);
 
-    // cJSON *members_json = mx_get_json_members(db, 11);
+    // cJSON *members_json = mx_get_json_members(db, 1);
     // gchar *members = cJSON_Print(members_json);
     // g_print("%s\n", members);
 
@@ -128,9 +145,9 @@ void test() {
     // else
     //     printf("false\n");
 
-    // mx_insert_member_into_db(db, 10, 2, DB_SIMPLE);
-    // mx_insert_member_into_db(db, 10, 3, DB_SIMPLE);
-    // mx_insert_member_into_db(db, 10, 4, DB_SIMPLE);
+    // mx_insert_member_into_db(db, 1, 1, DB_SIMPLE);
+    // mx_insert_member_into_db(db, 1, 2, DB_SIMPLE);
+    // mx_insert_member_into_db(db, 1, 3, DB_SIMPLE);
     // mx_insert_member_into_db(db, 10, 5, DB_SIMPLE);
     // mx_insert_member_into_db(db, 10, 6, DB_SIMPLE);
     // system("leaks -q uchat_server");
@@ -159,25 +176,28 @@ void test() {
     // mx_db_pop_queue_by_id(db, 6);
     // printf("%s\n", mx_get_queue(db, 6));
 
-    // t_db_room *room = malloc(sizeof(t_db_room));
-    // room->customer_id = 1;
-    // room->desc = "";
-    // room->room_name = "name";
-    // room->type = DB_GLOBAL_CHAT;
-    // mx_insert_room_into_db(db, room);
     // for (int i = 0; i < 10; i++)
     // mx_free_room(&room);
 
     // t_db_user *user = malloc(sizeof(t_db_user));
     // user->desc = "desc";
-    // user->login = "login5";
-    // user->name = "name5";
+    // user->login = "login4";
+    // user->name = "user4";
     // user->pass = "pass";
     // user->token = "token";
     // mx_insert_user_into_db(db, user);
 
+    // t_db_room *room = malloc(sizeof(t_db_room));
+    // room->customer_id = 2;
+    // room->desc = "";
+    // room->room_name = "admin_name";
+    // room->type = DB_GLOBAL_CHAT;
+    // mx_insert_room_into_db(db, room);
+
+
+    // mx_insert_member_into_db(db, 2, 2, DB_SIMPLE);
+
     // for (int i = 2; i < 20; i++)
-    // mx_insert_member_into_db(db, 1, 1, SIMPLE);
 
     // t_db_message *message = g_malloc(sizeof(t_db_message));
     // message->user_id = 1;
@@ -274,3 +294,5 @@ void test() {
     mx_close_db(db);
     printf("Ok\n");
 }
+
+

@@ -41,6 +41,10 @@ void mx_msgcreate_label_text(GtkWidget *box_info,
 void mx_msgcreate_label_time(GtkWidget *box_info,
                              t_gmsg *gmsg, gboolean is_own) {
     GtkWidget *label_time = gtk_label_new(NULL);
+    gchar *short_time = mx_get_string_time(gmsg->date, MX_TIME_SHORT);
+    gchar *long_time = mx_get_string_time(gmsg->date, MX_TIME_LONG);
+    puts(short_time);
+    puts(long_time);
 
     if (is_own)
         gtk_box_pack_end(GTK_BOX(box_info), label_time, FALSE, TRUE, 0);
@@ -48,7 +52,6 @@ void mx_msgcreate_label_time(GtkWidget *box_info,
         gtk_box_pack_start(GTK_BOX(box_info), label_time, FALSE, TRUE, 0);
     gtk_widget_set_halign(label_time, GTK_ALIGN_START);
     gtk_widget_set_valign(label_time, GTK_ALIGN_END);
-    gtk_label_set_text(GTK_LABEL(label_time), "13:07");
-    gtk_widget_set_tooltip_text(label_time, "24.05.2020    13:37");
-    (void)gmsg;
+    gtk_label_set_text(GTK_LABEL(label_time), short_time);
+    gtk_widget_set_tooltip_text(label_time, long_time);
 }
