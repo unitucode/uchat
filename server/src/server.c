@@ -274,4 +274,3 @@ void test() {
     mx_close_db(db);
     printf("Ok\n");
 }
-

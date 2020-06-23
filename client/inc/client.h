@@ -38,6 +38,14 @@
 #define MX_FT_ITALIC "##"
 #define MX_FT_UNDER "__"
 
+#define MX_OP_SCRATCH "<span strikethrough=\"true\">%s</span>"
+#define MX_OP_BOLD "<span font_weight=\"bold\">%s</span>"
+#define MX_OP_IMPORTANT "<span background=\"#FF698C7F\">%s</span>"
+#define MX_OP_ITALIC "<span font_style=\"italic\">%s</span>"
+#define MX_OP_UNDER "<span underline=\"single\">%s</span>"
+
+#define MX_CLOSE_SPAN "</span>"
+
 typedef struct s_groom t_groom;
 typedef struct s_gmsg t_gmsg;
 typedef struct s_chat t_chat;
@@ -275,5 +283,4 @@ bool mx_handle_request(char *request, t_chat *chat);
 void mx_send_auth_request(char *login, char *password,
                           t_chat *chat, t_request_type request_type);
 void mx_css_connect();
-void mx_format_text(GtkTextBuffer *buffer);
-void mx_text_buffer_set_tags(GtkTextBuffer *buffer);
+gchar *mx_format_text(gchar *text);

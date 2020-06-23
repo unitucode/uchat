@@ -32,7 +32,8 @@ void mx_msgcreate_label_text(GtkWidget *box_info,
     gtk_widget_set_halign(label_text, GTK_ALIGN_START);
     gtk_label_set_line_wrap(GTK_LABEL(label_text), TRUE);
     gtk_label_set_line_wrap_mode(GTK_LABEL(label_text), PANGO_WRAP_WORD_CHAR);
-    gtk_label_set_text(GTK_LABEL(label_text), gmsg->msg);
+    gtk_label_set_markup(GTK_LABEL(label_text), mx_format_text(gmsg->msg));
+    // gtk_label_set_text(GTK_LABEL(label_text), gmsg->msg);
     gmsg->label_text = GTK_LABEL(label_text);
     g_object_ref(label_text);
 }
