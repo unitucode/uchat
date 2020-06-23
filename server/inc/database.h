@@ -17,19 +17,10 @@ typedef enum s_type_db {
     DB_CURR_MESSAGE = 0,
     DB_NEW_MESSAGE,
     DB_OLD_MESSAGE,
-    DB_CUSTOMER,
-    DB_ADMIN,
-    DB_MODERATOR,
-    DB_SIMPLE,
-    DB_TEXT_MSG,
-    DB_FILE_MSG,
-    DB_FILE_TEXT_MSG,
     DB_SECOND,
     DB_MILISECOND,
-    DB_MICROSECOND,
-    DB_FRIENDS,
-    DB_BLACKLIST
-}            t_type_db;
+    DB_MICROSECOND
+} t_type_db;
 
 struct s_member{
     guint64 user_id;
@@ -152,28 +143,28 @@ void mx_free_user(t_db_user **user);
 void mx_insert_contact(sqlite3 *db, guint64 user_id, guint64 contact_id,
                        gint8 type);
 void mx_delete_contact(sqlite3 *db, guint64 user_id, guint64 contact_id);
-void mx_get_contact_(sqlite3 *db, guint64 user_id, gint8 type);
-
+cJSON *mx_get_contacts(sqlite3 *db, guint64 user_id, gint8 type);
 
 // user
 gboolean mx_is_member(sqlite3 *db, guint64 user_id, guint64 room_id);
 
-
 // search
 gboolean mx_check_user_by_login(sqlite3 *db, gchar *login);
-cJSON *mx_search_room(sqlite3 *db, gchar *str_search);
+cJSON *mx_search_room(sqlite3 *db, gchar *str_search, guint64 user_id);
 cJSON *mx_search_user(sqlite3 *db, gchar *str_search);
-
+cJSON *mx_search_message(sqlite3 *db, gchar *str_search, guint64 room_id);
 
 //members
 cJSON *mx_get_json_members(sqlite3 *db, guint64 room_id);
-GList *mx_get_log_members(sqlite3 *db, guint64 room_id);
+GList *mx_get_login_members(sqlite3 *db, guint64 room_id);
 void mx_insert_member_into_db(sqlite3 *db, guint64 room_id, guint64 user_id,
                               gint8 permission);
 void mx_destroy_data(gpointer data);
-void mx_edit_perm_member(sqlite3 *db, guint64 room_id, guint64 user_id,
-                         gint8 new_perm);
+void mx_edit_type_member(sqlite3 *db, guint64 room_id, guint64 user_id,
+                         gint8 new_type);
 gint8 mx_get_type_member(sqlite3 *db, guint64 user_id, guint64 room_id);
 
 // message
 gboolean mx_is_owner_msg(sqlite3 *db, guint64 user_id, guint64 msg_id);
+cJSON *mx_get_object_message(sqlite3_stmt *stmt);
+

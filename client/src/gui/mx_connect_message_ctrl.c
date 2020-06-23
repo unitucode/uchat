@@ -24,7 +24,8 @@ static void req_delete_msg(GtkListBox *box, GtkListBoxRow *row, t_chat *chat) {
 }
 
 static void delete_selected_msgs(GtkButton *btn, t_chat *chat) {
-    t_groom *groom = mx_get_selected_groom(chat->builder);
+    t_groom *groom = mx_get_selected_groom(chat->builder,
+                                           MX_LISTBOX_LOCAL_ROOMS);
 
     gtk_list_box_selected_foreach(groom->box_messages,
                                   (GtkListBoxForeachFunc)req_delete_msg,

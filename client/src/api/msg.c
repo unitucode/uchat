@@ -9,6 +9,8 @@ t_dtp *mx_msg_request(char *msg, int room_id) {
         return NULL;
     if (!cJSON_AddStringToObject(json_result, "message", MX_J_STR(msg)))
         return NULL;
+    if (!cJSON_AddNumberToObject(json_result, "msg_type", DB_TEXT_MSG))
+        return NULL;
     return mx_get_transport_data(json_result);
 }
 

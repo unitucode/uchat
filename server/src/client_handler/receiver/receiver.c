@@ -21,6 +21,8 @@ void mx_init_receiver(t_info *chat) {
     chat->request_handler[RQ_JOIN_ROOM] = mx_join_room_handler;
     chat->request_handler[RQ_GET_MEMBERS] = mx_get_members_handler;
     chat->request_handler[RQ_MEMBER_INFO] = mx_member_info_handler;
+    chat->request_handler[RQ_BAN_MEMBER] = mx_ban_member_handler;
+    chat->request_handler[RQ_SEARCH_MSG] = mx_search_msgs_handler;
 }
 
 bool mx_handle_request(char *request, t_client *client) {

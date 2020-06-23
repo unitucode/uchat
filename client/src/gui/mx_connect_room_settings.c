@@ -4,7 +4,8 @@ static void set_room_sett(GtkButton *btn, t_chat *chat) {
     GtkEntry *name = GTK_ENTRY(gtk_builder_get_object(chat->builder,
                                                       "entry_roomsett_name"));
     GObject *desc = gtk_builder_get_object(chat->builder, "buffer_room_desc");
-    t_groom *groom = mx_get_selected_groom(chat->builder);
+    t_groom *groom = mx_get_selected_groom(chat->builder,
+                                           MX_LISTBOX_LOCAL_ROOMS);
 
     gtk_text_buffer_set_text(GTK_TEXT_BUFFER(desc), groom->desc, -1);
     gtk_entry_set_text(name, groom->room_name);
@@ -12,7 +13,8 @@ static void set_room_sett(GtkButton *btn, t_chat *chat) {
 }
 
 static void req_room_sett(GtkButton *btn, t_chat *chat) {
-    t_groom *groom = mx_get_selected_groom(chat->builder);
+    t_groom *groom = mx_get_selected_groom(chat->builder,
+                                           MX_LISTBOX_LOCAL_ROOMS);
     t_dtp *dtp = NULL;
     char *new_name = mx_entry_get_text("entry_roomsett_name",
                                               chat->builder);
@@ -32,7 +34,8 @@ static void req_room_sett(GtkButton *btn, t_chat *chat) {
 }
 
 static void req_room_del(GtkButton *btn, t_chat *chat) {
-    t_groom *groom = mx_get_selected_groom(chat->builder);
+    t_groom *groom = mx_get_selected_groom(chat->builder,
+                                           MX_LISTBOX_LOCAL_ROOMS);
     t_dtp *dtp = mx_del_room_request(groom->id);
 
     mx_send(chat->out, dtp);

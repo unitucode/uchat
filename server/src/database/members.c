@@ -18,7 +18,7 @@ gboolean mx_is_member(sqlite3 *db, guint64 user_id, guint64 room_id) {
     return false;
 }
 
-GList *mx_get_log_members(sqlite3 *db, guint64 room_id) {
+GList *mx_get_login_members(sqlite3 *db, guint64 room_id) {
     sqlite3_stmt *stmt;
     gint rv = SQLITE_OK;
     GList *list = NULL;
@@ -36,14 +36,15 @@ GList *mx_get_log_members(sqlite3 *db, guint64 room_id) {
     return list;
 }
 
-void mx_edit_perm_member(sqlite3 *db, guint64 room_id, guint64 user_id,
-                       gint8 new_perm) {
+void mx_edit_type_member(sqlite3 *db, guint64 room_id, guint64 user_id,
+                       gint8 new_type) {
     sqlite3_str *sqlite_str = sqlite3_str_new(db);
     gchar *request = NULL;
     gint32 rv = SQLITE_OK;
 
-    sqlite3_str_appendf(sqlite_str, "update members set permission = %d where room_id = "
-                        "%llu and user_id = %llu", new_perm, room_id, user_id);
+    sqlite3_str_appendf(sqlite_str, "update members set permission = %d where "
+                                    "room_id = %llu and user_id = %llu",
+                        new_type, room_id, user_id);
     request = sqlite3_str_finish(sqlite_str);
     rv = sqlite3_exec(db, request, 0, 0, 0);
     mx_error_sqlite(rv, "exec", "edit members");

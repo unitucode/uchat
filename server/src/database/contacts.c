@@ -26,18 +26,30 @@ void mx_delete_contact(sqlite3 *db, guint64 user_id, guint64 contact_id) {
     sqlite3_free(request);
 }
 
-// cJSON *mx_get_contact_(sqlite3 *db, guint64 user_id, gint8 type) {
-//     sqlite3_stmt *stmt;
-//     gint32 rv = SQLITE_OK;
+static cJSON *create_object_contact(sqlite3_stmt *stmt) {
+    cJSON *contact = cJSON_CreateObject();
+
+    cJSON_AddNumberToObject(contact, "user_id", sqlite3_column_int64(stmt, 0));
+    cJSON_AddNumberToObject(contact, "contact_id", sqlite3_column_int64(stmt, 1));
+    cJSON_AddNumberToObject(contact, "type", sqlite3_column_int(stmt, 2));
+    return contact;
+}
+
+cJSON *mx_get_contacts(sqlite3 *db, guint64 user_id, gint8 type) {
+    sqlite3_stmt *stmt;
+    gint32 rv = SQLITE_OK;
+    cJSON *contacts = cJSON_CreateArray();
 
 
-//     rv = sqlite3_prepare_v2(db, "select * from contacts where user_id = ?1 "
-//                                 "and type = ?2", -1, &stmt, 0);
-//     mx_error_sqlite(rv, "prepare", "get contact of user");
-//     sqlite3_bind_int64(stmt, 1, user_id);
-//     sqlite3_bind_int(stmt, 2, type);
-//     while ((rv = sqlite3_step(stmt) == SQLITE_ROW)) {
+    rv = sqlite3_prepare_v2(db, "select * from contacts where user_id = ?1 "
+                                "and type = ?2", -1, &stmt, 0);
+    mx_error_sqlite(rv, "prepare", "get contact of user");
+    sqlite3_bind_int64(stmt, 1, user_id);
+    sqlite3_bind_int(stmt, 2, type);
+    while ((rv = sqlite3_step(stmt) == SQLITE_ROW))
+        cJSON_AddItemToArray(contacts, create_object_contact(stmt));
+    mx_error_sqlite(rv, "step", "get contact of user");
+    return contacts;
+}
 
-//     }
-// }
 

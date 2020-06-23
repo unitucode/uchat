@@ -1,7 +1,8 @@
 #include "client.h"
 
 void mx_select_msg(gpointer *eventbox, gpointer *event, t_signal_data *data) {
-    t_groom *groom = mx_get_selected_groom(data->builder);
+    t_groom *groom = mx_get_selected_groom(data->builder,
+                                           MX_LISTBOX_LOCAL_ROOMS);
     GList *rows = NULL;
 
     if (!mx_widget_is_visible("box_editing_msg", data->builder)) {

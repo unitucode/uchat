@@ -15,7 +15,7 @@ void mx_make_private(GtkToggleButton *btn, GtkWidget *widget) {
 }
 
 void mx_set_current_room_sett(GtkBuilder *builder) {
-    t_groom *groom = mx_get_selected_groom(builder);
+    t_groom *groom = mx_get_selected_groom(builder, MX_LISTBOX_LOCAL_ROOMS);
     GObject *name = gtk_builder_get_object(builder, "label_prefs_roomname");
     GObject *customer = gtk_builder_get_object(builder,
                                                "label_prefs_customer");
@@ -42,6 +42,18 @@ void mx_select_room(GtkWidget *event_box, GdkEventButton *event,
     mx_set_room_widgets_visibility(data->builder, true);
     (void)event;
     (void)user_data;
+}
+
+void mx_show_join_to_room(GtkWidget *event_box, GdkEventButton *event,
+                          GtkBuilder *builder) {
+    t_groom *groom = mx_get_selected_groom(builder,
+                                           MX_LISTBOX_LOCAL_ROOMS);
+
+    mx_reset_messege_room(groom, builder);
+    gtk_list_box_select_row(groom->box_rooms, groom->row_room);
+    mx_widget_switch_visibility_by_name(builder, "dialog_join_to_room");
+    (void)event_box;
+    (void)event;
 }
 
 //================================
@@ -76,9 +88,9 @@ static void add_messages_box(t_groom *room, GtkBuilder *builder) {
     mx_scrlldwnd_connect(NULL, scroll, builder);
 }
 
-static void add_room_row(t_groom *room, GtkBuilder *builder) {
+void mx_add_room_row(t_groom *room, GtkBuilder *builder, gchar *listbox_name) {
     GtkListBox *box = GTK_LIST_BOX(gtk_builder_get_object(builder,
-                                                          "listbox_rooms"));
+                                                          listbox_name));
     GtkWidget *row = gtk_list_box_row_new();
     GtkWidget *label = gtk_label_new(room->room_name);
     GtkWidget *event = gtk_event_box_new();
@@ -93,8 +105,14 @@ static void add_room_row(t_groom *room, GtkBuilder *builder) {
     g_object_ref(label);
 
     data = mx_create_sigdata(builder, room, NULL);
-    g_signal_connect(event, "button_press_event",
-                     G_CALLBACK(mx_select_room), NULL);
+    if (!g_strcmp0(listbox_name, MX_LISTBOX_LOCAL_ROOMS)) {
+        g_signal_connect(event, "button_press_event",
+                        G_CALLBACK(mx_select_room), NULL);
+    }
+    else {
+        g_signal_connect(event, "button_press_event",
+                         G_CALLBACK(mx_show_join_to_room), builder);
+    }
 
     gtk_label_set_ellipsize(GTK_LABEL(label), PANGO_ELLIPSIZE_END);
     gtk_container_add(GTK_CONTAINER(event), label);
@@ -114,7 +132,7 @@ static void add_room_row(t_groom *room, GtkBuilder *builder) {
 
 void mx_add_groom(t_groom *room, GtkBuilder *builder) {
     add_messages_box(room, builder);
-    add_room_row(room, builder);
+    mx_add_room_row(room, builder, MX_LISTBOX_LOCAL_ROOMS);
 }
 
 static t_groom *mx_init_groom() {

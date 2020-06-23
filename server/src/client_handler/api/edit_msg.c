@@ -30,10 +30,11 @@ bool mx_edit_msg_handler(t_dtp *msg, t_client *client) {
         return false;
     if (!mx_is_owner_msg(client->info->database, client->user->user_id, msg_id->valueint))
         return false;
+    if (mx_get_type_member(client->info->database, client->user->user_id, room_id->valueint) == DB_BANNED)
+        return false;
     mx_edit_message_by_id(client->info->database, msg_id->valueint, msg_str->valuestring);
     resend = mx_edit_msg_request(msg_str->valuestring, room_id->valueint, msg_id->valueint);
     mx_send_to_all(resend, client, room_id->valueint);
     mx_free_request(&resend);
-    //TODO
     return true;
 }

@@ -87,11 +87,29 @@ int main(int argc, char **argv) {
 void test() {
     sqlite3 *db = mx_open_db(MX_DB);
 
+    // cJSON *messages = mx_search_message(db, "he", 1);
+    // gchar *messages_str = cJSON_Print(messages);
+    // g_print("%s\n", messages_str);
+
+    // printf("%llu\n", mx_get_time(DB_SECOND));
+    // printf("%llu\n", mx_get_time(DB_MILISECOND));
+    // printf("%llu\n", mx_get_time(DB_MICROSECOND));   
+
+    // for (int i = 0; i < 10; i++)
+    //     mx_insert_contact(db, 1, i, 1);
+    // cJSON *contact_j = mx_get_contacts(db, 1, 1);
+    // gchar *contact = cJSON_Print(contact_j);
+    // g_print("%s\n", contact);
+
     // if (mx_is_owner_msg(db, 1, 1)) {
     //     g_print("true\n");
     // }
     // else
     //     g_print("false\n");
+
+    // cJSON *json_search = mx_search_room(db, "nam", 1);
+    // gchar *str_search = cJSON_Print(json_search);
+    // g_print("%s\n", str_search);
 
 
     // mx_edit_members(db, 11, 1, DB_SIMPLE);
@@ -164,7 +182,7 @@ void test() {
     // t_db_message *message = g_malloc(sizeof(t_db_message));
     // message->user_id = 1;
     // message->room_id = 1;
-    // message->message = "hello";
+    // message->message = "hedsllo";
     // message->file_name = NULL;
     // message->file_size = 0;
     // message->type = DB_TEXT_MSG;

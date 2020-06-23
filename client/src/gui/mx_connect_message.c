@@ -2,7 +2,8 @@
 
 static void req_send_message(GtkButton *btn, t_chat *chat) {
     gchar *message_text = mx_get_buffer_text("buffer_message", chat->builder);
-    t_groom *room = mx_get_selected_groom(chat->builder);
+    t_groom *room = mx_get_selected_groom(chat->builder,
+                                          MX_LISTBOX_LOCAL_ROOMS);
     t_dtp *dtp = NULL;
 
     if (room) {
