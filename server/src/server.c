@@ -86,6 +86,23 @@ int main(int argc, char **argv) {
 
 void test() {
     sqlite3 *db = mx_open_db(MX_DB);
+ 
+    // guint64 time = g_get_real_time();
+    // GDateTime *second = g_date_time_new_from_unix_utc(time / 1000000);
+    // printf("->%lld\n", (long long)time);
+    // printf("->%lld\n", (long long)second);
+    // g_print("%s\n", g_date_time_format(second, "%d.%m.%Y %H:%M"));
+
+    // g_print("%s\n", mx_get_string_time(time / 1000, MX_TIME_LONG));
+    // g_print("%s\n", mx_get_string_time(time / 1000, MX_TIME_SHORT));
+
+    // time_t sec = date / 1000000;
+
+    // char timestr[100];
+    // struct tm ts;
+    // ts = *localtime(&sec);
+    // strftime(timestr, 100, "%d.%m.%Y %H:%M ", &ts);
+    // printf("%s\n", timestr);
 
     // cJSON *messages = mx_search_message(db, "he", 1);
     // gchar *messages_str = cJSON_Print(messages);
@@ -277,3 +294,5 @@ void test() {
     mx_close_db(db);
     printf("Ok\n");
 }
+
+
