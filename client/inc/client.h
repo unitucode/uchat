@@ -26,7 +26,7 @@
 #define MX_GLOBAL_ROOMS "listbox_global_rooms"
 
 //settings
-#define MX_BUF_MSGS 50
+#define MX_BUF_MSGS 11
 #define MX_MAX_LENGTH_QUEUE 30
 #define MX_RECONN_ATTEMPTS 6
 #define MX_RECONN_DELAY_S 4
@@ -41,6 +41,14 @@
 #define MX_FT_IMPORTANT "``"
 #define MX_FT_ITALIC "##"
 #define MX_FT_UNDER "__"
+
+#define MX_OP_SCRATCH "<span strikethrough=\"true\">%s</span>"
+#define MX_OP_BOLD "<span font_weight=\"bold\">%s</span>"
+#define MX_OP_IMPORTANT "<span background=\"#FF698C7F\">%s</span>"
+#define MX_OP_ITALIC "<span font_style=\"italic\">%s</span>"
+#define MX_OP_UNDER "<span underline=\"single\">%s</span>"
+
+#define MX_CLOSE_SPAN "</span>"
 
 typedef struct s_groom t_groom;
 typedef struct s_gmsg t_gmsg;
@@ -57,6 +65,7 @@ struct s_groom {
     GtkListBox *box_messages;
     GtkLabel *label_name;
     GHashTable *members;
+    gboolean is_watched;
     int id;
     char *room_name;
     char *customer;
@@ -286,5 +295,4 @@ bool mx_handle_request(char *request, t_chat *chat);
 void mx_send_auth_request(char *login, char *password,
                           t_chat *chat, t_request_type request_type);
 void mx_css_connect();
-void mx_format_text(GtkTextBuffer *buffer);
-void mx_text_buffer_set_tags(GtkTextBuffer *buffer);
+gchar *mx_format_text(gchar *text);

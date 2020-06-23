@@ -23,11 +23,12 @@ void mx_set_current_room_sett(GtkBuilder *builder) {
     GObject *desc = gtk_builder_get_object(builder, "buffer_room_desc");
     GObject *header_name = gtk_builder_get_object(builder,
                                                   "label_header_roomname");
-
-    gtk_label_set_text(GTK_LABEL(name), groom->room_name);
-    gtk_text_buffer_set_text(GTK_TEXT_BUFFER(desc), groom->desc, -1);
-    gtk_label_set_text(GTK_LABEL(customer), groom->customer);
-    gtk_label_set_text(GTK_LABEL(header_name), groom->room_name);
+    if (groom) {
+        gtk_label_set_text(GTK_LABEL(name), groom->room_name);
+        gtk_text_buffer_set_text(GTK_TEXT_BUFFER(desc), groom->desc, -1);
+        gtk_label_set_text(GTK_LABEL(customer), groom->customer);
+        gtk_label_set_text(GTK_LABEL(header_name), groom->room_name);
+    }
 }
 
 void mx_select_room(GtkWidget *event_box, GdkEventButton *event,
@@ -152,6 +153,7 @@ static t_groom *mx_init_groom() {
     room->date = -1;
     room->is_updated = true;
     room->desc = NULL;
+    room->is_watched = false;
     room->members = g_hash_table_new(g_direct_hash, g_direct_equal);
     return room;
 }

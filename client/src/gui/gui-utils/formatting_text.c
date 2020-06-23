@@ -1,37 +1,42 @@
 #include "client.h"
 
-void mx_text_buffer_set_tags(GtkTextBuffer *buffer) {
-    gtk_text_buffer_create_tag(buffer, MX_FT_SCRATCH, "strikethrough", true, NULL);
-    gtk_text_buffer_create_tag(buffer, MX_FT_BOLD, "weight", PANGO_WEIGHT_BOLD, NULL);
-    gtk_text_buffer_create_tag(buffer, MX_FT_IMPORTANT, "background", "rgba(255, 105, 140, 0.5)", NULL);
-    gtk_text_buffer_create_tag(buffer, MX_FT_ITALIC, "style", PANGO_STYLE_ITALIC, NULL);
-    gtk_text_buffer_create_tag(buffer, MX_FT_UNDER, "underline", PANGO_UNDERLINE_LOW, NULL);
+gchar *set_tag(gchar *text, const gchar *tag, gchar *delim) {
+    gchar **parts = g_strsplit(text, delim, -1);
+    gchar *result = "";
+    gchar *tagged = NULL;
+    gchar *save = NULL;
+
+    for (int i = 0; parts[i]; i++) {
+        result = g_strjoin("", result, parts[i], NULL);
+        save = result;
+        i++;
+        if (!parts[i])
+            break;
+        tagged = g_strdup_printf(tag, parts[i]);
+        result = g_strjoin("", result, tagged, NULL);
+        g_free(save);
+        g_free(tagged);
+    }
+    g_strfreev(parts);
+    return result;
 }
 
-static void set_tags(GtkTextBuffer *buffer, gchar *ft_chars) {
-    GtkTextIter start;
-    GtkTextIter end;
-    gchar *text = NULL;
+gchar *mx_format_text(gchar *text) {
+    gchar *result = NULL;
+    gchar *save = NULL;
 
-    gtk_text_buffer_get_iter_at_offset(buffer, &start, 0);
-    gtk_text_buffer_get_iter_at_offset(buffer, &end, gtk_text_buffer_get_char_count(buffer));
-    text = gtk_text_buffer_get_text(buffer, &start, &end, TRUE);
-    gtk_text_buffer_get_iter_at_offset(buffer, &start, g_strrstr(text, ft_chars) - text + strlen(ft_chars));
-    g_print("start = %d\n", gtk_text_iter_get_offset(&start));
-    gtk_text_buffer_get_iter_at_offset(buffer, &end, g_strrstr(text + gtk_text_iter_get_offset(&start), ft_chars) - text);
-    g_print("end = %d\n", gtk_text_iter_get_offset(&end));
-    gtk_text_buffer_apply_tag_by_name(buffer, ft_chars, &start, &end);
+    result = set_tag(text, MX_OP_UNDER, MX_FT_UNDER);
+    save = result;
+    result = set_tag(result, MX_OP_BOLD, MX_FT_BOLD);
+    g_free(save);
+    save = result;
+    result = set_tag(result, MX_OP_SCRATCH, MX_FT_SCRATCH);
+    g_free(save);
+    save = result;
+    result = set_tag(result, MX_OP_ITALIC, MX_FT_ITALIC);
+    g_free(save);
+    save = result;
+    result = set_tag(result, MX_OP_IMPORTANT, MX_FT_IMPORTANT);
+    g_free(save);
+    return result;
 }
-
-void mx_format_text(GtkTextBuffer *buffer) {
-    GtkTextIter start;
-    GtkTextIter end;
-
-    gtk_text_buffer_get_iter_at_offset(buffer, &start, 0);
-    gtk_text_buffer_get_iter_at_offset(buffer, &end, gtk_text_buffer_get_char_count(buffer));
-    gtk_text_buffer_remove_all_tags(buffer, &start, &end);
-    set_tags(buffer, MX_FT_UNDER);
-}
-
-
-
