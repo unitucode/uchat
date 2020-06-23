@@ -26,7 +26,7 @@
 #define MX_LISTBOX_GLOBAL_ROOMS "listbox_global_rooms"
 
 //settings
-#define MX_BUF_MSGS 50
+#define MX_BUF_MSGS 11
 #define MX_MAX_LENGTH_QUEUE 30
 #define MX_RECONN_ATTEMPTS 6
 #define MX_RECONN_DELAY_S 4
@@ -61,6 +61,7 @@ struct s_groom {
     GtkListBox *box_messages;
     GtkLabel *label_name;
     GHashTable *members;
+    gboolean is_watched;
     int id;
     char *room_name;
     char *customer;
