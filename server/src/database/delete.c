@@ -19,8 +19,9 @@ void mx_delete_room_by_id(sqlite3 *db, guint64 room_id) {
     gint32 rv = SQLITE_OK;
 
     sqlite3_str_appendf(sqlite_str, "delete from rooms where id = %llu; delete "
-                                    "from messages where room_id = %llu;",
-                        room_id, room_id);
+                                    "from messages where room_id = %llu; "
+                                    "delete from members where room_id = %llu",
+                        room_id, room_id, room_id);
     request = sqlite3_str_finish(sqlite_str);
     rv = sqlite3_exec(db, request, 0, 0, 0);
     mx_error_sqlite(rv, "exec", "delete room");

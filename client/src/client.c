@@ -14,14 +14,15 @@ static void change_working_dir(void) {
 
 
 int main(int argc, char **argv) {
-    guint64 date = g_get_real_time();
-    GTimeZone *time_zone = g_time_zone_new_local();
-    guint64 local = 3 * 60 * 60 * 100 * 100;
-    local *= 100;
-    date += local;
+    // gint64 date = g_get_real_time();
+    // GTimeZone *time_zone = g_time_zone_new_local();
+    // printf("->->%lld\n", date);
+    // gint num_zone = g_time_zone_adjust_time(time_zone, G_TIME_TYPE_UNIVERSAL, &date);
+    // printf("%d\n", num_zone);
+    // printf("->%lld\n", date);
     // g_print("%s\n", mx_get_string_time(date / 1000, MX_TIME_LONG));
     // g_print("%s\n", mx_get_string_time(date / 1000, MX_TIME_SHORT));
-    exit(0);
+    // exit(0);
     GError *error = NULL;
     GSocketConnection *connection = NULL;
     GSocketClient *client = g_socket_client_new();
