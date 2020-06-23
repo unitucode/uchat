@@ -24,7 +24,6 @@ bool mx_new_room_handler(t_dtp *data, t_chat *chat) {
     members = mx_get_members_request(room->id);
     mx_send(chat->out, members);
     mx_free_request(&members);
-    mx_add_groom(room, chat->builder);
-    
+    mx_add_groom(room, chat);
     return true;
 }

@@ -22,8 +22,8 @@
 #define MX_ROOM_CTRL 0
 #define MX_MSG_CTRL 1
 
-#define MX_LISTBOX_LOCAL_ROOMS "listbox_rooms"
-#define MX_LISTBOX_GLOBAL_ROOMS "listbox_global_rooms"
+#define MX_LOCAL_ROOMS "listbox_rooms"
+#define MX_GLOBAL_ROOMS "listbox_global_rooms"
 
 //settings
 #define MX_BUF_MSGS 50
@@ -186,7 +186,7 @@ GtkBuilder *mx_init_window(int argc, char **argv);
 void mx_init_gui(t_chat *chat);
 gint mx_start_gui(t_chat *chat);
 void mx_start_main_window(t_chat *chat);
-void mx_add_groom(t_groom *room, GtkBuilder *builder);
+void mx_add_groom(t_groom *room, t_chat *chat);
 void mx_delete_groom(t_groom *room);
 t_groom *mx_create_groom(cJSON *room);
 t_gmsg *mx_create_gmsg(cJSON *msg, t_chat *chat);
@@ -242,6 +242,8 @@ void mx_search_local_rooms(GtkBuilder *builder, t_filter_data *data);
 void mx_search_global_rooms(GtkBuilder *builder);
 void mx_add_room_row(t_groom *room, GtkBuilder *builder, gchar *listbox_name);
 void mx_clear_global_search(GtkBuilder *builder);
+void mx_box_messages_reached(GtkScrolledWindow *scroll,
+                             GtkPositionType pos, t_chat *chat);
 
 // gui utils
 void mx_scrlldwnd_connect(gchar *name, GtkWidget *scroll, GtkBuilder *builder);

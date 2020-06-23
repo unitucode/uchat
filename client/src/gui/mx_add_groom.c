@@ -1,7 +1,8 @@
 #include "client.h"
 
 // SIGNAL-HANDLERS
-void mx_reset_addroom(GtkButton *btn, GtkBuilder *builder) {
+    void mx_reset_addroom(GtkButton *btn, GtkBuilder *builder)
+{
     GObject *button = gtk_builder_get_object(builder, "checkbtn_private");
 
     mx_clear_buffer_text("buffer_roomname", builder);
@@ -15,7 +16,7 @@ void mx_make_private(GtkToggleButton *btn, GtkWidget *widget) {
 }
 
 void mx_set_current_room_sett(GtkBuilder *builder) {
-    t_groom *groom = mx_get_selected_groom(builder, MX_LISTBOX_LOCAL_ROOMS);
+    t_groom *groom = mx_get_selected_groom(builder, MX_LOCAL_ROOMS);
     GObject *name = gtk_builder_get_object(builder, "label_prefs_roomname");
     GObject *customer = gtk_builder_get_object(builder,
                                                "label_prefs_customer");
@@ -47,8 +48,7 @@ void mx_select_room(GtkWidget *event_box, GdkEventButton *event,
 void mx_show_join_to_room(GtkWidget *event_box, GdkEventButton *event,
                           gpointer *user_data) {
     t_signal_data *data = g_object_get_data(G_OBJECT(event_box), "sigdata");
-    t_groom *lgroom = mx_get_selected_groom(data->builder,
-                                           MX_LISTBOX_LOCAL_ROOMS);
+    t_groom *lgroom = mx_get_selected_groom(data->builder, MX_LOCAL_ROOMS);
 
     gtk_list_box_select_row(data->groom->box_rooms, data->groom->row_room);
     mx_reset_messege_room(lgroom, data->builder);
@@ -69,8 +69,9 @@ gint mx_room_sort(GtkListBoxRow *row1, GtkListBoxRow *row2) {
     return true;
 }
 
-static void add_messages_box(t_groom *room, GtkBuilder *builder) {
-    GObject *stack = gtk_builder_get_object(builder, "stack_messege_rooms");
+static void add_messages_box(t_groom *room, t_chat *chat) {
+    GObject *stack = gtk_builder_get_object(chat->builder,
+                                            "stack_messege_rooms");
     GtkWidget *box = gtk_list_box_new();
     GtkWidget *scroll = gtk_scrolled_window_new(NULL, NULL);
     GtkWidget *view = gtk_viewport_new(NULL, NULL);
@@ -86,7 +87,9 @@ static void add_messages_box(t_groom *room, GtkBuilder *builder) {
     room->stack_msg = GTK_STACK(stack);
     room->page = GTK_SCROLLED_WINDOW(scroll);
     gtk_widget_show_all(scroll);
-    mx_scrlldwnd_connect(NULL, scroll, builder);
+    mx_scrlldwnd_connect(NULL, scroll, chat->builder);
+    g_signal_connect(scroll, "edge-reached",
+                     G_CALLBACK(mx_box_messages_reached), chat);
 }
 
 void mx_add_room_row(t_groom *room, GtkBuilder *builder, gchar *listbox_name) {
@@ -105,7 +108,7 @@ void mx_add_room_row(t_groom *room, GtkBuilder *builder, gchar *listbox_name) {
     g_object_ref(label);
 
     data = mx_create_sigdata(builder, room, NULL);
-    if (!g_strcmp0(listbox_name, MX_LISTBOX_LOCAL_ROOMS)) {
+    if (!g_strcmp0(listbox_name, MX_LOCAL_ROOMS)) {
         g_signal_connect(event, "button_press_event",
                         G_CALLBACK(mx_select_room), NULL);
     }
@@ -130,9 +133,9 @@ void mx_add_room_row(t_groom *room, GtkBuilder *builder, gchar *listbox_name) {
                             (GDestroyNotify)mx_free_sigdata);
 }
 
-void mx_add_groom(t_groom *room, GtkBuilder *builder) {
-    add_messages_box(room, builder);
-    mx_add_room_row(room, builder, MX_LISTBOX_LOCAL_ROOMS);
+void mx_add_groom(t_groom *room, t_chat *chat) {
+    add_messages_box(room, chat);
+    mx_add_room_row(room, chat->builder, MX_LOCAL_ROOMS);
 }
 
 static t_groom *mx_init_groom() {
