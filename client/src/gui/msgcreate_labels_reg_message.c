@@ -42,6 +42,8 @@ void mx_msgcreate_label_time(GtkWidget *box_info,
     GtkWidget *label_time = gtk_label_new(NULL);
     gchar *short_time = mx_get_string_time(gmsg->date, MX_TIME_SHORT);
     gchar *long_time = mx_get_string_time(gmsg->date, MX_TIME_LONG);
+    puts(short_time);
+    puts(long_time);
 
     if (is_own)
         gtk_box_pack_end(GTK_BOX(box_info), label_time, FALSE, TRUE, 0);
