@@ -6,9 +6,7 @@ gchar *set_tag(gchar *text, const gchar *tag, gchar *delim) {
     gchar *tagged = NULL;
     gchar *save = NULL;
 
-    g_print("text = %s\n", text);
     for (int i = 0; parts[i]; i++) {
-        g_print("here");
         result = g_strjoin("", result, parts[i], NULL);
         save = result;
         i++;
