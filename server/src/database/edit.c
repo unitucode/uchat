@@ -32,7 +32,7 @@ void mx_edit_message_by_id(sqlite3 *db, guint64 id, gchar *new) {
     gchar *request = NULL;
 
     sqlite3_str_appendf(str, "update messages set message = ?1 where "
-                             "id_message = %lu",
+                             "message_id = %lu",
                         id);
     request = sqlite3_str_finish(str);
     mx_error_sqlite(sqlite3_prepare(db, request, -1, &stmt, NULL), "prepare",

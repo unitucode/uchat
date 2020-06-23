@@ -48,6 +48,7 @@ cJSON *mx_get_new_messages_by_id(sqlite3 *db, guint64 room_id, guint64 date,
     return get_messages_by_id(stmt, room_id, count, date);
 }
 
+
 cJSON *mx_get_old_messages_by_id(sqlite3 *db, guint64 room_id, guint64 date, 
                                  gint64 count) {
     sqlite3_stmt *stmt;
@@ -65,7 +66,8 @@ cJSON *mx_get_curr_messages_by_id(sqlite3 *db, guint64 room_id, gint64 count) {
     gchar *request = mx_create_request_message_by_id(db, room_id, 
                                                      DB_CURR_MESSAGE);
 
-    mx_error_sqlite(sqlite3_prepare_v2(db, request, -1, &stmt, NULL), "prepare", "get curr message");
+    mx_error_sqlite(sqlite3_prepare_v2(db, request, -1, &stmt, NULL), 
+                                       "prepare", "get curr message");
     sqlite3_free(request);
     return get_messages_by_id(stmt, room_id, count, 0);
 }

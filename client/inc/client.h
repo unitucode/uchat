@@ -31,6 +31,17 @@
 #define MX_RECONN_ATTEMPTS 6
 #define MX_RECONN_DELAY_S 4
 
+// flag time
+#define MX_TIME_SHORT 0
+#define MX_TIME_LONG 1
+
+//formatting
+#define MX_FT_SCRATCH "~~"
+#define MX_FT_BOLD "**"
+#define MX_FT_IMPORTANT "``"
+#define MX_FT_ITALIC "##"
+#define MX_FT_UNDER "__"
+
 typedef struct s_groom t_groom;
 typedef struct s_gmsg t_gmsg;
 typedef struct s_chat t_chat;
@@ -262,13 +273,16 @@ gboolean mx_set_placeholder(GtkWidget *textview, GdkEvent *event,
                                    gpointer *user_data);
 t_filter_data *mx_create_filter_data(gchar *search_name);
 void mx_free_filter_data(t_filter_data *filter_data);
+gchar *mx_get_string_time(guint64 miliseconds, gint8 format);
 
-// gui wrappers
-// void mx_widget_show_all(GtkWidget *widget);
-// void mx_widget_destroy(GtkWidget *widget);
-// void mx_widget_show(GtkWidget *widget);
-void mx_upload_file(char *path, t_chat *chat);
+    // gui wrappers
+    // void mx_widget_show_all(GtkWidget *widget);
+    // void mx_widget_destroy(GtkWidget *widget);
+    // void mx_widget_show(GtkWidget *widget);
+    void mx_upload_file(char *path, t_chat *chat);
 bool mx_handle_request(char *request, t_chat *chat);
 void mx_send_auth_request(char *login, char *password,
                           t_chat *chat, t_request_type request_type);
 void mx_css_connect();
+void mx_format_text(GtkTextBuffer *buffer);
+void mx_text_buffer_set_tags(GtkTextBuffer *buffer);
