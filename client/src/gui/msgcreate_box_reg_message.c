@@ -22,13 +22,27 @@ void mx_msgcreate_box_info(GtkWidget *box_main,
                            t_gmsg *gmsg, gboolean is_own) {
     GtkWidget *box_info = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
 
-    if (is_own)
-        mx_widget_set_class(box_info, "box_own_msg_info");
+    if (is_own) {
+        if (gmsg->type == DB_TEXT_MSG) {
+            mx_widget_set_class(box_info, "box_own_msg_info");
+            mx_msgcreate_label_text(box_info, gmsg, is_own);
+        }
+        else {
+            mx_widget_set_class(box_info, "box_own_sticker_info");
+            mx_msgcreate_img_sticker(box_info, gmsg, is_own);
+        }
+    }
     else {
-        mx_widget_set_class(box_info, "box_msg_info");
+        if (gmsg->type == DB_TEXT_MSG) {
+            mx_widget_set_class(box_info, "box_msg_info");
+            mx_msgcreate_label_text(box_info, gmsg, is_own);
+        }
+        else {
+            mx_widget_set_class(box_info, "box_sticker_info");
+            mx_msgcreate_img_sticker(box_info, gmsg, is_own);
+        }
         mx_msgcreate_label_login(box_main, gmsg);
     }
     gtk_box_pack_end(GTK_BOX(box_main), box_info, FALSE, TRUE, 0);
-    mx_msgcreate_label_text(box_info, gmsg, is_own);
     mx_msgcreate_label_time(box_info, gmsg, is_own);
 }

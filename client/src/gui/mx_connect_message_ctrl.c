@@ -24,7 +24,8 @@ static void req_delete_msg(GtkListBox *box, GtkListBoxRow *row, t_chat *chat) {
 }
 
 static void delete_selected_msgs(GtkButton *btn, t_chat *chat) {
-    t_groom *groom = mx_get_selected_groom(chat->builder);
+    t_groom *groom = mx_get_selected_groom(chat->builder,
+                                           MX_LISTBOX_LOCAL_ROOMS);
 
     gtk_list_box_selected_foreach(groom->box_messages,
                                   (GtkListBoxForeachFunc)req_delete_msg,
@@ -40,6 +41,8 @@ static void show_edit_msg(GtkButton *btn, GtkBuilder *builder) {
 
     gtk_label_set_text(GTK_LABEL(label_text), old_text);
     gtk_text_buffer_set_text(GTK_TEXT_BUFFER(buffer), msg->msg, -1);
+    mx_text_buffer_set_tags(GTK_TEXT_BUFFER(buffer));
+    mx_format_text(GTK_TEXT_BUFFER(buffer));
     mx_switch_room_header(builder, MX_ROOM_CTRL);
     g_free(old_text);
     (void)btn;

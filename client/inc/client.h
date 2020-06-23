@@ -8,6 +8,7 @@
 #include <gio/gio.h>
 
 #define MX_IMGS_PATH "../src/gui/resources/"
+#define MX_STICKER_PATH MX_IMGS_PATH"stickers/"
 #define MX_GUI_PATH "../src/gui/gui.glade"
 #define MX_IMG_EYE MX_IMGS_PATH"eye.png"
 #define MX_IMG_CLOSEDEYE MX_IMGS_PATH"closed-eye.png"
@@ -29,6 +30,13 @@
 #define MX_MAX_LENGTH_QUEUE 30
 #define MX_RECONN_ATTEMPTS 6
 #define MX_RECONN_DELAY_S 4
+
+//formatting
+#define MX_FT_SCRATCH "~~"
+#define MX_FT_BOLD "**"
+#define MX_FT_IMPORTANT "``"
+#define MX_FT_ITALIC "##"
+#define MX_FT_UNDER "__"
 
 typedef struct s_groom t_groom;
 typedef struct s_gmsg t_gmsg;
@@ -69,6 +77,7 @@ struct s_chat {
     GDataInputStream *in;
     GSocketConnection *conn;
     GSocketClient *cli_conn;
+    GHashTable *stickers;
     char *auth_token;
     char *login;
     int argc;
@@ -191,6 +200,8 @@ void mx_connect_profile_settings(t_chat *chat);
 void mx_connect_room_settings(t_chat *chat);
 void mx_connect_message_ctrl(t_chat *chat);
 void mx_connect_search(t_chat *chat);
+void mx_connect_join_to_room(t_chat *chat);
+void mx_connect_stickers(t_chat *chat);
 void mx_connect_test_request(t_chat *chat); // DELETE
 void mx_errmsg_wrong_authdata(GtkBuilder *builder);
 void mx_errmsg_user_exist(GtkBuilder *builder);
@@ -212,12 +223,12 @@ void mx_select_msg(gpointer *eventbox, gpointer *event, t_signal_data *data);
 GtkWidget *mx_create_reg_message_row(t_gmsg *gmsg, gboolean is_own);
 GtkWidget *mx_msgcreate_eventbox();
 GtkWidget *mx_msgcreate_box_main(GtkWidget *eventbox, gboolean is_own);
-void mx_msgcreate_box_info(GtkWidget *box_main,
-                           t_gmsg *gmsg, gboolean is_own);
-GtkWidget *mx_create_reg_message_row(t_gmsg *gmsg, gboolean is_own);
+void mx_msgcreate_box_info(GtkWidget *box_main, t_gmsg *gmsg, gboolean is_own);
 void mx_msgcreate_label_login(GtkWidget *box_main, t_gmsg *gmsg);
 void mx_msgcreate_label_text(GtkWidget *box_info,
                              t_gmsg *gmsg, gboolean is_own);
+void mx_msgcreate_img_sticker(GtkWidget *box_info,
+                              t_gmsg *gmsg, gboolean is_own);
 void mx_msgcreate_label_time(GtkWidget *box_info,
                              t_gmsg *gmsg, gboolean is_own);
 void mx_search_delim_set_visibility(GtkBuilder *builder, gboolean is_visible);
@@ -239,7 +250,7 @@ void mx_widget_set_visibility_by_name(GtkBuilder *builder,
                                       gchar *name, gboolean is_visible);
 void mx_widget_switch_visibility(GtkWidget *usr_ctrl, GtkWidget *widget);
 void mx_widget_switch_visibility_by_name(GtkBuilder *builder, gchar *name);
-t_groom *mx_get_selected_groom(GtkBuilder *builder);
+t_groom *mx_get_selected_groom(GtkBuilder *builder, gchar *list_name);
 t_groom *mx_get_groom_by_id(gint room_id, GtkBuilder *builder);
 t_gmsg *mx_get_selected_gmsg(GtkBuilder *builder);
 t_gmsg *mx_get_gmsg_by_id(gint msg_id, gint room_id, GtkBuilder *builder);
@@ -264,3 +275,5 @@ bool mx_handle_request(char *request, t_chat *chat);
 void mx_send_auth_request(char *login, char *password,
                           t_chat *chat, t_request_type request_type);
 void mx_css_connect();
+void mx_format_text(GtkTextBuffer *buffer);
+void mx_text_buffer_set_tags(GtkTextBuffer *buffer);

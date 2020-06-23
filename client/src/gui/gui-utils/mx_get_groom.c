@@ -23,9 +23,9 @@ t_groom *mx_get_groom_by_id(gint room_id, GtkBuilder *builder) {
     return NULL;
 }
 
-t_groom *mx_get_selected_groom(GtkBuilder *builder) {
+t_groom *mx_get_selected_groom(GtkBuilder *builder, gchar *list_name) {
     GtkListBox *list = GTK_LIST_BOX(gtk_builder_get_object(builder,
-                                                           "listbox_rooms"));
+                                                           list_name));
     GObject *row = G_OBJECT(gtk_list_box_get_selected_row(list));
     t_groom *groom = NULL;
 

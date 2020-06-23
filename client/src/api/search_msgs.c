@@ -12,31 +12,29 @@ t_dtp *mx_search_msgs_request(char *msg, int room_id) {
     return mx_get_transport_data(json_result);
 }
 
-// static bool handle_msg(cJSON *room, t_chat *chat) {
-//     t_groom *groom = mx_create_groom(room);
+static bool handle_msg(cJSON *room, t_chat *chat) {
+    t_gmsg *msg = mx_create_gmsg(room, chat);
 
-//     if (!groom)
-//         return false;
-//     //GUI
-//     g_print("room = %s\n", groom->room_name);
-//     //GUI
-//     (void)chat;
-//     (void)groom;
-//     return true;
-// }
+    if (!msg)
+        return false;
+    //GUI
+    g_print("msg = %s\n", msg->msg);
+    //GUI
+    (void)chat;
+    (void)msg;
+    return true;
+}
 
 bool mx_search_msgs_handler(t_dtp *data, t_chat *chat) {
-    // cJSON *msgs = cJSON_GetObjectItemCaseSensitive(data->json, "msgs");
-    // cJSON *msg = NULL;
+    cJSON *msgs = cJSON_GetObjectItemCaseSensitive(data->json, "msgs");
+    cJSON *msg = NULL;
 
-    // if (!cJSON_IsArray(msgs))
-    //     return false;
-    // for (int i = 0; i < cJSON_GetArraySize(msgs); i++) {
-    //     room = cJSON_GetArrayItem(msgs, i);
-    //     if (!handle_room(room, chat))
-    //         return false;
-    // }
-    (void)data;
-    (void)chat;
+    if (!cJSON_IsArray(msgs))
+        return false;
+    for (int i = 0; i < cJSON_GetArraySize(msgs); i++) {
+        msg = cJSON_GetArrayItem(msgs, i);
+        if (!handle_msg(msg, chat))
+            return false;
+    }
     return true;
 }
