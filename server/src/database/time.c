@@ -2,11 +2,15 @@
 
 guint64 mx_get_time(gint8 type) {
     guint64 date = g_get_real_time();
+    guint64 time;
 
+    date += (3 * 60 * 60 * 100 * 100);
     if (type == DB_SECOND)
-        return date / 10000000;
-    if (type == DB_MILISECOND)
-        return date / 1000;
-    return date;
+        time = date / 1000000;
+    else if (type == DB_MILISECOND)
+        time = date / 1000;
+    else
+        time = date;
+    return time;
 }
 
