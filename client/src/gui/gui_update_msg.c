@@ -31,7 +31,8 @@ void mx_gdel_msg(int msg_id, int room_id, GtkBuilder *builder) {
     t_groom *room = mx_get_groom_by_id(room_id, builder);
 
     if (msg) {
-        room->uploaded--;
+        if (room->uploaded > 0)
+            room->uploaded--;
         mx_delete_row_msg(msg->row_msg, builder);
     }
 }
