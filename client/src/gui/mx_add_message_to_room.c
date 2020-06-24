@@ -40,7 +40,7 @@ static void add_message_row_start(t_gmsg *msg, t_chat *chat) { //TO FIX
     t_signal_data *data = NULL;
 
     gtk_widget_set_can_focus(row, FALSE);
-    data = mx_create_sigdata(chat->builder, NULL, GTK_LIST_BOX_ROW(row));
+    data = mx_create_sigdata(chat, NULL, GTK_LIST_BOX_ROW(row));
 
     msg->row_msg = GTK_LIST_BOX_ROW(row);
     g_object_ref(row);
