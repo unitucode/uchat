@@ -17,9 +17,7 @@ static bool handle_msg(cJSON *room, t_chat *chat) {
 
     if (!msg)
         return false;
-    //GUI
-    g_print("msg = %s\n", msg->msg);
-    //GUI
+    mx_add_message_to_found(msg, chat);
     (void)chat;
     (void)msg;
     return true;
@@ -35,6 +33,10 @@ bool mx_search_msgs_handler(t_dtp *data, t_chat *chat) {
         msg = cJSON_GetArrayItem(msgs, i);
         if (!handle_msg(msg, chat))
             return false;
+    }
+    if (!cJSON_GetArraySize(msgs)) {
+        mx_widget_set_visibility_by_name(chat->builder,
+                                        "label_search_nothing_msgs", TRUE);
     }
     return true;
 }
