@@ -17,10 +17,13 @@ void mx_box_messages_reached(GtkScrolledWindow *scroll,
 
         gtk_adjustment_set_value(adj, gtk_adjustment_get_value(adj) + 1);
     }
-    // if (pos == GTK_POS_BOTTOM) {
-    //     for (guint i = 0; i < groom->uploaded; i++) {
-    //         gtk_list_box
-    //     }
-    // }
+    if (pos == GTK_POS_BOTTOM) {
+        chat->upl_old_msgs = true;
+        for (guint i = 0; i < groom->uploaded; i++) {
+            g_message("delete message here mx_messages_top_reached.c\n");
+        }
+        groom->uploaded = 0;
+        chat->upl_old_msgs = false;
+    }
     (void)scroll;
 }
