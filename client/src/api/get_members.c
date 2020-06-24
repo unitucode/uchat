@@ -20,6 +20,8 @@ static bool insert_member(cJSON *member, int room_id, t_chat *chat) {
     if (!cJSON_IsNumber(id))
         return false;
     groom = mx_get_groom_by_id(room_id, chat->builder);
+    if (groom->customer_id == id->valueint)
+        groom->customer = g_strdup(login->valuestring);
     g_hash_table_insert(groom->members, GINT_TO_POINTER(id->valueint), g_strdup(login->valuestring));
     return true;
 }

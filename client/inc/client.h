@@ -69,9 +69,11 @@ struct s_groom {
     int id;
     char *room_name;
     char *customer;
+    int customer_id;
     long int date;
     char *desc;
     bool is_updated;
+    guint uploaded;
 };
 
 struct s_gmsg {
