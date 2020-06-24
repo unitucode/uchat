@@ -36,6 +36,7 @@ t_chat *mx_init_chat(GSocketConnection *connection, int argc, char **argv) {
     chat->builder = mx_init_window(argc, argv);
     chat->argc = argc;
     chat->argv = argv;
+    chat->upl_old_msgs = false;
     chat->stickers = mx_init_stickers();
     mx_init_handlers(chat);
     mx_init_errors(chat);

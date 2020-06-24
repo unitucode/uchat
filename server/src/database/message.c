@@ -17,4 +17,14 @@ gboolean mx_is_owner_msg(sqlite3 *db, guint64 user_id, guint64 msg_id) {
     return is_owner;
 }
 
+void mx_delete_all_messages(sqlite3 *db, guint64 room_id) {
+    sqlite3_str *sqlite_str = sqlite3_str_new(db);
+    gchar *request = NULL;
+
+    sqlite3_str_appendf(sqlite_str, "delete from messages where room_id = %llu",
+                        room_id);
+    request = sqlite3_str_finish(sqlite_str);
+    mx_error_sqlite(sqlite3_exec(db, request, 0, 0, 0), "exec", "del all msg");
+    sqlite3_free(request);
+}
 

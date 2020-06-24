@@ -127,6 +127,7 @@ void mx_edit_permission_of_user(sqlite3 *db, guint64 user_id, guint64 room_id,
 void mx_delete_message_by_id(sqlite3 *db, guint64 id);
 void mx_delete_user_by_id(sqlite3 *db, guint64 id);
 void mx_delete_room_by_id(sqlite3 *db, guint64 room_id);
+void mx_delete_all_messages(sqlite3 *db, guint64 room_id);
 
 // insert yes
 void mx_insert_room_into_db(sqlite3 *db, t_db_room *room);

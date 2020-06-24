@@ -16,7 +16,7 @@
 #define MX_ERRMSG_INVALID_LOGIN "Login can be minimum 3 symbol of a-z, 0-9, -"
 #define MX_ERRMSG_NODATA "Please, enter login and password"
 #define MX_ERRMSG_DIFPASS "Passwords must match"
-#define MX_ERRMSG_INCCRDATA "The email or password inccorect"
+#define MX_ERRMSG_INCCRDATA "The login or password inccorect"
 #define MX_ERRMSG_USEREXIST "User already exist"
 
 #define MX_ROOM_CTRL 0
@@ -26,7 +26,7 @@
 #define MX_GLOBAL_ROOMS "listbox_global_rooms"
 
 //settings
-#define MX_BUF_MSGS 11
+#define MX_BUF_MSGS 13
 #define MX_MAX_LENGTH_QUEUE 30
 #define MX_RECONN_ATTEMPTS 6
 #define MX_RECONN_DELAY_S 4
@@ -69,9 +69,11 @@ struct s_groom {
     int id;
     char *room_name;
     char *customer;
+    int customer_id;
     long int date;
     char *desc;
     bool is_updated;
+    guint uploaded;
 };
 
 struct s_gmsg {
@@ -98,6 +100,7 @@ struct s_chat {
     gsize id;
     t_groom *curr_room;
     t_dtp *data;
+    gboolean upl_old_msgs;
     GtkBuilder *builder;
     bool valid;
     void (*error_handler[ER_COUNT_ERRS])(GtkBuilder *builder);
@@ -106,7 +109,7 @@ struct s_chat {
 
 struct s_signal_data {
     t_groom *groom;
-    GtkBuilder *builder;
+    t_chat *chat;
     GtkListBoxRow *row_msg;
 };
 
@@ -150,6 +153,8 @@ bool mx_member_info_handler(t_dtp *data, t_chat *chat); //HANDLER FOR INFO MEMBE
 bool mx_new_member_handler(t_dtp *data, t_chat *chat); //HANDLER FOR NEW MEMBER
 bool mx_ban_member_handler(t_dtp *data, t_chat *chat); //HANDLER FOR BAN MEMBER
 bool mx_search_msgs_handler(t_dtp *data, t_chat *chat); //HANDLER FOR SEARCH MSG
+bool mx_del_hist_handler(t_dtp *data, t_chat *chat); //HANDLER FOR DELETE HISTORY
+bool mx_old_msgs_hanlder(t_dtp *data, t_chat *chat); //HANDLER FOR UPD MSGS
 
 
 /*
@@ -185,6 +190,8 @@ t_dtp *mx_member_info_request(int user_id); //FOR INFO ABOUT MEMBER
 t_dtp *mx_ban_member_request(int room_id, int user_id); // FOR BAN MEMBER
 t_dtp *mx_sticker_request(char *sticker, int room_id); // FOR STICKER
 t_dtp *mx_search_msgs_request(char *msg, int room_id); // FOR SEARCH MSGS
+t_dtp *mx_del_hist_request(int room_id); // FOR DELETE HISTORY
+t_dtp *mx_old_msgs_request(guint64 date, int room_id); // FOR UPD MSGS REQUEST
 
 //errors api
 void mx_err_auth_data_handler(GtkBuilder *builder);
@@ -201,7 +208,8 @@ t_groom *mx_create_groom(cJSON *room);
 t_gmsg *mx_create_gmsg(cJSON *msg, t_chat *chat);
 void mx_delete_gmsg(t_gmsg *gmsg);
 GtkWidget *mx_create_message_row(t_chat *chat,  t_gmsg *gmsg);
-void mx_add_message_to_room(t_gmsg *msg, t_chat *chat);
+void mx_add_message_to_room_new(t_gmsg *msg, t_chat *chat);
+void mx_add_message_to_room_old(t_gmsg *msg, t_chat *chat);
 void mx_logout_client(t_chat *chat);
 void mx_reset_addroom(GtkButton *btn, GtkBuilder *builder);
 void mx_reset_auth(GtkNotebook *note, GtkWidget *page,
@@ -249,7 +257,7 @@ gboolean mx_stop_search_room(gpointer *entry,
                              gpointer *data, GtkBuilder *builder);
 void mx_search_local_rooms(GtkBuilder *builder, t_filter_data *data);
 void mx_search_global_rooms(GtkBuilder *builder);
-void mx_add_room_row(t_groom *room, GtkBuilder *builder, gchar *listbox_name);
+void mx_add_room_row(t_groom *room, t_chat *chat, gchar *listbox_name);
 void mx_clear_global_search(GtkBuilder *builder);
 void mx_box_messages_reached(GtkScrolledWindow *scroll,
                              GtkPositionType pos, t_chat *chat);
@@ -276,7 +284,7 @@ t_gmsg *mx_get_gmsg_by_id(gint msg_id, gint room_id, GtkBuilder *builder);
 void mx_unselect_room(t_groom *groom, GtkBuilder *builder);
 void mx_entry_set_icon_by_path(GtkEntry *entry, gchar *path,
                                GtkEntryIconPosition icon_pos);
-t_signal_data *mx_create_sigdata(GtkBuilder *builder, t_groom *groom,
+t_signal_data *mx_create_sigdata(t_chat *chat, t_groom *groom,
                                  GtkListBoxRow *row_msg);
 void mx_free_sigdata(t_signal_data *data);
 char *mx_msgpage_name(gint id);
