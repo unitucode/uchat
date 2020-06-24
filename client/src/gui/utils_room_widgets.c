@@ -15,6 +15,7 @@ void mx_set_room_widgets_visibility(GtkBuilder *builder, bool visibility) {
     GObject *box_entry = gtk_builder_get_object(builder, "box_entry_field");
     GObject *box_header = gtk_builder_get_object(builder, "box_room_header");
     GObject *box_editing = gtk_builder_get_object(builder, "box_editing_msg");
+    GObject *box_stickers = gtk_builder_get_object(builder, "box_stickers");
 
     if (visibility) {
         mx_switch_room_header(builder, MX_ROOM_CTRL);
@@ -25,6 +26,7 @@ void mx_set_room_widgets_visibility(GtkBuilder *builder, bool visibility) {
         gtk_widget_hide(GTK_WIDGET(box_entry));
         gtk_widget_hide(GTK_WIDGET(box_header));
         gtk_widget_hide(GTK_WIDGET(box_editing));
+        gtk_widget_hide(GTK_WIDGET(box_stickers));
     }
 }
 

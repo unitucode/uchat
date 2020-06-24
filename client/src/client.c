@@ -1,5 +1,4 @@
 #include "client.h"
-#include "time.h"
 
 static void change_working_dir(void) {
     #ifdef MX_CLIENT

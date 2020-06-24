@@ -3,7 +3,8 @@
 * {
     font-family: "Gill Sans", sans-serif;
     transition: all .07s ease-out;
-    outline-color: rgb(83, 102, 187);
+    outline-color: rgb(103, 133, 255);
+    outline-style: dashed;
 }
 button {
     -gtk-icon-effect: none;
@@ -14,7 +15,8 @@ button {
 list row {
     box-shadow: none;   
 }
-.dialog_auth entry, .wnd_main entry, .dialog_auth textview, .wnd_main textview {
+.dialog_auth entry, .wnd_main entry, .box-room-settings textview,
+.dialog_auth textview, .wnd_main textview, .box-room-settings entry {
     caret-color: #fff;
     color: #fff;
 }
@@ -46,11 +48,11 @@ box stack, entry, .dialog_notebook header {
 }
 .dialog-action-area button, .dialog-action-area button:hover,
 .box_titlebar button, .button_send_message, .box_msg_ctrl button,
-.btn_attachment, #box_edit_msg button, .btn_confirm_changes {
+.btns-msg-box, #box_edit_msg button, .btn_confirm_changes,
+.box-functional-buttons button {
     background-image: none;
 }
 .dialog-action-area button {
-    
     background-color: #fff;
     box-shadow: none;
     padding: 12px 40px;
@@ -58,9 +60,6 @@ box stack, entry, .dialog_notebook header {
     color: #5366BB;
     font-size: 14px;
     font-weight: 500;
-}
-button label {
-    box-shadow: none;
 }
 .dialog-action-area button:first-child {
     margin-right: 5px;
@@ -70,6 +69,23 @@ button label {
 }
 .dialog-action-area button:hover {
     background-color: rgba(255,255,255,.7);
+}
+.box-functional-buttons button {
+    background-color: #424E78;
+    color: #fff;
+    padding: 7px 0;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 3px;
+    border-right: 3px solid transparent;
+    border-left: 3px solid transparent;
+}
+.box-functional-buttons button:hover {
+    border-right: 3px solid #6785FF;
+    border-left: 3px solid #6785FF;
+}
+button label {
+    box-shadow: none;
 }
 .notebook_item {
 	margin-top: 30px;
@@ -152,7 +168,8 @@ dialog headerbar {
 }
 .rooms-list label {
 	background-color: rgba(58,70, 107,.8);
-	padding: 25px 20px;
+    padding: 25px 20px;
+    border-color: transparent;
     border-radius: 8px;
     margin: 5px 25px;
     font-size: 15px;
@@ -166,9 +183,9 @@ dialog headerbar {
 }
 .rooms-list row:selected label {
 	background-color: rgb(66,78, 120);
-    border-left: 2px solid rgb(83,102,187);
-    border-right: 2px solid rgb(83,102,187);
-    margin: 5px 15px;
+    border-left: 3px solid rgb(83,102,187);
+    border-right: 3px solid transparent;
+    margin: 5px 18px;
 }
 .add-room-button {
 	background: none;
@@ -235,7 +252,7 @@ dialog headerbar {
 	margin: 7px 0;
 }
 .box_titlebar button:hover, .boxroom_header-in button:hover,
-.btn_attachment:hover, .button_send_message:hover {
+.btns-msg-box:hover, .button_send_message:hover {
     opacity: .7;
 }
 .box_msg_send {
@@ -321,11 +338,13 @@ dialog headerbar {
     color: #919CC0;
     margin-right: 10px;
 }
-.stack_messages list .box_own_sticker_info image:nth-child(2){
+.stack_messages list .box_own_sticker_info image {
     margin-top: 7px;
+    border-color: transparent;
 }
-.stack_messages list .box_sticker_info image:nth-child(1){
+.stack_messages list .box_sticker_info image {
     margin-top: 7px;
+    border-color: transparent;
 }
 .stack_messages list row:selected .box_msg_info label:nth-child(1) {
     background-color: #6785FF;
@@ -368,7 +387,8 @@ dialog headerbar {
 	background-color: #5775D9;
 }
 .dialog_auth entry selection, .wnd_main entry selection,
-.dialog_auth textview selection, .wnd_main textview selection{
+.dialog_auth textview selection, .wnd_main textview selection,
+.box-room-settings textview selection {
 	background-color: #6785FF;
 }
 #box_edit_msg {
@@ -403,4 +423,50 @@ dialog headerbar {
     background-color: #424E78;
     color: #919CC0;
     font-size: 14px;
+}
+#dialog_profile_prefs .dialog-action-area button {
+	padding: 12px 30px;
+}
+.btn_stickers {
+	margin-right: 12px; 
+}
+.stickers_box button {
+	background-image: none;
+}
+.stickers_box label {
+	color: #fff;
+}
+.stickers_box {
+	border-left: 1px solid #424E78;
+	padding: 2px 7px;
+}
+.wnd-room-settings {
+	padding: 30px;
+}
+.box-room-settings {
+	margin: 30px 45px 0 45px;
+}
+.box-room-settings entry {
+	border: 1px solid #424E78;
+	background-color: #3A466B;
+	border-radius: 5px;
+	padding: 0 8px;
+    font-weight: 300;
+    box-shadow: none;
+}
+.box-room-settings textview text {
+    background-color: #3A466B;
+    box-shadow: none;
+    border: 1px solid #48547E;
+    border-radius: 5px;
+    color: #fff;
+    font-weight: 300;
+}
+.box-room-settings textview {
+    background-color: transparent;
+    padding-top: 10px;
+    font-weight: 300;
+}
+.box-room-settings scrolledwindow {
+    border: none;
 }

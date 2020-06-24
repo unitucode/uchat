@@ -41,8 +41,6 @@ static void show_edit_msg(GtkButton *btn, GtkBuilder *builder) {
 
     gtk_label_set_text(GTK_LABEL(label_text), old_text);
     gtk_text_buffer_set_text(GTK_TEXT_BUFFER(buffer), msg->msg, -1);
-    mx_text_buffer_set_tags(GTK_TEXT_BUFFER(buffer));
-    mx_format_text(GTK_TEXT_BUFFER(buffer));
     mx_switch_room_header(builder, MX_ROOM_CTRL);
     g_free(old_text);
     (void)btn;

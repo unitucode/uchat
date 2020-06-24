@@ -36,7 +36,7 @@ bool mx_new_msgs_hanlder(t_dtp *data, t_chat *chat) {
         return false;
     if (!cJSON_IsArray(msgs))
         return false;
-    for (int i = 0; i < cJSON_GetArraySize(msgs); i++) {
+    for (int i = cJSON_GetArraySize(msgs) - 1; i >= 0; i--) {
         msg = cJSON_GetArrayItem(msgs, i);
         insert_msg(msg, chat, room_id->valueint);
     }

@@ -45,15 +45,16 @@ void mx_select_room(GtkWidget *event_box, GdkEventButton *event,
 }
 
 void mx_show_join_to_room(GtkWidget *event_box, GdkEventButton *event,
-                          GtkBuilder *builder) {
-    t_groom *groom = mx_get_selected_groom(builder,
+                          gpointer *user_data) {
+    t_signal_data *data = g_object_get_data(G_OBJECT(event_box), "sigdata");
+    t_groom *lgroom = mx_get_selected_groom(data->builder,
                                            MX_LISTBOX_LOCAL_ROOMS);
 
-    mx_reset_messege_room(groom, builder);
-    gtk_list_box_select_row(groom->box_rooms, groom->row_room);
-    mx_widget_switch_visibility_by_name(builder, "dialog_join_to_room");
-    (void)event_box;
+    gtk_list_box_select_row(data->groom->box_rooms, data->groom->row_room);
+    mx_reset_messege_room(lgroom, data->builder);
+    mx_widget_switch_visibility_by_name(data->builder, "dialog_join_to_room");
     (void)event;
+    (void)user_data;
 }
 
 //================================
@@ -96,7 +97,6 @@ void mx_add_room_row(t_groom *room, GtkBuilder *builder, gchar *listbox_name) {
     GtkWidget *event = gtk_event_box_new();
     t_signal_data *data = NULL;
 
-
     room->box_rooms = box;
     room->row_room = GTK_LIST_BOX_ROW(row);
     room->label_name = GTK_LABEL(label);
@@ -111,7 +111,7 @@ void mx_add_room_row(t_groom *room, GtkBuilder *builder, gchar *listbox_name) {
     }
     else {
         g_signal_connect(event, "button_press_event",
-                         G_CALLBACK(mx_show_join_to_room), builder);
+                         G_CALLBACK(mx_show_join_to_room), NULL);
     }
 
     gtk_label_set_ellipsize(GTK_LABEL(label), PANGO_ELLIPSIZE_END);
@@ -149,6 +149,7 @@ static t_groom *mx_init_groom() {
     room->date = -1;
     room->is_updated = true;
     room->desc = NULL;
+    room->is_watched = false;
     room->members = g_hash_table_new(g_direct_hash, g_direct_equal);
     return room;
 }

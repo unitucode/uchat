@@ -20,6 +20,8 @@ static void add_message_row(t_gmsg *msg, t_chat *chat) {
     gtk_list_box_insert(box, row, -1);
     gtk_list_box_row_changed(groom->row_room);
     groom->is_updated = false;
+    groom->is_watched = false;
+    // mx_widget_set_class(GTK_WIDGET(box), "room-unwatched");
     gtk_widget_show_all(GTK_WIDGET(box));
     g_object_set_data_full(G_OBJECT(row), "gmsg", msg,
                            (GDestroyNotify)mx_delete_gmsg);
