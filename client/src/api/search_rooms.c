@@ -15,7 +15,7 @@ static bool handle_room(cJSON *room, t_chat *chat) {
 
     if (!groom)
         return false;
-    mx_add_room_row(groom, chat->builder, MX_GLOBAL_ROOMS);
+    mx_add_room_row(groom, chat, MX_GLOBAL_ROOMS);
     return true;
 }
 

@@ -16,7 +16,7 @@
 #define MX_ERRMSG_INVALID_LOGIN "Login can be minimum 3 symbol of a-z, 0-9, -"
 #define MX_ERRMSG_NODATA "Please, enter login and password"
 #define MX_ERRMSG_DIFPASS "Passwords must match"
-#define MX_ERRMSG_INCCRDATA "The email or password inccorect"
+#define MX_ERRMSG_INCCRDATA "The login or password inccorect"
 #define MX_ERRMSG_USEREXIST "User already exist"
 
 #define MX_ROOM_CTRL 0
@@ -106,7 +106,7 @@ struct s_chat {
 
 struct s_signal_data {
     t_groom *groom;
-    GtkBuilder *builder;
+    t_chat *chat;
     GtkListBoxRow *row_msg;
 };
 
@@ -249,7 +249,7 @@ gboolean mx_stop_search_room(gpointer *entry,
                              gpointer *data, GtkBuilder *builder);
 void mx_search_local_rooms(GtkBuilder *builder, t_filter_data *data);
 void mx_search_global_rooms(GtkBuilder *builder);
-void mx_add_room_row(t_groom *room, GtkBuilder *builder, gchar *listbox_name);
+void mx_add_room_row(t_groom *room, t_chat *chat, gchar *listbox_name);
 void mx_clear_global_search(GtkBuilder *builder);
 void mx_box_messages_reached(GtkScrolledWindow *scroll,
                              GtkPositionType pos, t_chat *chat);
@@ -276,7 +276,7 @@ t_gmsg *mx_get_gmsg_by_id(gint msg_id, gint room_id, GtkBuilder *builder);
 void mx_unselect_room(t_groom *groom, GtkBuilder *builder);
 void mx_entry_set_icon_by_path(GtkEntry *entry, gchar *path,
                                GtkEntryIconPosition icon_pos);
-t_signal_data *mx_create_sigdata(GtkBuilder *builder, t_groom *groom,
+t_signal_data *mx_create_sigdata(t_chat *chat, t_groom *groom,
                                  GtkListBoxRow *row_msg);
 void mx_free_sigdata(t_signal_data *data);
 char *mx_msgpage_name(gint id);
