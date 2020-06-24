@@ -19,10 +19,10 @@ void mx_box_messages_reached(GtkScrolledWindow *scroll,
     }
     if (pos == GTK_POS_BOTTOM) {
         chat->upl_old_msgs = true;
-        for (guint i = 0; i < groom->uploaded; i++) {
+        while (groom->uploaded) {
             g_message("delete message here mx_messages_top_reached.c\n");
+            groom->uploaded--;
         }
-        groom->uploaded = 0;
         chat->upl_old_msgs = false;
     }
     (void)scroll;
