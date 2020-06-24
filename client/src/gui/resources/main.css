@@ -196,7 +196,7 @@ dialog headerbar {
     padding: 15px;
     border-radius: 100px;
     background-color: rgb(83,102,187);
-    margin: 20px 0;
+    margin: 25px 0;
 }
 .add-room-button:hover {
     background-color: rgb(66,78, 120);
@@ -305,9 +305,15 @@ dialog headerbar {
 .main_own_msg_box {
 	padding: 0 0 0 180px;
 }
+/* .stack_messages scrolledwindow {
+	padding-bottom: 25px;
+} */
 .stack_messages list {
-	margin: 7px 25px 25px 25px;
+	margin: 7px 25px 0 25px;
 }
+
+20u - 40
+
 .sender_login {
     margin-top: 10px;
 	font-size: 14px;

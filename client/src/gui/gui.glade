@@ -534,9 +534,10 @@
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="max_length">20</property>
-                    <property name="primary_icon_pixbuf">resources/search.png</property>
+                    <property name="primary_icon_name">search</property>
                     <property name="primary_icon_activatable">False</property>
                     <property name="primary_icon_sensitive">False</property>
+                    <property name="placeholder_text" translatable="yes">Search room</property>
                     <signal name="focus-out-event" handler="mx_stop_search_room" swapped="no"/>
                     <signal name="stop-search" handler="mx_stop_search_room" swapped="no"/>
                   </object>
@@ -827,7 +828,7 @@
                 </child>
                 <child>
                   <object class="GtkBox" id="box_room_header">
-                    <property name="height_request">50</property>
+                    <!-- <property name="height_request">50</property> -->
                     <property name="can_focus">False</property>
                     <property name="orientation">vertical</property>
                     <child>
@@ -859,6 +860,25 @@
                               </packing>
                             </child>
                             <child>
+                              <object class="GtkSearchEntry" id="sentry_messages">
+                                <property name="width_request">260</property>
+                                <property name="visible">True</property>
+                                <property name="can_focus">True</property>
+                                <property name="valign">center</property>
+                                <property name="primary_icon_name">search</property>
+                                <property name="primary_icon_activatable">False</property>
+                                <property name="primary_icon_sensitive">False</property>
+                                <property name="placeholder_text" translatable="yes">Search message</property>
+                                <signal name="focus-out-event" handler="mx_stop_search_message" swapped="no"/>
+                                <signal name="stop-search" handler="mx_stop_search_message" swapped="no"/>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">True</property>
+                                <property name="position">1</property>
+                              </packing>
+                            </child>
+                            <child>
                               <object class="GtkButton" id="btn_show_room_sett">
                                 <property name="width_request">35</property>
                                 <property name="height_request">35</property>
@@ -872,7 +892,7 @@
                               <packing>
                                 <property name="expand">False</property>
                                 <property name="fill">True</property>
-                                <property name="position">1</property>
+                                <property name="position">2</property>
                               </packing>
                             </child>
                             <child>
@@ -891,7 +911,7 @@
                               <packing>
                                 <property name="expand">False</property>
                                 <property name="fill">True</property>
-                                <property name="position">2</property>
+                                <property name="position">3</property>
                               </packing>
                             </child>
                             <style>
@@ -1005,6 +1025,40 @@
                     <property name="can_focus">False</property>
                     <property name="orientation">vertical</property>
                     <child>
+                      <object class="GtkLabel" id="label_found_messages">
+                        <property name="height_request">50</property>
+                        <property name="can_focus">False</property>
+                        <property name="label" translatable="yes">Founded messages</property>
+                        <attributes>
+                          <attribute name="weight" value="medium"/>
+                          <attribute name="absolute-size" value="19000"/>
+                        </attributes>
+                        <style>
+                          <class name="label_search_result"/>
+                        </style>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="label_search_nothing_msgs">
+                        <property name="height_request">60</property>
+                        <property name="can_focus">False</property>
+                        <property name="label" translatable="yes">Nothing found for this request</property>
+                        <attributes>
+                          <attribute name="foreground" value="#bababdbdb6b6"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">1</property>
+                      </packing>
+                    </child>
+                    <child>
                       <object class="GtkStack" id="stack_messege_rooms">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
@@ -1031,7 +1085,34 @@
                       <packing>
                         <property name="expand">True</property>
                         <property name="fill">True</property>
-                        <property name="position">1</property>
+                        <property name="position">2</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkScrolledWindow" id="scrlldwnd_found_msgs">
+                        <property name="can_focus">True</property>
+                        <property name="shadow_type">in</property>
+                        <child>
+                          <object class="GtkViewport">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <child>
+                              <object class="GtkListBox" id="listbox_found_msgs">
+                                <property name="can_focus">False</property>
+                                <property name="selection_mode">none</property>
+                                <property name="activate_on_single_click">False</property>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                        <style>
+                          <class name="stack_messages"/>
+                        </style>
+                      </object>
+                      <packing>
+                        <property name="expand">True</property>
+                        <property name="fill">True</property>
+                        <property name="position">3</property>
                       </packing>
                     </child>
                   </object>

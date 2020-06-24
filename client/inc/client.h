@@ -253,6 +253,10 @@ void mx_add_room_row(t_groom *room, GtkBuilder *builder, gchar *listbox_name);
 void mx_clear_global_search(GtkBuilder *builder);
 void mx_box_messages_reached(GtkScrolledWindow *scroll,
                              GtkPositionType pos, t_chat *chat);
+gboolean mx_stop_search_message(gpointer *entry,
+                                gpointer *data, GtkBuilder *builder);
+void mx_add_message_to_found(t_gmsg *gmsg, t_chat *chat);
+void mx_clear_found_msgs(GtkBuilder *builder);
 
 // gui utils
 void mx_scrlldwnd_connect(gchar *name, GtkWidget *scroll, GtkBuilder *builder);
