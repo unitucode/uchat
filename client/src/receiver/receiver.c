@@ -30,6 +30,8 @@ void mx_init_handlers(t_chat *chat) {
     chat->request_handler[RQ_NEW_MEMBER] = mx_new_member_handler;
     chat->request_handler[RQ_BAN_MEMBER] = mx_ban_member_handler;
     chat->request_handler[RQ_SEARCH_MSG] = mx_search_msgs_handler;
+    chat->request_handler[RQ_DEL_HIST] = mx_del_hist_handler;
+    chat->request_handler[RQ_UPD_MSGS] = mx_upd_msgs_hanlder;
 }
 
 bool mx_handle_request(char *request, t_chat *chat) {

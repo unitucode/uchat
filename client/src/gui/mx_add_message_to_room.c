@@ -1,9 +1,11 @@
 #include "client.h"
 
 static void add_message_row(t_gmsg *msg, t_chat *chat) {
+    t_groom *groom = mx_get_groom_by_id(msg->room_id, chat->builder);
+    if (!groom)
+        return;
     GtkWidget *row = gtk_list_box_row_new();
     GtkWidget *event = mx_create_message_row(chat, msg);
-    t_groom *groom = mx_get_groom_by_id(msg->room_id, chat->builder);
     GtkListBox *box = groom->box_messages;
     t_signal_data *data = NULL;
 

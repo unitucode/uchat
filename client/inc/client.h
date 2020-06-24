@@ -150,6 +150,8 @@ bool mx_member_info_handler(t_dtp *data, t_chat *chat); //HANDLER FOR INFO MEMBE
 bool mx_new_member_handler(t_dtp *data, t_chat *chat); //HANDLER FOR NEW MEMBER
 bool mx_ban_member_handler(t_dtp *data, t_chat *chat); //HANDLER FOR BAN MEMBER
 bool mx_search_msgs_handler(t_dtp *data, t_chat *chat); //HANDLER FOR SEARCH MSG
+bool mx_del_hist_handler(t_dtp *data, t_chat *chat); //HANDLER FOR DELETE HISTORY
+bool mx_upd_msgs_hanlder(t_dtp *data, t_chat *chat); //HANDLER FOR UPD MSGS
 
 
 /*
@@ -185,6 +187,8 @@ t_dtp *mx_member_info_request(int user_id); //FOR INFO ABOUT MEMBER
 t_dtp *mx_ban_member_request(int room_id, int user_id); // FOR BAN MEMBER
 t_dtp *mx_sticker_request(char *sticker, int room_id); // FOR STICKER
 t_dtp *mx_search_msgs_request(char *msg, int room_id); // FOR SEARCH MSGS
+t_dtp *mx_del_hist_request(int room_id); // FOR DELETE HISTORY
+t_dtp *mx_upd_msgs_request(long int date, int room_id); // FOR UPD MSGS REQUEST
 
 //errors api
 void mx_err_auth_data_handler(GtkBuilder *builder);
