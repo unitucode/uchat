@@ -7,7 +7,7 @@ static void message_old(sqlite3_str **str) {
 
 static void message_new(sqlite3_str **str) {
     sqlite3_str_appendall(*str, " and date > ?1");
-    sqlite3_str_appendall(*str, " order by date asc");
+    sqlite3_str_appendall(*str, " order by date desc");
 }
 
 static void message_curr(sqlite3_str **str) {

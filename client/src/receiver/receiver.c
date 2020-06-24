@@ -45,6 +45,9 @@ bool mx_handle_request(char *request, t_chat *chat) {
                 return false;
             }
         }
+        else {
+            return false;
+        }
         mx_free_request(&data);
     }
     return true;
@@ -71,6 +74,7 @@ void mx_receiver(GObject *source_object, GAsyncResult *res, gpointer user_data) 
     }
     if (!mx_handle_request(msg, chat)) {
         g_free(msg);
+        g_io_stream_close(G_IO_STREAM(chat->conn), NULL, NULL);
         return;
     }
     g_free(msg);

@@ -1,12 +1,14 @@
 #include "client.h"
 
-static void req_join_to_room(t_chat *chat) {
-    t_groom *groom = mx_get_selected_groom(chat->builder,
-                                           MX_LISTBOX_GLOBAL_ROOMS);
+static void req_join_to_room(GtkButton *btn, t_chat *chat) {
+    t_groom *groom = mx_get_selected_groom(chat->builder, MX_GLOBAL_ROOMS);
     t_dtp *dtp = mx_join_room_request(groom->id);
 
+    gtk_list_box_unselect_all(groom->box_rooms);
+    mx_stop_search_room(NULL, NULL, chat->builder);
     mx_send(chat->out, dtp);
     mx_free_request(&dtp);
+    (void)btn;
 }
 
 void mx_connect_join_to_room(t_chat *chat) {

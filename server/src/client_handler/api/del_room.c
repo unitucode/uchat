@@ -19,9 +19,9 @@ bool mx_del_room_handler(t_dtp *data, t_client *client) {
         return false;
     if (mx_get_type_member(client->info->database, client->user->user_id, room_id->valueint) != DB_CUSTOMER)
         return false;
-    mx_delete_room_by_id(client->info->database, room_id->valueint);
     resend = mx_delete_room_request(room_id->valueint);
     mx_send_to_all(resend, client, room_id->valueint);
+    mx_delete_room_by_id(client->info->database, room_id->valueint);
     mx_free_request(&resend);
     return true;
 }

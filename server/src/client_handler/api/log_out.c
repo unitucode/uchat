@@ -21,6 +21,7 @@ bool mx_log_out_handler(t_dtp *token, t_client *client) {
     answer = mx_log_out_request((char*)client->user->token);
     mx_free_user(&client->user);
     mx_send(client->out, answer);
+    g_hash_table_remove(client->info->users, client->out);
     mx_free_request(&answer);
     return true;
 }

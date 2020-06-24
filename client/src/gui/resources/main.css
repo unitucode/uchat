@@ -478,3 +478,15 @@ dialog headerbar {
 	border-right: 3px solid green;
 	border-left: 3px solid transparent;
 }
+overshoot.bottom {
+    background-image: -gtk-gradient(radial, center bottom, 0, center bottom, 0.5,
+        to (rgb(103,133,255)), to (rgba(103,133,255,0))),
+    -gtk-gradient(radial, center bottom, 0, center bottom, 0.9,
+        from (rgba(66,78,120,0.1)), to(rgba(66,78,120,0)));
+}
+overshoot.top {
+    background-image: -gtk-gradient(radial, center top, 0, center top, 0.5,
+        to (rgb(103,133,255)), to (rgba(103,133,255,0))),
+    -gtk-gradient(radial, center top, 0, center top, 0.9,
+        from (rgba(66,78,120,.1)), to(rgba(66,78,120,0)));
+}
