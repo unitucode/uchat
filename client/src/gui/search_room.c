@@ -56,7 +56,7 @@ gboolean mx_stop_search_room(gpointer *entry,
     GObject *listbox = gtk_builder_get_object(builder, "listbox_rooms");
     GObject *sentry = gtk_builder_get_object(builder, "sentry_rooms");
 
-    if (!mx_get_selected_groom(builder, MX_LISTBOX_GLOBAL_ROOMS)) {
+    if (!mx_get_selected_groom(builder, MX_GLOBAL_ROOMS)) {
         mx_search_delim_set_visibility(builder, FALSE);
         gtk_entry_set_text(GTK_ENTRY(sentry), "");
         gtk_list_box_set_filter_func(GTK_LIST_BOX(listbox), NULL, NULL, NULL);

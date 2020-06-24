@@ -21,7 +21,7 @@ t_gmsg *mx_create_gmsg(cJSON *msg, t_chat *chat) {
     if ((valid = get_data(msg, &data, "user_id")) && cJSON_IsNumber(data))
         gmsg->login = g_strdup(MX_J_STR(g_hash_table_lookup(groom->members, GINT_TO_POINTER(data->valueint))));
     if ((valid = get_data(msg, &data, "date")) && cJSON_IsNumber(data))
-        gmsg->date = data->valueint;
+        gmsg->date = data->valuedouble;
     if ((valid = get_data(msg, &data, "message_id")) && cJSON_IsNumber(data))
         gmsg->message_id = data->valueint;
     if ((valid = get_data(msg, &data, "msg_type")) && cJSON_IsNumber(data))

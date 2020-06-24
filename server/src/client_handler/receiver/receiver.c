@@ -24,7 +24,7 @@ void mx_init_receiver(t_info *chat) {
     chat->request_handler[RQ_BAN_MEMBER] = mx_ban_member_handler;
     chat->request_handler[RQ_SEARCH_MSG] = mx_search_msgs_handler;
     chat->request_handler[RQ_DEL_HIST] = mx_del_hist_handler;
-    chat->request_handler[RQ_UPD_MSGS] = mx_get_msgs_handler;
+    chat->request_handler[RQ_OLD_MSGS] = mx_old_msgs_handler;
 }
 
 bool mx_handle_request(char *request, t_client *client) {

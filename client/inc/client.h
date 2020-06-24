@@ -22,11 +22,11 @@
 #define MX_ROOM_CTRL 0
 #define MX_MSG_CTRL 1
 
-#define MX_LISTBOX_LOCAL_ROOMS "listbox_rooms"
-#define MX_LISTBOX_GLOBAL_ROOMS "listbox_global_rooms"
+#define MX_LOCAL_ROOMS "listbox_rooms"
+#define MX_GLOBAL_ROOMS "listbox_global_rooms"
 
 //settings
-#define MX_BUF_MSGS 11
+#define MX_BUF_MSGS 13
 #define MX_MAX_LENGTH_QUEUE 30
 #define MX_RECONN_ATTEMPTS 6
 #define MX_RECONN_DELAY_S 4
@@ -151,7 +151,7 @@ bool mx_new_member_handler(t_dtp *data, t_chat *chat); //HANDLER FOR NEW MEMBER
 bool mx_ban_member_handler(t_dtp *data, t_chat *chat); //HANDLER FOR BAN MEMBER
 bool mx_search_msgs_handler(t_dtp *data, t_chat *chat); //HANDLER FOR SEARCH MSG
 bool mx_del_hist_handler(t_dtp *data, t_chat *chat); //HANDLER FOR DELETE HISTORY
-bool mx_upd_msgs_hanlder(t_dtp *data, t_chat *chat); //HANDLER FOR UPD MSGS
+bool mx_old_msgs_hanlder(t_dtp *data, t_chat *chat); //HANDLER FOR UPD MSGS
 
 
 /*
@@ -188,7 +188,7 @@ t_dtp *mx_ban_member_request(int room_id, int user_id); // FOR BAN MEMBER
 t_dtp *mx_sticker_request(char *sticker, int room_id); // FOR STICKER
 t_dtp *mx_search_msgs_request(char *msg, int room_id); // FOR SEARCH MSGS
 t_dtp *mx_del_hist_request(int room_id); // FOR DELETE HISTORY
-t_dtp *mx_upd_msgs_request(long int date, int room_id); // FOR UPD MSGS REQUEST
+t_dtp *mx_old_msgs_request(guint64 date, int room_id); // FOR UPD MSGS REQUEST
 
 //errors api
 void mx_err_auth_data_handler(GtkBuilder *builder);
@@ -199,13 +199,14 @@ GtkBuilder *mx_init_window(int argc, char **argv);
 void mx_init_gui(t_chat *chat);
 gint mx_start_gui(t_chat *chat);
 void mx_start_main_window(t_chat *chat);
-void mx_add_groom(t_groom *room, GtkBuilder *builder);
+void mx_add_groom(t_groom *room, t_chat *chat);
 void mx_delete_groom(t_groom *room);
 t_groom *mx_create_groom(cJSON *room);
 t_gmsg *mx_create_gmsg(cJSON *msg, t_chat *chat);
 void mx_delete_gmsg(t_gmsg *gmsg);
 GtkWidget *mx_create_message_row(t_chat *chat,  t_gmsg *gmsg);
-void mx_add_message_to_room(t_gmsg *msg, t_chat *chat);
+void mx_add_message_to_room_new(t_gmsg *msg, t_chat *chat);
+void mx_add_message_to_room_old(t_gmsg *msg, t_chat *chat);
 void mx_logout_client(t_chat *chat);
 void mx_reset_addroom(GtkButton *btn, GtkBuilder *builder);
 void mx_reset_auth(GtkNotebook *note, GtkWidget *page,
@@ -255,6 +256,8 @@ void mx_search_local_rooms(GtkBuilder *builder, t_filter_data *data);
 void mx_search_global_rooms(GtkBuilder *builder);
 void mx_add_room_row(t_groom *room, GtkBuilder *builder, gchar *listbox_name);
 void mx_clear_global_search(GtkBuilder *builder);
+void mx_box_messages_reached(GtkScrolledWindow *scroll,
+                             GtkPositionType pos, t_chat *chat);
 
 // gui utils
 void mx_scrlldwnd_connect(gchar *name, GtkWidget *scroll, GtkBuilder *builder);

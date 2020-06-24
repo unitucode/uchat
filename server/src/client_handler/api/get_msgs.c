@@ -17,7 +17,7 @@ bool mx_get_msgs_handler(t_dtp *data, t_client *client) {
         return false;
     if (mx_get_type_member(client->info->database, client->user->user_id, room_id->valueint) == DB_BANNED)
         return false;
-    msgs_json = mx_get_new_messages_by_id(client->info->database, room_id->valueint, date->valueint, count->valueint);
+    msgs_json = mx_get_new_messages_by_id(client->info->database, room_id->valueint, date->valuedouble, count->valueint);
     if (!cJSON_AddNumberToObject(msgs_json, "type", RQ_GET_NEW_MSGS)) {
         cJSON_Delete(msgs_json);
         return false;

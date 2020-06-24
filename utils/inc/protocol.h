@@ -30,7 +30,7 @@ typedef enum s_request_type {
     RQ_UPD_ROOM_NAME,
     RQ_UPD_USER_DESC,
     RQ_UPD_USER_NAME,
-    RQ_UPD_MSGS,
+    RQ_OLD_MSGS,
     RQ_RECONNECT,
     RQ_DEL_ROOM,
     RQ_DEL_USER,

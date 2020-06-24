@@ -83,7 +83,7 @@ bool mx_member_info_handler(t_dtp *id, t_client *client);
 bool mx_ban_member_handler(t_dtp *ban, t_client *client);
 bool mx_search_msgs_handler(t_dtp *data, t_client *client);
 bool mx_del_hist_handler(t_dtp *msg, t_client *client);
-bool mx_get_msgs_handler(t_dtp *data, t_client *client);
+bool mx_old_msgs_handler(t_dtp *data, t_client *client);
 
 t_info *mx_init_info(void);
 void mx_deinit_info(t_info **info);

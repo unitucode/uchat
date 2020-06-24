@@ -16,14 +16,14 @@ void mx_hide_msg_editing(GtkButton *btn, GtkBuilder *builder) {
  * Unselec all messages in current room
  */
 void mx_unselect_curr_room_messages(GtkBuilder *builder) {
-    t_groom *groom = mx_get_selected_groom(builder, MX_LISTBOX_LOCAL_ROOMS);
+    t_groom *groom = mx_get_selected_groom(builder, MX_LOCAL_ROOMS);
 
     if (groom)
         gtk_list_box_unselect_all(groom->box_messages);
 }
 
 void mx_reset_messege_room(t_groom *new_selected, GtkBuilder *builder) {
-    t_groom *groom = mx_get_selected_groom(builder, MX_LISTBOX_LOCAL_ROOMS);
+    t_groom *groom = mx_get_selected_groom(builder, MX_LOCAL_ROOMS);
 
     if (groom && new_selected->id != groom->id) {
         mx_switch_room_header(builder, MX_ROOM_CTRL);

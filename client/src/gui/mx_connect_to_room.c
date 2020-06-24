@@ -1,8 +1,7 @@
 #include "client.h"
 
 static void req_join_to_room(GtkButton *btn, t_chat *chat) {
-    t_groom *groom = mx_get_selected_groom(chat->builder,
-                                           MX_LISTBOX_GLOBAL_ROOMS);
+    t_groom *groom = mx_get_selected_groom(chat->builder, MX_GLOBAL_ROOMS);
     t_dtp *dtp = mx_join_room_request(groom->id);
 
     gtk_list_box_unselect_all(groom->box_rooms);
