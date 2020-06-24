@@ -194,7 +194,7 @@ t_groom *mx_create_groom(cJSON *room) {
     if ((valid = get_data(room, &data, "id")) && cJSON_IsNumber(data))
         groom->id = data->valueint;
     if ((valid = get_data(room, &data, "date")) && cJSON_IsNumber(data))
-        groom->date = data->valueint;
+        groom->date = data->valuedouble;
     if ((valid = get_data(room, &data, "desc")) && cJSON_IsString(data))
         groom->desc = strdup(data->valuestring);
     if (!valid) {
