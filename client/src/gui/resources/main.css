@@ -187,6 +187,10 @@ dialog headerbar {
     border-right: 3px solid transparent;
     margin: 5px 18px;
 }
+.rooms-list row .has-messages {
+    border-left: 3px solid transparent;
+    border-right: 3px solid #28E1B2;
+}
 .add-room-button {
 	background: none;
     padding: 15px;
@@ -469,4 +473,8 @@ dialog headerbar {
 }
 .box-room-settings scrolledwindow {
     border: none;
+}
+.has-messages {
+	border-right: 3px solid green;
+	border-left: 3px solid transparent;
 }
