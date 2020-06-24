@@ -16,11 +16,11 @@ void mx_box_messages_reached(GtkScrolledWindow *scroll,
         GtkAdjustment *adj = gtk_scrolled_window_get_vadjustment(scroll);
 
         gtk_adjustment_set_value(adj, gtk_adjustment_get_value(adj) + 1);
-        // gtk_scrolled_window_set_vadjustment(scroll, adj);
     }
-    if (pos == GTK_POS_BOTTOM) {
-        puts(groom->room_name);
-        puts("CLEAR OLDER MESSAGE!");
-    }
+    // if (pos == GTK_POS_BOTTOM) {
+    //     for (guint i = 0; i < groom->uploaded; i++) {
+    //         gtk_list_box
+    //     }
+    // }
     (void)scroll;
 }

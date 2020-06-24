@@ -27,6 +27,7 @@ static void insert_msg(cJSON *room, t_chat *chat, int room_id) {
 bool mx_old_msgs_hanlder(t_dtp *data, t_chat *chat) {
     cJSON *room_id = cJSON_GetObjectItemCaseSensitive(data->json, "room_id");
     cJSON *msgs = cJSON_GetObjectItemCaseSensitive(data->json, "messages");
+    t_groom *groom = NULL;
     cJSON *msg = NULL;
 
     if (!cJSON_IsNumber(room_id))
@@ -37,6 +38,8 @@ bool mx_old_msgs_hanlder(t_dtp *data, t_chat *chat) {
         msg = cJSON_GetArrayItem(msgs, i);
         insert_msg(msg, chat, room_id->valueint);
     }
+    groom = mx_get_groom_by_id(room_id->valueint, chat->builder);
+    groom->uploaded += cJSON_GetArraySize(msgs);
     chat->upl_old_msgs = false;
     (void)data;
     (void)chat;
