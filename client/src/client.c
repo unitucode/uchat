@@ -13,10 +13,6 @@ static void change_working_dir(void) {
 
 
 int main(int argc, char **argv) {
-    // GDateTime *date = g_date_time_new_now_local();
-    // g_print("%s\n", mx_get_string_time(date / 1000, MX_TIME_LONG));
-    // g_print("%s\n", mx_get_string_time(date / 1000, MX_TIME_SHORT));
-    // exit(0);
     GError *error = NULL;
     GSocketConnection *connection = NULL;
     GSocketClient *client = g_socket_client_new();
