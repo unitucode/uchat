@@ -37,6 +37,7 @@ bool mx_old_msgs_hanlder(t_dtp *data, t_chat *chat) {
         msg = cJSON_GetArrayItem(msgs, i);
         insert_msg(msg, chat, room_id->valueint);
     }
+    chat->upl_old_msgs = false;
     (void)data;
     (void)chat;
     return true;

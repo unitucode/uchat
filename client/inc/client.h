@@ -98,6 +98,7 @@ struct s_chat {
     gsize id;
     t_groom *curr_room;
     t_dtp *data;
+    gboolean upl_old_msgs;
     GtkBuilder *builder;
     bool valid;
     void (*error_handler[ER_COUNT_ERRS])(GtkBuilder *builder);
