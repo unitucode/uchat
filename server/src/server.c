@@ -87,6 +87,8 @@ int main(int argc, char **argv) {
 void test() {
     sqlite3 *db = mx_open_db(MX_DB);
  
+    // mx_delete_all_messages(db, 1);
+
     // guint64 time = g_get_real_time();
     // GDateTime *second = g_date_time_new_from_unix_utc(time / 1000000);
     // printf("->%lld\n", (long long)time);

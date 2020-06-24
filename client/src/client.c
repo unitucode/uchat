@@ -14,12 +14,7 @@ static void change_working_dir(void) {
 
 
 int main(int argc, char **argv) {
-    // gint64 date = g_get_real_time();
-    // GTimeZone *time_zone = g_time_zone_new_local();
-    // printf("->->%lld\n", date);
-    // gint num_zone = g_time_zone_adjust_time(time_zone, G_TIME_TYPE_UNIVERSAL, &date);
-    // printf("%d\n", num_zone);
-    // printf("->%lld\n", date);
+    // GDateTime *date = g_date_time_new_now_local();
     // g_print("%s\n", mx_get_string_time(date / 1000, MX_TIME_LONG));
     // g_print("%s\n", mx_get_string_time(date / 1000, MX_TIME_SHORT));
     // exit(0);
