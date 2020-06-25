@@ -69,12 +69,10 @@ t_db_room *mx_parse_json_room(cJSON *room_j);
 t_db_message *mx_parse_message(cJSON *message_j);
 
 //create table yes
+void mx_create_table(sqlite3 *db);
 void mx_create_table_users(sqlite3 *db);
 void mx_create_table_rooms(sqlite3 *db);
-void mx_create_table_member(sqlite3 *db);
-void mx_create_table_queue(sqlite3 *db);
 void mx_create_table_messages(sqlite3 *db);
-void mx_create_table_contacts(sqlite3 *db);
 
 // function yes
 guint64 mx_get_time(gint8 type);
