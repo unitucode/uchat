@@ -223,6 +223,7 @@ void mx_connect_message_ctrl(t_chat *chat);
 void mx_connect_search(t_chat *chat);
 void mx_connect_join_to_room(t_chat *chat);
 void mx_connect_stickers(t_chat *chat);
+void mx_connect_ban_member(t_chat *chat);
 void mx_connect_test_request(t_chat *chat); // DELETE
 void mx_errmsg_wrong_authdata(GtkBuilder *builder);
 void mx_errmsg_user_exist(GtkBuilder *builder);
@@ -265,6 +266,7 @@ gboolean mx_stop_search_message(gpointer *entry,
                                 gpointer *data, GtkBuilder *builder);
 void mx_add_message_to_found(t_gmsg *gmsg, t_chat *chat);
 void mx_clear_found_msgs(GtkBuilder *builder);
+void mx_set_room_members(GtkBuilder *builder, t_groom *groom);
 
 // gui utils
 void mx_scrlldwnd_connect(gchar *name, GtkWidget *scroll, GtkBuilder *builder);

@@ -826,7 +826,6 @@
                 </child>
                 <child>
                   <object class="GtkBox" id="box_room_header">
-                    <!-- <property name="height_request">50</property> -->
                     <property name="can_focus">False</property>
                     <property name="orientation">vertical</property>
                     <child>
@@ -1631,6 +1630,103 @@
       <class name="dialog_addroom"/>
     </style>
   </object>
+  <object class="GtkDialog" id="dialog_ban_member">
+    <property name="width_request">360</property>
+    <property name="height_request">180</property>
+    <property name="can_focus">False</property>
+    <property name="resizable">False</property>
+    <property name="modal">True</property>
+    <property name="type_hint">dialog</property>
+    <property name="skip_taskbar_hint">True</property>
+    <property name="skip_pager_hint">True</property>
+    <property name="deletable">False</property>
+    <property name="transient_for">wnd_main</property>
+    <child type="titlebar">
+      <placeholder/>
+    </child>
+    <child internal-child="vbox">
+      <object class="GtkBox">
+        <property name="can_focus">False</property>
+        <property name="orientation">vertical</property>
+        <property name="spacing">2</property>
+        <child internal-child="action_area">
+          <object class="GtkButtonBox">
+            <property name="can_focus">False</property>
+            <property name="layout_style">end</property>
+            <child>
+              <object class="GtkButton">
+                <property name="label" translatable="yes">Cancel</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <signal name="clicked" handler="mx_widget_switch_visibility" object="dialog_ban_member" swapped="no"/>
+              </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkButton" id="btn_ban">
+                <property name="label" translatable="yes">Ban</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <signal name="clicked" handler="mx_widget_switch_visibility" object="dialog_ban_member" swapped="no"/>
+              </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">False</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkBox">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="orientation">vertical</property>
+            <child>
+              <object class="GtkLabel">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">Are you sure you want to ban?</property>
+              </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">label</property>
+              </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">True</property>
+            <property name="fill">True</property>
+            <property name="position">1</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+  </object>
   <object class="GtkDialog" id="dialog_join_to_room">
     <property name="width_request">360</property>
     <property name="height_request">180</property>
@@ -1655,7 +1751,7 @@
             <property name="can_focus">False</property>
             <property name="layout_style">end</property>
             <child>
-              <object class="GtkButton" id="btn_join_cancel">
+              <object class="GtkButton">
                 <property name="label" translatable="yes">Cancel</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
@@ -1698,7 +1794,7 @@
               <object class="GtkLabel">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="label" translatable="yes">Are you sure you want to join</property>
+                <property name="label" translatable="yes">Are you sure you want to join?</property>
               </object>
               <packing>
                 <property name="expand">True</property>
@@ -2100,7 +2196,7 @@
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="label" translatable="yes">Members</property>
-                    <property name="xalign">0.05000000074505806</property>
+                    <property name="xalign">0</property>
                     <attributes>
                       <attribute name="weight" value="bold"/>
                       <attribute name="foreground" value="#555557575353"/>
@@ -2122,9 +2218,10 @@
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <child>
-                          <object class="GtkListBox">
+                          <object class="GtkListBox" id="listbox_sett_members">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
+                            <property name="activate_on_single_click">False</property>
                           </object>
                         </child>
                       </object>
@@ -2266,7 +2363,6 @@
           <object class="GtkBox">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="orientation">vertical</property>
             <child>
               <object class="GtkLabel">
                 <property name="height_request">20</property>
@@ -2290,7 +2386,7 @@
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="label" translatable="yes">customer login</property>
-                <property name="xalign">0.10000000149011612</property>
+                <property name="xalign">1</property>
                 <attributes>
                   <attribute name="foreground" value="#555557575353"/>
                 </attributes>
@@ -2319,7 +2415,7 @@
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="label" translatable="yes">Description</property>
-                <property name="xalign">0.05000000074505806</property>
+                <property name="xalign">0</property>
                 <attributes>
                   <attribute name="weight" value="bold"/>
                   <attribute name="foreground" value="#555557575353"/>
@@ -2370,7 +2466,7 @@
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="label" translatable="yes">Members</property>
-            <property name="xalign">0.05000000074505806</property>
+            <property name="xalign">0</property>
             <attributes>
               <attribute name="weight" value="bold"/>
               <attribute name="foreground" value="#555557575353"/>
@@ -2395,7 +2491,7 @@
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <child>
-                  <object class="GtkListBox">
+                  <object class="GtkListBox" id="listbox_info_members">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="selection_mode">none</property>

@@ -28,6 +28,7 @@ void mx_set_current_room_sett(GtkBuilder *builder) {
         gtk_text_buffer_set_text(GTK_TEXT_BUFFER(desc), groom->desc, -1);
         gtk_label_set_text(GTK_LABEL(customer), groom->customer);
         gtk_label_set_text(GTK_LABEL(header_name), groom->room_name);
+        mx_set_room_members(builder, groom);
     }
 }
 
