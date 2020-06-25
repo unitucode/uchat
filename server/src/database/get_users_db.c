@@ -4,10 +4,14 @@ cJSON *mx_get_object_user(sqlite3_stmt *stmt) {
     cJSON *user = cJSON_CreateObject();
 
     cJSON_AddNumberToObject(user, "id", sqlite3_column_int64(stmt, 0));
-    cJSON_AddStringToObject(user, "name", (char*)sqlite3_column_text(stmt, 1));
-    cJSON_AddStringToObject(user, "login", (char*)sqlite3_column_text(stmt, 2));
-    cJSON_AddStringToObject(user, "pass", (char*)sqlite3_column_text(stmt, 3));
-    cJSON_AddStringToObject(user, "token", (char*)sqlite3_column_text(stmt, 4));
+    cJSON_AddStringToObject(user, "name", 
+                            (char*)sqlite3_column_text(stmt, 1));
+    cJSON_AddStringToObject(user, "login", 
+                            (char*)sqlite3_column_text(stmt, 2));
+    cJSON_AddStringToObject(user, "pass", 
+                            (char*)sqlite3_column_text(stmt, 3));
+    cJSON_AddStringToObject(user, "token", 
+                            (char*)sqlite3_column_text(stmt, 4));
     cJSON_AddNumberToObject(user, "date", sqlite3_column_int64(stmt, 5));
     cJSON_AddStringToObject(user, "desc",
                             MX_J_STR((char*)sqlite3_column_text(stmt, 6)));

@@ -4,8 +4,9 @@ static void get_id_msg(sqlite3 *db, t_db_message *message) {
     sqlite3_stmt *stmt;
     gint32 rv = SQLITE_OK;
 
-    rv = sqlite3_prepare_v2(db, "select message_id from messages where room_id = ?1 and"
-                                " date = ?2", -1, &stmt, NULL);
+    rv = sqlite3_prepare_v2(db, "select message_id from messages where "
+                                "room_id = ?1 and date = ?2",
+                            -1, &stmt, NULL);
     mx_error_sqlite(rv, "prepare", "get id msg");
     sqlite3_bind_int64(stmt, 1, message->room_id);
     sqlite3_bind_int64(stmt, 2, message->date);
@@ -14,17 +15,7 @@ static void get_id_msg(sqlite3 *db, t_db_message *message) {
     sqlite3_finalize(stmt);
 }
 
-void mx_insert_message(sqlite3 *db, t_db_message *message) {
-    sqlite3_stmt *stmt;
-    gint32 rv = SQLITE_OK;
-
-    message->date = mx_get_time(DB_MILISECOND);
-    message->status = DB_MSG_START;
-    rv = sqlite3_prepare_v2(db, "insert into messages(user_id, room_id, date, "
-                                "type, message, file_size, file_name, status, "
-                                "date_dead)values(?1, ?2, ?3, ?4, ?5, ?6, ?7, "
-                                "?8, ?9)", -1, &stmt, NULL);
-    mx_error_sqlite(rv, "prepare", "insert_msg_file");
+static void sqlite_bind_msg(sqlite3_stmt *stmt, t_db_message *message) {
     sqlite3_bind_int64(stmt, 1, message->user_id);
     sqlite3_bind_int64(stmt, 2, message->room_id);
     sqlite3_bind_int64(stmt, 3, message->date);
@@ -34,6 +25,27 @@ void mx_insert_message(sqlite3 *db, t_db_message *message) {
     sqlite3_bind_text(stmt, 7, message->file_name, -1, SQLITE_STATIC);
     sqlite3_bind_int(stmt, 8, message->status);
     sqlite3_bind_int64(stmt, 9, message->date_dead);
+}
+
+/*
+ * writes data about the message to the database, takes an opaque database
+ * structure sqlite3 and a structure t_db_message that contains all the data
+ * except the time and status of the message, this data is entered by the
+ * function itself
+ */
+void mx_insert_message(sqlite3 *db, t_db_message *message) {
+    sqlite3_stmt *stmt;
+    gint32 rv = SQLITE_OK;
+
+    message->date = mx_get_time(DB_MILISECOND);
+    message->status = DB_MSG_START;
+    rv = sqlite3_prepare_v2(db, "insert into messages(user_id, room_id, date,"
+                                "type, message, file_size, file_name, status,"
+                                "date_dead)values(?1, ?2, ?3, ?4, ?5, ?6, ?7,"
+                                "?8, ?9)",
+                            -1, &stmt, NULL);
+    mx_error_sqlite(rv, "prepare", "insert_msg_file");
+    sqlite_bind_msg(stmt, message);
     mx_error_sqlite(sqlite3_step(stmt), "step", "insert_msg_file");
     sqlite3_finalize(stmt);
     get_id_msg(db, message);

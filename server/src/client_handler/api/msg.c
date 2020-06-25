@@ -1,5 +1,14 @@
-#include "server.h"
+#include "api.h"
 
+/*
+ * Function: get_resend_msg
+ * -------------------------------
+ * Creates request "new message"
+ * 
+ * msg: infomation about message in database
+ * 
+ * returns: new request
+ */
 static t_dtp *get_resend_msg(t_db_message *msg) {
     cJSON *send_msg = cJSON_CreateObject();
 
@@ -20,6 +29,16 @@ static t_dtp *get_resend_msg(t_db_message *msg) {
     return mx_get_transport_data(send_msg);
 }
 
+/*
+ * Function: mx_msg_handler
+ * -------------------------------
+ * Handles request from client
+ * 
+ * data: request from client
+ * client: client that sent this request
+ * 
+ * returns: success of handling
+ */
 bool mx_msg_handler(t_dtp *data, t_client *client) { // TODO leaks
     t_db_message *msg = mx_parse_message(data->json);
     t_dtp *resend = NULL;

@@ -1,5 +1,12 @@
-#include "server.h"
+#include "api.h"
 
+/*
+ * Function: mx_correct_data
+ * -------------------------------
+ * Sends token to client if authorization data was valid
+ * 
+ * client: client that sent valid authorization data
+ */
 void mx_correct_data(t_client *client) {
     t_dtp *dtp = mx_token_request((char*)client->user->token, (char*)client->user->login);
 
@@ -29,6 +36,18 @@ static char *get_pass_str(t_dtp *data) {
     return data_obj->valuestring;
 }
 
+/*
+ * Function: mx_valid_authorization_data
+ * -------------------------------
+ * Validates authorization data
+ * 
+ * data: authorization request
+ * login: pointer to request login
+ * pass: pointer to request password
+ * client: client that sent this request
+ * 
+ * returns: success of validation
+ */
 bool mx_valid_authorization_data(t_dtp *data, char **login,
                                  char **pass, t_client *client) {
     if (client->user != NULL)

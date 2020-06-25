@@ -30,7 +30,8 @@ static cJSON *create_object_contact(sqlite3_stmt *stmt) {
     cJSON *contact = cJSON_CreateObject();
 
     cJSON_AddNumberToObject(contact, "user_id", sqlite3_column_int64(stmt, 0));
-    cJSON_AddNumberToObject(contact, "contact_id", sqlite3_column_int64(stmt, 1));
+    cJSON_AddNumberToObject(contact, "contact_id",
+                            sqlite3_column_int64(stmt, 1));
     cJSON_AddNumberToObject(contact, "type", sqlite3_column_int(stmt, 2));
     return contact;
 }

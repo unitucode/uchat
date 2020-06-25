@@ -1,5 +1,4 @@
-#include "server.h"
-#include "protocol.h"
+#include "api.h"
 
 static void incorrect_data(t_client *client) {
     t_dtp *dtp = mx_error_msg_request(ER_AUTH_DATA, "The email or password inccorect");
@@ -8,6 +7,16 @@ static void incorrect_data(t_client *client) {
     mx_free_request(&dtp);
 }
 
+/*
+ * Function: log_in
+ * -------------------------------
+ * Validates authorization data
+ * 
+ * user: user in database
+ * client: client that sent request
+ * 
+ * returns: success of loging
+ */
 static bool log_in(t_db_user *user, t_client *client) {
     t_db_user *check_user = mx_get_user_by_login(client->info->database, user->login);
 
@@ -27,6 +36,16 @@ static bool log_in(t_db_user *user, t_client *client) {
     return true;
 }
 
+/*
+ * Function: mx_log_in_handler
+ * -------------------------------
+ * Handles request from client
+ * 
+ * room: request from client
+ * client: client that sent this request
+ * 
+ * returns: success of handling
+ */
 bool mx_log_in_handler(t_dtp *login_data, t_client *client) { //ADD ENCRYPT
     t_db_user *user = mx_parse_json_user(login_data->json);
 

@@ -1,5 +1,14 @@
-#include "server.h"
+#include "api.h"
 
+/*
+ * Function: mx_del_room_request
+ * -------------------------------
+ * Creates request "delete room"
+ * 
+ * room_id: room id thath need to delete
+ * 
+ * returns: new request
+ */
 t_dtp *mx_delete_room_request(int room_id) {
     cJSON *send = cJSON_CreateObject();
 
@@ -10,6 +19,16 @@ t_dtp *mx_delete_room_request(int room_id) {
     return mx_get_transport_data(send);
 }
 
+/*
+ * Function: mx_del_room_handler
+ * -------------------------------
+ * Handles request from client
+ * 
+ * data: request from client
+ * client: client that sent this request
+ * 
+ * returns: success of handling
+ */
 bool mx_del_room_handler(t_dtp *data, t_client *client) {
     cJSON *room_id = cJSON_GetObjectItemCaseSensitive(data->json,
                                                    "room_id");

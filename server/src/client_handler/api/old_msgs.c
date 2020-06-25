@@ -1,5 +1,15 @@
-#include "server.h"
+#include "api.h"
 
+/*
+ * Function: mx_old_msgs_handler
+ * -------------------------------
+ * Handles request from client and send older messages
+ * 
+ * data: request from client
+ * client: client that sent this request
+ * 
+ * returns: success of handling
+ */
 bool mx_old_msgs_handler(t_dtp *data, t_client *client) {
     cJSON *date = cJSON_GetObjectItemCaseSensitive(data->json, "date");
     cJSON *count = cJSON_GetObjectItemCaseSensitive(data->json, "count");
