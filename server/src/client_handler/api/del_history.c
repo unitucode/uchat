@@ -20,7 +20,7 @@ bool mx_del_hist_handler(t_dtp *msg, t_client *client) {
         return false;
     if (mx_get_type_member(client->info->database, client->user->user_id, room_id->valueint) != DB_CUSTOMER)
         return false;
-    g_message("DELETE HISTORY OF ROOM %d\n", room_id->valueint);
+    mx_delete_all_messages(client->info->database, room_id->valueint);
     resend = mx_del_hist_request(room_id->valueint);
     mx_send_to_all(resend, client, room_id->valueint);
     mx_free_request(&resend);

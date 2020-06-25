@@ -73,7 +73,7 @@ struct s_groom {
     long int date;
     char *desc;
     bool is_updated;
-    guint uploaded;
+    gint uploaded;
 };
 
 struct s_gmsg {
@@ -105,6 +105,7 @@ struct s_chat {
     bool valid;
     void (*error_handler[ER_COUNT_ERRS])(GtkBuilder *builder);
     bool (*request_handler[RQ_COUNT_REQUEST])(t_dtp *dtp, struct s_chat *chat);
+    bool msg_placeholder;
 };
 
 struct s_signal_data {
