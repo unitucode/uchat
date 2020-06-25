@@ -10,7 +10,7 @@
 t_info *mx_init_info(void) {
     t_info *info = mx_malloc(sizeof(t_info));
 
-    info->users = g_hash_table_new_full(g_str_hash, g_str_equal, NULL, g_free);
+    info->users = g_hash_table_new(g_str_hash, g_str_equal);
     info->database = mx_open_db(MX_DB);
     mx_init_receiver(info);
     return info;

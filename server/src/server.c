@@ -42,6 +42,7 @@ static void message_ready(GObject *source_object, GAsyncResult *res,
         return;
     if (!mx_handle_request(cli->msg, cli)) {
         g_free(cli->msg);
+        g_message("Closed receiver for %s\n", cli->user->login);
         return;
     }
     g_free(cli->msg);
