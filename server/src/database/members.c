@@ -69,8 +69,10 @@ cJSON *mx_get_json_members(sqlite3 *db, guint64 room_id) {
 
     rv = sqlite3_prepare_v2(db, "select id, login, permission from users inner"
                                 " join members on users.id = members.user_id "
-                                "where room_id = ?1", -1, &stmt, NULL);
+                                "where room_id = ?1 and permission != ?2",
+                            -1, &stmt, NULL);
     sqlite3_bind_int64(stmt, 1, room_id);
+    sqlite3_bind_int(stmt, 1, DB_BANNED);
     while ((rv = sqlite3_step(stmt)) == SQLITE_ROW)
         cJSON_AddItemToArray(users, get_object_user(stmt));
     sqlite3_finalize(stmt);

@@ -61,27 +61,26 @@ struct s_db_room {
     gchar *room_name;
 };
 
-// yes
 cJSON *mx_json_is_valid(cJSON *data, gchar *str,
                         cJSON_bool (*check_valid)(const cJSON *const));
 t_db_user *mx_parse_json_user(cJSON *user_j);
 t_db_room *mx_parse_json_room(cJSON *room_j);
 t_db_message *mx_parse_message(cJSON *message_j);
 
-//create table yes
+//create table 
 void mx_create_table(sqlite3 *db);
 void mx_create_table_users(sqlite3 *db);
 void mx_create_table_rooms(sqlite3 *db);
 void mx_create_table_messages(sqlite3 *db);
 
-// function yes
+// function 
 guint64 mx_get_time(gint8 type);
 sqlite3 *mx_open_db(gchar *name_db);
 void mx_close_db(sqlite3 *db);
 gchar *mx_create_request_message_by_id(sqlite3 *db, guint64 room_id,
                                        gint8 type);
 
-//count yes
+//count
 guint64 mx_get_count_users(sqlite3 *db);
 guint64 mx_get_count_rooms(sqlite3 *db);
 guint64 mx_get_count_messages(sqlite3 *db, guint64 id);
@@ -89,14 +88,14 @@ guint64 mx_get_count_messages(sqlite3 *db, guint64 id);
 // error
 gboolean mx_error_sqlite(gint32 rv, gchar *error, gchar *where_error);
 
-// queue  yes
+// queue
 void mx_db_push_queue_by_id(sqlite3 *db, guint64 user_id,
                             gchar *request);
 void mx_db_pop_queue_by_id(sqlite3 *db, guint64 user_id);
 gchar *mx_get_queue(sqlite3 *db, guint64 user_id);
 void mx_clean_queue(sqlite3 *db, guint64 user_id);
 
-// get yes
+// get
 cJSON *mx_get_object_room(sqlite3_stmt *stmt);
 cJSON *mx_get_object_user(sqlite3_stmt *stmt);
 t_db_user *mx_get_user_by_login(sqlite3 *db, gchar *login);
@@ -111,7 +110,7 @@ cJSON *mx_get_old_messages_by_id(sqlite3 *db, guint64 room_id, guint64 date,
                                  gint64 count);
 cJSON *mx_get_curr_messages_by_id(sqlite3 *db, guint64 room_id, gint64 count);
 
-// edit yes
+// edit
 void mx_edit_user_name_by_id(sqlite3 *db, guint64 id, gchar *new_name);
 void mx_edit_room_name_by_id(sqlite3 *db, guint64 id, gchar *new_name);
 void mx_edit_message_by_id(sqlite3 *db, guint64 id, gchar *new);
@@ -121,7 +120,7 @@ void mx_edit_desc_room_by_id(sqlite3 *db, guint64 room_id, gchar *new);
 void mx_edit_permission_of_user(sqlite3 *db, guint64 user_id, guint64 room_id,
                                  gint8 new);
 
-// delete yes
+// delete
 void mx_delete_message_by_id(sqlite3 *db, guint64 id);
 void mx_delete_user_by_id(sqlite3 *db, guint64 id);
 void mx_delete_room_by_id(sqlite3 *db, guint64 room_id);
