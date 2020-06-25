@@ -62,6 +62,7 @@ void test();
 
 int main(int argc, char **argv) {
     // test();
+    // system("leaks -q uchat_server");
     GError *error = NULL;
     GSocketService *service = g_socket_service_new();
     GMainLoop *loop = NULL;
@@ -87,7 +88,13 @@ int main(int argc, char **argv) {
 void test() {
     sqlite3 *db = mx_open_db(MX_DB);
 
-    mx_get_time(1);
+    // if (mx_match_search("1%%ve", MX_LOGIN_REGEX))
+    //     printf("true\n");
+    // else
+    //     printf("false\n");
+
+    // mx_get_time(DB_MILISECOND);
+
     // mx_delete_all_messages(db, 1);
 
     // guint64 time = g_get_real_time();

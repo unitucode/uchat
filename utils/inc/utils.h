@@ -50,8 +50,8 @@ typedef enum e_logtype {
 }            t_logtype;
 
 //Utils
-bool mx_match_search(char *str, char *regex);
-bool mx_match_nsearch(char *str, char *regex, size_t size);
+bool mx_match_search(gchar *str, gchar *regex);
+bool mx_match_nsearch(gchar *str, gchar *regex, gssize size);
 void mx_randomize_str(char *str, size_t count);
 void *mx_memdup(const void *mem, size_t size);
 long long mx_get_current_time(void);
