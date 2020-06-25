@@ -38,11 +38,19 @@
 #define MX_MD5_BUF_SIZE 32
 #define MX_SHA256_LENGTH 64
 
+/* APPLICATION_TYPE
+ * ----------
+ * All types of application
+ */
 typedef enum e_app_type {
     CLIENT,
     SERVER
 }            t_app_type;
 
+/* LOG_TYPE
+ * ----------
+ * All types of logger
+ */
 typedef enum e_logtype {
     LOGMSG,
     LOGWAR,

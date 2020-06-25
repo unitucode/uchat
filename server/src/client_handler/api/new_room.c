@@ -1,5 +1,14 @@
-#include "server.h"
+#include "api.h"
 
+/*
+ * Function: get_resend_room
+ * -------------------------------
+ * Creates request "new room"
+ * 
+ * room: information about room in database
+ * 
+ * returns: new request
+ */
 static t_dtp *get_resend_room(t_db_room *room) {
     cJSON *send = cJSON_CreateObject();
 
@@ -18,6 +27,16 @@ static t_dtp *get_resend_room(t_db_room *room) {
     return mx_get_transport_data(send);
 }
 
+/*
+ * Function: mx_new_room_handler
+ * -------------------------------
+ * Handles request from client
+ * 
+ * data: request from client
+ * client: client that sent this request
+ * 
+ * returns: success of handling
+ */
 bool mx_new_room_handler(t_dtp *data, t_client *client) { //TODO leaks
     t_db_room *room = mx_parse_json_room(data->json);
     t_dtp *resend = NULL;

@@ -1,5 +1,14 @@
-#include "server.h"
+#include "api.h"
 
+/*
+ * Function: mx_del_hist_request
+ * -------------------------------
+ * Creates request "delete history"
+ * 
+ * room_id: room id thath need to clear
+ * 
+ * returns: new request
+ */
 t_dtp *mx_del_hist_request(int room_id) {
     cJSON *json_result = cJSON_CreateObject();
 
@@ -10,6 +19,16 @@ t_dtp *mx_del_hist_request(int room_id) {
     return mx_get_transport_data(json_result);
 }
 
+/*
+ * Function: mx_del_hist_handler
+ * -------------------------------
+ * Handles request from client
+ * 
+ * msg: request from client
+ * client: client that sent this request
+ * 
+ * returns: success of handling
+ */
 bool mx_del_hist_handler(t_dtp *msg, t_client *client) {
     cJSON *room_id = cJSON_GetObjectItemCaseSensitive(msg->json, "room_id");
     t_dtp *resend = NULL;

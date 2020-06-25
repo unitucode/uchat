@@ -1,5 +1,14 @@
-#include "server.h"
+#include "api.h"
 
+/*
+ * Function: mx_reconnect_request
+ * -------------------------------
+ * Creates request "reconnection token"
+ * 
+ * token: SHA-256 hash
+ * 
+ * returns: new request
+ */
 t_dtp *mx_reconnect_request(char *token, char *login) {
     cJSON *json_result = cJSON_CreateObject();
 

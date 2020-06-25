@@ -1,6 +1,6 @@
 #include "client.h"
 
-gchar *set_tag(gchar *text, const gchar *tag, gchar *delim) {
+static gchar *set_tag(gchar *text, const gchar *tag, gchar *delim) {
     gchar **parts = g_strsplit(text, delim, -1);
     gchar *result = "";
     gchar *tagged = NULL;

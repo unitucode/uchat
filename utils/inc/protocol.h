@@ -1,3 +1,6 @@
+/* protocol.h - Protocol of uchat
+ * between client and server
+ */
 #pragma once
 
 #include "utils.h"
@@ -5,15 +8,29 @@
 #define MX_J_STR(m) (m) ? (m) : "(null)"
 #define MX_MAX_FILE_SIZE 50000000
 
+/* Protocol object
+ * ----------
+ * str: string request
+ * json: json object of str
+ * len: length of str
+ * type: type of request
+ */
 typedef struct s_dtp t_dtp;
-typedef struct s_file t_file;
 
+/* ERROR_TYPE
+ * ----------
+ * All types of errors in protocol
+ */
 typedef enum s_error_type {
     ER_AUTH_DATA = 0,
     ER_USER_EXST,
     ER_COUNT_ERRS
 }            t_error_type;
 
+/* REQUEST_TYPE
+ * ----------
+ * All types of request in protocol
+ */
 typedef enum s_request_type {
     RQ_LOG_IN = 0,
     RQ_SIGN_UP,
@@ -23,7 +40,6 @@ typedef enum s_request_type {
     RQ_NEW_ROOM,
     RQ_DELETE_ROOM,
     RQ_ERROR_MSG,
-    RQ_USERS_ONLINE,
     RQ_GET_ROOMS,
     RQ_GET_NEW_MSGS,
     RQ_UPD_ROOM_DESC,
@@ -35,8 +51,8 @@ typedef enum s_request_type {
     RQ_DEL_ROOM,
     RQ_DEL_USER,
     RQ_EDIT_MSG,
-    RQ_DEL_MSG,
     RQ_FILE,
+    RQ_DEL_MSG,
     RQ_SEARCH_CH,
     RQ_JOIN_ROOM,
     RQ_GET_MEMBERS,
@@ -49,12 +65,20 @@ typedef enum s_request_type {
     RQ_COUNT_REQUEST
 }            t_request_type;
 
+/* ROOM_TYPE
+ * ----------
+ * All types of room
+ */
 typedef enum s_room_type {
     DB_PRIVAT_CHAT = 0,
     DB_GLOBAL_CHAT,
     DB_LS_CHAT
 }            t_room_type;
 
+/* MEMBER_TYPE
+ * ----------
+ * All types of member
+ */
 typedef enum s_member_type {
     DB_CUSTOMER = 0,
     DB_ADMIN,
@@ -63,16 +87,28 @@ typedef enum s_member_type {
     DB_BANNED
 }            t_member_type;
 
+/* MESSAGE_STATUS
+ * ----------
+ * All statuses of message
+ */
 typedef enum s_message_status {
     DB_MSG_START = 0,
     DB_MSG_EDIT,
 }            t_message_status;
 
+/* CONTACT_TYPE
+ * ----------
+ * All types of contacts
+ */
 typedef enum s_contact_type {
     DB_FRIENDS = 0,
     DB_BLACKLIST
 }            t_contact_type;
 
+/* MESSAGE_TYPE
+ * ----------
+ * All types of message
+ */
 typedef enum s_message_type {
     DB_TEXT_MSG = 0,
     DB_FILE_MSG,
@@ -80,13 +116,7 @@ typedef enum s_message_type {
     DB_STICKER
 }            t_message_type;
 
-struct s_file {
-    char *bytes;
-    char *name;
-    struct stat st;
-};
-
-struct s_dtp { // Data Transfer Protocol view
+struct s_dtp {
     char *str;
     cJSON *json;
     size_t len;

@@ -1,5 +1,13 @@
 #include "server.h"
 
+/*
+ * Function: mx_create_token
+ * -------------------------------
+ * Creates SHA-256 token
+ * 
+ * token: pointer to string that need to fill
+ * login: client`s login
+ */
 void mx_create_token(char **token, char *login) {
     char *seed = g_compute_checksum_for_string(G_CHECKSUM_MD5, login, strlen(login));
     char *hash = NULL;

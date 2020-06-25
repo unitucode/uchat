@@ -1,5 +1,15 @@
-#include "server.h"
+#include "api.h"
 
+/*
+ * Function: mx_token_request
+ * -------------------------------
+ * Creates request "token SHA-256 + login"
+ * 
+ * token: SHA-256 hash + login
+ * login: login of user
+ * 
+ * returns: new request
+ */
 t_dtp *mx_token_request(char *token, char *login) {
     cJSON *json_result = cJSON_CreateObject();
 
@@ -12,6 +22,16 @@ t_dtp *mx_token_request(char *token, char *login) {
     return mx_get_transport_data(json_result);
 }
 
+/*
+ * Function: mx_log_in_token_handler
+ * -------------------------------
+ * Handles request from client
+ * 
+ * room: request from client
+ * client: client that sent this request
+ * 
+ * returns: success of handling
+ */
 bool mx_log_in_token_handler(t_dtp *token, t_client *client) { // TODO!!!!!!
     cJSON *json = cJSON_Parse(token->str);
     cJSON *user_token = cJSON_GetObjectItemCaseSensitive(json, "token");

@@ -1,5 +1,15 @@
-#include "server.h"
+#include "api.h"
 
+/*
+ * Function: mx_error_msg_request
+ * -------------------------------
+ * Creates request "error message"
+ * 
+ * msg: message of error
+ * error_code: code of errors in utils/inc/protocol.h
+ * 
+ * returns: new request
+ */
 t_dtp *mx_error_msg_request(int error_code, char *msg) {
     cJSON *json_result = cJSON_CreateObject();
 

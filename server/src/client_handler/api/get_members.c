@@ -1,5 +1,15 @@
-#include "server.h"
+#include "api.h"
 
+/*
+ * Function: mx_get_members_handler
+ * -------------------------------
+ * Handles request from client and send all members to client
+ * 
+ * data: request from client
+ * client: client that sent this request
+ * 
+ * returns: success of handling
+ */
 bool mx_get_members_handler(t_dtp *data, t_client *client) {
     cJSON *room_id = cJSON_GetObjectItemCaseSensitive(data->json, "room_id");
     cJSON *members = cJSON_CreateObject();

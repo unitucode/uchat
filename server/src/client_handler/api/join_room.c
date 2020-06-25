@@ -1,4 +1,4 @@
-#include "server.h"
+#include "api.h"
 
 static t_dtp *get_resend_room(t_db_room *room) {
     cJSON *send = cJSON_CreateObject();
@@ -32,6 +32,16 @@ static t_dtp *new_member(char *login, int user_id, int room_id) {
     return mx_get_transport_data(member);
 }
 
+/*
+ * Function: mx_join_room_handler
+ * -------------------------------
+ * Handles request from client
+ * 
+ * room: request from client
+ * client: client that sent this request
+ * 
+ * returns: success of handling
+ */
 bool mx_join_room_handler(t_dtp *room, t_client *client) {
     cJSON *room_id = cJSON_GetObjectItemCaseSensitive(room->json, "room_id");
     t_db_room *db_room = NULL;

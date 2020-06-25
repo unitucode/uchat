@@ -1,5 +1,15 @@
-#include "server.h"
+#include "api.h"
 
+/*
+ * Function: mx_upd_room_desc_request
+ * -------------------------------
+ * Creates request "update room description"
+ * 
+ * room_id: room id that need to update description
+ * desc: new description
+ * 
+ * returns: new request
+ */
 t_dtp *mx_upd_room_desc_request(int room_id, char *desc) {
     cJSON *json_result = cJSON_CreateObject();
 
@@ -12,6 +22,16 @@ t_dtp *mx_upd_room_desc_request(int room_id, char *desc) {
     return mx_get_transport_data(json_result);
 }
 
+/*
+ * Function: mx_upd_room_desc_handler
+ * -------------------------------
+ * Handles request from client
+ * 
+ * room: request from client
+ * client: client that sent this request
+ * 
+ * returns: success of handling
+ */
 bool mx_upd_room_desc_handler(t_dtp *room, t_client *client) {
     cJSON *room_id = cJSON_GetObjectItemCaseSensitive(room->json, "room_id");
     cJSON *desc = cJSON_GetObjectItemCaseSensitive(room->json, "desc");

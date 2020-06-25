@@ -13,7 +13,7 @@ void mx_init_handlers(t_chat *chat) {
     chat->request_handler[RQ_GET_ROOMS] = mx_rooms_hanlder;
     chat->request_handler[RQ_GET_NEW_MSGS] = mx_new_msgs_hanlder;
     chat->request_handler[RQ_NEW_ROOM] = mx_new_room_handler;
-    chat->request_handler[RQ_USERS_ONLINE] = mx_update_users_handler;
+    // chat->request_handler[RQ_USERS_ONLINE] = mx_update_users_handler;
     chat->request_handler[RQ_MSG] = mx_msg_handler;
     chat->request_handler[RQ_LOG_OUT] = mx_log_out_handler;
     chat->request_handler[RQ_UPD_ROOM_DESC] = mx_upd_room_desc_handler;
