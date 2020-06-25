@@ -16,9 +16,14 @@ t_dtp *mx_msg_request(char *msg, int room_id) {
 
 bool mx_msg_handler(t_dtp *data, t_chat *chat) {
     t_gmsg *gmsg = mx_create_gmsg(data->json, chat);
+    t_groom *groom = NULL;
 
     if (!gmsg)
         return false;
     mx_add_message_to_room_new(gmsg, chat);
+    groom = mx_get_groom_by_id(gmsg->room_id, chat->builder);
+    if (!groom)
+        return false;
+    groom->uploaded++;
     return true;
 }

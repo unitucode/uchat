@@ -39,6 +39,8 @@ bool mx_old_msgs_hanlder(t_dtp *data, t_chat *chat) {
         insert_msg(msg, chat, room_id->valueint);
     }
     groom = mx_get_groom_by_id(room_id->valueint, chat->builder);
+    if (!groom)
+        return false;
     groom->uploaded += cJSON_GetArraySize(msgs);
     chat->upl_old_msgs = false;
     (void)data;
