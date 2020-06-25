@@ -12,8 +12,9 @@ GtkBuilder *mx_init_window(int argc, char **argv) {
 }
 
 gint mx_start_gui(t_chat *chat) {
-    const gchar *path[] = {"../src/gui/resources"};
-    gtk_icon_theme_set_search_path(gtk_icon_theme_get_default(), path, 1);
+    const gchar *path[] = {"../src/gui/resources",
+                           "../src/gui/resources/stickers"};
+    gtk_icon_theme_set_search_path(gtk_icon_theme_get_default(), path, 2);
     GObject *desc = gtk_builder_get_object(chat->builder, "buffer_message");
     gtk_text_buffer_set_text(GTK_TEXT_BUFFER(desc), "Enter your message", -1);
 

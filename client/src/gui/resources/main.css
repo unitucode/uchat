@@ -4,7 +4,7 @@
     font-family: "Gill Sans", sans-serif;
     transition: all .07s ease-out;
     outline-color: rgb(103, 133, 255);
-    outline-style: dashed;
+    outline-style: double;
 }
 button {
     -gtk-icon-effect: none;
@@ -46,10 +46,7 @@ box stack, entry, .dialog_notebook header {
 .dialog-action-area {
     margin-bottom: 45px;
 }
-.dialog-action-area button, .dialog-action-area button:hover,
-.box_titlebar button, .button_send_message, .box_msg_ctrl button,
-.btns-msg-box, #box_edit_msg button, .btn_confirm_changes,
-.box-functional-buttons button {
+button {
     background-image: none;
 }
 .dialog-action-area button {
@@ -444,7 +441,6 @@ dialog headerbar {
 	color: #fff;
 }
 .stickers_box {
-	border-left: 1px solid #424E78;
 	padding: 2px 7px;
 }
 .wnd-room-settings {
@@ -494,4 +490,27 @@ overshoot.top {
     -gtk-gradient(radial, center top, 0, center top, 0.9,
         from (rgba(66,78,120,.1)), to(rgba(66,78,120,0))); */
     background-image: none;
+}
+.box_stickers_header {
+	padding: 11px 25px 10px 25px;
+	border-bottom: 1px solid #424E78;
+	background-color: #364165;
+}
+.box_stickers_header label {
+	color: #fff;
+}
+.box_stickers_header button {
+	padding-right: 7px;
+	font-weight: 300;
+	font-size: 12px;
+}
+.box_stickers_area {
+    border-left: 1px solid #424E78;
+}
+
+.box_stickers_area scrolledwindow{
+    box-shadow: -10px 5px 10px -2px rgba(0,0,0,.065);
+}
+.box_stickers_area grid {
+    padding: 10px;
 }
