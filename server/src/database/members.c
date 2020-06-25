@@ -71,10 +71,13 @@ cJSON *mx_get_json_members(sqlite3 *db, guint64 room_id) {
                                 " join members on users.id = members.user_id "
                                 "where room_id = ?1 and permission != ?2",
                             -1, &stmt, NULL);
+    mx_error_sqlite(rv, "prepare", "get_json_members");
     sqlite3_bind_int64(stmt, 1, room_id);
-    sqlite3_bind_int(stmt, 1, DB_BANNED);
+    sqlite3_bind_int(stmt, 2, DB_BANNED);
+    printf("Ok\n");
     while ((rv = sqlite3_step(stmt)) == SQLITE_ROW)
         cJSON_AddItemToArray(users, get_object_user(stmt));
+    printf("Ok2 -> %s\n", cJSON_Print(users));
     sqlite3_finalize(stmt);
     return users;
 }
