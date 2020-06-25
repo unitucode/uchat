@@ -73,7 +73,7 @@ struct s_groom {
     long int date;
     char *desc;
     bool is_updated;
-    guint uploaded;
+    gint uploaded;
 };
 
 struct s_gmsg {
