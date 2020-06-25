@@ -21,10 +21,13 @@ cJSON *mx_get_rooms(sqlite3 *db, guint64 date, guint64 user_id) {
     gint32 rv = 0;
 
     rv = sqlite3_prepare_v2(db, "select * from rooms where id in (select room"
-                                "_id from members where user_id = ?2) and date"
-                                " > ?1 order by date desc", -1, &stmt, NULL);
+                                "_id from members where user_id = ?2 and "
+                                "permission != ?3) and date > ?1 order by "
+                                "date desc",
+                            -1, &stmt, NULL);
     sqlite3_bind_int64(stmt, 1, date);
     sqlite3_bind_int64(stmt, 2, user_id);
+    sqlite3_bind_int(stmt, 3, DB_BANNED);
     while ((rv = sqlite3_step(stmt)) == SQLITE_ROW)
         cJSON_AddItemToArray(rooms, mx_get_object_room(stmt));
     sqlite3_finalize(stmt);
