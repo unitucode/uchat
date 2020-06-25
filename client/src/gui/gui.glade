@@ -325,14 +325,14 @@
   <object class="GtkImage" id="image14">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
-    <property name="pixel_size">12</property>
-    <property name="icon_name">close</property>
+    <property name="pixel_size">18</property>
+    <property name="icon_name">edit-clear-symbolic</property>
   </object>
   <object class="GtkImage" id="image15">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
-    <property name="pixel_size">12</property>
-    <property name="icon_name">close</property>
+    <property name="pixel_size">18</property>
+    <property name="icon_name">edit-clear-symbolic</property>
   </object>
   <object class="GtkImage" id="image16">
     <property name="visible">True</property>
@@ -860,7 +860,6 @@
                                 <property name="xalign">0</property>
                                 <attributes>
                                   <attribute name="weight" value="semibold"/>
-                                  <attribute name="foreground" value="#eeeeeeeeecec"/>
                                 </attributes>
                               </object>
                               <packing>
@@ -1846,9 +1845,6 @@
                     <property name="can_focus">False</property>
                     <property name="label" translatable="yes">Login</property>
                     <property name="xalign">0</property>
-                    <attributes>
-                      <attribute name="weight" value="semibold"/>
-                    </attributes>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -1889,9 +1885,6 @@
                     <property name="can_focus">False</property>
                     <property name="label" translatable="yes">Status</property>
                     <property name="xalign">0</property>
-                    <attributes>
-                      <attribute name="weight" value="semibold"/>
-                    </attributes>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -1912,6 +1905,8 @@
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="wrap_mode">word-char</property>
+                        <property name="left_margin">8</property>
+                        <property name="right_margin">8</property>
                       </object>
                     </child>
                   </object>
@@ -2027,9 +2022,6 @@
                     <property name="can_focus">False</property>
                     <property name="label" translatable="yes">Room name</property>
                     <property name="xalign">0</property>
-                    <attributes>
-                      <attribute name="weight" value="semibold"/>
-                    </attributes>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -2067,9 +2059,6 @@
                     <property name="can_focus">False</property>
                     <property name="label" translatable="yes">Description</property>
                     <property name="xalign">0</property>
-                    <attributes>
-                      <attribute name="weight" value="semibold"/>
-                    </attributes>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -2090,8 +2079,8 @@
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="wrap_mode">word-char</property>
-                        <property name="left_margin">0</property>
-                        <property name="right_margin">0</property>
+                        <property name="left_margin">8</property>
+                        <property name="right_margin">8</property>
                         <property name="buffer">buffer_room_desc</property>
                       </object>
                     </child>
@@ -2121,9 +2110,6 @@
                     <property name="can_focus">False</property>
                     <property name="label" translatable="yes">Members</property>
                     <property name="xalign">0</property>
-                    <attributes>
-                      <attribute name="weight" value="semibold"/>
-                    </attributes>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -2271,9 +2257,7 @@
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="label" translatable="yes">Room Name</property>
-            <attributes>
-              <attribute name="absolute-size" value="17300"/>
-            </attributes>
+            <property name="xalign">0</property>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -2293,9 +2277,6 @@
                 <property name="can_focus">False</property>
                 <property name="label" translatable="yes">Customer</property>
                 <property name="xalign">0</property>
-                <attributes>
-                  <attribute name="weight" value="semibold"/>
-                </attributes>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -2335,9 +2316,6 @@
                 <property name="can_focus">False</property>
                 <property name="label" translatable="yes">Description</property>
                 <property name="xalign">0</property>
-                <attributes>
-                  <attribute name="weight" value="semibold"/>
-                </attributes>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -2360,6 +2338,8 @@
                     <property name="wrap_mode">word-char</property>
                     <property name="cursor_visible">False</property>
                     <property name="buffer">buffer_room_desc</property>
+                    <property name="left_margin">8</property>
+                    <property name="right_margin">8</property>
                   </object>
                 </child>
               </object>
@@ -2377,51 +2357,58 @@
           </packing>
         </child>
         <child>
-          <object class="GtkLabel">
-            <property name="height_request">20</property>
+          <object class="GtkBox">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="label" translatable="yes">Members</property>
-            <property name="xalign">0</property>
-            <attributes>
-              <attribute name="weight" value="semibold"/>
-            </attributes>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">3</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkScrolledWindow">
-            <property name="height_request">170</property>
-            <property name="visible">True</property>
-            <property name="can_focus">True</property>
-            <property name="shadow_type">in</property>
-            <property name="max_content_height">170</property>
+            <property name="orientation">vertical</property>
             <child>
-              <object class="GtkViewport">
-                <property name="height_request">-1</property>
+              <object class="GtkLabel">
+                <property name="height_request">20</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
+                <property name="label" translatable="yes">Members</property>
+                <property name="xalign">0</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkScrolledWindow">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="shadow_type">in</property>
                 <child>
-                  <object class="GtkListBox">
+                  <object class="GtkViewport">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="selection_mode">none</property>
-                    <property name="activate_on_single_click">False</property>
+                    <child>
+                      <object class="GtkListBox">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                      </object>
+                    </child>
                   </object>
                 </child>
               </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="position">1</property>
+              </packing>
             </child>
           </object>
           <packing>
             <property name="expand">True</property>
             <property name="fill">True</property>
-            <property name="position">4</property>
+            <property name="position">3</property>
           </packing>
         </child>
+        <style>
+          <class name="box-room-info"/>
+        </style>
       </object>
     </child>
     <style>

@@ -1,4 +1,4 @@
-@define-color placeholder_text_color #a1b6c0;
+@define-color placeholder_text_color #919CC0;
 
 * {
     font-family: "Gill Sans", sans-serif;
@@ -16,7 +16,8 @@ list row {
     box-shadow: none;   
 }
 .dialog_auth entry, .wnd_main entry, .box-room-settings textview,
-.dialog_auth textview, .wnd_main textview, .box-room-settings entry {
+.dialog_auth textview, .wnd_main textview, .box-room-settings entry,
+.box-room-info textview, #dialog_profile_prefs textview {
     caret-color: #fff;
     color: #fff;
 }
@@ -28,6 +29,12 @@ button, .input, entry, notebook, .dialog_auth .titlebar, button image  {
     background: rgb(57,69,107);
     background-image: linear-gradient(173deg, rgb(57, 69, 107) 0%, rgb(35,41,65) 100%);
 }
+.dialog_auth entry selection, .wnd_main entry selection,
+.dialog_auth textview selection, .wnd_main textview selection,
+.box-room-settings textview selection, .box-room-info textview selection,
+#dialog_profile_prefs textview selection {
+	background-color: #6785FF;
+}
 box stack, entry, .dialog_notebook header {
     background-color: transparent;
 }
@@ -37,11 +44,12 @@ box stack, entry, .dialog_notebook header {
 .dialog_auth entry, .wnd_main entry, .dialog_addroom entry {
 	box-shadow: none;
     font-size: 15px;
+    font-weight: 300;
 }
 .dialog_auth entry, .dialog_addroom entry {
-    border-bottom: 1px solid rgba(255,255,255,.7);
-    padding: 0;
-    border-radius: 0;
+	background-color: #3A466B;
+	border-radius: 5px;
+    padding: 1px 10px;
 }
 .dialog-action-area {
     margin-bottom: 45px;
@@ -70,16 +78,14 @@ button {
 .box-functional-buttons button {
     background-color: #424E78;
     color: #fff;
-    padding: 7px 0;
+    padding: 8px 0;
     font-size: 14px;
     font-weight: 500;
     border-radius: 3px;
-    border-right: 3px solid transparent;
-    border-left: 3px solid transparent;
+    border: 1px solid transparent;
 }
 .box-functional-buttons button:hover {
-    border-right: 3px solid #6785FF;
-    border-left: 3px solid #6785FF;
+    border: 1px solid #6785FF;
 }
 button label {
     box-shadow: none;
@@ -95,10 +101,11 @@ button label {
 headerbar {
     min-height: 40px;
 }
-.dialog_auth decoration {
+.dialog_auth decoration, .wnd-room-info decoration,
+.wnd-room-settings decoration, .profile-settings-wnd decoration {
     border-radius: 8px;
 }
-.dialog_auth {
+.dialog_auth, .wnd-room-info, .wnd-room-settings, .profile-settings-wnd {
 	border-radius: 0 0 8px 8px;
 }
 .dialog_notebook stack, tabs {
@@ -127,7 +134,7 @@ headerbar {
 }
 .dialog_notebook tab:checked {
     box-shadow: none;
-	box-shadow: 0 -3px rgb(88,83,187) inset;
+	box-shadow: 0 -3px rgb(103,133,255) inset;
 }
 .dialog_notebook tab label {
     font-weight: 500;
@@ -222,6 +229,9 @@ dialog headerbar {
     background-color: #3A466B;
     padding: 5px 8px;
 }
+.boxroom_header-in label {
+    color: #fff;
+}
 .wnd_main list {
     color: #fff;
 }
@@ -244,7 +254,7 @@ dialog headerbar {
 	opacity: 1;
 }
 .box_titlebar {
-	background-color: #323B59;
+    background-color: #323B59;
 	padding: 0 25px;
 }
 .box_titlebar button {
@@ -256,6 +266,9 @@ dialog headerbar {
 .btns-msg-box:hover, .button_send_message:hover {
     opacity: .7;
 }
+
+/* Messages area styles */
+
 .box_msg_send {
 	margin: 0 25px 25px 25px;
 	background-color: #424E78;
@@ -302,6 +315,7 @@ dialog headerbar {
 .main_own_msg_box {
 	padding: 0 0 0 180px;
 }
+
 
 .stack_messages list {
 	margin: 7px 38px 14px 38px;
@@ -364,16 +378,6 @@ dialog headerbar {
     border-left: 8px solid #6785FF;
     border-radius: 5px;
 }
-.search {
-	/* border: 1px solid #424E78; */
-	background-color: #3A466B;
-	border-radius: 5px;
-    padding: 2px 8px 1px 8px;
-    font-weight: 300;
-}
-.box-rooms .search {
-    margin: 18px 25px 15px 25px;
-}
 .stack_messages list row label {
 	transition: none;
 }
@@ -389,11 +393,6 @@ dialog headerbar {
 }
 .box_msg_ctrl button {
 	background-color: #5775D9;
-}
-.dialog_auth entry selection, .wnd_main entry selection,
-.dialog_auth textview selection, .wnd_main textview selection,
-.box-room-settings textview selection {
-	background-color: #6785FF;
 }
 #box_edit_msg {
 	margin: 0 25px 10px 25px;
@@ -431,23 +430,26 @@ dialog headerbar {
 #dialog_profile_prefs .dialog-action-area button {
 	padding: 12px 30px;
 }
-.btn_stickers {
-	margin-right: 12px; 
+
+/* Search entry styles */
+
+.search {
+	background-color: #3A466B;
+	border-radius: 5px;
+    padding: 2px 8px 1px 8px;
+    font-weight: 300;
 }
-.stickers_box button {
-	background-image: none;
+.box-rooms .search {
+    margin: 18px 25px 15px 25px;
 }
-.stickers_box label {
-	color: #fff;
-}
-.stickers_box {
-	padding: 2px 7px;
-}
+
+/* Dialog window room settings styles */
+
 .wnd-room-settings {
 	padding: 30px;
 }
 .box-room-settings {
-	margin: 30px 45px 0 45px;
+	margin: 22px 45px 0 45px;
 }
 .box-room-settings entry {
 	border: 1px solid #424E78;
@@ -456,8 +458,10 @@ dialog headerbar {
 	padding: 0 8px;
     font-weight: 300;
     box-shadow: none;
+    font-size: 14px;
 }
-.box-room-settings textview text {
+.box-room-settings textview text, .box-room-info textview text,
+#dialog_profile_prefs textview text {
     background-color: #3A466B;
     box-shadow: none;
     border: 1px solid #48547E;
@@ -465,31 +469,56 @@ dialog headerbar {
     color: #fff;
     font-weight: 300;
 }
-.box-room-settings textview {
+.box-room-settings textview, .box-room-info textview {
     background-color: transparent;
-    padding-top: 10px;
+    padding-top: 8px;
     font-weight: 300;
+    font-size: 14px;
 }
-.box-room-settings scrolledwindow {
+.box-room-settings scrolledwindow, .box-room-info scrolledwindow {
     border: none;
 }
-.has-messages {
+.box-room-settings > box:first-child label {
+	font-size: 14px;
+	color: #D8DCE8;
+	margin-top: 10px;
+    margin-bottom: 7px;
+    font-weight: 500;
+}
+.box-room-settings > box:first-child box:last-child list {
+	border-radius: 5px;
+	background-color: #3A466B;
+	border: 1px solid #48547E;
+}
+
+/* Class for room with new messages */
+.has-messages { 
 	border-right: 3px solid green;
 	border-left: 3px solid transparent;
 }
+
+/* Overshoot deactivation */
+
 overshoot.bottom {
-    /* background-image: -gtk-gradient(radial, center bottom, 0, center bottom, 0.5,
-        to (rgb(103,133,255)), to (rgba(103,133,255,0))),
-    -gtk-gradient(radial, center bottom, 0, center bottom, 0.9,
-        from (rgba(66,78,120,0.1)), to(rgba(66,78,120,0))); */
     background-image: none;
 }
 overshoot.top {
-    /* background-image: -gtk-gradient(radial, center top, 0, center top, 0.5,
-        to (rgb(103,133,255)), to (rgba(103,133,255,0))),
-    -gtk-gradient(radial, center top, 0, center top, 0.9,
-        from (rgba(66,78,120,.1)), to(rgba(66,78,120,0))); */
     background-image: none;
+}
+
+/* Stickers area stiles */
+
+.btn_stickers {
+	margin-right: 12px; 
+}
+.stickers_box {
+    padding: 2px 7px;
+}
+.stickers_box button {
+	background-image: none;
+}
+.stickers_box label {
+	color: #fff;
 }
 .box_stickers_header {
 	padding: 11px 25px 10px 25px;
@@ -513,4 +542,63 @@ overshoot.top {
 }
 .box_stickers_area grid {
     padding: 10px;
+}
+
+/* Dialog window room info styles */
+
+.box-room-info {
+    color: #fff;
+    margin: 22px 45px 45px 45px;
+}
+.box-room-info box label:first-child {
+	font-size: 14px;
+	color: #D8DCE8;
+	font-weight: 500;
+}
+.box-room-info box label:last-child {
+    font-size: 16px;
+}
+.box-room-info box:nth-child(3) label, .box-room-info box:nth-child(4) label {
+	margin-bottom: 7px;
+}
+.box-room-info box:nth-child(4) label {
+	margin-top: 3px;
+}
+.box-room-info box:last-child list {
+	border-radius: 5px;
+	background-color: #3A466B;
+	border: 1px solid #48547E;
+}
+.box-room-info > label {
+	font-size: 17px;
+}
+.box-room-info textview {  
+    font-size: 14px;
+}
+
+/* Dialog window profile settings styles */
+
+#dialog_profile_prefs {
+    color: #fff;
+    margin: 35px 45px 0 45px;
+}
+#dialog_profile_prefs > box:first-child label:first-child {
+	font-size: 14px;
+	color: #D8DCE8;
+	font-weight: 500;
+}
+#dialog_profile_prefs > box:first-child label:last-child  {
+	font-size: 16px;
+}
+#dialog_profile_prefs > box:first-child box:last-child label {
+	margin: 10px 0 7px;
+}
+#dialog_profile_prefs .dialog-action-area {
+    margin-top: 12px;
+}
+#dialog_profile_prefs textview {  
+    font-size: 14px;
+    padding-top: 8px;
+    background-color: transparent;
+    font-weight: 300;
 }
