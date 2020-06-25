@@ -1,5 +1,4 @@
-#include "server.h"
-#include "protocol.h"
+#include "api.h"
 
 static void incorrect_data(t_client *client) {
     t_dtp *dtp = mx_error_msg_request(ER_USER_EXST, "User already exist");
@@ -8,6 +7,16 @@ static void incorrect_data(t_client *client) {
     mx_free_request(&dtp);
 }
 
+/*
+ * Function: sign_up
+ * -------------------------------
+ * Validate sign up data
+ * 
+ * user: information about user in database
+ * client: client that sent sign up request
+ * 
+ * returns: success of validation
+ */
 static bool sign_up(t_db_user *user, t_client *client) {
     char *token;
 
@@ -25,6 +34,16 @@ static bool sign_up(t_db_user *user, t_client *client) {
     return true;
 }
 
+/*
+ * Function: mx_sign_up_handler
+ * -------------------------------
+ * Handles request from client
+ * 
+ * signup_data: request from client
+ * client: client that sent this request
+ * 
+ * returns: success of handling
+ */
 bool mx_sign_up_handler(t_dtp *signup_data, t_client *client) {
     t_db_user *user = mx_parse_json_user(signup_data->json);
 

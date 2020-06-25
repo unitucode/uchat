@@ -1,5 +1,14 @@
-#include "server.h"
+#include "api.h"
 
+/*
+ * Function: mx_token_request
+ * -------------------------------
+ * Creates request "log out"
+ * 
+ * token: SHA-256 hash + login
+ * 
+ * returns: new request
+ */
 t_dtp *mx_log_out_request(char *token) {
     cJSON *json_result = cJSON_CreateObject();
 
@@ -10,6 +19,16 @@ t_dtp *mx_log_out_request(char *token) {
     return mx_get_transport_data(json_result);
 }
 
+/*
+ * Function: mx_log_out_handler
+ * -------------------------------
+ * Handles request from client
+ * 
+ * token: request from client
+ * client: client that sent this request
+ * 
+ * returns: success of handling
+ */
 bool mx_log_out_handler(t_dtp *token, t_client *client) {
     cJSON *tok = cJSON_GetObjectItemCaseSensitive(token->json, "token");
     t_dtp *answer = NULL;

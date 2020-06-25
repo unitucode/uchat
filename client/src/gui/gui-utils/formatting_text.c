@@ -1,11 +1,13 @@
 #include "client.h"
 
-gchar *set_tag(gchar *text, const gchar *tag, gchar *delim) {
+static gchar *set_tag(gchar *text, const gchar *tag, gchar *delim) {
     gchar **parts = g_strsplit(text, delim, -1);
     gchar *result = "";
     gchar *tagged = NULL;
     gchar *save = NULL;
 
+    if (!*parts)
+        return g_strdup("");
     for (int i = 0; parts[i]; i++) {
         result = g_strjoin("", result, parts[i], NULL);
         save = result;

@@ -1,4 +1,4 @@
-#include "server.h"
+#include "api.h"
 
 static void send_to_all(gpointer data, gpointer user_data) {
     t_send_helper *send_helper = (t_send_helper*)user_data;
@@ -10,6 +10,17 @@ static void send_to_all(gpointer data, gpointer user_data) {
     (void)data;
 }
 
+/*
+ * Function: mx_send_to_all
+ * -------------------------------
+ * Sends request to all members in room
+ * 
+ * data: request that need to send
+ * client: client that sending request
+ * room_id: members of this room will receive this request
+ * 
+ * returns: new request
+ */
 void mx_send_to_all(t_dtp *data, t_client *client, guint64 room_id) {
     GList *list = mx_get_login_members(client->info->database, room_id);
     t_send_helper *send_helper = g_malloc0(sizeof(t_send_helper));

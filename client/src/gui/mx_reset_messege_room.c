@@ -29,5 +29,6 @@ void mx_reset_messege_room(t_groom *new_selected, GtkBuilder *builder) {
         mx_switch_room_header(builder, MX_ROOM_CTRL);
         mx_unselect_curr_room_messages(builder);
         mx_hide_msg_editing(NULL, builder);
+        mx_stop_search_message(NULL, NULL, builder);
     }
 }

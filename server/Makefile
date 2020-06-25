@@ -40,7 +40,7 @@ LIBS = $(LIBD_LIBS) $(GTK_LIBS) -L/usr/local/opt/openssl/lib \
 all: $(SERVER)
 
 $(SERVER): $(OBJS)
-	@$(CC) -o $@ $^ $(UTILS_LIB) $(LIBS)
+	@$(CC) -fsanitize=address -o $@ $^ $(UTILS_LIB) $(LIBS)
 	@printf "\033[32;1m$@ created\033[0m\n"
 
 $(OBJS): obj/%.o: %.c $(INCS) | $(OBJD)

@@ -443,8 +443,6 @@
     <property name="pixbuf">resources/stickers/bear_angry.png</property>
   </object>
   <object class="GtkApplicationWindow" id="wnd_main">
-    <property name="width_request">960</property>
-    <property name="height_request">720</property>
     <property name="can_focus">False</property>
     <property name="window_position">center</property>
     <property name="default_width">1000</property>
@@ -537,6 +535,7 @@
                     <property name="primary_icon_pixbuf">resources/search.png</property>
                     <property name="primary_icon_activatable">False</property>
                     <property name="primary_icon_sensitive">False</property>
+                    <property name="placeholder_text" translatable="yes">Search room</property>
                     <signal name="focus-out-event" handler="mx_stop_search_room" swapped="no"/>
                     <signal name="stop-search" handler="mx_stop_search_room" swapped="no"/>
                   </object>
@@ -859,10 +858,28 @@
                               </packing>
                             </child>
                             <child>
+                              <object class="GtkSearchEntry" id="sentry_messages">
+                                <property name="width_request">260</property>
+                                <property name="visible">True</property>
+                                <property name="can_focus">True</property>
+                                <property name="valign">center</property>
+                                <property name="primary_icon_name">edit-find-symbolic</property>
+                                <property name="primary_icon_activatable">False</property>
+                                <property name="primary_icon_sensitive">False</property>
+                                <property name="placeholder_text" translatable="yes">Search message</property>
+                                <signal name="focus-out-event" handler="mx_stop_search_message" swapped="no"/>
+                                <signal name="stop-search" handler="mx_stop_search_message" swapped="no"/>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">True</property>
+                                <property name="position">1</property>
+                              </packing>
+                            </child>
+                            <child>
                               <object class="GtkButton" id="btn_show_room_sett">
                                 <property name="width_request">35</property>
                                 <property name="height_request">35</property>
-                                <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="receives_default">True</property>
                                 <property name="valign">center</property>
@@ -872,7 +889,7 @@
                               <packing>
                                 <property name="expand">False</property>
                                 <property name="fill">True</property>
-                                <property name="position">1</property>
+                                <property name="position">2</property>
                               </packing>
                             </child>
                             <child>
@@ -891,7 +908,7 @@
                               <packing>
                                 <property name="expand">False</property>
                                 <property name="fill">True</property>
-                                <property name="position">2</property>
+                                <property name="position">3</property>
                               </packing>
                             </child>
                             <style>
@@ -1005,6 +1022,40 @@
                     <property name="can_focus">False</property>
                     <property name="orientation">vertical</property>
                     <child>
+                      <object class="GtkLabel" id="label_found_messages">
+                        <property name="height_request">50</property>
+                        <property name="can_focus">False</property>
+                        <property name="label" translatable="yes">Found messages</property>
+                        <attributes>
+                          <attribute name="weight" value="medium"/>
+                          <attribute name="absolute-size" value="19000"/>
+                        </attributes>
+                        <style>
+                          <class name="label_search_result"/>
+                        </style>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="label_search_nothing_msgs">
+                        <property name="height_request">60</property>
+                        <property name="can_focus">False</property>
+                        <property name="label" translatable="yes">Nothing found for this request</property>
+                        <attributes>
+                          <attribute name="foreground" value="#bababdbdb6b6"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">1</property>
+                      </packing>
+                    </child>
+                    <child>
                       <object class="GtkStack" id="stack_messege_rooms">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
@@ -1031,7 +1082,34 @@
                       <packing>
                         <property name="expand">True</property>
                         <property name="fill">True</property>
-                        <property name="position">1</property>
+                        <property name="position">2</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkScrolledWindow" id="scrlldwnd_found_msgs">
+                        <property name="can_focus">True</property>
+                        <property name="shadow_type">in</property>
+                        <child>
+                          <object class="GtkViewport">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <child>
+                              <object class="GtkListBox" id="listbox_found_msgs">
+                                <property name="can_focus">False</property>
+                                <property name="selection_mode">none</property>
+                                <property name="activate_on_single_click">False</property>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                        <style>
+                          <class name="stack_messages"/>
+                        </style>
+                      </object>
+                      <packing>
+                        <property name="expand">True</property>
+                        <property name="fill">True</property>
+                        <property name="position">3</property>
                       </packing>
                     </child>
                   </object>
@@ -1554,6 +1632,8 @@
     </style>
   </object>
   <object class="GtkDialog" id="dialog_join_to_room">
+    <property name="width_request">360</property>
+    <property name="height_request">180</property>
     <property name="can_focus">False</property>
     <property name="resizable">False</property>
     <property name="destroy_with_parent">True</property>
@@ -1627,7 +1707,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkLabel">
+              <object class="GtkLabel" id="label_join_roomname">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
               </object>
@@ -1843,7 +1923,7 @@
   </object>
   <object class="GtkDialog" id="dialog_room_sett">
     <property name="width_request">320</property>
-    <property name="height_request">320</property>
+    <property name="height_request">560</property>
     <property name="can_focus">True</property>
     <property name="events">GDK_FOCUS_CHANGE_MASK</property>
     <property name="resizable">False</property>
@@ -2004,9 +2084,63 @@
                 </child>
               </object>
               <packing>
-                <property name="expand">True</property>
+                <property name="expand">False</property>
                 <property name="fill">True</property>
                 <property name="position">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkBox">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="orientation">vertical</property>
+                <child>
+                  <object class="GtkLabel">
+                    <property name="height_request">20</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="label" translatable="yes">Members</property>
+                    <property name="xalign">0.05000000074505806</property>
+                    <attributes>
+                      <attribute name="weight" value="bold"/>
+                      <attribute name="foreground" value="#555557575353"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkScrolledWindow">
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="shadow_type">in</property>
+                    <child>
+                      <object class="GtkViewport">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <child>
+                          <object class="GtkListBox">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="expand">True</property>
+                    <property name="fill">True</property>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+              </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="position">2</property>
               </packing>
             </child>
           </object>
@@ -2074,7 +2208,6 @@
   </object>
   <object class="GtkWindow" id="wnd_room_info">
     <property name="width_request">350</property>
-    <property name="height_request">400</property>
     <property name="can_focus">True</property>
     <property name="resizable">False</property>
     <property name="modal">True</property>
@@ -2108,6 +2241,7 @@
     </child>
     <child>
       <object class="GtkBox" id="box_roomprefs">
+        <property name="height_request">380</property>
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="orientation">vertical</property>
@@ -2199,19 +2333,18 @@
             </child>
             <child>
               <object class="GtkScrolledWindow">
+                <property name="height_request">100</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="shadow_type">in</property>
-                <property name="max_content_height">290</property>
+                <property name="max_content_height">104</property>
                 <property name="propagate_natural_height">True</property>
                 <child>
                   <object class="GtkTextView">
-                    <property name="height_request">100</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="margin_left">15</property>
                     <property name="margin_right">15</property>
-                    <property name="editable">False</property>
                     <property name="wrap_mode">word-char</property>
                     <property name="cursor_visible">False</property>
                     <property name="buffer">buffer_room_desc</property>
@@ -2226,9 +2359,56 @@
             </child>
           </object>
           <packing>
-            <property name="expand">True</property>
+            <property name="expand">False</property>
             <property name="fill">True</property>
             <property name="position">2</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel">
+            <property name="height_request">20</property>
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="label" translatable="yes">Members</property>
+            <property name="xalign">0.05000000074505806</property>
+            <attributes>
+              <attribute name="weight" value="bold"/>
+              <attribute name="foreground" value="#555557575353"/>
+            </attributes>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">3</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkScrolledWindow">
+            <property name="height_request">170</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="shadow_type">in</property>
+            <property name="max_content_height">170</property>
+            <child>
+              <object class="GtkViewport">
+                <property name="height_request">-1</property>
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <child>
+                  <object class="GtkListBox">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="selection_mode">none</property>
+                    <property name="activate_on_single_click">False</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">True</property>
+            <property name="fill">True</property>
+            <property name="position">4</property>
           </packing>
         </child>
       </object>

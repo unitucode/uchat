@@ -1,5 +1,15 @@
-#include "server.h"
+#include "api.h"
 
+/*
+ * Function: mx_ban_member_request
+ * -------------------------------
+ * Creates request "member ban"
+ * 
+ * room_id: id of rooms with this member
+ * user_id: id of user that need to ban
+ * 
+ * returns: new request
+ */
 t_dtp *mx_ban_member_request(int room_id, int user_id) {
     cJSON *json_result = cJSON_CreateObject();
 
@@ -23,6 +33,16 @@ static void ban_member(t_client *client, int user_id, int room_id) {
     mx_free_request(&del_room);
 }
 
+/*
+ * Function: mx_ban_member_handler
+ * -------------------------------
+ * Handles request from client
+ * 
+ * ban: request from client
+ * client: client that sent this request
+ * 
+ * returns: success of handling
+ */
 bool mx_ban_member_handler(t_dtp *ban, t_client *client) {
     cJSON *room_id = cJSON_GetObjectItemCaseSensitive(ban->json, "room_id");
     cJSON *user_id = cJSON_GetObjectItemCaseSensitive(ban->json, "user_id");

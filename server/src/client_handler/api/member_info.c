@@ -1,5 +1,14 @@
-#include "server.h"
+#include "api.h"
 
+/*
+ * Function: mx_member_info_request
+ * -------------------------------
+ * Creates request "information about member"
+ * 
+ * user: infomation about user in database
+ * 
+ * returns: new request
+ */
 t_dtp *mx_member_info_request(t_db_user *user) {
     cJSON *res = cJSON_CreateObject();
 
@@ -12,6 +21,16 @@ t_dtp *mx_member_info_request(t_db_user *user) {
     return mx_get_transport_data(res);
 }
 
+/*
+ * Function: mx_member_info_handler
+ * -------------------------------
+ * Handles request from client
+ * 
+ * id: request from client
+ * client: client that sent this request
+ * 
+ * returns: success of handling
+ */
 bool mx_member_info_handler(t_dtp *id, t_client *client) {
     cJSON *user_id = cJSON_GetObjectItemCaseSensitive(id->json, "user_id");
     t_db_user *user = NULL;

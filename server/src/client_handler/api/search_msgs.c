@@ -1,5 +1,14 @@
-#include "server.h"
+#include "api.h"
 
+/*
+ * Function: mx_search_msgs_request
+ * -------------------------------
+ * Creates request "found messages"
+ * 
+ * array: cJSON object that contains array of found messages
+ * 
+ * returns: new request
+ */
 t_dtp *mx_search_msgs_request(cJSON *array) {
     cJSON *res = cJSON_CreateObject();
 
@@ -10,6 +19,16 @@ t_dtp *mx_search_msgs_request(cJSON *array) {
     return mx_get_transport_data(res);
 }
 
+/*
+ * Function: mx_search_msgs_handler
+ * -------------------------------
+ * Handles request from client
+ * 
+ * data: request from client
+ * client: client that sent this request
+ * 
+ * returns: success of handling
+ */
 bool mx_search_msgs_handler(t_dtp *data, t_client *client) {
     cJSON *msg = cJSON_GetObjectItemCaseSensitive(data->json, "msg");
     cJSON *room_id = cJSON_GetObjectItemCaseSensitive(data->json, "room_id");

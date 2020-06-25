@@ -16,11 +16,14 @@ void mx_box_messages_reached(GtkScrolledWindow *scroll,
         GtkAdjustment *adj = gtk_scrolled_window_get_vadjustment(scroll);
 
         gtk_adjustment_set_value(adj, gtk_adjustment_get_value(adj) + 1);
-        // gtk_scrolled_window_set_vadjustment(scroll, adj);
     }
     if (pos == GTK_POS_BOTTOM) {
-        puts(groom->room_name);
-        puts("CLEAR OLDER MESSAGE!");
+        chat->upl_old_msgs = true;
+        while (groom->uploaded > MX_BUF_MSGS) {
+            g_message("delete message here client/src/gui/mx_messages_top_reached.c \n");
+            groom->uploaded--;
+        }
+        chat->upl_old_msgs = false;
     }
     (void)scroll;
 }

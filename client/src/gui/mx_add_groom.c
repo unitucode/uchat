@@ -34,14 +34,22 @@ void mx_set_current_room_sett(GtkBuilder *builder) {
 void mx_select_room(GtkWidget *event_box, GdkEventButton *event,
                     gpointer *user_data) {
     t_signal_data *data = g_object_get_data(G_OBJECT(event_box), "sigdata");
+    GObject *btn_room_sett = gtk_builder_get_object(data->chat->builder,
+                                                    "btn_show_room_sett");
 
-    mx_reset_messege_room(data->groom, data->builder);
+    mx_reset_messege_room(data->groom, data->chat->builder);
     gtk_stack_set_visible_child(data->groom->stack_msg,
                                 GTK_WIDGET(data->groom->page));
     gtk_list_box_select_row(data->groom->box_rooms,
                             data->groom->row_room);
-    mx_set_current_room_sett(data->builder);
-    mx_set_room_widgets_visibility(data->builder, true);
+    mx_set_current_room_sett(data->chat->builder);
+    mx_set_room_widgets_visibility(data->chat->builder, true);
+    puts(data->chat->login);
+    puts(data->groom->customer);
+    if (!g_strcmp0(data->chat->login, data->groom->customer))
+        mx_widget_set_visibility(GTK_WIDGET(btn_room_sett), TRUE);
+    else
+        mx_widget_set_visibility(GTK_WIDGET(btn_room_sett), FALSE);
     (void)event;
     (void)user_data;
 }
@@ -49,11 +57,16 @@ void mx_select_room(GtkWidget *event_box, GdkEventButton *event,
 void mx_show_join_to_room(GtkWidget *event_box, GdkEventButton *event,
                           gpointer *user_data) {
     t_signal_data *data = g_object_get_data(G_OBJECT(event_box), "sigdata");
-    t_groom *lgroom = mx_get_selected_groom(data->builder, MX_LOCAL_ROOMS);
+    t_groom *lgroom = mx_get_selected_groom(data->chat->builder,
+                                            MX_LOCAL_ROOMS);
+    GObject *label_name = gtk_builder_get_object(data->chat->builder,
+                                                 "label_join_roomname");
 
     gtk_list_box_select_row(data->groom->box_rooms, data->groom->row_room);
-    mx_reset_messege_room(lgroom, data->builder);
-    mx_widget_switch_visibility_by_name(data->builder, "dialog_join_to_room");
+    mx_reset_messege_room(lgroom, data->chat->builder);
+    mx_widget_switch_visibility_by_name(data->chat->builder,
+                                        "dialog_join_to_room");
+    gtk_label_set_text(GTK_LABEL(label_name), data->groom->room_name);
     (void)event;
     (void)user_data;
 }
@@ -93,8 +106,8 @@ static void add_messages_box(t_groom *room, t_chat *chat) {
                      G_CALLBACK(mx_box_messages_reached), chat);
 }
 
-void mx_add_room_row(t_groom *room, GtkBuilder *builder, gchar *listbox_name) {
-    GtkListBox *box = GTK_LIST_BOX(gtk_builder_get_object(builder,
+void mx_add_room_row(t_groom *room, t_chat *chat, gchar *listbox_name) {
+    GtkListBox *box = GTK_LIST_BOX(gtk_builder_get_object(chat->builder,
                                                           listbox_name));
     GtkWidget *row = gtk_list_box_row_new();
     GtkWidget *label = gtk_label_new(room->room_name);
@@ -108,7 +121,7 @@ void mx_add_room_row(t_groom *room, GtkBuilder *builder, gchar *listbox_name) {
     g_object_ref(row);
     g_object_ref(label);
 
-    data = mx_create_sigdata(builder, room, NULL);
+    data = mx_create_sigdata(chat, room, NULL);
     if (!g_strcmp0(listbox_name, MX_LOCAL_ROOMS)) {
         g_signal_connect(event, "button_press_event",
                         G_CALLBACK(mx_select_room), NULL);
@@ -136,7 +149,7 @@ void mx_add_room_row(t_groom *room, GtkBuilder *builder, gchar *listbox_name) {
 
 void mx_add_groom(t_groom *room, t_chat *chat) {
     add_messages_box(room, chat);
-    mx_add_room_row(room, chat->builder, MX_LOCAL_ROOMS);
+    mx_add_room_row(room, chat, MX_LOCAL_ROOMS);
 }
 
 static t_groom *mx_init_groom() {
@@ -154,7 +167,9 @@ static t_groom *mx_init_groom() {
     room->is_updated = true;
     room->desc = NULL;
     room->is_watched = false;
+    room->customer_id = 0;
     room->members = g_hash_table_new(g_direct_hash, g_direct_equal);
+    room->uploaded = 0;
     return room;
 }
 
@@ -177,7 +192,7 @@ t_groom *mx_create_groom(cJSON *room) {
     if ((valid = get_data(room, &data, "name")) && cJSON_IsString(data))
         groom->room_name = strdup(data->valuestring);
     if ((valid = get_data(room, &data, "customer_id")) && cJSON_IsNumber(data))
-        groom->customer = strdup("TODO ID");
+        groom->customer_id = data->valueint;
     if ((valid = get_data(room, &data, "id")) && cJSON_IsNumber(data))
         groom->id = data->valueint;
     if ((valid = get_data(room, &data, "date")) && cJSON_IsNumber(data))

@@ -1,23 +1,45 @@
 #pragma once
 
+#include <glib.h>
+#include <gio/gio.h>
 #include "utils.h"
 #include "protocol.h"
 #include "sqlite3.h"
 #include "database.h"
-#include <glib.h>
-#include <gio/gio.h>
 
-//settings
-#define MX_LISTENQ 1024
-#define MX_PORT_LEN 8
+/*
+ * Settings of server
+ */
 #define MX_REQUEST_PER_SECOND 20
 #define MX_DELAY (1000000 / MX_REQUEST_PER_SECOND)
 #define MX_MAX_ROOMS 20
 #define MX_MAX_MSGS 500
 
-typedef struct s_chat t_chat;
+/* Client
+ * ----------
+ * conn: connection between client and server
+ * out: GDataOutputStream object
+ * in: GDataOutputStream object
+ * in_s: GInputStream object
+ * msg: last request from client
+ * user: information about this user in database
+ * info: information about all chat
+ */
 typedef struct s_client t_client;
+
+/* Information
+ * ----------
+ * users: hash table that contains all connected user
+ * database: sqlite3 database connection
+ * request_handler: array of handler functions
+ */
 typedef struct s_info t_info;
+
+/* Send helper
+ * ----------
+ * table: hash table that contains all members of room
+ * data: request that need to send
+ */
 typedef struct s_send_helper t_send_helper;
 
 struct s_info {
@@ -42,62 +64,17 @@ struct s_send_helper {
 };
 
 gssize mx_send(GDataOutputStream *out, t_dtp *dtp);
-bool mx_handle_request(char *request, t_client *client);
-
-//api
-t_dtp *mx_token_request(char *token, char *login);
-t_dtp *mx_error_msg_request(int error_code, char *msg);
-t_dtp *mx_users_online_request(int count, int all);
-t_dtp *mx_log_out_request(char *token);
-t_dtp *mx_upd_room_desc_request(int room_id, char *room_name);
-t_dtp *mx_upd_room_name_request(int room_id, char *room_name);
-t_dtp *mx_upd_user_desc_request(char *desc);
-t_dtp *mx_reconnect_request(char *token, char *login);
-t_dtp *mx_search_rooms_request(cJSON *array);
-t_dtp *mx_member_info_request(t_db_user *user);
-t_dtp *mx_delete_room_request(int room_id);
-t_dtp *mx_ban_member_request(int room_id, int user_id);
-t_dtp *mx_search_msgs_request(cJSON *array);
-t_dtp *mx_del_hist_request(int room_id);
-
-//data protocol handler functions
-bool mx_log_in_handler(t_dtp *login, t_client *client);
-bool mx_sign_up_handler(t_dtp *signup_data, t_client *client);
-bool mx_log_in_token_handler(t_dtp *token, t_client *client);
-bool mx_new_room_handler(t_dtp *data, t_client *client);
-bool mx_msg_handler(t_dtp *data, t_client *client);
-bool mx_get_rooms_handler(t_dtp *data, t_client *client);
-bool mx_log_out_handler(t_dtp *token, t_client *client);
-bool mx_get_msgs_handler(t_dtp *data, t_client *client);
-bool mx_upd_room_desc_handler(t_dtp *desc, t_client *client); //TODO
-bool mx_upd_room_name_handler(t_dtp *desc, t_client *client); //TODO
-bool mx_upd_user_desc_handler(t_dtp *desc_data, t_client *client); //TODO
-bool mx_del_room_handler(t_dtp *data, t_client *client); //TODO
-bool mx_del_msg_handler(t_dtp *msg, t_client *client); //TODO
-bool mx_edit_msg_handler(t_dtp *msg, t_client *client); //TODO!!!!!!! DB
-bool mx_upload_file_handler(t_dtp *data, t_client *client); //TODO
-bool mx_search_rooms_handler(t_dtp *data, t_client *client);
-bool mx_join_room_handler(t_dtp *room, t_client *client);
-bool mx_get_members_handler(t_dtp *data, t_client *client);
-bool mx_member_info_handler(t_dtp *id, t_client *client);
-bool mx_ban_member_handler(t_dtp *ban, t_client *client);
-bool mx_search_msgs_handler(t_dtp *data, t_client *client);
-bool mx_del_hist_handler(t_dtp *msg, t_client *client);
-bool mx_old_msgs_handler(t_dtp *data, t_client *client);
-
 t_info *mx_init_info(void);
+t_client *mx_new_client(socklen_t len);
 void mx_deinit_info(t_info **info);
 void mx_init_receiver(t_info *chat);
 
-int mx_tcp_listen(const char *serv, socklen_t *addr_len);
 void mx_get_client_info(t_client *client);
-t_client *mx_new_client(socklen_t len);
 void mx_connect_client(t_client *client);
 void mx_disconnect_client(t_client *client);
 void mx_delete_client(void **client);
 void *mx_receiver(void *arg);
 void mx_send_to_all(t_dtp *data, t_client *client, guint64 room_id);
-void mx_update_online(int count, t_client *client);
 
 //Authorization
 bool mx_valid_authorization_data(t_dtp *data, char **login,
