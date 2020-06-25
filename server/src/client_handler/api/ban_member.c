@@ -13,7 +13,7 @@
 t_dtp *mx_ban_member_request(int room_id, int user_id) {
     cJSON *json_result = cJSON_CreateObject();
 
-    if (!cJSON_AddNumberToObject(json_result, "type", RQ_EDIT_MSG))
+    if (!cJSON_AddNumberToObject(json_result, "type", RQ_BAN_MEMBER))
         return NULL;
     if (!cJSON_AddNumberToObject(json_result, "room_id", room_id))
         return NULL;

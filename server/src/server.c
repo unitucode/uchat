@@ -34,15 +34,18 @@ static void message_ready(GObject *source_object, GAsyncResult *res,
     if (!g_socket_connection_is_connected(cli->conn)
         || g_output_stream_is_closed(G_OUTPUT_STREAM(cli->out))
         || g_input_stream_is_closed(G_INPUT_STREAM(in))) {
+            g_message("1Closed receiver for %s\n", cli->user->login);
         g_hash_table_remove(cli->info->users, cli->out);
         return;
     }
     cli->msg = g_data_input_stream_read_line_finish(in, res, &count, NULL);
-    if (!cli->msg)
+    if (!cli->msg) {
+        g_message("2Closed receiver for %s\n", cli->user->login);
         return;
+    }
     if (!mx_handle_request(cli->msg, cli)) {
         g_free(cli->msg);
-        g_message("Closed receiver for %s\n", cli->user->login);
+        g_message("3Closed receiver for %s\n", cli->user->login);
         return;
     }
     g_free(cli->msg);

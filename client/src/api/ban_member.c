@@ -25,11 +25,15 @@ bool mx_ban_member_handler(t_dtp *data, t_chat *chat) {
     cJSON *room_id = cJSON_GetObjectItemCaseSensitive(data->json, "room_id");
     cJSON *user_id = cJSON_GetObjectItemCaseSensitive(data->json, "user_id");
 
+    g_print("here");
     if (!cJSON_IsNumber(room_id))
         return false;
+    g_print("here");
     if (!cJSON_IsNumber(user_id))
         return false;
+    g_print("here");
     if (!delete_member(chat, room_id->valueint, user_id->valueint))
         return false;
+    g_print("here");
     return true;
 }
