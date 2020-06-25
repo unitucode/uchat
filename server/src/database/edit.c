@@ -4,7 +4,8 @@ void mx_edit_room_name_by_id(sqlite3 *db, guint64 id, gchar *new_name) {
     sqlite3_stmt *stmt;
     gint32 rv = SQLITE_OK;
 
-    rv = sqlite3_prepare_v2(db, "update rooms set name = ?1 where id = ?2", -1,
+    rv = sqlite3_prepare_v2(db, "update rooms set name = ?1 "
+                                "where id = ?2", -1,
                             &stmt, NULL);
     mx_error_sqlite(rv, "prepare", "edit name room");
     sqlite3_bind_text(stmt, 1, new_name, -1, SQLITE_STATIC);
@@ -17,7 +18,8 @@ void mx_edit_user_name_by_id(sqlite3 *db, guint64 id, gchar *new_name) {
     sqlite3_stmt *stmt;
     gint32 rv = SQLITE_OK;
 
-    rv = sqlite3_prepare_v2(db, "update users set login = ?1 where id = ?2", -1,
+    rv = sqlite3_prepare_v2(db, "update users set login = ?1 "
+                                "where id = ?2", -1,
                             &stmt, NULL);
     mx_error_sqlite(rv, "prepare", "edit name user");
     sqlite3_bind_text(stmt, 1, new_name, -1, SQLITE_STATIC);

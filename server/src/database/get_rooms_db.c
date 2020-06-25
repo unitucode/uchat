@@ -6,7 +6,8 @@ cJSON *mx_get_object_room(sqlite3_stmt *stmt) {
     cJSON_AddNumberToObject(room, "id", sqlite3_column_int64(stmt, 0));
     cJSON_AddStringToObject(room, "name", 
                             MX_J_STR((char*)sqlite3_column_text(stmt, 1)));
-    cJSON_AddNumberToObject(room, "customer_id", sqlite3_column_int64(stmt, 2));
+    cJSON_AddNumberToObject(room, "customer_id", 
+                            sqlite3_column_int64(stmt, 2));
     cJSON_AddNumberToObject(room, "date", sqlite3_column_int64(stmt, 3));
     cJSON_AddStringToObject(room, "desc", 
                             MX_J_STR((char*)sqlite3_column_text(stmt, 4)));

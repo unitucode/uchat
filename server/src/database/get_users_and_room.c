@@ -55,7 +55,8 @@ t_db_room *mx_get_room_by_id(sqlite3 *db, guint64 id) {
     sqlite3_stmt *stmt;
 
     mx_error_sqlite(sqlite3_prepare_v3(db, "select * from rooms where "
-                                                 "id = ?1", -1, 0, &stmt, NULL),
+                                           "id = ?1",
+                                       -1, 0, &stmt, NULL),
                     "prepare", "get_room");
     sqlite3_bind_int(stmt, 1, id);
     if (sqlite3_step(stmt) == 100) {

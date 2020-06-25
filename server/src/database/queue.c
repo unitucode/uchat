@@ -49,7 +49,8 @@ void mx_clean_queue(sqlite3 *db, guint64 user_id) {
     sqlite3_str *str = sqlite3_str_new(db);
     gchar *sql = NULL;
 
-    sqlite3_str_appendf(str, "delete from queue where user_id = %llu", user_id);
+    sqlite3_str_appendf(str, "delete from queue where user_id = %llu",
+                        user_id);
     sql = sqlite3_str_finish(str);
     sqlite3_exec(db, sql, 0, 0, 0);
     sqlite3_free(sql);

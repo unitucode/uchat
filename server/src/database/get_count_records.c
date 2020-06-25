@@ -7,7 +7,8 @@ guint64 mx_get_count_messages(sqlite3 *db, guint64 id) {
     gint32 rv = SQLITE_OK;
     guint64 count = 0;
 
-    sqlite3_str_appendf(str, "select count() from messages where room_id = %lu", id);
+    sqlite3_str_appendf(str, "select count() from messages "
+                             "where room_id = %lu", id);
     request = sqlite3_str_finish(str);
     rv = sqlite3_prepare_v2(db, request, -1, &stmt, NULL);
     mx_error_sqlite(rv, "prepare", "count messages");

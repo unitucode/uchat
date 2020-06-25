@@ -52,27 +52,15 @@ t_db_message *mx_parse_message(cJSON *message_j) {
     if (!(json = mx_json_is_valid(message_j, "room_id", cJSON_IsNumber)))
         return NULL;
     message->room_id = json->valueint;
-    // if (!(json = mx_json_is_valid(message_j, "user_id", cJSON_IsNumber)))
-    //     return NULL;
-    // message->user_id = json->valueint;
     if (!(json = mx_json_is_valid(message_j, "msg_type", cJSON_IsNumber)))
         return NULL;
     message->type = json->valueint;
-    // if (!(json = mx_json_is_valid(message_j, "file_size", cJSON_IsNumber)))
-    //     return NULL;
     message->file_size = 0;
     if (!(json = mx_json_is_valid(message_j, "message", cJSON_IsString)))
         return NULL;
     message->message = g_strstrip(g_strdup(json->valuestring));
-    // if (!(json = mx_json_is_valid(message_j, "file_name", cJSON_IsString)))
-    //     return NULL;
     message->file_name = g_strdup("");
-    // if (!(json = mx_json_is_valid(message_j, "date_dead", cJSON_IsNumber)))
-    //     return NULL;
     message->date_dead = 0;
     return message;
 }
-
-
-
 
