@@ -1,24 +1,29 @@
 #include "utils.h"
 
-bool mx_match_nsearch(char *str, char *regex, size_t size) {
-    char buf[size + 1];
-    regex_t reg;
-    int res;
+gboolean mx_match_nsearch(gchar *str, gchar *regex, gssize size) {
+    gchar buf[size + 1];
+    GRegex *g_reg = NULL;
+    GMatchInfo *match_info;
+    gboolean g_res;
 
     buf[size] = 0;
-    strncpy(buf, str, size);
-    regcomp(&reg, regex, REG_EXTENDED);
-    res = regexec(&reg, buf, 0, NULL, 0);
-    regfree(&reg);
-    return !res;
+    g_strlcpy(buf, str, size + 1);
+    puts(buf);
+    g_reg = g_regex_new(regex, 0, 0, NULL);
+    g_res = g_regex_match(g_reg, buf, 0, &match_info);
+    g_match_info_free(match_info);
+    return g_res;
 }
 
-bool mx_match_search(char *str, char *regex) {
-    regex_t reg;
-    int res;
+gboolean mx_match_search(gchar *str, gchar *regex) {
+    GRegex *g_reg = NULL;
+    GMatchInfo *match_info;
+    gboolean g_res;
 
-    regcomp(&reg, regex, REG_EXTENDED);
-    res = regexec(&reg, str, 0, NULL, 0);
-    regfree(&reg);
-    return !res;
+    g_reg = g_regex_new(regex, 0, 0, NULL);
+    g_res = g_regex_match(g_reg, str, 0, &match_info);
+    g_match_info_free(match_info);
+    g_regex_unref(g_reg);
+    return g_res;
 }
+

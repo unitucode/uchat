@@ -21,7 +21,6 @@
 #define MX_ITOA(m) MX_IN_ITOA(m)
 
 #define MX_LOG_FILE "info.log"
-#define MX_REQ_REGEX "([0-9]+[|][0-9]+[|]).+" 
 #define MX_HASH_REGEX "^[A-Fa-f0-9]{64}$"
 #define MX_LOGIN_REGEX "^[a-z0-9_-]{3,22}$"
 
@@ -50,10 +49,9 @@ typedef enum e_logtype {
 }            t_logtype;
 
 //Utils
-bool mx_match_search(char *str, char *regex);
-bool mx_match_nsearch(char *str, char *regex, size_t size);
+gboolean mx_match_search(gchar *str, gchar *regex);
+gboolean mx_match_nsearch(gchar *str, gchar *regex, gssize size);
 void mx_randomize_str(char *str, size_t count);
-void *mx_memdup(const void *mem, size_t size);
 long long mx_get_current_time(void);
 
 
@@ -73,4 +71,3 @@ void mx_log_errno(FILE *fd);
 void mx_log_type(FILE *fd, t_logtype type);
 void mx_logger(const char *file, t_logtype type, const char *fmt, ...);
 void mx_elogger(const char *file, t_logtype type, const char *fmt, ...);
-

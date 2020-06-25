@@ -51,7 +51,6 @@ typedef enum s_request_type {
     RQ_DEL_ROOM,
     RQ_DEL_USER,
     RQ_EDIT_MSG,
-    RQ_FILE,
     RQ_DEL_MSG,
     RQ_SEARCH_CH,
     RQ_JOIN_ROOM,

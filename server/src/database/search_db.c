@@ -66,7 +66,7 @@ cJSON *mx_search_message(sqlite3 *db, gchar *str_search, guint64 room_id) {
     cJSON *messages = cJSON_CreateArray();
 
     sqlite3_str_appendf(sql_str, "select * from messages where room_id = %llu"
-                                 " and message like'%s%%' and type = %d",
+                                 " and message like '%s%%' and type = %d",
                         room_id, str_search, DB_TEXT_MSG);
     request = sqlite3_str_finish(sql_str);
     mx_error_sqlite(sqlite3_prepare_v2(db, request, -1, &stmt, NULL), "prepare",
