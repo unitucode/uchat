@@ -383,7 +383,8 @@
   <object class="GtkImage" id="image8">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
-    <property name="icon_name">dialog-cancel</property>
+    <property name="pixel_size">12</property>
+    <property name="icon_name">close</property>
   </object>
   <object class="GtkImage" id="image9">
     <property name="visible">True</property>
@@ -760,8 +761,6 @@
                             <property name="top_margin">14</property>
                             <property name="bottom_margin">14</property>
                             <property name="buffer">buffer_message</property>
-                            <signal name="focus-in-event" handler="mx_unset_placeholder" swapped="no"/>
-                            <signal name="focus-out-event" handler="mx_set_placeholder" swapped="no"/>
                           </object>
                         </child>
                       </object>
@@ -1488,7 +1487,7 @@
     <child type="titlebar">
       <object class="GtkHeaderBar">
         <property name="visible">True</property>
-        <property name="can_focus">False</property>
+        <property name="can_focus">True</property>
         <property name="title" translatable="yes">Create new room</property>
         <property name="spacing">0</property>
       </object>

@@ -12,4 +12,6 @@ void mx_init_gui(t_chat *chat) {
     mx_connect_stickers(chat);
     mx_connect_ban_member(chat);
     mx_connect_test_request(chat); // DELETE
+    mx_connect_set_placeholder(chat);
+    mx_connect_unset_placeholder(chat);
 }
