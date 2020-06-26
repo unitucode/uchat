@@ -24,6 +24,7 @@ bool mx_msg_handler(t_dtp *data, t_chat *chat) {
     groom = mx_get_groom_by_id(gmsg->room_id, chat->builder);
     if (!groom)
         return false;
+    mx_widget_set_class(GTK_WIDGET(groom->label_name), "has-messages");
     groom->uploaded++;
     return true;
 }

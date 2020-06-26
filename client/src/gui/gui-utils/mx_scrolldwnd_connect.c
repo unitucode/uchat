@@ -1,14 +1,24 @@
 #include "client.h"
 
 static void mx_scroll_to_end(GtkAdjustment *adj) {
-    static gdouble i = 0;
-    gdouble x = gtk_adjustment_get_upper(adj);
-    gdouble curr = gtk_adjustment_get_value(adj) + gtk_adjustment_get_page_size(adj);
+    static gdouble last_curr = 0;
+    static gdouble last_upper = 0;
+    gdouble upper = gtk_adjustment_get_upper(adj);
+    gdouble lower = gtk_adjustment_get_page_size(adj);
+    gdouble curr = gtk_adjustment_get_value(adj) + lower;
 
-    if (curr <= x && curr >= x - ((x - i) * 2 + 20))
-        if (i < x)
-            gtk_adjustment_set_value(adj, x);
-    i = x;
+    g_print("\n\nupper = %f\n", upper);
+    g_print("last_upper = %f\n", last_upper);
+    g_print("last_curr = %f\n", last_curr);
+    g_print("curr = %f\n", curr);
+    if (last_curr < curr)
+        gtk_adjustment_set_value(adj, last_curr);
+    else if (curr == last_curr && curr == last_upper) {
+        g_print("set to %f\n", upper);
+        gtk_adjustment_set_value(adj, upper);
+    }
+    last_curr = curr;
+    last_upper = upper;
 }
 
 /*
