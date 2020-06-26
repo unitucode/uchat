@@ -15,8 +15,6 @@ bool mx_del_hist_handler(t_dtp *data, t_chat *chat) {
 
     if (!cJSON_IsNumber(room_id))
         return false;
-    g_message("DELETE HISTORY OF ROOM %d client/src/api/del_history.c\n", room_id->valueint);
-    (void)room_id;
-    (void)chat;
+    mx_gupd_clear_history(chat->builder, room_id->valueint);
     return true;
 }
