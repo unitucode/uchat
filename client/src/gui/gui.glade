@@ -1671,7 +1671,7 @@
         <child internal-child="action_area">
           <object class="GtkButtonBox">
             <property name="can_focus">False</property>
-            <property name="layout_style">end</property>
+            <property name="layout_style">center</property>
             <child>
               <object class="GtkButton">
                 <property name="label" translatable="yes">Cancel</property>
@@ -1744,6 +1744,9 @@
         </child>
       </object>
     </child>
+    <style>
+      <class name="dialog_join_to_room"/>
+    </style>
   </object>
   <object class="GtkDialog" id="dialog_profile_sett">
     <property name="width_request">350</property>
@@ -2129,6 +2132,9 @@
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="activate_on_single_click">False</property>
+                            <style>
+                              <class name="listbox_info_members"/>
+                            </style>
                           </object>
                         </child>
                       </object>
@@ -2385,6 +2391,9 @@
                       <object class="GtkListBox" id="listbox_info_members">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
+                        <style>
+                          <class name="listbox_info_members"/>
+                        </style>
                       </object>
                     </child>
                   </object>
