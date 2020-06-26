@@ -38,6 +38,7 @@ t_chat *mx_init_chat(GSocketConnection *connection, int argc, char **argv) {
     chat->argv = argv;
     chat->upl_old_msgs = false;
     chat->stickers = mx_init_stickers();
+    chat->msg_placeholder = true;
     mx_init_handlers(chat);
     mx_init_errors(chat);
     g_data_input_stream_read_line_async(in, G_PRIORITY_DEFAULT, NULL, mx_receiver, chat);

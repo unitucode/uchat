@@ -1,4 +1,5 @@
 #include "api.h"
+#include <glib/gstdio.h>
 
 /*
  * Function: mx_change_working_dir
@@ -7,9 +8,13 @@
  */
 void mx_change_working_dir(void) {
     #ifdef MX_SERVER
-    if (chdir(MX_SERVER)) {
+    if (g_chdir(MX_SERVER)) {
         mx_elogger(NULL, LOGERR,
                    "No working directory %s\n", MX_SERVER);
+    }
+    if (g_mkdir_with_parents(MX_FILES_DIR, 0755)) {
+        mx_elogger(NULL, LOGERR,
+                   "No files directory %s\n", MX_FILES_DIR);
     }
     #else
     mx_elogger(NULL, LOGERR, "No working directory");
@@ -34,18 +39,18 @@ static void message_ready(GObject *source_object, GAsyncResult *res,
     if (!g_socket_connection_is_connected(cli->conn)
         || g_output_stream_is_closed(G_OUTPUT_STREAM(cli->out))
         || g_input_stream_is_closed(G_INPUT_STREAM(in))) {
-            g_message("1Closed receiver for %s\n", cli->user->login);
+            g_message("1Closed receiver for\n");
         g_hash_table_remove(cli->info->users, cli->out);
         return;
     }
     cli->msg = g_data_input_stream_read_line_finish(in, res, &count, NULL);
     if (!cli->msg) {
-        g_message("2Closed receiver for %s\n", cli->user->login);
+        g_message("2Closed receiver for\n");
         return;
     }
     if (!mx_handle_request(cli->msg, cli)) {
         g_free(cli->msg);
-        g_message("3Closed receiver for %s\n", cli->user->login);
+        g_message("3Closed receiver for\n");
         return;
     }
     g_free(cli->msg);

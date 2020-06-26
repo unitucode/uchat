@@ -53,7 +53,6 @@ static void add_message_row_start(t_gmsg *msg, t_chat *chat) { //TO FIX
     gtk_list_box_row_changed(groom->row_room);
     groom->is_updated = false;
     groom->is_watched = false;
-    
     gtk_widget_show_all(GTK_WIDGET(box));
     g_object_set_data_full(G_OBJECT(row), "gmsg", msg,
                            (GDestroyNotify)mx_delete_gmsg);

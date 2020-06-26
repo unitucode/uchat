@@ -14,6 +14,7 @@
 #define MX_DELAY (1000000 / MX_REQUEST_PER_SECOND)
 #define MX_MAX_ROOMS 20
 #define MX_MAX_MSGS 500
+#define MX_BUF_FILE 2048
 
 /* Client
  * ----------

@@ -338,6 +338,7 @@
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
+                <signal name="clicked" handler="mx_widget_switch_visibility" swapped="no"/>
               </object>
               <packing>
                 <property name="expand">True</property>
@@ -2635,7 +2636,6 @@
               <object class="GtkSearchEntry" id="sentry_members">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
-                <property name="events">GDK_FOCUS_CHANGE_MASK</property>
                 <property name="primary_icon_name">edit-find-symbolic</property>
                 <property name="primary_icon_activatable">False</property>
                 <property name="primary_icon_sensitive">False</property>

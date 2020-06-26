@@ -32,15 +32,16 @@ static void delete_selected_msgs(GtkButton *btn, t_chat *chat) {
     (void)btn;
 }
 
-static void show_edit_msg(GtkButton *btn, GtkBuilder *builder) {
-    GObject *buffer = gtk_builder_get_object(builder, "buffer_message");
-    GObject *label_text = gtk_builder_get_object(builder, "label_edit_text");
-    t_gmsg *msg = mx_get_selected_gmsg(builder);
+static void show_edit_msg(GtkButton *btn, t_chat *chat) {
+    GObject *buffer = gtk_builder_get_object(chat->builder, "buffer_message");
+    GObject *label_text = gtk_builder_get_object(chat->builder, "label_edit_text");
+    t_gmsg *msg = mx_get_selected_gmsg(chat->builder);
     gchar *old_text = g_strdelimit(g_strdup(msg->msg), "\n", ' ');  
 
+    chat->msg_placeholder = false;
     gtk_label_set_text(GTK_LABEL(label_text), old_text);
     gtk_text_buffer_set_text(GTK_TEXT_BUFFER(buffer), msg->msg, -1);
-    mx_switch_room_header(builder, MX_ROOM_CTRL);
+    mx_switch_room_header(chat->builder, MX_ROOM_CTRL);
     g_free(old_text);
     (void)btn;
 }
@@ -56,7 +57,7 @@ void mx_connect_message_ctrl(t_chat *chat) {
     g_signal_connect(btn_delete, "clicked",
                      G_CALLBACK(delete_selected_msgs), chat);
     g_signal_connect(btn_edit, "clicked",
-                     G_CALLBACK(show_edit_msg), chat->builder);
+                     G_CALLBACK(show_edit_msg), chat);
     g_signal_connect(btn_unselect, "clicked",
                      G_CALLBACK(unselect_msg), chat->builder);
 }

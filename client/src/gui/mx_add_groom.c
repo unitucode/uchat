@@ -36,6 +36,7 @@ void mx_select_room(GtkWidget *event_box, GdkEventButton *event,
                             data->groom->row_room);
     mx_set_current_room_sett(data->chat->builder);
     mx_set_room_widgets_visibility(data->chat->builder, true);
+    mx_widget_remove_class(GTK_WIDGET(data->groom->label_name), "has-messages");
     if (!g_strcmp0(data->chat->login, data->groom->customer))
         mx_widget_set_visibility(GTK_WIDGET(btn_room_sett), TRUE);
     else

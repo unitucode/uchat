@@ -17,6 +17,7 @@ static void set_room_sett(GtkButton *btn, t_chat *chat) {
 
     gtk_text_buffer_set_text(GTK_TEXT_BUFFER(desc), groom->desc, -1);
     gtk_entry_set_text(name, groom->room_name);
+    gtk_editable_set_position(GTK_EDITABLE(name), -1);
     (void)btn;
 }
 
