@@ -23,5 +23,6 @@ bool mx_new_member_handler(t_dtp *data, t_chat *chat) {
         return false;
     if (!add_member(login->valuestring, id->valueint, room_id->valueint, chat))
         return false;
+    mx_set_current_room_sett(chat->builder);
     return true;
 }
