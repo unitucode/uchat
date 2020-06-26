@@ -10,7 +10,9 @@ void mx_msgcreate_label_login(GtkWidget *box_main, t_gmsg *gmsg) {
 
 void mx_msgcreate_img_sticker(GtkWidget *box_info,
                               t_gmsg *gmsg, gboolean is_own) {
-    GtkWidget *sticker = gtk_image_new_from_icon_name(gmsg->msg, GTK_ICON_SIZE_DIALOG);
+    GtkWidget *sticker = gtk_image_new_from_icon_name(gmsg->msg,
+                                                      GTK_ICON_SIZE_DIALOG);
+
     gtk_image_set_pixel_size(GTK_IMAGE(sticker), 128);
     if (is_own)
         gtk_box_pack_end(GTK_BOX(box_info), sticker, FALSE, FALSE, 0);
