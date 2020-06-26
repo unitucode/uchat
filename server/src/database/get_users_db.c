@@ -1,5 +1,10 @@
 #include "server.h"
 
+/*
+ * Function: 
+ * 
+ */
+
 cJSON *mx_get_object_user(sqlite3_stmt *stmt) {
     cJSON *user = cJSON_CreateObject();
 
@@ -17,6 +22,11 @@ cJSON *mx_get_object_user(sqlite3_stmt *stmt) {
                             MX_J_STR((char*)sqlite3_column_text(stmt, 6)));
     return user;
 }
+
+/*
+ * Function: 
+ * 
+ */
 
 cJSON *mx_get_users(sqlite3 *db, guint64 date) {
     cJSON *users = cJSON_CreateArray();

@@ -1,5 +1,10 @@
 #include "server.h"
 
+/*
+ * Function: 
+ * 
+ */
+
 void mx_db_push_queue_by_id(sqlite3 *db, guint64 user_id,
                             gchar *request) {
     sqlite3_stmt *stmt;
@@ -15,6 +20,11 @@ void mx_db_push_queue_by_id(sqlite3 *db, guint64 user_id,
     sqlite3_finalize(stmt);
 }
 
+/*
+ * Function: 
+ * 
+ */
+
 void mx_db_pop_queue_by_id(sqlite3 *db, guint64 user_id) {
     sqlite3_str *str = sqlite3_str_new(db);
     gchar *request = NULL;
@@ -25,6 +35,11 @@ void mx_db_pop_queue_by_id(sqlite3 *db, guint64 user_id) {
     sqlite3_exec(db, request, 0, 0, NULL);
     sqlite3_free(request);
 }
+
+/*
+ * Function: 
+ * 
+ */
 
 gchar *mx_get_queue(sqlite3 *db, guint64 user_id) {
     sqlite3_stmt *stmt;
@@ -44,6 +59,11 @@ gchar *mx_get_queue(sqlite3 *db, guint64 user_id) {
     sqlite3_finalize(stmt);
     return request;
 }
+
+/*
+ * Function: 
+ * 
+ */
 
 void mx_clean_queue(sqlite3 *db, guint64 user_id) {
     sqlite3_str *str = sqlite3_str_new(db);

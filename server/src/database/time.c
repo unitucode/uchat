@@ -1,5 +1,10 @@
 #include "server.h"
 
+/*
+ * Function: 
+ * 
+ */
+
 guint64 mx_get_time(gint8 type) {
     gint64 dt = 0;
     GDateTime *gtime = g_date_time_new_now_local();

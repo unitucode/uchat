@@ -1,5 +1,10 @@
 #include "server.h"
 
+/*
+ * Function: 
+ * 
+ */
+
 cJSON *mx_json_is_valid(cJSON *data, gchar *str, 
                         cJSON_bool(check_valid)(const cJSON * const)) {
     cJSON *json = cJSON_GetObjectItemCaseSensitive(data, str);
@@ -8,6 +13,11 @@ cJSON *mx_json_is_valid(cJSON *data, gchar *str,
         return NULL;
     return json;
 }
+
+/*
+ * Function: 
+ * 
+ */
 
 t_db_user *mx_parse_json_user(cJSON *user_j) {
     t_db_user *user = malloc(sizeof(t_db_user));
@@ -29,6 +39,11 @@ t_db_user *mx_parse_json_user(cJSON *user_j) {
     return user;
 }
 
+/*
+ * Function: 
+ * 
+ */
+
 t_db_room *mx_parse_json_room(cJSON *room_j) {
     t_db_room *room = malloc(sizeof(t_db_room));
     cJSON *json = NULL;
@@ -44,6 +59,11 @@ t_db_room *mx_parse_json_room(cJSON *room_j) {
     room->type = json->valueint;
     return room;
 }
+
+/*
+ * Function: 
+ * 
+ */
 
 t_db_message *mx_parse_message(cJSON *message_j) {
     t_db_message *message = malloc(sizeof(t_db_message));

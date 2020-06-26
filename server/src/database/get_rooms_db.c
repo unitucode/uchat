@@ -1,5 +1,10 @@
 #include "server.h"
 
+/*
+ * Function: 
+ * 
+ */
+
 cJSON *mx_get_object_room(sqlite3_stmt *stmt) {
     cJSON *room = cJSON_CreateObject();
 
@@ -14,6 +19,11 @@ cJSON *mx_get_object_room(sqlite3_stmt *stmt) {
     cJSON_AddNumberToObject(room, "type", sqlite3_column_int(stmt, 5));
     return room;
 }
+
+/*
+ * Function: 
+ * 
+ */
 
 cJSON *mx_get_rooms(sqlite3 *db, guint64 date, guint64 user_id) {
     cJSON *rooms = cJSON_CreateArray();

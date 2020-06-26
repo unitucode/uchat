@@ -1,5 +1,10 @@
 #include "server.h"
 
+/*
+ * Function: 
+ * 
+ */
+
 void mx_free_user(t_db_user **user) {
     if (!user || !*user)
         return;
@@ -17,6 +22,11 @@ void mx_free_user(t_db_user **user) {
     *user = NULL;
 }
 
+/*
+ * Function: 
+ * 
+ */
+
 void mx_free_room(t_db_room **room) {
     if (!room || !*room)
         return;
@@ -27,6 +37,11 @@ void mx_free_room(t_db_room **room) {
     mx_free((void**)room);
     room = NULL;
 }
+
+/*
+ * Function: 
+ * 
+ */
 
 void mx_free_message(t_db_message **message) {
     if (!message || !*message)

@@ -1,5 +1,10 @@
 #include "server.h"
 
+/*
+ * Function: 
+ * 
+ */
+
 void mx_edit_permission_of_user(sqlite3 *db, guint64 user_id, guint64 room_id,
                                 gint8 new) {
     sqlite3_str *sqlite_str = sqlite3_str_new(db);
@@ -12,6 +17,11 @@ void mx_edit_permission_of_user(sqlite3 *db, guint64 user_id, guint64 room_id,
     mx_error_sqlite(sqlite3_exec(db, request, 0, 0, 0), "exec",
                      "update permission");
 }
+
+/*
+ * Function: 
+ * 
+ */
 
 void mx_edit_token(sqlite3 *db, guint64 user_id, gchar *new) {
     sqlite3_stmt *stmt;
@@ -26,6 +36,11 @@ void mx_edit_token(sqlite3 *db, guint64 user_id, gchar *new) {
     sqlite3_finalize(stmt);
 }
 
+/*
+ * Function: 
+ * 
+ */
+
 void mx_edit_desc_room_by_id(sqlite3 *db, guint64 room_id, gchar *new) {
     sqlite3_stmt *stmt;
     gint32 rv = SQLITE_OK;
@@ -38,6 +53,11 @@ void mx_edit_desc_room_by_id(sqlite3 *db, guint64 room_id, gchar *new) {
     mx_error_sqlite(sqlite3_step(stmt), "step", "update room");
     sqlite3_finalize(stmt);
 }
+
+/*
+ * Function: 
+ * 
+ */
 
 void mx_edit_desc_user(sqlite3 *db, guint64 user_id, gchar *new) {
     sqlite3_stmt *stmt;

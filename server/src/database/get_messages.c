@@ -1,5 +1,10 @@
 #include "server.h"
 
+/*
+ * Function: 
+ * 
+ */
+
 cJSON *mx_get_object_message(sqlite3_stmt *stmt) {
     cJSON *o_m = cJSON_CreateObject();
 
@@ -18,6 +23,11 @@ cJSON *mx_get_object_message(sqlite3_stmt *stmt) {
     return o_m;
 }
 
+/*
+ * Function: 
+ * 
+ */
+
 static cJSON *get_messages_by_id(sqlite3_stmt *stmt, guint64 room_id, 
                                  gint64 count, guint64 date) {
     cJSON *room = cJSON_CreateObject();
@@ -35,6 +45,11 @@ static cJSON *get_messages_by_id(sqlite3_stmt *stmt, guint64 room_id,
     return room;
 }
 
+/*
+ * Function: 
+ * 
+ */
+
 cJSON *mx_get_new_messages_by_id(sqlite3 *db, guint64 room_id, guint64 date,
                                  gint64 count) {
     sqlite3_stmt *stmt;
@@ -48,6 +63,10 @@ cJSON *mx_get_new_messages_by_id(sqlite3 *db, guint64 room_id, guint64 date,
     return get_messages_by_id(stmt, room_id, count, date);
 }
 
+/*
+ * Function: 
+ * 
+ */
 
 cJSON *mx_get_old_messages_by_id(sqlite3 *db, guint64 room_id, guint64 date, 
                                  gint64 count) {
@@ -60,6 +79,11 @@ cJSON *mx_get_old_messages_by_id(sqlite3 *db, guint64 room_id, guint64 date,
     sqlite3_free(request);
     return get_messages_by_id(stmt, room_id, count, date);
 }
+
+/*
+ * Function: 
+ * 
+ */
 
 cJSON *mx_get_curr_messages_by_id(sqlite3 *db, guint64 room_id, gint64 count) {
     sqlite3_stmt *stmt;

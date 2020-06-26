@@ -1,5 +1,10 @@
 #include "server.h"
 
+/*
+ * Function: 
+ * 
+ */
+
 void mx_edit_room_name_by_id(sqlite3 *db, guint64 id, gchar *new_name) {
     sqlite3_stmt *stmt;
     gint32 rv = SQLITE_OK;
@@ -14,6 +19,11 @@ void mx_edit_room_name_by_id(sqlite3 *db, guint64 id, gchar *new_name) {
     sqlite3_finalize(stmt);
 }
 
+/*
+ * Function: 
+ * 
+ */
+
 void mx_edit_user_name_by_id(sqlite3 *db, guint64 id, gchar *new_name) {
     sqlite3_stmt *stmt;
     gint32 rv = SQLITE_OK;
@@ -27,6 +37,11 @@ void mx_edit_user_name_by_id(sqlite3 *db, guint64 id, gchar *new_name) {
     mx_error_sqlite(sqlite3_step(stmt), "step", "edit room user");
     sqlite3_finalize(stmt);
 }
+
+/*
+ * Function: 
+ * 
+ */
 
 void mx_edit_message_by_id(sqlite3 *db, guint64 id, gchar *new) {
     sqlite3_str *str = sqlite3_str_new(db);

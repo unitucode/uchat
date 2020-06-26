@@ -1,5 +1,10 @@
 #include "server.h"
 
+/*
+ * Function: 
+ * 
+ */
+
 gboolean mx_is_owner_msg(sqlite3 *db, guint64 user_id, guint64 msg_id) {
     sqlite3_stmt *stmt;
     gint32 rv = 0;
@@ -16,6 +21,11 @@ gboolean mx_is_owner_msg(sqlite3 *db, guint64 user_id, guint64 msg_id) {
     sqlite3_finalize(stmt);
     return is_owner;
 }
+
+/*
+ * Function: 
+ * 
+ */
 
 void mx_delete_all_messages(sqlite3 *db, guint64 room_id) {
     sqlite3_str *sqlite_str = sqlite3_str_new(db);
