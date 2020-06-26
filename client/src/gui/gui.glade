@@ -756,8 +756,6 @@
                             <property name="top_margin">14</property>
                             <property name="bottom_margin">14</property>
                             <property name="buffer">buffer_message</property>
-                            <signal name="focus-in-event" handler="mx_unset_placeholder" swapped="no"/>
-                            <signal name="focus-out-event" handler="mx_set_placeholder" swapped="no"/>
                           </object>
                         </child>
                       </object>

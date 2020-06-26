@@ -293,13 +293,11 @@ void mx_free_sigdata(t_signal_data *data);
 char *mx_msgpage_name(gint id);
 gboolean mx_widget_is_visible(gchar *widget_name, GtkBuilder *builder);
 void mx_widget_set_class(GtkWidget *widget, gchar *class);
-gboolean mx_unset_placeholder(GtkWidget *textview, GdkEvent  *event,
-                                   gpointer *user_data);
-gboolean mx_set_placeholder(GtkWidget *textview, GdkEvent *event,
-                                   gpointer *user_data);
 t_filter_data *mx_create_filter_data(gchar *search_name);
 void mx_free_filter_data(t_filter_data *filter_data);
 gchar *mx_get_string_time(guint64 miliseconds, gint8 format);
+void mx_connect_set_placeholder(t_chat *chat);
+void mx_connect_unset_placeholder(t_chat *chat);
 
     // gui wrappers
     // void mx_widget_show_all(GtkWidget *widget);
