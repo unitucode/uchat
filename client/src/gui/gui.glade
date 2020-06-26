@@ -377,7 +377,8 @@
   <object class="GtkImage" id="image8">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
-    <property name="icon_name">dialog-cancel</property>
+    <property name="pixel_size">12</property>
+    <property name="icon_name">close</property>
   </object>
   <object class="GtkImage" id="image9">
     <property name="visible">True</property>
@@ -1480,7 +1481,7 @@
     <child type="titlebar">
       <object class="GtkHeaderBar">
         <property name="visible">True</property>
-        <property name="can_focus">False</property>
+        <property name="can_focus">True</property>
         <property name="title" translatable="yes">Create new room</property>
         <property name="spacing">0</property>
       </object>
