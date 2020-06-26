@@ -11,6 +11,8 @@ void mx_box_messages_reached(GtkScrolledWindow *scroll,
     t_groom *groom = mx_get_selected_groom(chat->builder, MX_LOCAL_ROOMS);
 
     if (pos == GTK_POS_TOP && !chat->upl_old_msgs) {
+        if (!gtk_list_box_get_row_at_index(groom->box_messages, 0))
+            return;
         t_gmsg *msg = (t_gmsg*)g_object_get_data(G_OBJECT(gtk_list_box_get_row_at_index(groom->box_messages, 0)), "gmsg");
         t_dtp *get_old = mx_old_msgs_request(msg->date, groom->id);
 
