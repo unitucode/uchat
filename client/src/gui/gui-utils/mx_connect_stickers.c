@@ -3,7 +3,7 @@
 void send_sticker_1(GtkButton *btn, t_chat *chat) {
     t_groom *groom = mx_get_selected_groom(chat->builder, 
                                            MX_LOCAL_ROOMS);
-    t_dtp *dtp = mx_sticker_request("racoon_angry.png", groom->id);
+    t_dtp *dtp = mx_sticker_request("racoon_angry", groom->id);
 
     mx_send(chat->out, dtp);
     mx_free_request(&dtp);
@@ -14,7 +14,7 @@ void send_sticker_1(GtkButton *btn, t_chat *chat) {
 void send_sticker_2(GtkButton *btn, t_chat *chat) {
     t_groom *groom = mx_get_selected_groom(chat->builder, 
                                            MX_LOCAL_ROOMS);
-    t_dtp *dtp = mx_sticker_request("racoon_happy.png", groom->id);
+    t_dtp *dtp = mx_sticker_request("racoon_happy", groom->id);
 
     mx_send(chat->out, dtp);
     mx_free_request(&dtp);
@@ -24,7 +24,7 @@ void send_sticker_2(GtkButton *btn, t_chat *chat) {
 void send_sticker_3(GtkButton *btn, t_chat *chat) {
     t_groom *groom = mx_get_selected_groom(chat->builder, 
                                            MX_LOCAL_ROOMS);
-    t_dtp *dtp = mx_sticker_request("racoon_wow.png", groom->id);
+    t_dtp *dtp = mx_sticker_request("racoon_wow", groom->id);
 
     mx_send(chat->out, dtp);
     mx_free_request(&dtp);
@@ -34,7 +34,7 @@ void send_sticker_3(GtkButton *btn, t_chat *chat) {
 void send_sticker_4(GtkButton *btn, t_chat *chat) {
     t_groom *groom = mx_get_selected_groom(chat->builder, 
                                            MX_LOCAL_ROOMS);
-    t_dtp *dtp = mx_sticker_request("racoon_tounge.png", groom->id);
+    t_dtp *dtp = mx_sticker_request("racoon_tounge", groom->id);
 
     mx_send(chat->out, dtp);
     mx_free_request(&dtp);
@@ -44,7 +44,7 @@ void send_sticker_4(GtkButton *btn, t_chat *chat) {
 void send_sticker_5(GtkButton *btn, t_chat *chat) {
     t_groom *groom = mx_get_selected_groom(chat->builder, 
                                            MX_LOCAL_ROOMS);
-    t_dtp *dtp = mx_sticker_request("duck_angry.png", groom->id);
+    t_dtp *dtp = mx_sticker_request("duck_angry", groom->id);
 
     mx_send(chat->out, dtp);
     mx_free_request(&dtp);
@@ -54,7 +54,7 @@ void send_sticker_5(GtkButton *btn, t_chat *chat) {
 void send_sticker_6(GtkButton *btn, t_chat *chat) {
     t_groom *groom = mx_get_selected_groom(chat->builder, 
                                            MX_LOCAL_ROOMS);
-    t_dtp *dtp = mx_sticker_request("duck_happy.png", groom->id);
+    t_dtp *dtp = mx_sticker_request("duck_happy", groom->id);
 
     mx_send(chat->out, dtp);
     mx_free_request(&dtp);
@@ -64,7 +64,7 @@ void send_sticker_6(GtkButton *btn, t_chat *chat) {
 void send_sticker_7(GtkButton *btn, t_chat *chat) {
     t_groom *groom = mx_get_selected_groom(chat->builder, 
                                            MX_LOCAL_ROOMS);
-    t_dtp *dtp = mx_sticker_request("duck_wow.png", groom->id);
+    t_dtp *dtp = mx_sticker_request("duck_wow", groom->id);
 
     mx_send(chat->out, dtp);
     mx_free_request(&dtp);
@@ -74,7 +74,7 @@ void send_sticker_7(GtkButton *btn, t_chat *chat) {
 void send_sticker_8(GtkButton *btn, t_chat *chat) {
     t_groom *groom = mx_get_selected_groom(chat->builder, 
                                            MX_LOCAL_ROOMS);
-    t_dtp *dtp = mx_sticker_request("duck_tounge.png", groom->id);
+    t_dtp *dtp = mx_sticker_request("duck_tounge", groom->id);
 
     mx_send(chat->out, dtp);
     mx_free_request(&dtp);
@@ -84,7 +84,7 @@ void send_sticker_8(GtkButton *btn, t_chat *chat) {
 void send_sticker_9(GtkButton *btn, t_chat *chat) {
     t_groom *groom = mx_get_selected_groom(chat->builder, 
                                            MX_LOCAL_ROOMS);
-    t_dtp *dtp = mx_sticker_request("bear_angry.png", groom->id);
+    t_dtp *dtp = mx_sticker_request("bear_angry", groom->id);
 
     mx_send(chat->out, dtp);
     mx_free_request(&dtp);
@@ -94,7 +94,7 @@ void send_sticker_9(GtkButton *btn, t_chat *chat) {
 void send_sticker_10(GtkButton *btn, t_chat *chat) {
     t_groom *groom = mx_get_selected_groom(chat->builder, 
                                            MX_LOCAL_ROOMS);
-    t_dtp *dtp = mx_sticker_request("bear_happy.png", groom->id);
+    t_dtp *dtp = mx_sticker_request("bear_happy", groom->id);
 
     mx_send(chat->out, dtp);
     mx_free_request(&dtp);
@@ -104,7 +104,7 @@ void send_sticker_10(GtkButton *btn, t_chat *chat) {
 void send_sticker_11(GtkButton *btn, t_chat *chat) {
     t_groom *groom = mx_get_selected_groom(chat->builder, 
                                            MX_LOCAL_ROOMS);
-    t_dtp *dtp = mx_sticker_request("bear_wow.png", groom->id);
+    t_dtp *dtp = mx_sticker_request("bear_wow", groom->id);
 
     mx_send(chat->out, dtp);
     mx_free_request(&dtp);
@@ -114,7 +114,7 @@ void send_sticker_11(GtkButton *btn, t_chat *chat) {
 void send_sticker_12(GtkButton *btn, t_chat *chat) {
     t_groom *groom = mx_get_selected_groom(chat->builder, 
                                            MX_LOCAL_ROOMS);
-    t_dtp *dtp = mx_sticker_request("bear_tounge.png", groom->id);
+    t_dtp *dtp = mx_sticker_request("bear_tounge", groom->id);
 
     mx_send(chat->out, dtp);
     mx_free_request(&dtp);
