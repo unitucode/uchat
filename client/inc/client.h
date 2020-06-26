@@ -268,6 +268,7 @@ gboolean mx_stop_search_message(gpointer *entry,
 void mx_add_message_to_found(t_gmsg *gmsg, t_chat *chat);
 void mx_clear_found_msgs(GtkBuilder *builder);
 void mx_set_room_members(GtkBuilder *builder, t_groom *groom);
+void mx_show_user_info(GtkBuilder *builder, gchar *login, gchar *desc);
 
 // gui utils
 void mx_scrlldwnd_connect(gchar *name, GtkWidget *scroll, GtkBuilder *builder);
