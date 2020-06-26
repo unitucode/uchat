@@ -95,6 +95,7 @@ struct s_chat {
     GHashTable *stickers;
     char *auth_token;
     char *login;
+    gchar *desc;
     int argc;
     char **argv;
     gsize id;

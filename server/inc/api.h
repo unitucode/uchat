@@ -7,7 +7,7 @@
 /*
  * Requests
  */
-t_dtp *mx_token_request(char *token, char *login);
+t_dtp *mx_token_request(char *token, char *login, char *desc);
 t_dtp *mx_error_msg_request(int error_code, char *msg);
 t_dtp *mx_log_out_request(char *token);
 t_dtp *mx_upd_room_desc_request(int room_id, char *room_name);
