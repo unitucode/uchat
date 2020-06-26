@@ -1,18 +1,9 @@
 #include "client.h"
 
 // SIGNAL-HANDLERS
-    void mx_reset_addroom(GtkButton *btn, GtkBuilder *builder)
-{
-    GObject *button = gtk_builder_get_object(builder, "checkbtn_private");
-
+void mx_reset_addroom(GtkButton *btn, GtkBuilder *builder) {
     mx_clear_buffer_text("buffer_roomname", builder);
-    mx_clear_buffer_text("buffer_roompass", builder);
-    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button), 0);
     (void)btn;
-}
-
-void mx_make_private(GtkToggleButton *btn, GtkWidget *widget) {
-    gtk_widget_set_sensitive(widget, gtk_toggle_button_get_active(btn));
 }
 
 void mx_set_current_room_sett(GtkBuilder *builder) {
