@@ -297,7 +297,6 @@
     <property name="can_focus">False</property>
     <property name="resizable">False</property>
     <property name="modal">True</property>
-    <property name="destroy_with_parent">True</property>
     <property name="type_hint">dialog</property>
     <property name="skip_taskbar_hint">True</property>
     <property name="skip_pager_hint">True</property>
@@ -325,6 +324,7 @@
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
+                <signal name="clicked" handler="mx_widget_switch_visibility" object="dialog_clear_history" swapped="no"/>
               </object>
               <packing>
                 <property name="expand">True</property>
@@ -2632,6 +2632,23 @@
               </packing>
             </child>
             <child>
+              <object class="GtkSearchEntry" id="sentry_members">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="events">GDK_FOCUS_CHANGE_MASK</property>
+                <property name="primary_icon_name">edit-find-symbolic</property>
+                <property name="primary_icon_activatable">False</property>
+                <property name="primary_icon_sensitive">False</property>
+                <property name="placeholder_text" translatable="yes">Search member</property>
+                <signal name="stop-search" handler="mx_stop_search_members" swapped="no"/>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+            <child>
               <object class="GtkScrolledWindow">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
@@ -2652,7 +2669,7 @@
               <packing>
                 <property name="expand">True</property>
                 <property name="fill">True</property>
-                <property name="position">1</property>
+                <property name="position">2</property>
               </packing>
             </child>
           </object>

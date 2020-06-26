@@ -270,6 +270,9 @@ void mx_clear_found_msgs(GtkBuilder *builder);
 void mx_set_room_members(GtkBuilder *builder, t_groom *groom);
 void mx_show_user_info(GtkBuilder *builder, gchar *login, gchar *desc);
 void mx_gupd_clear_history(GtkBuilder *builder, gint room_id);
+void mx_search_members(GtkBuilder *builder, gchar *search_login);
+gboolean mx_stop_search_members(gpointer *entry,
+                                gpointer *data, GtkBuilder *builder);
 
 // gui utils
 void mx_scrlldwnd_connect(gchar *name, GtkWidget *scroll, GtkBuilder *builder);
@@ -307,7 +310,7 @@ gchar *mx_get_string_time(guint64 miliseconds, gint8 format);
     // void mx_widget_show_all(GtkWidget *widget);
     // void mx_widget_destroy(GtkWidget *widget);
     // void mx_widget_show(GtkWidget *widget);
-    void mx_upload_file(char *path, t_chat *chat);
+void mx_upload_file(char *path, t_chat *chat);
 bool mx_handle_request(char *request, t_chat *chat);
 void mx_send_auth_request(char *login, char *password,
                           t_chat *chat, t_request_type request_type);

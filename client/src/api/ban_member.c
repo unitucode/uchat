@@ -34,5 +34,6 @@ bool mx_ban_member_handler(t_dtp *data, t_chat *chat) {
     if (!delete_member(chat, room_id->valueint, user_id->valueint))
         return false;
     mx_set_current_room_sett(chat->builder);
+    mx_widget_set_visibility_by_name(chat->builder, "dialog_room_sett", TRUE);    
     return true;
 }
