@@ -1,9 +1,9 @@
-@define-color placeholder_text_color #919CC0;
+@define-color placeholder_text_color #8895A3;
 
 * {
     font-family: "Gill Sans", sans-serif;
     transition: all .07s ease-out;
-    outline-color: rgb(103, 133, 255);
+    outline-color: #CFD6EC;
     outline-style: double;
 }
 button {
@@ -19,8 +19,8 @@ list row {
 .dialog_auth textview, .wnd_main textview, .box-room-settings entry,
 .box-room-info textview, #dialog_profile_prefs textview,
 .dialog_addroom entry {
-    caret-color: #fff;
-    color: #fff;
+    caret-color: #737A82;
+    color: #737A82;
 }
 button, .input, entry, notebook, .dialog_auth .titlebar, button image  {
     border: none;
@@ -28,14 +28,13 @@ button, .input, entry, notebook, .dialog_auth .titlebar, button image  {
 .dialog_auth, .wnd_main, .dialog_addroom,
 .profile-settings-wnd, .wnd-room-info, .wnd-room-settings,
 .dialog_join_to_room {
-    background: rgb(57,69,107);
-    background-image: linear-gradient(173deg, rgb(57, 69, 107) 0%, rgb(35,41,65) 100%);
+    background: #fff;
 }
 .dialog_auth entry selection, .wnd_main entry selection,
 .dialog_auth textview selection, .wnd_main textview selection,
 .box-room-settings textview selection, .box-room-info textview selection,
 #dialog_profile_prefs textview selection {
-	background-color: #6785FF;
+	background-color: #5771E5;
 }
 box stack, entry, .dialog_notebook header {
     background-color: transparent;
@@ -46,13 +45,16 @@ box stack, entry, .dialog_notebook header {
 .dialog_addroom entry {
     margin-top: 12px;
 }
+.dialog_addroom .dialog-action-area {
+    margin-top: 15px;
+}
 .dialog_auth entry, .wnd_main entry, .dialog_addroom entry {
 	box-shadow: none;
     font-size: 15px;
-    font-weight: 300;
+    font-weight: 400;
 }
 .dialog_auth entry, .dialog_addroom entry {
-	background-color: #3A466B;
+	background-color: #F2F4FF;
 	border-radius: 5px;
     padding: 1px 10px;
 }
@@ -63,11 +65,11 @@ button {
     background-image: none;
 }
 .dialog-action-area button {
-    background-color: #fff;
+    background-color: #5771E5;
     box-shadow: none;
     padding: 12px 40px;
     border-radius: 2px;
-    color: #5366BB;
+    color: #fff;
     font-size: 14px;
     font-weight: 500;
 }
@@ -78,11 +80,11 @@ button {
     margin-left: 5px;
 }
 .dialog-action-area button:hover {
-    background-color: rgba(255,255,255,.7);
+    background-color: rgba(87,113,229,.7);
 }
 .box-functional-buttons button {
-    background-color: #424E78;
-    color: #fff;
+    background-color: #F2F4FF;
+    color: #8895A3;
     padding: 8px 0;
     font-size: 14px;
     font-weight: 500;
@@ -90,7 +92,7 @@ button {
     border: 1px solid transparent;
 }
 .box-functional-buttons button:hover {
-    border: 1px solid #6785FF;
+    border: 1px solid #5771E5;
 }
 button label {
     box-shadow: none;
@@ -104,7 +106,7 @@ button label {
     color: red;
 }
 headerbar {
-    min-height: 40px;
+    min-height: 35px;
 }
 .dialog_auth decoration, .wnd-room-info decoration,
 .wnd-room-settings decoration, .profile-settings-wnd decoration {
@@ -126,31 +128,31 @@ headerbar {
 	border: none;
 }
 .dialog_notebook tab{
-    color: #fff;
+    color: #8895A3;
     padding-top: 7px;
     padding-bottom: 8px;
     outline: none;
 }
 .dialog_notebook tab {
-    box-shadow: 0 -3px rgba(105,114,145,.4) inset;
+    box-shadow: 0 -3px #CFD6EC inset;
 }
 .dialog_notebook tab:hover {
-    box-shadow: 0 -3px rgba(105,114,145,.75) inset;
+    box-shadow: 0 -3px #B5C0E0 inset;
 }
 .dialog_notebook tab:checked {
     box-shadow: none;
-	box-shadow: 0 -3px rgb(103,133,255) inset;
+	box-shadow: 0 -3px rgb(87,113,229) inset;
 }
 .dialog_notebook tab label {
     font-weight: 500;
     font-size: 16px;
-    color: rgba(255,255,255,.6);
+    color: rgba(136,149,163,.6);
 }
 .dialog_notebook tab:hover label {
-    color: rgba(255,255,255,.8);
+    color: rgba(136,149,163,.8);
 }
 .dialog_notebook tab:checked label {
-    color: #fff;
+    color: rgb(136, 149, 163);
 }
 headerbar box label {
 	font-size: 14px;
@@ -160,7 +162,6 @@ headerbar box label {
 dialog headerbar {
     background: rgb(229,229,229);
     background: linear-gradient(180deg, rgba(229,229,229,1) 0%, rgba(205,205,205,1) 100%);
-    box-shadow: 0 -1px #A8A7A6 inset;
 }
 .rooms-list, .stack_messages list, .rooms-list .activatable:selected {
 	background: transparent;
@@ -168,17 +169,35 @@ dialog headerbar {
 .wnd_main scrolledwindow {
 	border: none;
 }
+
+/* Search entry styles */
+
+.search {
+	background-color: #F2F4FF;
+	border-radius: 5px;
+    padding: 2px 8px 1px 8px;
+    font-weight: 100;
+}
+.box-rooms .search {
+    margin: 18px 25px 15px 25px;
+}
+.search image {
+    margin-right: 8px;
+}
+
+/* Rooms list box styles */
+
 .rooms-list row {
 	padding: 0;
 }
 .rooms-list row, .rooms-list row label {
-    color: #fff;
+    color: #8895A3;
     outline: none;
 }
 .rooms-list label {
-	background-color: rgba(58,70, 107,.8);
+	background-color: transparent;
     padding: 25px 20px;
-    border-color: transparent;
+    border: 2px solid #E8ECF8;
     border-radius: 8px;
     margin: 5px 25px;
     font-size: 15px;
@@ -187,83 +206,79 @@ dialog headerbar {
     background-color: transparent;
 }
 .rooms-list row:hover label {
-    background-color: rgb(58,70, 107);
     margin: 5px 20px;
 }
 .rooms-list row:selected label {
-	background-color: rgb(66,78, 120);
-    border-left: 3px solid rgb(83,102,187);
-    border-right: 3px solid rgb(83,102,187);
+    border-color: transparent;
+    border-left: 2px solid rgb(87,113,229);
+    border-right: 2px solid rgb(87,113,229);
     margin: 5px 18px;
 }
+/* Class for room with new messages */
 .rooms-list row .has-messages {
-    border-left: 3px solid transparent;
-    border-right: 3px solid #28E1B2;
+    border-right: 2px solid #28E1B2;
 }
 .add-room-button {
 	background: none;
     padding: 15px;
     border-radius: 100px;
-    background-color: rgb(83,102,187);
+    background-color: #E8ECF8;
     margin: 20px 0 25px 0;
 }
 .add-room-button:hover {
-    background-color: rgb(66,78, 120);
+    background-color: rgb(215, 220, 233);
 }
 .wnd_main scrolledwindow overshoot, scrolledwindow undershoot {
 	box-shadow: none;
 }
-.wnd_main scrolledwindow scrollbar.bottom {
-	box-shadow: 0 -20px 20px #2A324D;
-}
 .box-rooms {
-    box-shadow: 10px 5px 10px -2px rgba(0,0,0,.065);
-	border-right: 1px solid #424E78;
-}
-.box_room_header {
-    box-shadow: 5px 10px 10px -2px rgba(0,0,0,.065);
+    background-color: #F9FAFF;
 }
 .boxroom_header-in {
-    border-bottom: 1px solid #424E78;
-    background-color: #364165;
+    border-bottom: 1px solid #CFD6EC;
+    background-color: transparent;
     padding: 7px 25px;
     font-size: 17px;
 }
 .boxroom_header-in button {
     background-image: none;
-    background-color: #3A466B;
+    background-color: transparent;
+    border: 1px solid #CFD6EC;
     padding: 5px 8px;
 }
 .boxroom_header-in label {
-    color: #fff;
+    color: #323B59;
 }
 .wnd_main list {
     color: #fff;
 }
 .wnd_main srcollbar.hovering slider {
-    background-color: rgba(58,70, 107,.8);
+    background-color: rgba(87,113,229,.8);
 }
 .wnd_main .hovering {
-    background-color: rgb(66,78, 120);
-	border:none;
+    background-color: #F2F4FF;
+	border: none;
 }
 .wnd_main .dragging slider {
-	background-color: rgb(83,102,187);
+	background-color: rgb(87,113,229);
 }
 .wnd_main scrollbar slider {
 	border-color: transparent;
-	background-color: rgba(83,102,187,.8);
+	background-color: rgba(87,113,229,.8);
 }
 .box-rooms undershoot.bottom {
-	box-shadow: 0 -30px 10px -10px rgb(42,48,75) inset;
+	box-shadow: 0 -30px 10px -10px #F9FAFF inset;
 	opacity: 1;
 }
+
+/* Title bar styles */
+
 .box_titlebar {
-    background-color: #323B59;
+    background-color: #5771E5;
 	padding: 0 25px;
 }
 .box_titlebar button {
-    background-color: #3A466B;
+    background-color: #F2F4FF;
     padding: 3px 8px;
 	margin: 7px 0;
 }
@@ -276,43 +291,44 @@ dialog headerbar {
 
 .box_msg_send {
 	margin: 0 25px 25px 25px;
-	background-color: #424E78;
+    background-color: transparent;
+    border: 1px solid #CFD6EC;
 	padding: 15px 33px 15px 25px;
 	border-radius: 8px;
 }
 .button_send_message, .btn_confirm_changes {
-	background-color: #2F3857;
+	background-color: #E8ECF8;
 	border-radius: 100px;
 	padding: 13px;
 }
 .box_msg_send textview text,  .box_msg_send textview {
     background-color: transparent;
-    color: #B8C2E5;
+    color: #737A82;
     font-weight: 300;
     font-size: 15px;
 }
-.box_msg_send scrolledwindow {
-	border: 1px solid #424E78;
+.stack_messages > label {
+    color: #8895A3;
 }
 .stack_messages list .box_msg_info label:nth-child(1) {
-	background-color: #424E78;
+	background-color: #FAFCFE;
 	padding: 10px 15px;
 	border-radius: 0 8px 8px 8px;
 	margin-top: 7px;
 	margin-left: 7px; 
 	font-weight: 300;
 	font-size: 14px;
-	color: #B8C2E5; 
+	color: #737A82; 
 }
 .stack_messages list .box_own_msg_info label:nth-child(2) {
-	background-color: rgb(86, 102, 160);
+	background-color: #E7F3FF;
 	padding: 10px 15px;
 	border-radius: 8px 8px 0 8px;
 	margin-top: 7px;
 	margin-left: 7px;
 	font-weight: 300;
 	font-size: 14px;
-	color: #B8C2E5; 
+	color: #737A82; 
 }
 .main_msg_box {
 	padding: 0 180px 0 0;
@@ -320,12 +336,11 @@ dialog headerbar {
 .main_own_msg_box {
 	padding: 0 0 0 180px;
 }
-
-
 .stack_messages list {
 	margin: 7px 38px 14px 38px;
 }
 .sender_login {
+    color: #798097;
     margin-top: 10px;
 	font-size: 14px;
 }
@@ -338,25 +353,25 @@ dialog headerbar {
 .stack_messages list .box_msg_info label:nth-child(2){
 	font-size: 13px;
     font-weight: 300;
-    color: #919CC0;
+    color: #C2C2C2;
     margin-left: 10px;
 }
 .stack_messages list .box_sticker_info label:nth-child(2){
 	font-size: 13px;
     font-weight: 300;
-    color: #919CC0;
+    color: #C2C2C2;
     margin-left: 10px;
 }
 .stack_messages list .box_own_msg_info label:nth-child(1){
 	font-size: 13px;
     font-weight: 300;
-    color: #919CC0;
+    color: #C2C2C2;
     margin-right: 10px;
 }
 .stack_messages list .box_own_sticker_info label:nth-child(1){
 	font-size: 13px;
     font-weight: 300;
-    color: #919CC0;
+    color: #C2C2C2;
     margin-right: 10px;
 }
 .stack_messages list .box_own_sticker_info image {
@@ -368,19 +383,19 @@ dialog headerbar {
     border-color: transparent;
 }
 .stack_messages list row:selected .box_msg_info label:nth-child(1) {
-    background-color: #6785FF;
+    background-color: #5771E5;
     color: #fff;
 }
 .stack_messages list row:selected .box_own_msg_info label:nth-child(2) {
-    background-color: #6785FF;
+    background-color: #5771E5;
     color: #fff;
 }
 .stack_messages list row:selected .box_own_sticker_info image:nth-child(2) {
-    border-right: 8px solid #6785FF;
+    border-right: 8px solid #5771E5;
     border-radius: 5px;
 }
 .stack_messages list row:selected .box_sticker_info image:nth-child(1) {
-    border-left: 8px solid #6785FF;
+    border-left: 8px solid #5771E5;
     border-radius: 5px;
 }
 .stack_messages list row label {
@@ -389,26 +404,24 @@ dialog headerbar {
 .stack_messages list row:hover {
     background-color: transparent;
 }
-.search image {
-    margin-right: 8px;
-}
-.box_msg_ctrl  {
-    background-color: #6785FF;
+.box_msg_ctrl {
+    background-color: #fff;
+    border-bottom: 1px solid #CFD6EC;
     padding: 7px 25px;
 }
 .box_msg_ctrl button {
-	background-color: #5775D9;
+	background-color: #5771E5;
 }
 #box_edit_msg {
 	margin: 0 25px 10px 25px;
 }
 #box_edit_msg label:first-child {
-	color: #6785FF;
+	color: #5771E5;
 	font-weight: 400;
 	font-size: 15px;
 }
 #box_edit_msg label:last-child {
-	color: #919CC0;
+	color: #8895A3;
 	font-weight: 300;
 	font-size: 14px;
 }
@@ -418,34 +431,19 @@ dialog headerbar {
 #image_edit_msg {
 	margin-top: 2px;
 }
-#box_edit_msg button, #image_edit_msg {
-    opacity: .6;
-}
 #box_edit_msg button:hover {
-    opacity: .3;
+    opacity: .65;
 }
 .stack_messages list .box_msg_info label.full_border_msg {
 	border-top-left-radius: 8px;
 }
 .label_search_result {
-    background-color: #424E78;
-    color: #919CC0;
+    background-color: #E8ECF8;
+    color: #737A82;
     font-size: 14px;
 }
 #dialog_profile_prefs .dialog-action-area button {
 	padding: 12px 30px;
-}
-
-/* Search entry styles */
-
-.search {
-	background-color: #3A466B;
-	border-radius: 5px;
-    padding: 2px 8px 1px 8px;
-    font-weight: 300;
-}
-.box-rooms .search {
-    margin: 18px 25px 15px 25px;
 }
 
 /* Dialog window room settings styles */
@@ -457,8 +455,8 @@ dialog headerbar {
 	margin: 22px 45px 0 45px;
 }
 .box-room-settings entry {
-	border: 1px solid #424E78;
-	background-color: #3A466B;
+	border: 1px solid #E8ECF8;
+	background-color: #F2F4FF;
 	border-radius: 5px;
 	padding: 0 8px;
     font-weight: 300;
@@ -467,11 +465,11 @@ dialog headerbar {
 }
 .box-room-settings textview text, .box-room-info textview text,
 #dialog_profile_prefs textview text {
-    background-color: #3A466B;
+    background-color: #F2F4FF;
     box-shadow: none;
-    border: 1px solid #48547E;
+    border: 1px solid #E8ECF8;
     border-radius: 5px;
-    color: #fff;
+    color: #737A82;
     font-weight: 300;
 }
 .box-room-settings textview, .box-room-info textview {
@@ -485,7 +483,7 @@ dialog headerbar {
 }
 .box-room-settings > box:first-child label {
 	font-size: 14px;
-	color: #D8DCE8;
+	color: #8895A3;
 	margin-top: 10px;
     margin-bottom: 7px;
     font-weight: 500;
@@ -495,75 +493,19 @@ dialog headerbar {
 }
 .box-room-settings > box:first-child box:last-child scrolledwindow {
 	border-radius: 5px;
-	background-color: #3A466B;
-	border: 1px solid #48547E;
-}
-
-/* Class for room with new messages */
-.has-messages { 
-	border-right: 3px solid green;
-	border-left: 3px solid transparent;
-}
-
-/* Overshoot deactivation */
-
-overshoot.bottom {
-    background-image: none;
-}
-overshoot.top {
-    background-image: none;
-}
-
-/* Stickers area stiles */
-
-.btn_stickers {
-	margin-right: 12px; 
-}
-.stickers_box {
-    padding: 2px 7px;
-}
-.stickers_box button {
-	background-image: none;
-}
-.stickers_box label {
-	color: #fff;
-}
-.box_stickers_header {
-	padding: 11px 25px 10px 25px;
-	border-bottom: 1px solid #424E78;
-	background-color: #364165;
-}
-.box_stickers_header label {
-	color: #fff;
-}
-.box_stickers_header button {
-	padding-right: 7px;
-	font-weight: 300;
-	font-size: 12px;
-}
-.box_stickers_area {
-    border-left: 1px solid #424E78;
-}
-.box_stickers_area scrolledwindow{
-    box-shadow: -10px 5px 10px -2px rgba(0,0,0,.065);
-}
-.box_stickers_area grid {
-    padding: 10px;
-}
-.box_stickers_area grid button:hover, .wnd-room-info headerbar button:hover,
-.profile-settings-wnd headerbar button:hover {
-    opacity: .7;
+	background-color: #F2F4FF;
+	border: 1px solid #E8ECF8;
 }
 
 /* Dialog window room info styles */
 
 .box-room-info {
-    color: #fff;
+    color: #737A82;
     margin: 22px 45px 45px 45px;
 }
 .box-room-info box label:first-child {
 	font-size: 14px;
-	color: #D8DCE8;
+	color: #8895A3;
 	font-weight: 500;
 }
 .box-room-info box label:last-child {
@@ -580,8 +522,8 @@ overshoot.top {
 }
 .box-room-info box:last-child scrolledwindow {
 	border-radius: 5px;
-	background-color: #3A466B;
-	border: 1px solid #48547E;
+	background-color: #F2F4FF;
+	border: 1px solid #E8ECF8;
 }
 .box-room-info > label {
 	font-size: 17px;
@@ -593,12 +535,12 @@ overshoot.top {
 /* Dialog window profile settings styles */
 
 #dialog_profile_prefs {
-    color: #fff;
+    color: #737A82;
     margin: 35px 45px 0 45px;
 }
 #dialog_profile_prefs > box:first-child label:first-child {
 	font-size: 14px;
-	color: #D8DCE8;
+	color: #8895A3;
 	font-weight: 500;
 }
 #dialog_profile_prefs > box:first-child label:last-child  {
@@ -621,13 +563,13 @@ overshoot.top {
 
 .dialog_join_to_room .dialog-vbox {
     margin-top: 40px;
-    color: #fff;
+    color: #737A82;
 }
 .dialog_join_to_room .dialog-vbox > box:first-child label:first-child {
 	font-size: 16px;
 	font-weight: 300;
     margin-bottom: 9px;
-    color: #D8DCE8;
+    color: #8895A3;
 }
 .dialog_join_to_room .dialog-vbox > box:first-child label:last-child {
 	font-size: 18px;
@@ -636,23 +578,74 @@ overshoot.top {
 .dialog_join_to_room .dialog-vbox > box:first-child {
     margin-bottom: 9px;
 }
+
+/* Members list styles */
+
 .listbox_info_members row {
     margin: 7px 7px 0 7px;
     border-radius: 5px;
     padding: 0 15px;
 }
+.listbox_info_members row button:hover {
+    opacity: .7;
+}
 .listbox_info_members row:last-child {
     margin-bottom: 7px;
 }
 .listbox_info_members row:hover {
-    background-color: #424E78;
+    background-color: rgb(229, 231, 244);
 }
 .listbox_info_members row:selected {
-	background-color: #6785FF;
+    background-color: #5771E5;
+}
+.listbox_info_members row:selected label,
+.listbox_info_members row:selected:hover {
+    color: #fff;
 }
 .listbox_info_members row:selected:hover {
-	background-color: #5F7BEE;
+    background-color: rgb(83, 107, 215);
 }
-.dialog_addroom .dialog-action-area {
-    margin-top: 15px;
+
+/* Overshoot deactivation */
+
+overshoot.bottom {
+    background-image: none;
+}
+overshoot.top {
+    background-image: none;
+}
+
+/* Stickers area stiles */
+
+.btn_stickers {
+	margin-right: 12px; 
+}
+.stickers_box {
+    padding: 2px 7px;
+}
+.stickers_box button {
+	background-image: none;
+}
+.box_stickers_header {
+	padding: 11px 25px 11px 25px;
+	border-bottom: 1px solid #CFD6EC;
+	background-color: transparent;
+}
+.box_stickers_header label {
+    color: #323B59;
+}
+.box_stickers_header button {
+	font-weight: 300;
+    font-size: 12px;
+    background-color: #5771E5;
+}
+.box_stickers_area {
+    border-left: 1px solid #CFD6EC;
+}
+.box_stickers_area grid {
+    padding: 10px;
+}
+.box_stickers_area grid button:hover, .wnd-room-info headerbar button:hover,
+.profile-settings-wnd headerbar button:hover {
+    opacity: .8;
 }

@@ -297,53 +297,6 @@
     <property name="pixel_size">17</property>
     <property name="icon_name">edit</property>
   </object>
-  <object class="GtkImage" id="image10">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="pixel_size">15</property>
-    <property name="icon_name">room-settings</property>
-  </object>
-  <object class="GtkImage" id="image11">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="pixel_size">18</property>
-    <property name="icon_name">done</property>
-  </object>
-  <object class="GtkImage" id="image12">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="pixel_size">12</property>
-    <property name="icon_name">close</property>
-  </object>
-  <object class="GtkImage" id="image13">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="pixel_size">12</property>
-    <property name="icon_name">close</property>
-  </object>
-  <object class="GtkImage" id="image14">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="pixel_size">18</property>
-    <property name="icon_name">edit-clear-symbolic</property>
-  </object>
-  <object class="GtkImage" id="image15">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="pixel_size">18</property>
-    <property name="icon_name">edit-clear-symbolic</property>
-  </object>
-  <object class="GtkImage" id="image16">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="pixel_size">26</property>
-    <property name="icon_name">stickers</property>
-  </object>
-  <object class="GtkImage" id="image17">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="icon_name">dialog-close</property>
-  </object>
   <object class="GtkImage" id="image2">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
@@ -391,6 +344,65 @@
     <property name="can_focus">False</property>
     <property name="pixel_size">15</property>
     <property name="icon_name">settings</property>
+  </object>
+  <object class="GtkImage" id="image18">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="pixel_size">15</property>
+    <property name="icon_name">dark-theme</property>
+  </object>
+  <object class="GtkImage" id="image19">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="pixel_size">15</property>
+    <property name="icon_name">light-theme</property>
+  </object>
+  <object class="GtkImage" id="image10">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="pixel_size">15</property>
+    <property name="icon_name">room-settings</property>
+  </object>
+  <object class="GtkImage" id="image11">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="pixel_size">18</property>
+    <property name="icon_name">done</property>
+  </object>
+  <object class="GtkImage" id="image12">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="pixel_size">12</property>
+    <property name="icon_name">close</property>
+  </object>
+  <object class="GtkImage" id="image13">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="pixel_size">14</property>
+    <property name="icon_name">edit-clear-symbolic</property>
+  </object>
+  <object class="GtkImage" id="image14">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="pixel_size">18</property>
+    <property name="icon_name">edit-clear-symbolic</property>
+  </object>
+  <object class="GtkImage" id="image15">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="pixel_size">18</property>
+    <property name="icon_name">edit-clear-symbolic</property>
+  </object>
+  <object class="GtkImage" id="image16">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="pixel_size">26</property>
+    <property name="icon_name">stickers</property>
+  </object>
+  <object class="GtkImage" id="image17">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="icon_name">dialog-close</property>
   </object>
   <object class="GtkImage" id="img_sticker_1">
     <property name="visible">True</property>
@@ -520,6 +532,7 @@
                 <property name="can_focus">False</property>
                 <property name="focus_on_click">False</property>
                 <property name="receives_default">True</property>
+                <property name="margin_right">7</property>
                 <property name="image">image9</property>
                 <signal name="clicked" handler="mx_widget_switch_visibility" object="dialog_profile_sett" swapped="no"/>
               </object>
@@ -527,6 +540,23 @@
                 <property name="expand">False</property>
                 <property name="fill">True</property>
                 <property name="position">2</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkButton">
+                <property name="width_request">30</property>
+                <property name="height_request">25</property>
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="focus_on_click">False</property>
+                <property name="receives_default">True</property>
+                <property name="image">image18</property>
+                <!-- <signal name="clicked" handler="mx_widget_switch_visibility" object="dialog_profile_sett" swapped="no"/> -->
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">3</property>
               </packing>
             </child>
             <style>
@@ -1084,7 +1114,6 @@
                             <property name="can_focus">False</property>
                             <property name="label" translatable="yes">Choose any room to start dialog</property>
                             <attributes>
-                              <attribute name="foreground" value="#eeeeeeeeecec"/>
                               <attribute name="absolute-size" value="20000"/>
                             </attributes>
                           </object>
@@ -1148,7 +1177,7 @@
                         <property name="can_focus">False</property>
                         <property name="valign">start</property>
                         <property name="pixel_size">16</property>
-                        <property name="icon_name">edit</property>
+                        <property name="icon_name">edit-light</property>
                       </object>
                       <packing>
                         <property name="expand">False</property>
