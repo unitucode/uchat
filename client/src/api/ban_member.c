@@ -15,9 +15,11 @@ t_dtp *mx_ban_member_request(int room_id, int user_id) {
 static bool delete_member(t_chat *chat, int room_id, int user_id) {
     t_groom *groom = mx_get_groom_by_id(room_id, chat->builder);
 
-    if (!g_hash_table_contains(groom->members, GINT_TO_POINTER(user_id)))
-        return false;
-    g_print("removed = %d\n", g_hash_table_remove(groom->members, GINT_TO_POINTER(user_id))); // TODO LEAKS
+    if (groom) {
+        if (!g_hash_table_contains(groom->members, GINT_TO_POINTER(user_id)))
+            return false;
+        g_print("removed = %d\n", g_hash_table_remove(groom->members, GINT_TO_POINTER(user_id))); // TODO LEAKS
+    }
     return true;
 }
 

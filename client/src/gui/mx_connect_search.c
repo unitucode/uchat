@@ -2,6 +2,7 @@
 
 static void req_search_global_rooms(gchar *search_name, t_chat *chat) {
     t_dtp *dtp = mx_search_rooms_request(search_name);
+puts(search_name);
 
     mx_send(chat->out, dtp);
     mx_free_request(&dtp);
@@ -24,7 +25,6 @@ void mx_start_search_room(GtkSearchEntry *sentry, t_chat *chat) {
 
 void mx_start_search_msgs(GtkSearchEntry *sentry, t_chat *chat) {
     gchar *search_text = (gchar*)gtk_entry_get_text(GTK_ENTRY(sentry));
-
     mx_clear_found_msgs(chat->builder);
     if (!strlen(search_text))
         mx_stop_search_message(NULL, NULL, chat->builder);

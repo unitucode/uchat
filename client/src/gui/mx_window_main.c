@@ -11,12 +11,16 @@ GtkBuilder *mx_init_window(int argc, char **argv) {
     return builder;
 }
 
-gint mx_start_gui(t_chat *chat) {
-    const gchar *path[] = {"../src/gui/resources"};
-    gtk_icon_theme_set_search_path(gtk_icon_theme_get_default(), path, 1);
-    GObject *desc = gtk_builder_get_object(chat->builder, "buffer_message");
+static void change_icontheme_paths(GtkBuilder *builder) {
+    const gchar *path[] = {"../src/gui/resources",
+                           "../src/gui/resources/stickers"};
+    gtk_icon_theme_set_search_path(gtk_icon_theme_get_default(), path, 2);
+    GObject *desc = gtk_builder_get_object(builder, "buffer_message");
     gtk_text_buffer_set_text(GTK_TEXT_BUFFER(desc), "Enter your message", -1);
+}
 
+gint mx_start_gui(t_chat *chat) {
+    change_icontheme_paths(chat->builder);
     gtk_main();
 
     (void)chat;

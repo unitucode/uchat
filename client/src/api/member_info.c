@@ -18,7 +18,6 @@ bool mx_member_info_handler(t_dtp *data, t_chat *chat) {
         return false;
     if (!cJSON_IsString(login))
         return false;
-    g_print("user desc = %s\n, user login = %s\n", desc->valuestring, login->valuestring);
-    (void)chat;
+    mx_show_user_info(chat->builder, login->valuestring, desc->valuestring);
     return true;
 }

@@ -19,7 +19,7 @@ bool mx_upd_user_desc_handler(t_dtp *data, t_chat *chat) {
     if (!cJSON_IsString(login))
         return false;
     //WORKING WITH GUI
-    chat++;
+    (void)chat;
     printf("new desc = %s in %s user\n", desc->valuestring, login->valuestring);
     //WORKING WITH GUI
     return true;

@@ -7,6 +7,7 @@
 
 #define MX_J_STR(m) (m) ? (m) : "(null)"
 #define MX_MAX_FILE_SIZE 50000000
+#define MX_FILES_DIR "files/"
 
 /* Protocol object
  * ----------
@@ -61,6 +62,7 @@ typedef enum s_request_type {
     RQ_STICKER,
     RQ_SEARCH_MSG,
     RQ_DEL_HIST,
+    RQ_FILE,
     RQ_COUNT_REQUEST
 }            t_request_type;
 
