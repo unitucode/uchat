@@ -1,5 +1,11 @@
 #include "client.h"
 
+static void delete_older_message(t_groom *groom) {
+    GtkListBoxRow *row = gtk_list_box_get_row_at_index(groom->box_messages, 0);
+
+    gtk_widget_destroy(GTK_WIDGET(row));
+}
+
 void mx_box_messages_reached(GtkScrolledWindow *scroll,
                              GtkPositionType pos, t_chat *chat) {
     t_groom *groom = mx_get_selected_groom(chat->builder, MX_LOCAL_ROOMS);
@@ -20,7 +26,8 @@ void mx_box_messages_reached(GtkScrolledWindow *scroll,
     if (pos == GTK_POS_BOTTOM) {
         chat->upl_old_msgs = true;
         while (groom->uploaded > MX_BUF_MSGS) {
-            g_message("delete message here client/src/gui/mx_messages_top_reached.c \n");
+            puts("DELETE OLD MSG");
+            delete_older_message(groom);
             groom->uploaded--;
         }
         chat->upl_old_msgs = false;
