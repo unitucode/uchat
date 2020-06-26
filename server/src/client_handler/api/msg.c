@@ -1,7 +1,7 @@
 #include "api.h"
 
 /*
- * Function: get_resend_msg
+ * Function: mx_msg_request
  * -------------------------------
  * Creates request "new message"
  * 
@@ -9,7 +9,7 @@
  * 
  * returns: new request
  */
-static t_dtp *get_resend_msg(t_db_message *msg) {
+t_dtp *mx_msg_request(t_db_message *msg) {
     cJSON *send_msg = cJSON_CreateObject();
 
     if (!cJSON_AddNumberToObject(send_msg, "type", RQ_MSG))
@@ -55,7 +55,7 @@ bool mx_msg_handler(t_dtp *data, t_client *client) { // TODO leaks
         return false;
     msg->user_id = client->user->user_id;
     mx_insert_message(client->info->database, msg);
-    resend = get_resend_msg(msg);
+    resend = mx_msg_request(msg);
     mx_send_to_all(resend, client, msg->room_id);
     mx_free_request(&resend);
     return true;
