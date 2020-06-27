@@ -12,10 +12,12 @@ static void mx_scroll_to_end(GtkAdjustment *adj) {
     g_print("last_curr = %f\n", last_curr);
     g_print("curr = %f\n", curr);
     if (last_curr < curr)
-        gtk_adjustment_set_value(adj, last_curr);
-    else if (curr == last_curr && curr == last_upper) {
+        gtk_adjustment_set_value(adj, curr);
+    else if (last_upper < upper) {
+        upper = gtk_adjustment_get_upper(adj);
         g_print("set to %f\n", upper);
         gtk_adjustment_set_value(adj, upper);
+        curr = gtk_adjustment_get_value(adj) + lower;
     }
     last_curr = curr;
     last_upper = upper;
