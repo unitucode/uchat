@@ -1,5 +1,15 @@
 #include  "server.h"
 
+/*
+ * Function:  mx_insert_contact
+ * adds an entry to the user contact database
+ * 
+ * db: closed database structure
+ * user_id: user ID of the contact owner
+ * contact_id: the user with whom the contact exists
+ * type: contact type
+ */
+
 void mx_insert_contact(sqlite3 *db, guint64 user_id, guint64 contact_id,
                        gint8 type) {
     sqlite3_str *sqlite_str = sqlite3_str_new(db);
@@ -14,6 +24,15 @@ void mx_insert_contact(sqlite3 *db, guint64 user_id, guint64 contact_id,
     sqlite3_free(request);
 }
 
+/*
+ * Function: mx_delete_contact
+ * deletes a record from users' contact data
+ * 
+ * db: closed database structure
+ * user_id: user ID of the contact owner
+ * contact_id: the user with whom the contact exists
+ */
+
 void mx_delete_contact(sqlite3 *db, guint64 user_id, guint64 contact_id) {
     sqlite3_str *sqlite_str = sqlite3_str_new(db);
     gchar *request = NULL;
@@ -26,6 +45,14 @@ void mx_delete_contact(sqlite3 *db, guint64 user_id, guint64 contact_id) {
     sqlite3_free(request);
 }
 
+/*
+ * Function: create_object_contact
+ * creates and returns an json object with the contact
+ * information it takes from the database using the stmt object
+ * 
+ * stmt: the sql operator is compiled in binary form
+ */
+
 static cJSON *create_object_contact(sqlite3_stmt *stmt) {
     cJSON *contact = cJSON_CreateObject();
 
@@ -35,6 +62,18 @@ static cJSON *create_object_contact(sqlite3_stmt *stmt) {
     cJSON_AddNumberToObject(contact, "type", sqlite3_column_int(stmt, 2));
     return contact;
 }
+
+/*
+ * Function: mx_get_contacts
+ * takes from the database all records about
+ * the specified type of user contacts and returns in json format
+ * 
+ * db: closed database structure
+ * user_id: user id
+ * type: type of contacts
+ * 
+ * return: json array, if contacts not found return empty array json
+ */
 
 cJSON *mx_get_contacts(sqlite3 *db, guint64 user_id, gint8 type) {
     sqlite3_stmt *stmt;

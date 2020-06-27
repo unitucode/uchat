@@ -1,5 +1,12 @@
 #include "server.h"
 
+/*
+ * Function: mx_create_table
+ * creates all initial tables in the database
+ * 
+ * db: closed database structure
+ */
+
 void mx_create_table(sqlite3 *db) {
     sqlite3_exec(db, "create table if not exists contacts("
                      "user_id       integer not null,"
@@ -22,6 +29,13 @@ void mx_create_table(sqlite3 *db) {
     mx_create_table_messages(db);
 }
 
+/*
+ * Function: mx_create_table_messages
+ * Create table messages
+ * 
+ * db: closed database structure
+ */
+
 void mx_create_table_messages(sqlite3 *db) {
     sqlite3_exec(db, "create table if not exists messages("
                      "user_id       integer             not null,"
@@ -36,6 +50,13 @@ void mx_create_table_messages(sqlite3 *db) {
                      "date_dead     integer             not null);", 0, 0, 0);
 }
 
+/*
+ * Function: mx_create_table_users
+ * create table users
+ * 
+ * db: closed database structure
+ */
+
 void mx_create_table_users(sqlite3 *db) {
     sqlite3_exec(db, "create table if not exists users("
                            "id             integer primary key not null,"
@@ -47,6 +68,13 @@ void mx_create_table_users(sqlite3 *db) {
                            "desc           text                );",
                  0, 0, 0);
 }
+
+/*
+ * Function: mx_create_table_rooms
+ * create table rooms
+ * 
+ * db: closed database structure
+ */
 
 void mx_create_table_rooms(sqlite3 *db) {
     sqlite3_exec(db, "create table if not exists rooms("
