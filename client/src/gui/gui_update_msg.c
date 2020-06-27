@@ -42,7 +42,7 @@ void mx_gupd_msg_text(int msg_id, int room_id,
 
     mx_free((void **)&(gmsg->msg));
     gmsg->msg = mx_strdup(text);
-    gtk_label_set_text(gmsg->label_text, gmsg->msg);
+    gtk_label_set_markup(gmsg->label_text, mx_format_text(gmsg->msg));
     gtk_widget_show_all(GTK_WIDGET(gmsg->label_text));
     mx_unselect_curr_room_messages(builder);
 }
