@@ -1,75 +1,32 @@
 #include "client.h"
 
 static void mx_scroll_to_end(GtkAdjustment *adj, gpointer user_data) {
-    // static gdouble last_value = 0;
-    // static gdouble last_upper = 0;
-
-<<<<<<< HEAD
+    static gdouble last_value = 0;
+    static gdouble last_upper = 0;
+    t_groom *room = (t_groom*)user_data;
     gdouble upper = gtk_adjustment_get_upper(adj);
-    gdouble value = gtk_adjustment_get_value(adj);
-    // gdouble lower = gtk_adjustment_get_lower(adj);
+    gdouble upper_f = upper - last_upper;
 
-    if (last_value < value) {
-        printf("\nset up value one\n");
-        gtk_adjustment_set_value(adj, value);
-    }
-    else if (last_upper < upper) {
-        g_print("value          == %f\n", gtk_adjustment_get_value(adj));
-        g_print("lower          == %f\n", gtk_adjustment_get_lower(adj));
-        g_print("upper          == %f\n", gtk_adjustment_get_upper(adj));
-        g_print("page_size      == %f\n", gtk_adjustment_get_page_size(adj));
-        value = (upper - gtk_adjustment_get_page_size(adj));
-        g_print("\nset up value -> %f\n", value);
-        gtk_adjustment_set_value(adj, value);
-    }
-    else if (value < last_value) {
-        if(last_upper)
+    gdouble value = last_value + upper_f;
+    gtk_adjustment_set_value(adj, value);
+    if (room->uploaded == MX_BUF_MSGS) {
+        if (last_upper) {
             upper = last_upper;
-        gtk_adjustment_set_upper(adj, upper);
-        value = (upper - gtk_adjustment_get_page_size(adj));
-        g_print("\nset up value -> %f\n", value);
-        gtk_adjustment_set_value(adj, value);
+            gtk_adjustment_set_upper(adj, upper);
+        }
     }
-    g_print("\nvalue          == %f\n", gtk_adjustment_get_value(adj));
-    g_print("lower          == %f\n", gtk_adjustment_get_lower(adj));
-    g_print("upper          == %f\n", gtk_adjustment_get_upper(adj));
-    g_print("page_size      == %f\n", gtk_adjustment_get_page_size(adj));
-    g_print("last_value     == %f\n", last_value);
-    g_print("lasr_upper     == %f\n\n", last_upper);
-    last_value = gtk_adjustment_get_value(adj);
-    last_upper = upper;
-=======
-    // gdouble upper = gtk_adjustment_get_upper(adj);
-    // gdouble value = gtk_adjustment_get_value(adj);
-    // gdouble lower = gtk_adjustment_get_lower(adj);
+    else if (room->uploaded > MX_BUF_MSGS) {}
+    value = last_value + upper_f;
+    gtk_adjustment_set_value(adj, value);
 
-    // if (last_value < value)
-    //     gtk_adjustment_set_value(adj, value);
-    // else if (last_upper < upper && lower == 0) {
-    //     g_print("\nset up value -> %f\n", value);
-    //     g_print("value          == %f\n", gtk_adjustment_get_value(adj));
-    //     g_print("lower          == %f\n", gtk_adjustment_get_lower(adj));
-    //     g_print("upper          == %f\n", gtk_adjustment_get_upper(adj));
-    //     g_print("step increment == %f\n", gtk_adjustment_get_step_increment(adj));
-    //     g_print("page increment == %f\n", gtk_adjustment_get_page_increment(adj));
-    //     g_print("page size      == %f\n\n", gtk_adjustment_get_page_size(adj));
-    //     gtk_adjustment_set_upper(adj, last_upper);
-    //     value = (upper - gtk_adjustment_get_page_size(adj));
-    //     gtk_adjustment_set_value(adj, value);
-    // }
-    // g_print("\nvalue          == %f\n", gtk_adjustment_get_value(adj));
-    // g_print("lower          == %f\n", gtk_adjustment_get_lower(adj));
-    // g_print("upper          == %f\n", gtk_adjustment_get_upper(adj));
-    // g_print("step increment == %f\n", gtk_adjustment_get_step_increment(adj));
-    // g_print("page increment == %f\n", gtk_adjustment_get_page_increment(adj));
-    // g_print("page size      == %f\n", gtk_adjustment_get_page_size(adj));
-    // g_print("last_value     == %f\n", last_value);
-    // g_print("lasr_upper     == %f\n\n", last_upper);
-    // last_value = gtk_adjustment_get_value(adj);
-    // last_upper = upper;
-    (void)adj;
-    (void)user_data;
->>>>>>> 294d35117917148cfebb96bbc147751828a14105
+    g_print("\nvalue    == %f\n", gtk_adjustment_get_value(adj));
+    g_print("last_value == %f\n\n", last_value);
+    g_print("\nlower      == %f\n", gtk_adjustment_get_lower(adj));
+    g_print("upper      == %f\n", gtk_adjustment_get_upper(adj));
+    g_print("last_upper == %f\n", last_upper);
+    g_print("page_size  == %f\n\n", gtk_adjustment_get_page_size(adj));
+    last_value = gtk_adjustment_get_value(adj);
+    last_upper = gtk_adjustment_get_upper(adj);
 }
 
 /*
