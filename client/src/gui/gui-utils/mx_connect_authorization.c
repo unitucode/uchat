@@ -19,7 +19,7 @@ static void req_signup(t_chat *chat) {
     gchar *login = mx_get_buffer_text("buffer_login", chat->builder);
     gchar *password = mx_get_buffer_text("buffer_password", chat->builder);
     gchar *confirm = mx_get_buffer_text("buffer_password_confirm",
-                                       chat->builder);
+                                        chat->builder);
 
     if (is_valid_auth_data(login, password, GTK_LABEL(label_error))) {
         if (!strcmp(password, confirm))
