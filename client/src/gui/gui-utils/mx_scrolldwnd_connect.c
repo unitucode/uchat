@@ -6,28 +6,33 @@ static void mx_scroll_to_end(GtkAdjustment *adj) {
 
     gdouble upper = gtk_adjustment_get_upper(adj);
     gdouble value = gtk_adjustment_get_value(adj);
-    gdouble lower = gtk_adjustment_get_lower(adj);
+    // gdouble lower = gtk_adjustment_get_lower(adj);
 
-    if (last_value < value)
+    if (last_value < value) {
+        printf("\nset up value one\n");
         gtk_adjustment_set_value(adj, value);
-    else if (last_upper < upper && lower == 0) {
-        g_print("\nset up value -> %f\n", value);
+    }
+    else if (last_upper < upper) {
         g_print("value          == %f\n", gtk_adjustment_get_value(adj));
         g_print("lower          == %f\n", gtk_adjustment_get_lower(adj));
         g_print("upper          == %f\n", gtk_adjustment_get_upper(adj));
-        g_print("step increment == %f\n", gtk_adjustment_get_step_increment(adj));
-        g_print("page increment == %f\n", gtk_adjustment_get_page_increment(adj));
-        g_print("page size      == %f\n\n", gtk_adjustment_get_page_size(adj));
-        gtk_adjustment_set_upper(adj, last_upper);
+        g_print("page_size      == %f\n", gtk_adjustment_get_page_size(adj));
         value = (upper - gtk_adjustment_get_page_size(adj));
+        g_print("\nset up value -> %f\n", value);
+        gtk_adjustment_set_value(adj, value);
+    }
+    else if (value < last_value) {
+        if(last_upper)
+            upper = last_upper;
+        gtk_adjustment_set_upper(adj, upper);
+        value = (upper - gtk_adjustment_get_page_size(adj));
+        g_print("\nset up value -> %f\n", value);
         gtk_adjustment_set_value(adj, value);
     }
     g_print("\nvalue          == %f\n", gtk_adjustment_get_value(adj));
     g_print("lower          == %f\n", gtk_adjustment_get_lower(adj));
     g_print("upper          == %f\n", gtk_adjustment_get_upper(adj));
-    g_print("step increment == %f\n", gtk_adjustment_get_step_increment(adj));
-    g_print("page increment == %f\n", gtk_adjustment_get_page_increment(adj));
-    g_print("page size      == %f\n", gtk_adjustment_get_page_size(adj));
+    g_print("page_size      == %f\n", gtk_adjustment_get_page_size(adj));
     g_print("last_value     == %f\n", last_value);
     g_print("lasr_upper     == %f\n\n", last_upper);
     last_value = gtk_adjustment_get_value(adj);
