@@ -12,15 +12,11 @@ t_dtp *mx_upd_user_desc_request(char *desc) {
 
 bool mx_upd_user_desc_handler(t_dtp *data, t_chat *chat) {
     cJSON *desc = cJSON_GetObjectItemCaseSensitive(data->json, "desc");
-    cJSON *login = cJSON_GetObjectItemCaseSensitive(data->json, "name");
 
     if (!cJSON_IsString(desc))
         return false;
-    if (!cJSON_IsString(login))
-        return false;
-    //WORKING WITH GUI
-    chat++;
-    printf("new desc = %s in %s user\n", desc->valuestring, login->valuestring);
-    //WORKING WITH GUI
+    if (chat->desc)
+        g_free(chat->desc);
+    chat->desc = g_strdup(desc->valuestring);
     return true;
 }

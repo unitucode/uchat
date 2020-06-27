@@ -7,7 +7,7 @@
 /*
  * Requests
  */
-t_dtp *mx_token_request(char *token, char *login);
+t_dtp *mx_token_request(char *token, char *login, char *desc);
 t_dtp *mx_error_msg_request(int error_code, char *msg);
 t_dtp *mx_log_out_request(char *token);
 t_dtp *mx_upd_room_desc_request(int room_id, char *room_name);
@@ -20,6 +20,7 @@ t_dtp *mx_delete_room_request(int room_id);
 t_dtp *mx_ban_member_request(int room_id, int user_id);
 t_dtp *mx_search_msgs_request(cJSON *array);
 t_dtp *mx_del_hist_request(int room_id);
+t_dtp *mx_msg_request(t_db_message *msg);
 
 /*
  * Handlers for requests
@@ -46,6 +47,7 @@ bool mx_ban_member_handler(t_dtp *ban, t_client *client);
 bool mx_search_msgs_handler(t_dtp *data, t_client *client);
 bool mx_del_hist_handler(t_dtp *msg, t_client *client);
 bool mx_old_msgs_handler(t_dtp *data, t_client *client);
+bool mx_upload_file_handler(t_dtp *file, t_client *client);
 
 /*
  * Main request handler

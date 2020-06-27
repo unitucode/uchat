@@ -8,7 +8,7 @@
  * client: client that sent valid authorization data
  */
 void mx_correct_data(t_client *client) {
-    t_dtp *dtp = mx_token_request((char*)client->user->token, (char*)client->user->login);
+    t_dtp *dtp = mx_token_request((char*)client->user->token, (char*)client->user->login, client->user->desc);
 
     mx_send(client->out, dtp);
     mx_logger(MX_LOG_FILE, LOGMSG, "Logged in: %s\n", client->user->login);

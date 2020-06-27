@@ -1,18 +1,9 @@
 #include "client.h"
 
 // SIGNAL-HANDLERS
-    void mx_reset_addroom(GtkButton *btn, GtkBuilder *builder)
-{
-    GObject *button = gtk_builder_get_object(builder, "checkbtn_private");
-
+void mx_reset_addroom(GtkButton *btn, GtkBuilder *builder) {
     mx_clear_buffer_text("buffer_roomname", builder);
-    mx_clear_buffer_text("buffer_roompass", builder);
-    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button), 0);
     (void)btn;
-}
-
-void mx_make_private(GtkToggleButton *btn, GtkWidget *widget) {
-    gtk_widget_set_sensitive(widget, gtk_toggle_button_get_active(btn));
 }
 
 void mx_set_current_room_sett(GtkBuilder *builder) {
@@ -28,6 +19,7 @@ void mx_set_current_room_sett(GtkBuilder *builder) {
         gtk_text_buffer_set_text(GTK_TEXT_BUFFER(desc), groom->desc, -1);
         gtk_label_set_text(GTK_LABEL(customer), groom->customer);
         gtk_label_set_text(GTK_LABEL(header_name), groom->room_name);
+        mx_set_room_members(builder, groom);
     }
 }
 
@@ -44,8 +36,7 @@ void mx_select_room(GtkWidget *event_box, GdkEventButton *event,
                             data->groom->row_room);
     mx_set_current_room_sett(data->chat->builder);
     mx_set_room_widgets_visibility(data->chat->builder, true);
-    puts(data->chat->login);
-    puts(data->groom->customer);
+    mx_widget_remove_class(GTK_WIDGET(data->groom->label_name), "has-messages");
     if (!g_strcmp0(data->chat->login, data->groom->customer))
         mx_widget_set_visibility(GTK_WIDGET(btn_room_sett), TRUE);
     else
