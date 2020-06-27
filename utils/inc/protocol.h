@@ -62,7 +62,8 @@ typedef enum s_request_type {
     RQ_STICKER,
     RQ_SEARCH_MSG,
     RQ_DEL_HIST,
-    RQ_FILE,
+    RQ_UPLOAD_FILE,
+    RQ_DOWNLOAD_FILE,
     RQ_COUNT_REQUEST
 }            t_request_type;
 
