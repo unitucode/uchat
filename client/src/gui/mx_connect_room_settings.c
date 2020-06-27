@@ -1,5 +1,14 @@
 #include "client.h"
 
+void mx_clear_history_set_roomname(GtkButton *btn, GtkBuilder *builder) {
+    t_groom *groom = mx_get_selected_groom(builder,  MX_LOCAL_ROOMS);
+    GObject *label = gtk_builder_get_object(builder,
+                                            "label_clear_history_roomname");
+    
+    gtk_label_set_text(GTK_LABEL(label), groom->room_name);
+    (void)btn;
+}
+
 static void set_room_sett(GtkButton *btn, t_chat *chat) {
     GtkEntry *name = GTK_ENTRY(gtk_builder_get_object(chat->builder,
                                                       "entry_roomsett_name"));
@@ -32,6 +41,15 @@ static void req_room_sett(GtkButton *btn, t_chat *chat) {
     (void)btn;
 }
 
+static void req_room_clear(GtkButton *btn, t_chat *chat) {
+    t_groom *groom = mx_get_selected_groom(chat->builder, MX_LOCAL_ROOMS);
+    t_dtp *dtp = mx_del_hist_request(groom->id);
+
+    mx_send(chat->out, dtp);
+    mx_free_request(&dtp);
+    (void)btn;
+}
+
 static void req_room_del(GtkButton *btn, t_chat *chat) {
     t_groom *groom = mx_get_selected_groom(chat->builder, MX_LOCAL_ROOMS);
     t_dtp *dtp = mx_del_room_request(groom->id);
@@ -47,9 +65,12 @@ void mx_connect_room_settings(t_chat *chat) {
     GObject *btn_apply = gtk_builder_get_object(chat->builder,
                                                 "btn_roomsett_apply");
     GObject *btn_delete = gtk_builder_get_object(chat->builder,
-                                                  "btn_roomsett_delete");
+                                                 "btn_roomsett_delete");
+    GObject *btn_clear = gtk_builder_get_object(chat->builder,
+                                                "btn_clear_history");
 
     g_signal_connect(btn_sett, "clicked", G_CALLBACK(set_room_sett), chat);
     g_signal_connect(btn_apply, "clicked", G_CALLBACK(req_room_sett), chat);
+    g_signal_connect(btn_clear, "clicked", G_CALLBACK(req_room_clear), chat);
     g_signal_connect(btn_delete, "clicked", G_CALLBACK(req_room_del), chat);
 }

@@ -35,7 +35,9 @@ bool mx_upd_user_desc_handler(t_dtp *desc_data, t_client *client) {
     
     if (!cJSON_IsString(desc))
         return false;
+    g_print("here");
     mx_edit_desc_user(client->info->database, client->user->user_id, desc->valuestring);
+    g_print("here");
     resend = mx_upd_user_desc_request(desc->valuestring);
     mx_send(client->out, resend);
     mx_free_request(&resend);
