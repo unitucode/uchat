@@ -8,14 +8,20 @@ static void mx_scroll_to_end(GtkAdjustment *adj) {
     gdouble curr = gtk_adjustment_get_value(adj) + lower;
 
     g_print("\n\nupper = %f\n", upper);
+    g_print("curr = %f\n", curr);
     g_print("last_upper = %f\n", last_upper);
     g_print("last_curr = %f\n", last_curr);
-    g_print("curr = %f\n", curr);
-    if (last_curr < curr)
+    if (last_curr < curr) {
+        last_curr = curr;
+        g_print("set to last_curr %f\n", last_curr);
         gtk_adjustment_set_value(adj, last_curr);
-    else if (curr == last_curr && curr == last_upper) {
-        g_print("set to %f\n", upper);
+        gtk_adjustment_set_upper(adj, upper);
+    }
+    else if (last_upper < upper) {
+        g_print("set to upper %f\n", upper);
         gtk_adjustment_set_value(adj, upper);
+        gtk_adjustment_set_upper(adj, upper);
+        curr = upper;
     }
     last_curr = curr;
     last_upper = upper;
