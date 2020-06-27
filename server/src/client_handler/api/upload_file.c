@@ -65,7 +65,7 @@ bool mx_upload_file_handler(t_dtp *data, t_client *client) {
     if (mx_get_type_member(client->info->database, client->user->user_id, room_id->valueint) == DB_BANNED)
         return false;
     filename = g_strdup_printf(
-        "%s%llu%s%s", MX_FILES_DIR, mx_get_time(DB_MICROSECOND),
+        "%s%lu%s%s", MX_FILES_DIR, mx_get_time(DB_MICROSECOND),
         client->user->login, name->valuestring);
     if (!read_file(client, size->valueint, filename)) {
         g_free(filename);
