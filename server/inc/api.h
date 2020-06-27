@@ -21,6 +21,7 @@ t_dtp *mx_ban_member_request(int room_id, int user_id);
 t_dtp *mx_search_msgs_request(cJSON *array);
 t_dtp *mx_del_hist_request(int room_id);
 t_dtp *mx_msg_request(t_db_message *msg);
+t_dtp *mx_size_request(goffset size, gchar *name);
 
 /*
  * Handlers for requests
@@ -48,6 +49,7 @@ bool mx_search_msgs_handler(t_dtp *data, t_client *client);
 bool mx_del_hist_handler(t_dtp *msg, t_client *client);
 bool mx_old_msgs_handler(t_dtp *data, t_client *client);
 bool mx_upload_file_handler(t_dtp *file, t_client *client);
+bool mx_download_file_handler(t_dtp *data, t_client *client);
 
 /*
  * Main request handler

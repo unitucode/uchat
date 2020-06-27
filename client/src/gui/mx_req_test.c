@@ -1,7 +1,8 @@
 #include "client.h"
 
 static void req_test(GtkButton *btn, t_chat *chat) {
-    mx_upload_file("/Users/okhomin/Desktop/ucode/uchat/uchat/client/src/gui/resources/add-room.png", 1, chat);
+    // mx_upload_file("/Users/okhomin/Desktop/ucode/uchat/uchat/client/src/gui/resources/add-room.png", 1, chat);
+    mx_download_file(1, 2, chat);
     // t_groom *room = mx_get_groom_by_id(1, chat->builder);
     // mx_widget_set_class(GTK_WIDGET(room->label_name), "has-messages");
     // t_dtp *request = mx_search_rooms_request("1");

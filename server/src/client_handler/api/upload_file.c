@@ -7,7 +7,7 @@ static gboolean read_file(t_client *client, gsize size, char *name) {
     char buf[MX_BUF_FILE + 1];
     gssize read = 0;
     gsize bytes = 0;
-
+    //SET NEW NAME IF EXISTS
     if (size <= MX_MAX_FILE_SIZE) {
         while ((read = g_input_stream_read(client->in_s, buf, size, NULL, NULL)) > 0) {
             bytes += read;
@@ -65,7 +65,7 @@ bool mx_upload_file_handler(t_dtp *data, t_client *client) {
     if (mx_get_type_member(client->info->database, client->user->user_id, room_id->valueint) == DB_BANNED)
         return false;
     filename = g_strdup_printf(
-        "%s%llu%s%s", MX_FILES_DIR, mx_get_time(DB_MICROSECOND),
+        "%s%"G_GUINT64_FORMAT"%s%s", MX_FILES_DIR, mx_get_time(DB_MICROSECOND),
         client->user->login, name->valuestring);
     if (!read_file(client, size->valueint, filename)) {
         g_free(filename);
@@ -74,5 +74,6 @@ bool mx_upload_file_handler(t_dtp *data, t_client *client) {
     resend_file(client, filename, room_id->valueint);
     g_io_stream_close(G_IO_STREAM(client->conn), NULL, NULL);
     g_free(filename);
+    mx_free_user(&client->user);
     return true;
 }

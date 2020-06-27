@@ -39,9 +39,10 @@ void mx_init_receiver(t_info *chat) {
     chat->request_handler[RQ_UPD_USER_DESC] = mx_upd_user_desc_handler;
     chat->request_handler[RQ_EDIT_MSG] = mx_edit_msg_handler;
     chat->request_handler[RQ_SEARCH_MSG] = mx_search_msgs_handler;
-    chat->request_handler[RQ_FILE] = mx_upload_file_handler;
+    chat->request_handler[RQ_UPLOAD_FILE] = mx_upload_file_handler;
     chat->request_handler[RQ_RECONNECT] = NULL;
     chat->request_handler[RQ_OLD_MSGS] = mx_old_msgs_handler;
+    chat->request_handler[RQ_DOWNLOAD_FILE] = mx_download_file_handler;
     mx_init_room_handlers(chat);
 }
 
@@ -63,7 +64,8 @@ bool mx_handle_request(char *request, t_client *client) {
         if (client->user || data->type == RQ_LOG_IN
             || data->type == RQ_SIGN_UP
             || data->type == RQ_TOKEN
-            || data->type == RQ_FILE) {
+            || data->type == RQ_UPLOAD_FILE
+            || data->type == RQ_DOWNLOAD_FILE) {
             if (!client->info->request_handler[data->type]
                 || !client->info->request_handler[data->type](data, client)) {
                     return false;

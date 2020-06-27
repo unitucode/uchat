@@ -158,6 +158,7 @@ bool mx_ban_member_handler(t_dtp *data, t_chat *chat); //HANDLER FOR BAN MEMBER
 bool mx_search_msgs_handler(t_dtp *data, t_chat *chat); //HANDLER FOR SEARCH MSG
 bool mx_del_hist_handler(t_dtp *data, t_chat *chat); //HANDLER FOR DELETE HISTORY
 bool mx_old_msgs_hanlder(t_dtp *data, t_chat *chat); //HANDLER FOR UPD MSGS
+void mx_download_file(guint64 room_id, guint64 msg_id, t_chat *chat);
 
 
 /*
@@ -195,6 +196,7 @@ t_dtp *mx_search_msgs_request(char *msg, int room_id); // FOR SEARCH MSGS
 t_dtp *mx_del_hist_request(int room_id); // FOR DELETE HISTORY
 t_dtp *mx_old_msgs_request(guint64 date, int room_id); // FOR UPD MSGS REQUEST
 t_dtp *mx_upload_file_request(const char *name, goffset size, char *token, gint room_id); // FOR FILE
+t_dtp *mx_download_file_request(guint64 room_id, guint64 msg_id, gchar *token);
 
 //errors api
 void mx_err_auth_data_handler(GtkBuilder *builder);
@@ -274,7 +276,7 @@ void mx_show_user_info(GtkBuilder *builder, gchar *login, gchar *desc);
 void mx_gupd_clear_history(GtkBuilder *builder, gint room_id);
 
 // gui utils
-void mx_scrlldwnd_connect(gchar *name, GtkWidget *scroll, GtkBuilder *builder);
+void mx_scrlldwnd_connect(gchar *name, GtkWidget *scroll, GtkBuilder *builder, t_chat *chat);
 gchar *mx_entry_get_text(gchar *entry_name, GtkBuilder *builder);
 gchar *mx_get_buffer_text(gchar *buff_name, GtkBuilder *builder);
 void mx_clear_buffer_text(gchar *buff_name, GtkBuilder *builder);
