@@ -264,6 +264,9 @@ void mx_gupd_clear_history(GtkBuilder *builder, gint room_id);
 void mx_search_members(GtkBuilder *builder, gchar *search_login);
 gboolean mx_stop_search_members(gpointer *entry,
                                 gpointer *data, GtkBuilder *builder);
+void mx_msgcreate_own_content(GtkWidget *box_info, t_gmsg *gmsg);
+void mx_msgcreate_content(GtkWidget *box_main,
+                          GtkWidget *box_info, t_gmsg *gmsg);
 
 // gui utils
 void mx_scrlldwnd_connect(gchar *name, GtkWidget *scroll, GtkBuilder *builder);
