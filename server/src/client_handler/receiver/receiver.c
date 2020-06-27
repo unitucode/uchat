@@ -42,6 +42,7 @@ void mx_init_receiver(t_info *chat) {
     chat->request_handler[RQ_UPLOAD_FILE] = mx_upload_file_handler;
     chat->request_handler[RQ_RECONNECT] = NULL;
     chat->request_handler[RQ_OLD_MSGS] = mx_old_msgs_handler;
+    chat->request_handler[RQ_DOWNLOAD_FILE] = mx_download_file_handler;
     mx_init_room_handlers(chat);
 }
 

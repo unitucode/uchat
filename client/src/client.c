@@ -6,6 +6,10 @@ static void change_working_dir(void) {
         mx_elogger(NULL, LOGERR,
                    "No working directory %s\n", MX_CLIENT);
     }
+    if (g_mkdir_with_parents(MX_FILES_DIR, 0755)) {
+        mx_elogger(NULL, LOGERR,
+                   "No files directory %s\n", MX_FILES_DIR);
+    }
     #else
     mx_elogger(NULL, LOGERR, "No working directory");
     #endif
