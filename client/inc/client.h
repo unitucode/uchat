@@ -276,7 +276,7 @@ void mx_show_user_info(GtkBuilder *builder, gchar *login, gchar *desc);
 void mx_gupd_clear_history(GtkBuilder *builder, gint room_id);
 
 // gui utils
-void mx_scrlldwnd_connect(gchar *name, GtkWidget *scroll, GtkBuilder *builder, t_chat *chat);
+void mx_scrlldwnd_connect(gchar *name, GtkWidget *scroll, GtkBuilder *builder, t_groom *room);
 gchar *mx_entry_get_text(gchar *entry_name, GtkBuilder *builder);
 gchar *mx_get_buffer_text(gchar *buff_name, GtkBuilder *builder);
 void mx_clear_buffer_text(gchar *buff_name, GtkBuilder *builder);
