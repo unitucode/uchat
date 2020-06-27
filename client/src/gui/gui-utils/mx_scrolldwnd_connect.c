@@ -1,6 +1,6 @@
 #include "client.h"
 
-static void mx_scroll_to_end(GtkAdjustment *adj) {
+static void mx_scroll_to_end(GtkAdjustment *adj, gpointer user_data) {
     // static gdouble last_value = 0;
     // static gdouble last_upper = 0;
 
@@ -33,13 +33,14 @@ static void mx_scroll_to_end(GtkAdjustment *adj) {
     // last_value = gtk_adjustment_get_value(adj);
     // last_upper = upper;
     (void)adj;
+    (void)user_data;
 }
 
 /*
  * Do GtkScrolledWindow autoscroll to down by name or pointer
  */
-void mx_scrlldwnd_connect(gchar *name,
-                          GtkWidget *scroll, GtkBuilder *builder) {
+void mx_scrlldwnd_connect(gchar *name, GtkWidget *scroll,
+                          GtkBuilder *builder, t_chat *chat) {
     GtkWidget *scrlldwnd = NULL;
     GtkAdjustment *adj = NULL;
 
@@ -48,5 +49,5 @@ void mx_scrlldwnd_connect(gchar *name,
     else
         scrlldwnd = scroll;
     adj = gtk_scrolled_window_get_vadjustment(GTK_SCROLLED_WINDOW(scrlldwnd));
-    g_signal_connect(adj, "changed", G_CALLBACK(mx_scroll_to_end), NULL);
+    g_signal_connect(adj, "changed", G_CALLBACK(mx_scroll_to_end), chat);
 }

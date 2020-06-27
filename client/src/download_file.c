@@ -71,6 +71,7 @@ static void file_ready(GObject *source_object, GAsyncResult *res,
         return;
     }
     file_read(size->valuedouble, name->valuestring, in_s);
+    g_io_stream_close(G_IO_STREAM(user_data), NULL, NULL);
 }
 
 void mx_download_file(guint64 room_id, guint64 msg_id, t_chat *chat) {
