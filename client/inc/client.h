@@ -326,6 +326,12 @@ void mx_req_room_del(GtkButton *btn, t_chat *chat);
 void mx_start_search_room(GtkSearchEntry *sentry, t_chat *chat);
 void mx_start_search_msgs(GtkSearchEntry *sentry, t_chat *chat);
 void mx_start_search_members(GtkSearchEntry *sentry, t_chat *chat);
+void mx_reset_addroom(GtkButton *btn, GtkBuilder *builder);
+void mx_set_current_room_sett(GtkBuilder *builder);
+void mx_select_room(GtkWidget *event_box, GdkEventButton *event,
+                    gpointer *user_data);
+void mx_show_join_to_room(GtkWidget *event_box, GdkEventButton *event,
+                          gpointer *user_data);
 
 // void mx_upload_file(gchar *path, gint room_id, t_chat *chat);
 bool mx_handle_request(char *request, t_chat *chat);
