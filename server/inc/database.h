@@ -165,3 +165,4 @@ gint8 mx_get_type_member(sqlite3 *db, guint64 user_id, guint64 room_id);
 // message
 gboolean mx_is_owner_msg(sqlite3 *db, guint64 user_id, guint64 msg_id);
 cJSON *mx_get_object_message(sqlite3_stmt *stmt);
+gchar *mx_get_text_message_by_id(sqlite3 *db, guint64 message_id);
