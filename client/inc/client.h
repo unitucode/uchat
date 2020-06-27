@@ -267,6 +267,7 @@ gboolean mx_stop_search_members(gpointer *entry,
 void mx_msgcreate_own_content(GtkWidget *box_info, t_gmsg *gmsg);
 void mx_msgcreate_content(GtkWidget *box_main,
                           GtkWidget *box_info, t_gmsg *gmsg);
+t_groom *mx_init_groom();
 
 // gui utils
 void mx_scrlldwnd_connect(gchar *name, GtkWidget *scroll, GtkBuilder *builder);
