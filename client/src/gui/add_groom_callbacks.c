@@ -13,6 +13,7 @@ void mx_set_current_room_sett(GtkBuilder *builder) {
     GObject *desc = gtk_builder_get_object(builder, "buffer_room_desc");
     GObject *header_name = gtk_builder_get_object(builder,
                                                   "label_header_roomname");
+
     if (groom) {
         gtk_label_set_text(GTK_LABEL(name), groom->room_name);
         gtk_text_buffer_set_text(GTK_TEXT_BUFFER(desc), groom->desc, -1);
