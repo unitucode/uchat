@@ -192,7 +192,7 @@ t_dtp *mx_ban_member_request(guint64 room_id, guint64 user_id); // FOR BAN MEMBE
 t_dtp *mx_sticker_request(char *sticker, int room_id); // FOR STICKER
 t_dtp *mx_search_msgs_request(char *msg, int room_id); // FOR SEARCH MSGS
 t_dtp *mx_del_hist_request(guint64 room_id); // FOR DELETE HISTORY
-t_dtp *mx_old_msgs_request(guint64 date, int room_id); // FOR UPD MSGS REQUEST
+t_dtp *mx_old_msgs_request(guint64 date, guint64 room_id); // FOR UPD MSGS REQUEST
 t_dtp *mx_upload_file_request(const char *name, goffset size,
                               char *token, guint64 room_id); // FOR FILE
 t_dtp *mx_download_file_request(guint64 room_id, guint64 msg_id, gchar *token);
