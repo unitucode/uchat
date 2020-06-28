@@ -1,20 +1,22 @@
 #include "client.h"
 
 static void mx_scroll_to_end(GtkAdjustment *adj, gpointer user_data) {
-    // gdouble upper = gtk_adjustment_get_upper(adj);
-    // gdouble curr = gtk_adjustment_get_value(adj);
-    // t_groom *room = (t_groom*)user_data;
-    // static gint last_uploaded = 0;
-    // static gdouble last_upper = 0;
-    // static gdouble last_curr = 0;
+    static gdouble last_value = 0;
+    static gdouble last_upper = 0;
+    gdouble upper = gtk_adjustment_get_upper(adj);
+    gdouble value = gtk_adjustment_get_value(adj);
 
-    // if (last_uploaded < room->uploaded) {
-    //     gtk_adjustment_set_value(adj, 0);
+    // if (value > (last_upper - gtk_adjustment_get_page_size(adj) - 50) || value == 0) {
+    //     gtk_adjustment_set_value(adj, upper - gtk_adjustment_get_page_size(adj));
     // }
-    // last_uploaded = room->uploaded;
-    // last_upper = upper;
-    // last_curr = curr + gtk_adjustment_get_page_size(adj);
-    (void)adj;
+    if (last_value - value < 50 || value == 0) {
+        gtk_adjustment_set_value(adj, upper - gtk_adjustment_get_page_size(adj));
+    }
+    g_print("\nvalue = %f\n", value);
+    g_print("last_upper = %f\n", last_upper);
+    g_print("page_size = %f\n", gtk_adjustment_get_page_size(adj));
+    last_value = gtk_adjustment_get_value(adj);
+    last_upper = gtk_adjustment_get_upper(adj);
     (void)user_data;
 }
 
