@@ -22,7 +22,8 @@ static bool sign_up(t_db_user *user, t_client *client) {
 
     if (mx_check_user_by_login(client->info->database, user->login)) {
         incorrect_data(client);
-        mx_logger(MX_LOG_FILE, LOGMSG, "Already exist user %s\n", user->login);
+        mx_logger(MX_LOG_FILE, LOGMSG,
+                  "Already exist user %s\n", user->login);
         return false;
     }
     mx_create_token(&token, user->login);

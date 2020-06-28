@@ -8,11 +8,14 @@
  * client: client that sent valid authorization data
  */
 void mx_correct_data(t_client *client) {
-    t_dtp *dtp = mx_token_request((char*)client->user->token, (char*)client->user->login, client->user->desc);
+    t_dtp *dtp = mx_token_request((char*)client->user->token,
+                                  (char*)client->user->login,
+                                  client->user->desc);
 
     mx_send(client->out, dtp);
     mx_logger(MX_LOG_FILE, LOGMSG, "Logged in: %s\n", client->user->login);
-    g_hash_table_insert(client->info->users, client->user->login, client->out);
+    g_hash_table_insert(client->info->users, client->user->login,
+                        client->out);
     mx_free_request(&dtp);
 }
 
