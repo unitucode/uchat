@@ -8,12 +8,12 @@ void mx_add_messages_box(t_groom *room, t_chat *chat) {
     GtkWidget *view = gtk_viewport_new(NULL, NULL);
 
     room->box_messages = GTK_LIST_BOX(box);
-    gtk_list_box_set_selection_mode(room->box_messages, GTK_SELECTION_MULTIPLE);
+    gtk_list_box_set_selection_mode(room->box_messages,
+                                    GTK_SELECTION_MULTIPLE);
     gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scroll),
                                    GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
     gtk_container_add(GTK_CONTAINER(scroll), view);
     gtk_container_add(GTK_CONTAINER(view), box);
-
     gtk_stack_add_named(GTK_STACK(stack), scroll, mx_msgpage_name(room->id));
     room->stack_msg = GTK_STACK(stack);
     room->page = GTK_SCROLLED_WINDOW(scroll);
