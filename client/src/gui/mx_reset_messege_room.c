@@ -20,6 +20,7 @@ void mx_unselect_curr_room_messages(GtkBuilder *builder) {
 
     if (groom)
         gtk_list_box_unselect_all(groom->box_messages);
+    mx_reset_select_count();
 }
 
 void mx_reset_messege_room(t_groom *new_selected, GtkBuilder *builder) {

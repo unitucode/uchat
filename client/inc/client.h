@@ -56,6 +56,13 @@ typedef struct s_chat t_chat;
 typedef struct s_filter_data t_filter_data;
 typedef struct s_signal_data t_signal_data;
 typedef struct s_gsticker t_gsticker;
+// typedef struct s_msg_select t_msg_select;
+
+// struct s_msg_select {
+//     gint selected;
+//     gint another;
+//     gint notedit;
+// };
 
 struct s_groom {
     GtkListBox *box_rooms;
@@ -74,6 +81,7 @@ struct s_groom {
     char *desc;
     bool is_updated;
     gint uploaded;
+    // t_msg_select *msg_flags;
 };
 
 struct s_gmsg {
@@ -273,6 +281,7 @@ void mx_add_to_sett_members(gint *key,
                             gchar *value, GtkBuilder *builder);
 void mx_add_to_info_members(gint *key,
                             gchar *value, GtkBuilder *builder);
+void mx_reset_select_count();
 
 // gui utils
 void mx_scrlldwnd_connect(gchar *name, GtkWidget *scroll, GtkBuilder *builder);
