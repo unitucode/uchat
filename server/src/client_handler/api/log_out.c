@@ -29,18 +29,18 @@ t_dtp *mx_log_out_request(char *token) {
  * 
  * returns: success of handling
  */
-bool mx_log_out_handler(t_dtp *token, t_client *client) {
+gboolean mx_log_out_handler(t_dtp *token, t_client *client) {
     cJSON *tok = cJSON_GetObjectItemCaseSensitive(token->json, "token");
     t_dtp *answer = NULL;
 
     if (!cJSON_IsString(tok) || !mx_isvalid_token(tok->valuestring))
-        return false;
+        return FALSE;
     if (strcmp(client->user->token, tok->valuestring))
-        return false;
+        return FALSE;
     answer = mx_log_out_request((char*)client->user->token);
     mx_free_user(&client->user);
     mx_send(client->out, answer);
     g_hash_table_remove(client->info->users, client->out);
     mx_free_request(&answer);
-    return true;
+    return TRUE;
 }

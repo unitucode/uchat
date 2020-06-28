@@ -45,23 +45,23 @@ static void resend_msg(t_db_message *msg, t_client *client) {
  * 
  * returns: success of handling
  */
-bool mx_msg_handler(t_dtp *data, t_client *client) { // TODO leaks
+gboolean mx_msg_handler(t_dtp *data, t_client *client) { // TODO leaks
     t_db_message *msg = mx_parse_message(data->json);
 
     if (!msg || !strlen(msg->message))
-        return false;
+        return FALSE;
     if (!mx_is_member(client->info->database, client->user->user_id,
                       msg->room_id)) {
         mx_free_message(&msg);
-        return false;
+        return FALSE;
     }
     if (mx_get_type_member(client->info->database, client->user->user_id,
                            msg->room_id) == DB_BANNED) {
         mx_free_message(&msg);
-        return false;
+        return FALSE;
     }
     msg->user_id = client->user->user_id;
     mx_insert_message(client->info->database, msg);
     resend_msg(msg, client);
-    return true;
+    return TRUE;
 }

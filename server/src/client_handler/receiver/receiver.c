@@ -56,7 +56,7 @@ void mx_init_receiver(t_info *chat) {
  * 
  * returns: success of handling
  */
-bool mx_handle_request(char *request, t_client *client) {
+gboolean mx_handle_request(char *request, t_client *client) {
     t_dtp *data = mx_request_creation(request);
 
     if (data) {

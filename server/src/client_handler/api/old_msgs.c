@@ -10,7 +10,7 @@
  * 
  * returns: success of handling
  */
-bool mx_old_msgs_handler(t_dtp *data, t_client *client) {
+gboolean mx_old_msgs_handler(t_dtp *data, t_client *client) {
     cJSON *date = cJSON_GetObjectItemCaseSensitive(data->json, "date");
     cJSON *count = cJSON_GetObjectItemCaseSensitive(data->json, "count");
     cJSON *room_id = cJSON_GetObjectItemCaseSensitive(data->json, "room_id");
@@ -18,22 +18,22 @@ bool mx_old_msgs_handler(t_dtp *data, t_client *client) {
     cJSON *msgs_json = NULL;
 
     if (!cJSON_IsNumber(date))
-        return false;
+        return FALSE;
     if (!cJSON_IsNumber(count))
-        return false;
+        return FALSE;
     if (!cJSON_IsNumber(room_id))
-        return false;
+        return FALSE;
     if (!mx_is_member(client->info->database, client->user->user_id, room_id->valueint))
-        return false;
+        return FALSE;
     if (mx_get_type_member(client->info->database, client->user->user_id, room_id->valueint) == DB_BANNED)
-        return false;
+        return FALSE;
     msgs_json = mx_get_old_messages_by_id(client->info->database, room_id->valueint, date->valuedouble, count->valueint);
     if (!cJSON_AddNumberToObject(msgs_json, "type", RQ_OLD_MSGS)) {
         cJSON_Delete(msgs_json);
-        return false;
+        return FALSE;
     }
     msgs = mx_get_transport_data(msgs_json);
     mx_send(client->out, msgs);
     mx_free_request(&msgs);
-    return true;
+    return TRUE;
 }

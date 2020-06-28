@@ -38,23 +38,23 @@ static void download_file(gchar *msg, t_client *client) {
     g_free(msg);
 }
 
-bool mx_download_file_handler(t_dtp *data, t_client *client) {
+gboolean mx_download_file_handler(t_dtp *data, t_client *client) {
     cJSON *token = cJSON_GetObjectItemCaseSensitive(data->json, "token");
     cJSON *room_id = cJSON_GetObjectItemCaseSensitive(data->json, "room_id");
     cJSON *msg_id = cJSON_GetObjectItemCaseSensitive(data->json, "msg_id");
 
     if (!cJSON_IsString(token) || !cJSON_IsNumber(room_id))
-        return false;
+        return FALSE;
     if (!cJSON_IsNumber(msg_id))
-        return false;
+        return FALSE;
     client->user = mx_get_user_by_token(client->info->database, token->valuestring); // LEAKS
     if (!mx_is_member(client->info->database, client->user->user_id, room_id->valueint))
-        return false;
+        return FALSE;
     if (mx_get_type_member(client->info->database, client->user->user_id, room_id->valueint) == DB_BANNED)
-        return false;
+        return FALSE;
     download_file(
         mx_get_text_message_by_id(client->info->database, msg_id->valueint),
         client);
     mx_free_user(&client->user);
-    return true;
+    return TRUE;
 }

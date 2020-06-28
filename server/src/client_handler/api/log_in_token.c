@@ -34,7 +34,7 @@ t_dtp *mx_token_request(char *token, char *login, char *desc) {
  * 
  * returns: success of handling
  */
-bool mx_log_in_token_handler(t_dtp *token, t_client *client) {
+gboolean mx_log_in_token_handler(t_dtp *token, t_client *client) {
     cJSON *user_token = cJSON_GetObjectItemCaseSensitive(token->json,
                                                          "token");
     t_dtp *reconnect = NULL;
@@ -46,7 +46,7 @@ bool mx_log_in_token_handler(t_dtp *token, t_client *client) {
     }
     if (!client->user) {
         mx_logger(MX_LOG_FILE, LOGWAR, "Inccorect token\n");
-        return false;
+        return FALSE;
     }
     mx_logger(MX_LOG_FILE, LOGMSG, "Logged by token %s\n",
               client->user->login);
@@ -54,5 +54,5 @@ bool mx_log_in_token_handler(t_dtp *token, t_client *client) {
                                      client->user->login);
     mx_send(client->out, reconnect);
     mx_free_request(&reconnect);
-    return true;
+    return TRUE;
 }

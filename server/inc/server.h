@@ -45,7 +45,7 @@ typedef struct s_send_helper t_send_helper;
 struct s_info {
     GHashTable *users;
     sqlite3* database;
-    bool (*request_handler[RQ_COUNT_REQUEST])(t_dtp *dtp, t_client *chat);
+    gboolean (*request_handler[RQ_COUNT_REQUEST])(t_dtp *dtp, t_client *chat);
 };
 
 struct s_client {

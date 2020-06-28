@@ -49,23 +49,23 @@ static bool log_in(t_db_user *user, t_client *client) {
  * 
  * returns: success of handling
  */
-bool mx_log_in_handler(t_dtp *login_data, t_client *client) {
+gboolean mx_log_in_handler(t_dtp *login_data, t_client *client) {
     t_db_user *user = mx_parse_json_user(login_data->json);
 
     if (!user)
-        return false;
+        return FALSE;
     if (!mx_match_search(user->login, MX_LOGIN_REGEX)) {
         mx_free_user(&user);
-        return false;
+        return FALSE;
     }
     if (!mx_match_search(user->pass, MX_HASH_REGEX)) {
         mx_free_user(&user);
-        return false;
+        return FALSE;
     }
     if (!log_in(user, client)) {
         mx_free_user(&user);
-        return false;
+        return FALSE;
     }
     mx_free_user(&user);
-    return true;
+    return TRUE;
 }
