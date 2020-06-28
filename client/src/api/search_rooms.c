@@ -44,7 +44,7 @@ gboolean mx_search_rooms_handler(t_dtp *data, t_chat *chat) {
 
     if (!cJSON_IsArray(rooms))
         return FALSE;
-    for (guint64 i = 0; i < cJSON_GetArraySize(rooms); i++) {
+    for (int i = 0; i < cJSON_GetArraySize(rooms); i++) {
         room = cJSON_GetArrayItem(rooms, i);
         if (!handle_room(room, chat))
             return FALSE;

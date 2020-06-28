@@ -177,7 +177,7 @@ t_dtp *mx_sign_up_request(char *login, char *pass);
 t_dtp *mx_get_rooms_request(guint64 date);
 t_dtp *mx_log_out_request(char *token);
 t_dtp *mx_get_new_msgs_request(guint64 date, guint64 room_id);
-t_dtp *mx_upd_room_desc_request(int room_id, char *desc); // FOR ROOM UPDATE DESCRIPTION CREATE REQUEST
+t_dtp *mx_upd_room_desc_request(guint64 room_id, char *desc); // FOR ROOM UPDATE DESCRIPTION CREATE REQUEST
 t_dtp *mx_upd_room_name_request(int room_id, char *name); // FOR ROOM UPDATE NAME CREATE REQUEST
 t_dtp *mx_upd_user_desc_request(char *desc); // FOR USER DESCRIPTION UPDATE
 t_dtp *mx_del_room_request(guint64 room_id); // FOR DELETE ROOM
@@ -189,7 +189,7 @@ t_dtp *mx_join_room_request(guint64 room_id); //FOR JOIN TO ROOM
 t_dtp *mx_get_members_request(guint64 room_id); //FOR MEMEBERS
 t_dtp *mx_member_info_request(guint64 user_id); //FOR INFO ABOUT MEMBER
 t_dtp *mx_ban_member_request(guint64 room_id, guint64 user_id); // FOR BAN MEMBER
-t_dtp *mx_sticker_request(char *sticker, int room_id); // FOR STICKER
+t_dtp *mx_sticker_request(char *sticker, guint64 room_id); // FOR STICKER
 t_dtp *mx_search_msgs_request(char *msg, guint64 room_id); // FOR SEARCH MSGS
 t_dtp *mx_del_hist_request(guint64 room_id); // FOR DELETE HISTORY
 t_dtp *mx_old_msgs_request(guint64 date, guint64 room_id); // FOR UPD MSGS REQUEST
