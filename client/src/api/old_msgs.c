@@ -24,26 +24,26 @@ static void insert_msg(cJSON *room, t_chat *chat, int room_id) {
     mx_add_message_to_room_old(gmsg, chat);
 }
 
-bool mx_old_msgs_hanlder(t_dtp *data, t_chat *chat) {
+gboolean mx_old_msgs_hanlder(t_dtp *data, t_chat *chat) {
     cJSON *room_id = cJSON_GetObjectItemCaseSensitive(data->json, "room_id");
     cJSON *msgs = cJSON_GetObjectItemCaseSensitive(data->json, "messages");
     t_groom *groom = NULL;
     cJSON *msg = NULL;
 
     if (!cJSON_IsNumber(room_id))
-        return false;
+        return FALSE;
     if (!cJSON_IsArray(msgs))
-        return false;
+        return FALSE;
     for (int i = 0; i < cJSON_GetArraySize(msgs); i++) {
         msg = cJSON_GetArrayItem(msgs, i);
         insert_msg(msg, chat, room_id->valueint);
     }
     groom = mx_get_groom_by_id(room_id->valueint, chat->builder);
     if (!groom)
-        return false;
+        return FALSE;
     groom->uploaded += cJSON_GetArraySize(msgs);
-    chat->upl_old_msgs = false;
+    chat->upl_old_msgs = FALSE;
     (void)data;
     (void)chat;
-    return true;
+    return TRUE;
 }

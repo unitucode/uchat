@@ -15,9 +15,3 @@ t_dtp *mx_upload_file_request(const char *name, goffset size, char *token, gint 
         return NULL;
     return mx_get_transport_data(json_result);
 }
-
-bool mx_upload_file_handler(t_dtp *data, t_chat *chat) {
-    data++;
-    chat++;
-    return true;
-}

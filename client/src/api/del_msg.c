@@ -12,14 +12,14 @@ t_dtp *mx_del_msg_request(int room_id, int msg_id) {
     return mx_get_transport_data(json_result);
 }
 
-bool mx_del_msg_handler(t_dtp *data, t_chat *chat) {
+gboolean mx_del_msg_handler(t_dtp *data, t_chat *chat) {
     cJSON *room_id = cJSON_GetObjectItemCaseSensitive(data->json, "room_id");
     cJSON *msg_id = cJSON_GetObjectItemCaseSensitive(data->json, "msg_id");
 
     if (!cJSON_IsNumber(room_id))
-        return false;
+        return FALSE;
     if (!cJSON_IsNumber(msg_id))
-        return false;
+        return FALSE;
     mx_gdel_msg(msg_id->valueint, room_id->valueint, chat->builder);
-    return true;
+    return TRUE;
 }

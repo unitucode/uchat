@@ -12,26 +12,26 @@ t_dtp *mx_ban_member_request(int room_id, int user_id) {
     return mx_get_transport_data(json_result);
 }
 
-static bool delete_member(t_chat *chat, int room_id, int user_id) {
+static gboolean delete_member(t_chat *chat, int room_id, int user_id) {
     t_groom *groom = mx_get_groom_by_id(room_id, chat->builder);
 
     if (groom) {
         if (!g_hash_table_contains(groom->members, GINT_TO_POINTER(user_id)))
-            return false;
+            return FALSE;
         g_print("removed = %d\n", g_hash_table_remove(groom->members, GINT_TO_POINTER(user_id))); // TODO LEAKS
     }
     return true;
 }
 
-bool mx_ban_member_handler(t_dtp *data, t_chat *chat) {
+gboolean mx_ban_member_handler(t_dtp *data, t_chat *chat) {
     cJSON *room_id = cJSON_GetObjectItemCaseSensitive(data->json, "room_id");
     cJSON *user_id = cJSON_GetObjectItemCaseSensitive(data->json, "user_id");
 
     if (!cJSON_IsNumber(room_id))
-        return false;
+        return FALSE;
     if (!cJSON_IsNumber(user_id))
-        return false;
+        return FALSE;
     if (!delete_member(chat, room_id->valueint, user_id->valueint))
-        return false;
-    return true;
+        return FALSE;
+    return TRUE;
 }

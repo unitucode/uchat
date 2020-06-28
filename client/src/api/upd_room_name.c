@@ -12,15 +12,15 @@ t_dtp *mx_upd_room_name_request(int room_id, char *name) {
     return mx_get_transport_data(json_result);
 }
 
-bool mx_upd_room_name_handler(t_dtp *data, t_chat *chat) {
+gboolean mx_upd_room_name_handler(t_dtp *data, t_chat *chat) {
     cJSON *room_id = cJSON_GetObjectItemCaseSensitive(data->json, "room_id");
     cJSON *room_name = cJSON_GetObjectItemCaseSensitive(data->json, "room_name");
 
     if (!cJSON_IsNumber(room_id))
-        return false;
+        return FALSE;
     if (!cJSON_IsString(room_name))
-        return false;
+        return FALSE;
     mx_gupd_room_name(room_id->valueint, room_name->valuestring,
                       chat->builder);
-    return true;
+    return TRUE;
 }

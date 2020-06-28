@@ -10,11 +10,11 @@ t_dtp *mx_del_hist_request(int room_id) {
     return mx_get_transport_data(json_result);
 }
 
-bool mx_del_hist_handler(t_dtp *data, t_chat *chat) {
+gboolean mx_del_hist_handler(t_dtp *data, t_chat *chat) {
     cJSON *room_id = cJSON_GetObjectItemCaseSensitive(data->json, "room_id");
 
     if (!cJSON_IsNumber(room_id))
-        return false;
+        return FALSE;
     mx_gupd_clear_history(chat->builder, room_id->valueint);
-    return true;
+    return TRUE;
 }

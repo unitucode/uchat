@@ -52,7 +52,7 @@ t_dtp *mx_sign_up_request(char *login, char *pass) {
  * 
  * returns: success of handling
  */
-bool mx_authorization_handler(t_dtp *token, t_chat *chat) {
+gboolean mx_authorization_handler(t_dtp *token, t_chat *chat) {
     cJSON *auth_token = cJSON_GetObjectItemCaseSensitive(token->json,
                                                          "token");
     cJSON *login = cJSON_GetObjectItemCaseSensitive(token->json, "login");
@@ -60,16 +60,16 @@ bool mx_authorization_handler(t_dtp *token, t_chat *chat) {
 
     if (chat->auth_token || !cJSON_IsString(auth_token)
         || !mx_isvalid_token(auth_token->valuestring)) {
-        return false;
+        return FALSE;
     }
     if (!cJSON_IsString(login)
         || !mx_match_search(login->valuestring, MX_LOGIN_REGEX)) {
-        return false;
+        return FALSE;
     }
     chat->login = strdup(login->valuestring);
     chat->auth_token = strdup(auth_token->valuestring);
     chat->desc = strdup(desc->valuestring);
     mx_get_data(chat);
     mx_start_main_window(chat);
-    return true;
+    return TRUE;
 }

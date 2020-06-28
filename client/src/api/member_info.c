@@ -10,14 +10,14 @@ t_dtp *mx_member_info_request(int user_id) {
     return mx_get_transport_data(json_result);
 }
 
-bool mx_member_info_handler(t_dtp *data, t_chat *chat) {
+gboolean mx_member_info_handler(t_dtp *data, t_chat *chat) {
     cJSON *desc = cJSON_GetObjectItemCaseSensitive(data->json, "desc");
     cJSON *login = cJSON_GetObjectItemCaseSensitive(data->json, "login");
 
     if (!cJSON_IsString(desc))
-        return false;
+        return FALSE;
     if (!cJSON_IsString(login))
-        return false;
+        return FALSE;
     mx_show_user_info(chat->builder, login->valuestring, desc->valuestring);
-    return true;
+    return TRUE;
 }

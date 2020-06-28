@@ -27,18 +27,18 @@ static void insert_msg(cJSON *room, t_chat *chat, int room_id) {
     mx_free_request(&dtp);
 }
 
-bool mx_new_msgs_hanlder(t_dtp *data, t_chat *chat) {
+gboolean mx_new_msgs_hanlder(t_dtp *data, t_chat *chat) {
     cJSON *room_id = cJSON_GetObjectItemCaseSensitive(data->json, "room_id");
     cJSON *msgs = cJSON_GetObjectItemCaseSensitive(data->json, "messages");
     cJSON *msg = NULL;
 
     if (!cJSON_IsNumber(room_id))
-        return false;
+        return FALSE;
     if (!cJSON_IsArray(msgs))
-        return false;
+        return FALSE;
     for (int i = cJSON_GetArraySize(msgs) - 1; i >= 0; i--) {
         msg = cJSON_GetArrayItem(msgs, i);
         insert_msg(msg, chat, room_id->valueint);
     }
-    return true;
+    return TRUE;
 }

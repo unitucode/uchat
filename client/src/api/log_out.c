@@ -10,15 +10,15 @@ t_dtp *mx_log_out_request(char *token) {
     return mx_get_transport_data(json_result);
 }
 
-bool mx_log_out_handler(t_dtp *token, t_chat *chat) {
+gboolean mx_log_out_handler(t_dtp *token, t_chat *chat) {
     cJSON *tok = cJSON_GetObjectItemCaseSensitive(token->json, "token");
 
     if (!cJSON_IsString(tok) || !mx_isvalid_token(tok->valuestring))
-        return false;
+        return FALSE;
     if (strcmp(chat->auth_token, tok->valuestring))
-        return false;
+        return FALSE;
     mx_free((void**)&chat->auth_token);
     mx_free((void**)&chat->login);
     mx_logout_client(chat);
-    return true;
+    return TRUE;
 }

@@ -14,18 +14,18 @@ t_dtp *mx_edit_msg_request(char *msg, int room_id, int msg_id) {
     return mx_get_transport_data(json_result);
 }
 
-bool mx_edit_msg_handler(t_dtp *data, t_chat *chat) {
+gboolean mx_edit_msg_handler(t_dtp *data, t_chat *chat) {
     cJSON *msg = cJSON_GetObjectItemCaseSensitive(data->json, "msg");
     cJSON *room_id = cJSON_GetObjectItemCaseSensitive(data->json, "room_id");
     cJSON *msg_id = cJSON_GetObjectItemCaseSensitive(data->json, "msg_id");
 
     if (!cJSON_IsString(msg))
-        return false;
+        return FALSE;
     if (!cJSON_IsNumber(room_id))
-        return false;
+        return FALSE;
     if (!cJSON_IsNumber(msg_id))
-        return false;
+        return FALSE;
     mx_gupd_msg_text(msg_id->valueint, room_id->valueint,
                      msg->valuestring, chat->builder);
-    return true;
+    return TRUE;
 }

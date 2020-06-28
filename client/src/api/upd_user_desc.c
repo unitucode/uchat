@@ -10,13 +10,13 @@ t_dtp *mx_upd_user_desc_request(char *desc) {
     return mx_get_transport_data(json_result);
 }
 
-bool mx_upd_user_desc_handler(t_dtp *data, t_chat *chat) {
+gboolean mx_upd_user_desc_handler(t_dtp *data, t_chat *chat) {
     cJSON *desc = cJSON_GetObjectItemCaseSensitive(data->json, "desc");
 
     if (!cJSON_IsString(desc))
-        return false;
+        return FALSE;
     if (chat->desc)
         g_free(chat->desc);
     chat->desc = g_strdup(desc->valuestring);
-    return true;
+    return TRUE;
 }

@@ -32,15 +32,15 @@ static void insert_room(cJSON *room, t_chat *chat) { //TODO HANDLE ROOMS
     mx_free_request(&members);
 }
 
-bool mx_rooms_hanlder(t_dtp *data, t_chat *chat) {
+gboolean mx_rooms_hanlder(t_dtp *data, t_chat *chat) {
     cJSON *rooms = cJSON_GetObjectItemCaseSensitive(data->json, "rooms");
     cJSON *room = NULL;
 
     if (!cJSON_IsArray(rooms))
-        return false;
+        return FALSE;
     for (int i = 0; i < cJSON_GetArraySize(rooms); i++) {
         room = cJSON_GetArrayItem(rooms, i);
         insert_room(room, chat);
     }
-    return true;
+    return TRUE;
 }

@@ -104,7 +104,7 @@ struct s_chat {
     GtkBuilder *builder;
     bool valid;
     void (*error_handler[ER_COUNT_ERRS])(GtkBuilder *builder);
-    bool (*request_handler[RQ_COUNT_REQUEST])(t_dtp *dtp, struct s_chat *chat);
+    gboolean (*request_handler[RQ_COUNT_REQUEST])(t_dtp *dtp, struct s_chat *chat);
     bool msg_placeholder;
 };
 
@@ -132,31 +132,31 @@ void mx_upload_file(gchar *path, gint room_id, t_chat *chat);
 
 
 //handlers
-bool mx_error_handler(t_dtp *data, t_chat *chat);
-bool mx_authorization_handler(t_dtp *token, t_chat *chat);
-bool mx_new_room_handler(t_dtp *data, t_chat *chat);
-bool mx_msg_handler(t_dtp *data, t_chat *chat);
-bool mx_rooms_hanlder(t_dtp *data, t_chat *chat);
-bool mx_log_out_handler(t_dtp *token, t_chat *chat);
-bool mx_new_msgs_hanlder(t_dtp *data, t_chat *chat);
-bool mx_upd_room_desc_handler(t_dtp *data, t_chat *chat); // HANDLER FOR ROOM UPDATE DESCRIPTION REQUEST
-bool mx_upd_room_name_handler(t_dtp *data, t_chat *chat); // HANDLER FOR ROOM UPDATE NAME REQUEST
-bool mx_upd_user_desc_handler(t_dtp *data, t_chat *chat); // HANDLER FOR USER UPDATE DESCRIPTION REQUEST
-bool mx_update_users_handler(t_dtp *data, t_chat *chat); // HANDLER FOR USERS ONLINE UPDATE
-bool mx_reconnect_hanlder(t_dtp *token, t_chat *chat); // HANDLER FOR RECONNECT
-bool mx_del_room_handler(t_dtp *data, t_chat *chat);  // HANDLER FOR DELETE ROOM
-bool mx_edit_msg_handler(t_dtp *data, t_chat *chat); // HANDLER FOR EDIT MSG
-bool mx_del_msg_handler(t_dtp *data, t_chat *chat); // HANDLER FOR DEL MSG
-bool mx_upload_file_handler(t_dtp *data, t_chat *chat); // HANDLER FOR GET FILE
-bool mx_search_rooms_handler(t_dtp *data, t_chat *chat); //HANDLER FOR SEARCHING
-bool mx_join_room_handler(t_dtp *data, t_chat *chat); //HANDLER FOR JOIN ROOM
-bool mx_get_members_handler(t_dtp *data, t_chat *chat); //HANDLER FOR USERS
-bool mx_member_info_handler(t_dtp *data, t_chat *chat); //HANDLER FOR INFO MEMBER
-bool mx_new_member_handler(t_dtp *data, t_chat *chat); //HANDLER FOR NEW MEMBER
-bool mx_ban_member_handler(t_dtp *data, t_chat *chat); //HANDLER FOR BAN MEMBER
-bool mx_search_msgs_handler(t_dtp *data, t_chat *chat); //HANDLER FOR SEARCH MSG
-bool mx_del_hist_handler(t_dtp *data, t_chat *chat); //HANDLER FOR DELETE HISTORY
-bool mx_old_msgs_hanlder(t_dtp *data, t_chat *chat); //HANDLER FOR UPD MSGS
+gboolean mx_error_handler(t_dtp *data, t_chat *chat);
+gboolean mx_authorization_handler(t_dtp *token, t_chat *chat);
+gboolean mx_new_room_handler(t_dtp *data, t_chat *chat);
+gboolean mx_msg_handler(t_dtp *data, t_chat *chat);
+gboolean mx_rooms_hanlder(t_dtp *data, t_chat *chat);
+gboolean mx_log_out_handler(t_dtp *token, t_chat *chat);
+gboolean mx_new_msgs_hanlder(t_dtp *data, t_chat *chat);
+gboolean mx_upd_room_desc_handler(t_dtp *data, t_chat *chat); // HANDLER FOR ROOM UPDATE DESCRIPTION REQUEST
+gboolean mx_upd_room_name_handler(t_dtp *data, t_chat *chat); // HANDLER FOR ROOM UPDATE NAME REQUEST
+gboolean mx_upd_user_desc_handler(t_dtp *data, t_chat *chat); // HANDLER FOR USER UPDATE DESCRIPTION REQUEST
+gboolean mx_update_users_handler(t_dtp *data, t_chat *chat); // HANDLER FOR USERS ONLINE UPDATE
+gboolean mx_reconnect_hanlder(t_dtp *token, t_chat *chat); // HANDLER FOR RECONNECT
+gboolean mx_del_room_handler(t_dtp *data, t_chat *chat);  // HANDLER FOR DELETE ROOM
+gboolean mx_edit_msg_handler(t_dtp *data, t_chat *chat); // HANDLER FOR EDIT MSG
+gboolean mx_del_msg_handler(t_dtp *data, t_chat *chat); // HANDLER FOR DEL MSG
+gboolean mx_upload_file_handler(t_dtp *data, t_chat *chat); // HANDLER FOR GET FILE
+gboolean mx_search_rooms_handler(t_dtp *data, t_chat *chat); //HANDLER FOR SEARCHING
+gboolean mx_join_room_handler(t_dtp *data, t_chat *chat); //HANDLER FOR JOIN ROOM
+gboolean mx_get_members_handler(t_dtp *data, t_chat *chat); //HANDLER FOR USERS
+gboolean mx_member_info_handler(t_dtp *data, t_chat *chat); //HANDLER FOR INFO MEMBER
+gboolean mx_new_member_handler(t_dtp *data, t_chat *chat); //HANDLER FOR NEW MEMBER
+gboolean mx_ban_member_handler(t_dtp *data, t_chat *chat); //HANDLER FOR BAN MEMBER
+gboolean mx_search_msgs_handler(t_dtp *data, t_chat *chat); //HANDLER FOR SEARCH MSG
+gboolean mx_del_hist_handler(t_dtp *data, t_chat *chat); //HANDLER FOR DELETE HISTORY
+gboolean mx_old_msgs_hanlder(t_dtp *data, t_chat *chat); //HANDLER FOR UPD MSGS
 void mx_download_file(guint64 room_id, guint64 msg_id, t_chat *chat);
 
 

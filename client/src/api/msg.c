@@ -14,17 +14,17 @@ t_dtp *mx_msg_request(char *msg, int room_id) {
     return mx_get_transport_data(json_result);
 }
 
-bool mx_msg_handler(t_dtp *data, t_chat *chat) {
+gboolean mx_msg_handler(t_dtp *data, t_chat *chat) {
     t_gmsg *gmsg = mx_create_gmsg(data->json, chat);
     t_groom *groom = NULL;
 
     if (!gmsg)
-        return false;
+        return FALSE;
     mx_add_message_to_room_new(gmsg, chat);
     groom = mx_get_groom_by_id(gmsg->room_id, chat->builder);
     if (!groom)
-        return false;
+        return FALSE;
     mx_widget_set_class(GTK_WIDGET(groom->label_name), "has-messages");
     groom->uploaded++;
-    return true;
+    return TRUE;
 }
