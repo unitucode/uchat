@@ -43,7 +43,8 @@ t_dtp *mx_sign_up_request(char *login, char *pass) {
 }
 
 bool mx_authorization_handler(t_dtp *token, t_chat *chat) {
-    cJSON *auth_token = cJSON_GetObjectItemCaseSensitive(token->json, "token");
+    cJSON *auth_token = cJSON_GetObjectItemCaseSensitive(token->json,
+                                                         "token");
     cJSON *login = cJSON_GetObjectItemCaseSensitive(token->json, "login");
     cJSON *desc = cJSON_GetObjectItemCaseSensitive(token->json, "desc");
 

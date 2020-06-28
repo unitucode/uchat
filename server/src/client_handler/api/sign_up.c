@@ -48,8 +48,9 @@ static gboolean sign_up(t_db_user *user, t_client *client) {
 gboolean mx_sign_up_handler(t_dtp *signup_data, t_client *client) {
     t_db_user *user = mx_parse_json_user(signup_data->json);
 
-    if (!user)
+    if (!user) {
         return FALSE;
+    }
     if (!mx_match_search(user->login, MX_LOGIN_REGEX)) {
         mx_free_user(&user);
         return FALSE;
@@ -60,5 +61,5 @@ gboolean mx_sign_up_handler(t_dtp *signup_data, t_client *client) {
     }
     if (!sign_up(user, client))
         mx_free_user(&user);
-    return FALSE;
+    return TRUE;
 }
