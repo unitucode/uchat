@@ -170,7 +170,7 @@ void mx_download_file(guint64 room_id, guint64 msg_id, t_chat *chat);
  */
 //api
 t_dtp *mx_new_room_request(char *room_name, char *desc, t_room_type type);
-t_dtp *mx_msg_request(char *msg, int room_id);
+t_dtp *mx_msg_request(char *msg, guint64 room_id);
 t_dtp *mx_token_request(char *token);
 t_dtp *mx_log_in_request(char *login, char *pass);
 t_dtp *mx_sign_up_request(char *login, char *pass);
