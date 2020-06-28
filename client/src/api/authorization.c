@@ -42,15 +42,23 @@ t_dtp *mx_sign_up_request(char *login, char *pass) {
     return mx_get_transport_data(json_result);
 }
 
+/*
+ * Function: mx_authorization_handler
+ * -------------------------------
+ * Handles request from server
+ * 
+ * token: request from server
+ * chat: information about chat
+ * 
+ * returns: success of handling
+ */
 bool mx_authorization_handler(t_dtp *token, t_chat *chat) {
     cJSON *auth_token = cJSON_GetObjectItemCaseSensitive(token->json,
                                                          "token");
     cJSON *login = cJSON_GetObjectItemCaseSensitive(token->json, "login");
     cJSON *desc = cJSON_GetObjectItemCaseSensitive(token->json, "desc");
 
-    if (chat->auth_token)
-        return false;
-    if (!cJSON_IsString(auth_token)
+    if (chat->auth_token || !cJSON_IsString(auth_token)
         || !mx_isvalid_token(auth_token->valuestring)) {
         return false;
     }
