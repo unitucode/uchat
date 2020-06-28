@@ -187,7 +187,7 @@ t_dtp *mx_edit_msg_request(char *msg, guint64 room_id, guint64 msg_id); // FOR E
 t_dtp *mx_search_rooms_request(char *room_name); // FOR SEARCHING CHANNEL
 t_dtp *mx_join_room_request(guint64 room_id); //FOR JOIN TO ROOM
 t_dtp *mx_get_members_request(guint64 room_id); //FOR MEMEBERS
-t_dtp *mx_member_info_request(int user_id); //FOR INFO ABOUT MEMBER
+t_dtp *mx_member_info_request(guint64 user_id); //FOR INFO ABOUT MEMBER
 t_dtp *mx_ban_member_request(guint64 room_id, guint64 user_id); // FOR BAN MEMBER
 t_dtp *mx_sticker_request(char *sticker, int room_id); // FOR STICKER
 t_dtp *mx_search_msgs_request(char *msg, int room_id); // FOR SEARCH MSGS
