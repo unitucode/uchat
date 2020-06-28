@@ -1,5 +1,16 @@
 #include "client.h"
 
+/*
+ * Function: mx_new_room_request
+ * -------------------------------
+ * Creates new room request
+ * 
+ * room_name: room name
+ * desc: description of room
+ * type: type of room
+ * 
+ * returns: new room request
+ */
 t_dtp *mx_new_room_request(char *room_name, char *desc, t_room_type type) {
     cJSON *json_result = cJSON_CreateObject();
 
@@ -14,6 +25,16 @@ t_dtp *mx_new_room_request(char *room_name, char *desc, t_room_type type) {
     return mx_get_transport_data(json_result);
 }
 
+/*
+ * Function: mx_new_room_handler
+ * -------------------------------
+ * Handles request from server
+ * 
+ * data: request from server
+ * chat: information about chat
+ * 
+ * returns: success of handling
+ */
 gboolean mx_new_room_handler(t_dtp *data, t_chat *chat) {
     t_groom *room = NULL;
     t_dtp *members = NULL;
