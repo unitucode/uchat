@@ -44,6 +44,7 @@ typedef enum s_request_type {
     RQ_DEL_HIST,
     RQ_GET_NEW_MSGS,
     RQ_SEARCH_MSG,
+    RQ_ERROR_MSG,
     RQ_OLD_MSGS,
     RQ_GET_ROOMS,
     RQ_NEW_ROOM,
@@ -57,13 +58,12 @@ typedef enum s_request_type {
     RQ_NEW_MEMBER,
     RQ_BAN_MEMBER,
     RQ_UPD_USER_DESC,
-    RQ_UPD_USER_NAME,
-    RQ_ERROR_MSG,
     RQ_UPLOAD_FILE,
     RQ_DOWNLOAD_FILE,
-    RQ_RECONNECT,
-    RQ_DEL_USER,
     RQ_LOG_OUT,
+    RQ_UPD_USER_NAME, // TO DELETE
+    RQ_DEL_USER, // TO DELETE
+    RQ_RECONNECT, // TO DELETE
     RQ_COUNT_REQUEST
 }            t_request_type;
 
