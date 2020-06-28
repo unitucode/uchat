@@ -15,7 +15,7 @@ gboolean mx_log_out_handler(t_dtp *token, t_chat *chat) {
 
     if (!cJSON_IsString(tok) || !mx_isvalid_token(tok->valuestring))
         return FALSE;
-    if (strcmp(chat->auth_token, tok->valuestring))
+    if (g_strcmp0(chat->auth_token, tok->valuestring))
         return FALSE;
     mx_free((void**)&chat->auth_token);
     mx_free((void**)&chat->login);

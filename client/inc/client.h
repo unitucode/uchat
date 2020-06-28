@@ -185,7 +185,7 @@ t_dtp *mx_upd_user_name_request(char *name); //TODO
 t_dtp *mx_del_msg_request(guint64 room_id, guint64 msg_id); // FOR DELETE MESSAGE FROM ROOM
 t_dtp *mx_edit_msg_request(char *msg, guint64 room_id, guint64 msg_id); // FOR EDIT MESSAGE IN ROOM
 t_dtp *mx_search_rooms_request(char *room_name); // FOR SEARCHING CHANNEL
-t_dtp *mx_join_room_request(int room_id); //FOR JOIN TO ROOM
+t_dtp *mx_join_room_request(guint64 room_id); //FOR JOIN TO ROOM
 t_dtp *mx_get_members_request(guint64 room_id); //FOR MEMEBERS
 t_dtp *mx_member_info_request(int user_id); //FOR INFO ABOUT MEMBER
 t_dtp *mx_ban_member_request(guint64 room_id, guint64 user_id); // FOR BAN MEMBER
