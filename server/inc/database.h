@@ -3,8 +3,6 @@
 #include "utils.h"
 #include "sqlite3.h"
 #include "protocol.h"
-#include <glib.h>
-#include <sys/time.h>
 
 #define MX_DB "database.db"
 

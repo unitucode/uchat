@@ -29,6 +29,12 @@ t_dtp *mx_msg_request(t_db_message *msg) {
     return mx_get_transport_data(send_msg);
 }
 
+static void resend_msg(t_db_message *msg, t_client *client) {
+    t_dtp *resend = mx_msg_request(msg);
+    mx_send_to_all(resend, client, msg->room_id);
+    mx_free_request(&resend);
+}
+
 /*
  * Function: mx_msg_handler
  * -------------------------------
@@ -39,24 +45,23 @@ t_dtp *mx_msg_request(t_db_message *msg) {
  * 
  * returns: success of handling
  */
-bool mx_msg_handler(t_dtp *data, t_client *client) { // TODO leaks
+gboolean mx_msg_handler(t_dtp *data, t_client *client) { // TODO leaks
     t_db_message *msg = mx_parse_message(data->json);
-    t_dtp *resend = NULL;
 
-    if (!msg)
-        return false;
-    if (!strlen(msg->message))
-        return false;
-    if (!mx_is_member(client->info->database, client->user->user_id, msg->room_id)) {
+    if (!msg || !strlen(msg->message))
+        return FALSE;
+    if (!mx_is_member(client->info->database, client->user->user_id,
+                      msg->room_id)) {
         mx_free_message(&msg);
-        return false;
+        return FALSE;
     }
-    if (mx_get_type_member(client->info->database, client->user->user_id, msg->room_id) == DB_BANNED)
-        return false;
+    if (mx_get_type_member(client->info->database, client->user->user_id,
+                           msg->room_id) == DB_BANNED) {
+        mx_free_message(&msg);
+        return FALSE;
+    }
     msg->user_id = client->user->user_id;
     mx_insert_message(client->info->database, msg);
-    resend = mx_msg_request(msg);
-    mx_send_to_all(resend, client, msg->room_id);
-    mx_free_request(&resend);
-    return true;
+    resend_msg(msg, client);
+    return TRUE;
 }

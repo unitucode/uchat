@@ -17,13 +17,14 @@ static void incorrect_data(t_client *client) {
  * 
  * returns: success of validation
  */
-static bool sign_up(t_db_user *user, t_client *client) {
+static gboolean sign_up(t_db_user *user, t_client *client) {
     char *token;
 
     if (mx_check_user_by_login(client->info->database, user->login)) {
         incorrect_data(client);
-        mx_logger(MX_LOG_FILE, LOGMSG, "Already exist user %s\n", user->login);
-        return false;
+        mx_logger(MX_LOG_FILE, LOGMSG,
+                  "Already exist user %s\n", user->login);
+        return FALSE;
     }
     mx_create_token(&token, user->login);
     user->token = token;
@@ -31,7 +32,7 @@ static bool sign_up(t_db_user *user, t_client *client) {
     mx_logger(MX_LOG_FILE, LOGMSG, "Success signup user %s\n", user->login);
     client->user = user;
     mx_correct_data(client);
-    return true;
+    return TRUE;
 }
 
 /*
@@ -44,20 +45,21 @@ static bool sign_up(t_db_user *user, t_client *client) {
  * 
  * returns: success of handling
  */
-bool mx_sign_up_handler(t_dtp *signup_data, t_client *client) {
+gboolean mx_sign_up_handler(t_dtp *signup_data, t_client *client) {
     t_db_user *user = mx_parse_json_user(signup_data->json);
 
-    if (!user)
-        return false;
+    if (!user) {
+        return FALSE;
+    }
     if (!mx_match_search(user->login, MX_LOGIN_REGEX)) {
         mx_free_user(&user);
-        return false;
+        return FALSE;
     }
     if (!mx_match_search(user->pass, MX_HASH_REGEX)) {
         mx_free_user(&user);
-        return false;
+        return FALSE;
     }
     if (!sign_up(user, client))
         mx_free_user(&user);
-    return true;
+    return TRUE;
 }

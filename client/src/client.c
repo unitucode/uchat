@@ -15,6 +15,13 @@ static void change_working_dir(void) {
     #endif
 }
 
+static gboolean is_valid(int argc) {
+    if (argc != 3) {
+        g_printerr("Usage: ./uchat <ip,domen> <port>\n");
+        return FALSE;
+    }
+    return TRUE;
+}
 
 int main(int argc, char **argv) {
     GError *error = NULL;
@@ -23,17 +30,16 @@ int main(int argc, char **argv) {
     t_chat *chat = NULL;
 
     change_working_dir();
-    if (argc != 3) {
-        g_printerr("Usage: ./uchat <ip,domen> <port>\n");
+    if (!is_valid(argc))
         return -1;
-    }
-    connection = g_socket_client_connect_to_host(client, argv[1], g_ascii_strtoll(argv[2], NULL, 10), NULL, &error);
+    connection = g_socket_client_connect_to_host(
+        client, argv[1], g_ascii_strtoll(argv[2], NULL, 10), NULL, &error);
     if (!connection || error) {
         g_printerr("Invalid port or ip\n");
         return -1;
     }
     chat = mx_init_chat(connection, argc, argv);
-    chat->cli_conn = g_object_ref(client);
+    chat->cli_conn = client;
     mx_init_gui(chat);
     mx_start_gui(chat);
     return 0;

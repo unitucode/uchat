@@ -72,9 +72,6 @@ static void message_ready(GObject *source_object, GAsyncResult *res,
  */
 static gboolean incoming(GSocketService *service, GSocketConnection *conn,
                          GObject *source_object, gpointer user_data) {
-    static int test = 0;
-    test++;
-    g_print("test = %d\n", test);
     GOutputStream *out_s = g_io_stream_get_output_stream(G_IO_STREAM(conn));
     GInputStream *in_s = g_io_stream_get_input_stream(G_IO_STREAM(conn));
     GDataOutputStream *out = g_data_output_stream_new(out_s);
