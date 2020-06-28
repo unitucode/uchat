@@ -1,6 +1,15 @@
 #include "client.h"
 
-t_dtp *mx_search_msgs_request(char *msg, int room_id) {
+/*
+ * Function: mx_search_msgs_request
+ * -------------------------------
+ * Creates search messages request
+ * 
+ * msg: start of message
+ * 
+ * returns: search messages request
+ */
+t_dtp *mx_search_msgs_request(char *msg, guint64 room_id) {
     cJSON *json_result = cJSON_CreateObject();
 
     if (!cJSON_AddNumberToObject(json_result, "type", RQ_SEARCH_MSG))
@@ -18,11 +27,19 @@ static gboolean handle_msg(cJSON *room, t_chat *chat) {
     if (!msg)
         return FALSE;
     mx_add_message_to_found(msg, chat);
-    (void)chat;
-    (void)msg;
     return TRUE;
 }
 
+/*
+ * Function: mx_searc_msgs_handler
+ * -------------------------------
+ * Handles request from server
+ * 
+ * data: request from server
+ * chat: information about chat
+ * 
+ * returns: success of handling
+ */
 gboolean mx_search_msgs_handler(t_dtp *data, t_chat *chat) {
     cJSON *msgs = cJSON_GetObjectItemCaseSensitive(data->json, "msgs");
     cJSON *msg = NULL;
@@ -36,7 +53,7 @@ gboolean mx_search_msgs_handler(t_dtp *data, t_chat *chat) {
     }
     if (!cJSON_GetArraySize(msgs)) {
         mx_widget_set_visibility_by_name(chat->builder,
-                                        "label_search_nothing_msgs", TRUE);
+                                         "label_search_nothing_msgs", TRUE);
     }
     return TRUE;
 }
