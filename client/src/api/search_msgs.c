@@ -31,7 +31,7 @@ static gboolean handle_msg(cJSON *room, t_chat *chat) {
 }
 
 /*
- * Function: mx_searc_msgs_handler
+ * Function: mx_search_msgs_handler
  * -------------------------------
  * Handles request from server
  * 
