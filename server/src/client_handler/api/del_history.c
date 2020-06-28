@@ -35,10 +35,14 @@ gboolean mx_del_hist_handler(t_dtp *msg, t_client *client) {
 
     if (!cJSON_IsNumber(room_id))
         return FALSE;
-    if (!mx_is_member(client->info->database, client->user->user_id, room_id->valueint))
+    if (!mx_is_member(client->info->database, client->user->user_id,
+                      room_id->valueint)) {
         return FALSE;
-    if (mx_get_type_member(client->info->database, client->user->user_id, room_id->valueint) != DB_CUSTOMER)
+    }
+    if (mx_get_type_member(client->info->database, client->user->user_id,
+                           room_id->valueint) != DB_CUSTOMER) {
         return FALSE;
+    }
     mx_delete_all_messages(client->info->database, room_id->valueint);
     resend = mx_del_hist_request(room_id->valueint);
     mx_send_to_all(resend, client, room_id->valueint);
