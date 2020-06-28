@@ -178,7 +178,7 @@ t_dtp *mx_get_rooms_request(guint64 date);
 t_dtp *mx_log_out_request(char *token);
 t_dtp *mx_get_new_msgs_request(guint64 date, guint64 room_id);
 t_dtp *mx_upd_room_desc_request(guint64 room_id, char *desc); // FOR ROOM UPDATE DESCRIPTION CREATE REQUEST
-t_dtp *mx_upd_room_name_request(int room_id, char *name); // FOR ROOM UPDATE NAME CREATE REQUEST
+t_dtp *mx_upd_room_name_request(guint64 room_id, char *name); // FOR ROOM UPDATE NAME CREATE REQUEST
 t_dtp *mx_upd_user_desc_request(char *desc); // FOR USER DESCRIPTION UPDATE
 t_dtp *mx_del_room_request(guint64 room_id); // FOR DELETE ROOM
 t_dtp *mx_upd_user_name_request(char *name); //TODO
@@ -234,8 +234,8 @@ void mx_errmsg_user_exist(GtkBuilder *builder);
 void mx_delete_row_room(GtkListBoxRow *row, GtkBuilder *builder);
 void mx_set_default_room_sett(GtkBuilder *builder);
 void mx_set_current_room_sett(GtkBuilder *builder);
-void mx_gupd_room_desc(gint id, gchar *desc, GtkBuilder *builder);
-void mx_gupd_room_name(gint id, gchar *name, GtkBuilder *builder);
+void mx_gupd_room_desc(guint64 id, char *desc, GtkBuilder *builder);
+void mx_gupd_room_name(guint64 id, char *name, GtkBuilder *builder);
 void mx_gdel_room(guint64 id, GtkBuilder *builder);
 void mx_gdel_msg(guint64 msg_id, guint64 room_id, GtkBuilder *builder);
 void mx_gupd_msg_text(guint64 msg_id, guint64 room_id,
