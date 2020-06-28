@@ -26,10 +26,18 @@ void mx_box_messages_reached(GtkScrolledWindow *scroll,
         gtk_adjustment_set_value(adj, gtk_adjustment_get_value(adj) + 1);
     }
     if (pos == GTK_POS_BOTTOM) {
+
         chat->upl_old_msgs = true;
         while (groom->uploaded > MX_BUF_MSGS) {
+            GtkRequisition req;
+            GtkRequisition req2;
+            gtk_widget_get_preferred_size(GTK_WIDGET(gtk_list_box_get_row_at_index(groom->box_messages, 0)), &req, &req2);
+            GtkAdjustment *adj = gtk_scrolled_window_get_vadjustment(scroll);
+
             puts("DELETE OLD MSG");
             delete_older_message(groom);
+            gtk_adjustment_set_upper(adj, gtk_adjustment_get_upper(adj) - req2.height);
+            gtk_adjustment_set_value(adj, gtk_adjustment_get_upper(adj) - gtk_adjustment_get_page_size(adj));
             groom->uploaded--;
         }
         chat->upl_old_msgs = false;
