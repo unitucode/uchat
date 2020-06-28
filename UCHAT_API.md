@@ -1,5 +1,5 @@
 # API
-
+___
 ### Log in
 **From client to server request**
 **Answer: RQ_TOKEN**
@@ -13,6 +13,7 @@
 }
 ```
 **Nothing to client request**
+___
 ### Sign up
 **From client to server request**
 **Answer: RQ_TOKEN**
@@ -26,6 +27,7 @@
 }
 ```
 **Nothing to client request**
+___
 ### Log in by token
 **From client to server request**
 **Answer: RQ_TOKEN**
@@ -44,6 +46,7 @@
     "desc": "user`s description"
 }
 ```
+___
 ### Message
 **From client to server request**
 **Answer: RQ_MSG to every online member in room**
@@ -67,6 +70,7 @@
     "msg_type" DB_TEXT_MSG(DB_STICKER ...)
 }
 ```
+___
 ### Error message
 **Nothing from client to server request**
 **From server to client request**
@@ -77,6 +81,7 @@
    "msg": "error message"
 }
 ```
+___
 ### Edit message
 **From client to server request**
 **Answer: RQ_EDIT_MSG to every online member in room**
@@ -97,6 +102,7 @@
     "msg": "edited_message"
 }
 ```
+___
 ### Delete message
 **From client to server request**
 **Answer: RQ_DEL_MSG to every online member in room**
@@ -115,6 +121,7 @@
     "msg_id": message_id_that_need_to_delete
 }
 ```
+___
 ### Delete chat-history of room
 **From client to server request**
 **Answer: RQ_DEL_HIST to every online member in room**
@@ -131,6 +138,7 @@
     "room_id": room_id_that_need_to_clear
 }
 ```
+___
 ### Get new messages
 **From client to server request**
 **Answer: RQ_GET_NEW_MSGS**
@@ -151,6 +159,7 @@
    }]
 }
 ```
+___
 ### Search messages
 **From client to server request**
 **Answer: RQ_SEARCH_MSGS**
@@ -169,6 +178,7 @@
    }]
 }
 ```
+___
 ### Get old messages
 **From client to server request**
 **Answer: RQ_OLD_MSGS**
@@ -189,6 +199,7 @@
     }]
 }
 ```
+___
 ### Get rooms
 **From client to server request**
 **Answer: RQ_GET_ROOMS**
@@ -206,6 +217,7 @@
     }]
 }
 ```
+___
 ### Create new room
 **From client to server request**
 **Answer: RQ_NEW_ROOM**
@@ -228,6 +240,7 @@
     "desc", "room description"
 }
 ```
+___
 ### Delete room
 **From client to server request**
 **Answer: RQ_DEL_ROOM to every online member in room**
@@ -244,6 +257,7 @@
     "room_id": room_id
 }
 ```
+___
 ### Join to room
 **From client to server request**
 **Answer: RQ_NEW_MEMBER to every online member in room and RQ_JOIN_ROOM to sender**
@@ -272,6 +286,7 @@
    "desc": "room description"
 }
 ```
+___
 ### Update room name
 **From client to server request**
 **Answer: RQ_UPD_ROOM_NAME to every online member in room**
@@ -290,6 +305,7 @@
     "room_name": "new room name"
 }
 ```
+___
 ### Update room description
 **From client to server request**
 **Answer: RQ_UPD_ROOM_DESC to every online member in room**
@@ -308,6 +324,7 @@
     "desc": "new room description"
 }
 ```
+___
 ### Search room
 **From client to server request**
 **Answer: RQ_SEARCH_CH**
@@ -325,6 +342,7 @@
     }]
 }
 ```
+___
 ### Get members
 **From client to server request**
 **Answer: RQ_GET_MEMBERS**
@@ -343,6 +361,7 @@
     }]
 }
 ```
+___
 ### Get information about member
 **From client to server request**
 **Answer: RQ_MEMBER_INFO**
@@ -360,6 +379,7 @@
     "login": "member login"
 }
 ```
+___
 ### New member in room
 **Nothing from client to server request**
 **From server to client request**
@@ -371,6 +391,7 @@
    "login": "member login"
 }
 ```
+___
 ### Ban member in room
 **From client to server request**
 **Answer: RQ_BAN_MEMBER to every online member in room**
@@ -389,6 +410,7 @@
    "user_id": banned_member_id
 }
 ```
+___
 ### Update user description
 **From client to server request**
 **Answer: RQ_UPD_USER_DESC**
@@ -405,6 +427,7 @@
    "desc": "new user description"
 }
 ```
+___
 ### Upload file to server
 **From client to server request**
 **Answer: nothing. Server is uploading file**
@@ -417,6 +440,7 @@
    "token": "SHA-256 user token"
 }
 ```
+___
 ### Download file to server
 **From client to server request**
 **Answer: RQ_DOWNLOAD_FILE**
@@ -436,6 +460,7 @@
    "name": "file name"
 }
 ```
+___
 ### Log out
 **From client to server request**
 **Answer: RQ_LOG_OUT**
