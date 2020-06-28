@@ -269,6 +269,10 @@ void mx_msgcreate_content(GtkWidget *box_main,
                           GtkWidget *box_info, t_gmsg *gmsg);
 t_groom *mx_init_groom();
 void mx_add_messages_box(t_groom *room, t_chat *chat);
+void mx_add_to_sett_members(gint *key,
+                            gchar *value, GtkBuilder *builder);
+void mx_add_to_info_members(gint *key,
+                            gchar *value, GtkBuilder *builder);
 
 // gui utils
 void mx_scrlldwnd_connect(gchar *name, GtkWidget *scroll, GtkBuilder *builder);
