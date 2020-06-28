@@ -37,13 +37,13 @@ static t_dtp *get_resend_room(t_db_room *room) {
  * 
  * returns: success of handling
  */
-gboolean mx_new_room_handler(t_dtp *data, t_client *client) { //TODO leaks
+gboolean mx_new_room_handler(t_dtp *data, t_client *client) {
     t_db_room *room = mx_parse_json_room(data->json);
     t_dtp *resend = NULL;
-    room->customer_id = client->user->user_id;
 
     if (!room)
         return FALSE;
+    room->customer_id = client->user->user_id;
     mx_insert_room_into_db(client->info->database, room);
     resend = get_resend_room(room);
     mx_free_room(&room);
