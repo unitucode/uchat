@@ -35,7 +35,9 @@ gboolean mx_search_rooms_handler(t_dtp *data, t_client *client) {
 
     if (!cJSON_IsString(name))
         return FALSE;
-    answer = mx_search_rooms_request(mx_search_room(client->info->database, name->valuestring, client->user->user_id));
+    answer = mx_search_rooms_request(mx_search_room(client->info->database,
+                                                    name->valuestring,
+                                                    client->user->user_id));
     mx_send(client->out, answer);
     mx_free_request(&answer);
     return TRUE;
