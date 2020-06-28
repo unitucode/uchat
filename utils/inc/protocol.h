@@ -52,18 +52,18 @@ typedef enum s_request_type {
     RQ_UPD_ROOM_DESC,
     RQ_SEARCH_CH,
     RQ_GET_MEMBERS,
-    RQ_LOG_OUT,
+    RQ_MEMBER_INFO,
+    RQ_NEW_MEMBER,
+    RQ_BAN_MEMBER,
     RQ_ERROR_MSG,
     RQ_UPD_USER_DESC,
     RQ_UPD_USER_NAME,
     RQ_RECONNECT,
     RQ_DEL_USER,
-    RQ_MEMBER_INFO,
-    RQ_NEW_MEMBER,
-    RQ_BAN_MEMBER,
     RQ_STICKER,
     RQ_UPLOAD_FILE,
     RQ_DOWNLOAD_FILE,
+    RQ_LOG_OUT,
     RQ_COUNT_REQUEST
 }            t_request_type;
 

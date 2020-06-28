@@ -19,7 +19,7 @@ static gboolean resend(t_client *client, guint64 room_id) {
     t_dtp *answer = NULL;
 
     if (!cJSON_AddItemReferenceToObject(members, "members", json_members)
-        ||!cJSON_AddNumberToObject(members, "room_id", room_id)
+        || !cJSON_AddNumberToObject(members, "room_id", room_id)
         || !cJSON_AddNumberToObject(members, "type", RQ_GET_MEMBERS)) {
         cJSON_Delete(members);
         return FALSE;
