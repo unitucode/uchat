@@ -26,11 +26,11 @@ void mx_delete_row_msg(GtkListBoxRow *row, GtkBuilder *builder) {
     gtk_widget_destroy(GTK_WIDGET(row));
 }
 
-void mx_gdel_msg(int msg_id, int room_id, GtkBuilder *builder) {
+void mx_gdel_msg(guint64 msg_id, guint64 room_id, GtkBuilder *builder) {
     t_gmsg *msg = mx_get_gmsg_by_id(msg_id, room_id, builder);
     t_groom *room = mx_get_groom_by_id(room_id, builder);
 
-    if (msg) {
+    if (msg && room) {
         room->uploaded--;
         mx_delete_row_msg(msg->row_msg, builder);
     }

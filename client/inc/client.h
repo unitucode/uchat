@@ -66,7 +66,7 @@ struct s_groom {
     GtkLabel *label_name;
     GHashTable *members;
     gboolean is_watched;
-    int id;
+    guint64 id;
     char *room_name;
     char *customer;
     int customer_id;
@@ -183,7 +183,7 @@ t_dtp *mx_upd_user_desc_request(char *desc); // FOR USER DESCRIPTION UPDATE
 t_dtp *mx_del_room_request(int room_id); // FOR DELETE ROOM
 t_dtp *mx_edit_msg_request(char *msg, int room_id, int msg_id); // FOR EDIT MSG
 t_dtp *mx_upd_user_name_request(char *name); //TODO
-t_dtp *mx_del_msg_request(int room_id, int msg_id); // FOR DELETE MESSAGE FROM ROOM
+t_dtp *mx_del_msg_request(guint64 room_id, guint64 msg_id); // FOR DELETE MESSAGE FROM ROOM
 t_dtp *mx_edit_msg_request(char *msg, int room_id, int msg_id); // FOR EDIT MESSAGE IN ROOM
 t_dtp *mx_search_rooms_request(char *room_name); // FOR SEARCHING CHANNEL
 t_dtp *mx_join_room_request(int room_id); //FOR JOIN TO ROOM
@@ -237,7 +237,7 @@ void mx_set_current_room_sett(GtkBuilder *builder);
 void mx_gupd_room_desc(gint id, gchar *desc, GtkBuilder *builder);
 void mx_gupd_room_name(gint id, gchar *name, GtkBuilder *builder);
 void mx_gdel_room(gint id, GtkBuilder *builder);
-void mx_gdel_msg(gint msg_id, gint room_id, GtkBuilder *builder);
+void mx_gdel_msg(guint64 msg_id, guint64 room_id, GtkBuilder *builder);
 void mx_gupd_msg_text(gint msg_id, gint room_id,
                       gchar *text, GtkBuilder *builder);
 void mx_reset_messege_room(t_groom *new_selected, GtkBuilder *builder);
@@ -286,7 +286,7 @@ void mx_widget_set_visibility_by_name(GtkBuilder *builder,
 void mx_widget_switch_visibility(GtkWidget *usr_ctrl, GtkWidget *widget);
 void mx_widget_switch_visibility_by_name(GtkBuilder *builder, gchar *name);
 t_groom *mx_get_selected_groom(GtkBuilder *builder, gchar *list_name);
-t_groom *mx_get_groom_by_id(gint room_id, GtkBuilder *builder);
+t_groom *mx_get_groom_by_id(guint64 room_id, GtkBuilder *builder);
 t_gmsg *mx_get_selected_gmsg(GtkBuilder *builder);
 t_gmsg *mx_get_gmsg_by_id(gint msg_id, gint room_id, GtkBuilder *builder);
 void mx_unselect_room(t_groom *groom, GtkBuilder *builder);
