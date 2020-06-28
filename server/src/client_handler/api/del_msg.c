@@ -22,6 +22,26 @@ t_dtp *mx_del_msg_request(int room_id, int msg_id) {
     return mx_get_transport_data(json_result);
 }
 
+static gboolean is_valid(t_client *client, gint msg_id, gint room_id) {
+    if (!mx_is_member(client->info->database,
+                      client->user->user_id, room_id)) {
+        return FALSE;
+    }
+    if (mx_get_type_member(client->info->database, client->user->user_id,
+                           room_id) == DB_BANNED) {
+        return FALSE;
+    }
+    if (mx_get_type_member(client->info->database, client->user->user_id,
+                           room_id) == DB_CUSTOMER) {
+        return TRUE;
+    }
+    if (!mx_is_owner_msg(client->info->database, client->user->user_id,
+                         msg_id)) {
+        return FALSE;
+    }
+    return TRUE;
+}
+
 /*
  * Function: mx_del_msg_handler
  * -------------------------------
@@ -37,15 +57,9 @@ gboolean mx_del_msg_handler(t_dtp *msg, t_client *client) {
     cJSON *msg_id = cJSON_GetObjectItemCaseSensitive(msg->json, "msg_id");
     t_dtp *resend = NULL;
 
-    if (!cJSON_IsNumber(room_id))
+    if (!cJSON_IsNumber(room_id) || !cJSON_IsNumber(msg_id))
         return FALSE;
-    if (!cJSON_IsNumber(msg_id))
-        return FALSE;
-    if (!mx_is_member(client->info->database, client->user->user_id, room_id->valueint))
-        return FALSE;
-    if (!mx_is_owner_msg(client->info->database, client->user->user_id, msg_id->valueint))
-        return FALSE;
-    if (mx_get_type_member(client->info->database, client->user->user_id, room_id->valueint) == DB_BANNED)
+    if (!is_valid(client, msg_id->valuedouble, room_id->valuedouble))
         return FALSE;
     mx_delete_message_by_id(client->info->database, msg_id->valueint);
     resend = mx_del_msg_request(room_id->valueint, msg_id->valueint);
