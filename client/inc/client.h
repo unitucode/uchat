@@ -174,7 +174,7 @@ t_dtp *mx_msg_request(char *msg, int room_id);
 t_dtp *mx_token_request(char *token);
 t_dtp *mx_log_in_request(char *login, char *pass);
 t_dtp *mx_sign_up_request(char *login, char *pass);
-t_dtp *mx_get_rooms_request(long int date);
+t_dtp *mx_get_rooms_request(guint64 date);
 t_dtp *mx_log_out_request(char *token);
 t_dtp *mx_get_new_msgs_request(guint64 date, guint64 room_id);
 t_dtp *mx_upd_room_desc_request(int room_id, char *desc); // FOR ROOM UPDATE DESCRIPTION CREATE REQUEST
