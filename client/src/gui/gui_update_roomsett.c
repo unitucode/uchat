@@ -17,8 +17,9 @@ void mx_gupd_room_name(int id, char *name, GtkBuilder *builder) {
     mx_set_current_room_sett(builder);
 }
 
-void mx_gdel_room(int id, GtkBuilder *builder) {
+void mx_gdel_room(guint64 id, GtkBuilder *builder) {
     t_groom *groom = mx_get_groom_by_id(id, builder);
-
-    mx_delete_row_room(groom->row_room, builder);
+    
+    if (groom)
+        mx_delete_row_room(groom->row_room, builder);
 }

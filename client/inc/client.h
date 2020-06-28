@@ -69,7 +69,7 @@ struct s_groom {
     guint64 id;
     char *room_name;
     char *customer;
-    int customer_id;
+    guint64 customer_id;
     long int date;
     char *desc;
     bool is_updated;
@@ -180,21 +180,21 @@ t_dtp *mx_get_new_msgs_request(long int date, int room_id);
 t_dtp *mx_upd_room_desc_request(int room_id, char *desc); // FOR ROOM UPDATE DESCRIPTION CREATE REQUEST
 t_dtp *mx_upd_room_name_request(int room_id, char *name); // FOR ROOM UPDATE NAME CREATE REQUEST
 t_dtp *mx_upd_user_desc_request(char *desc); // FOR USER DESCRIPTION UPDATE
-t_dtp *mx_del_room_request(int room_id); // FOR DELETE ROOM
-t_dtp *mx_edit_msg_request(char *msg, int room_id, int msg_id); // FOR EDIT MSG
+t_dtp *mx_del_room_request(guint64 room_id); // FOR DELETE ROOM
 t_dtp *mx_upd_user_name_request(char *name); //TODO
 t_dtp *mx_del_msg_request(guint64 room_id, guint64 msg_id); // FOR DELETE MESSAGE FROM ROOM
-t_dtp *mx_edit_msg_request(char *msg, int room_id, int msg_id); // FOR EDIT MESSAGE IN ROOM
+t_dtp *mx_edit_msg_request(char *msg, guint64 room_id, guint64 msg_id); // FOR EDIT MESSAGE IN ROOM
 t_dtp *mx_search_rooms_request(char *room_name); // FOR SEARCHING CHANNEL
 t_dtp *mx_join_room_request(int room_id); //FOR JOIN TO ROOM
-t_dtp *mx_get_members_request(int room_id); //FOR MEMEBERS
+t_dtp *mx_get_members_request(guint64 room_id); //FOR MEMEBERS
 t_dtp *mx_member_info_request(int user_id); //FOR INFO ABOUT MEMBER
 t_dtp *mx_ban_member_request(guint64 room_id, guint64 user_id); // FOR BAN MEMBER
 t_dtp *mx_sticker_request(char *sticker, int room_id); // FOR STICKER
 t_dtp *mx_search_msgs_request(char *msg, int room_id); // FOR SEARCH MSGS
 t_dtp *mx_del_hist_request(guint64 room_id); // FOR DELETE HISTORY
 t_dtp *mx_old_msgs_request(guint64 date, int room_id); // FOR UPD MSGS REQUEST
-t_dtp *mx_upload_file_request(const char *name, goffset size, char *token, gint room_id); // FOR FILE
+t_dtp *mx_upload_file_request(const char *name, goffset size,
+                              char *token, guint64 room_id); // FOR FILE
 t_dtp *mx_download_file_request(guint64 room_id, guint64 msg_id, gchar *token);
 
 //errors api
@@ -236,10 +236,10 @@ void mx_set_default_room_sett(GtkBuilder *builder);
 void mx_set_current_room_sett(GtkBuilder *builder);
 void mx_gupd_room_desc(gint id, gchar *desc, GtkBuilder *builder);
 void mx_gupd_room_name(gint id, gchar *name, GtkBuilder *builder);
-void mx_gdel_room(gint id, GtkBuilder *builder);
+void mx_gdel_room(guint64 id, GtkBuilder *builder);
 void mx_gdel_msg(guint64 msg_id, guint64 room_id, GtkBuilder *builder);
-void mx_gupd_msg_text(gint msg_id, gint room_id,
-                      gchar *text, GtkBuilder *builder);
+void mx_gupd_msg_text(guint64 msg_id, guint64 room_id,
+                      char *text, GtkBuilder *builder);
 void mx_reset_messege_room(t_groom *new_selected, GtkBuilder *builder);
 void mx_hide_msg_editing(GtkButton *btn, GtkBuilder *builder);
 void mx_set_room_widgets_visibility(GtkBuilder *builder, bool visibility);
