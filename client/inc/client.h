@@ -26,7 +26,7 @@
 #define MX_GLOBAL_ROOMS "listbox_global_rooms"
 
 //settings
-#define MX_BUF_MSGS 13
+#define MX_BUF_MSGS 30
 #define MX_MAX_LENGTH_QUEUE 30
 #define MX_RECONN_ATTEMPTS 6
 #define MX_RECONN_DELAY_S 4

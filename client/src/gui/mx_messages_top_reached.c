@@ -26,8 +26,8 @@ void mx_box_messages_reached(GtkScrolledWindow *scroll,
         gtk_adjustment_set_value(adj, gtk_adjustment_get_value(adj) + 1);
     }
     if (pos == GTK_POS_BOTTOM) {
-
         chat->upl_old_msgs = true;
+        g_print("\nuploaded = %d\n", groom->uploaded);
         while (groom->uploaded > MX_BUF_MSGS) {
             GtkRequisition req;
             GtkRequisition req2;
