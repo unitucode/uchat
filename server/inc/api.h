@@ -1,7 +1,5 @@
 #pragma once
 
-#include "protocol.h"
-#include "database.h"
 #include "server.h"
 
 /*

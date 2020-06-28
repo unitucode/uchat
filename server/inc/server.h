@@ -1,6 +1,5 @@
 #pragma once
 
-#include <glib.h>
 #include <gio/gio.h>
 #include "utils.h"
 #include "protocol.h"
