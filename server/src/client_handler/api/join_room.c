@@ -32,6 +32,20 @@ static t_dtp *new_member(char *login, int user_id, int room_id) {
     return mx_get_transport_data(member);
 }
 
+static void resend(t_client *client, guint64 room_id) {
+    t_dtp *answer = NULL;
+    t_db_room *db_room = NULL;
+
+    db_room = mx_get_room_by_id(client->info->database, room_id);
+    answer = get_resend_room(db_room);
+    mx_send(client->out, answer);
+    mx_free_request(&answer);
+    answer = new_member(client->user->login, client->user->user_id, room_id);
+    mx_send_to_all(answer, client, room_id);
+    mx_free_request(&answer);
+    mx_free_room(&db_room);
+}
+
 /*
  * Function: mx_join_room_handler
  * -------------------------------
@@ -44,21 +58,14 @@ static t_dtp *new_member(char *login, int user_id, int room_id) {
  */
 gboolean mx_join_room_handler(t_dtp *room, t_client *client) {
     cJSON *room_id = cJSON_GetObjectItemCaseSensitive(room->json, "room_id");
-    t_db_room *db_room = NULL;
-    t_dtp *answer = NULL;
 
-    if (!cJSON_IsNumber(room_id))
+    if (!cJSON_IsNumber(room_id)
+        || mx_is_member(client->info->database, client->user->user_id,
+                        room_id->valueint)) {
         return FALSE;
-    if (mx_is_member(client->info->database, client->user->user_id, room_id->valueint))
-        return FALSE;
-    mx_insert_member_into_db(client->info->database, room_id->valueint, client->user->user_id, DB_SIMPLE);
-    db_room = mx_get_room_by_id(client->info->database, room_id->valueint);
-    answer = get_resend_room(db_room);
-    mx_send(client->out, answer);
-    mx_free_request(&answer);
-    answer = new_member(client->user->login, client->user->user_id, room_id->valueint);
-    mx_send_to_all(answer, client, room_id->valueint);
-    mx_free_request(&answer);
-    mx_free_room(&db_room);
+    }
+    mx_insert_member_into_db(client->info->database, room_id->valueint,
+                             client->user->user_id, DB_SIMPLE);
+    resend(client, room_id->valuedouble);
     return TRUE;
 }
