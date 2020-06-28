@@ -1,22 +1,19 @@
 #include "client.h"
 
 static void mx_scroll_to_end(GtkAdjustment *adj, gpointer user_data) {
-    static gdouble last_value = 0;
+    static GtkAdjustment *last_adj = 0;
     static gdouble last_upper = 0;
     gdouble upper = gtk_adjustment_get_upper(adj);
     gdouble value = gtk_adjustment_get_value(adj);
 
-    // if (value > (last_upper - gtk_adjustment_get_page_size(adj) - 50) || value == 0) {
-    //     gtk_adjustment_set_value(adj, upper - gtk_adjustment_get_page_size(adj));
-    // }
-    if (last_value - value < 50 || value == 0) {
+    if (last_adj != adj)
+        value = 0;
+    if (value > (last_upper - gtk_adjustment_get_page_size(adj) - 50) ||
+            value == 0) {
         gtk_adjustment_set_value(adj, upper - gtk_adjustment_get_page_size(adj));
     }
-    g_print("\nvalue = %f\n", value);
-    g_print("last_upper = %f\n", last_upper);
-    g_print("page_size = %f\n", gtk_adjustment_get_page_size(adj));
-    last_value = gtk_adjustment_get_value(adj);
     last_upper = gtk_adjustment_get_upper(adj);
+    last_adj = adj;
     (void)user_data;
 }
 
