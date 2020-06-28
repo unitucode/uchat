@@ -35,10 +35,11 @@ GList *mx_get_login_members(sqlite3 *db, guint64 room_id) {
 
     rv = sqlite3_prepare_v2(db, "select distinct login from users inner join "
                                 "members on users.id = members.user_id where "
-                                "room_id = ?1",
+                                "room_id = ?1 and permission != ?2",
                             -1, &stmt, 0);
     mx_error_sqlite(rv, "prepare", "get_users_in_room");
     sqlite3_bind_int64(stmt, 1, room_id);
+    sqlite3_bind_int(stmt, 2, DB_BANNED);
     while ((rv = sqlite3_step(stmt)) == SQLITE_ROW)
         list = g_list_append(list, strdup((char*)sqlite3_column_text(stmt,
                              0)));
@@ -99,10 +100,8 @@ cJSON *mx_get_json_members(sqlite3 *db, guint64 room_id) {
     mx_error_sqlite(rv, "prepare", "get_json_members");
     sqlite3_bind_int64(stmt, 1, room_id);
     sqlite3_bind_int(stmt, 2, DB_BANNED);
-    printf("Ok\n");
     while ((rv = sqlite3_step(stmt)) == SQLITE_ROW)
         cJSON_AddItemToArray(users, get_object_user(stmt));
-    printf("Ok2 -> %s\n", cJSON_Print(users));
     sqlite3_finalize(stmt);
     return users;
 }
