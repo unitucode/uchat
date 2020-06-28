@@ -26,7 +26,7 @@
 #define MX_GLOBAL_ROOMS "listbox_global_rooms"
 
 //settings
-#define MX_BUF_MSGS 13
+#define MX_BUF_MSGS 30
 #define MX_MAX_LENGTH_QUEUE 30
 #define MX_RECONN_ATTEMPTS 6
 #define MX_RECONN_DELAY_S 4
@@ -189,10 +189,10 @@ t_dtp *mx_search_rooms_request(char *room_name); // FOR SEARCHING CHANNEL
 t_dtp *mx_join_room_request(int room_id); //FOR JOIN TO ROOM
 t_dtp *mx_get_members_request(int room_id); //FOR MEMEBERS
 t_dtp *mx_member_info_request(int user_id); //FOR INFO ABOUT MEMBER
-t_dtp *mx_ban_member_request(int room_id, int user_id); // FOR BAN MEMBER
+t_dtp *mx_ban_member_request(guint64 room_id, guint64 user_id); // FOR BAN MEMBER
 t_dtp *mx_sticker_request(char *sticker, int room_id); // FOR STICKER
 t_dtp *mx_search_msgs_request(char *msg, int room_id); // FOR SEARCH MSGS
-t_dtp *mx_del_hist_request(int room_id); // FOR DELETE HISTORY
+t_dtp *mx_del_hist_request(guint64 room_id); // FOR DELETE HISTORY
 t_dtp *mx_old_msgs_request(guint64 date, int room_id); // FOR UPD MSGS REQUEST
 t_dtp *mx_upload_file_request(const char *name, goffset size, char *token, gint room_id); // FOR FILE
 t_dtp *mx_download_file_request(guint64 room_id, guint64 msg_id, gchar *token);
@@ -272,7 +272,7 @@ void mx_add_message_to_found(t_gmsg *gmsg, t_chat *chat);
 void mx_clear_found_msgs(GtkBuilder *builder);
 void mx_set_room_members(GtkBuilder *builder, t_groom *groom);
 void mx_show_user_info(GtkBuilder *builder, gchar *login, gchar *desc);
-void mx_gupd_clear_history(GtkBuilder *builder, gint room_id);
+void mx_gupd_clear_history(GtkBuilder *builder, guint64 room_id);
 
 // gui utils
 void mx_scrlldwnd_connect(gchar *name, GtkWidget *scroll, GtkBuilder *builder, t_groom *room);
