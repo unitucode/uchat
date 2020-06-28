@@ -92,7 +92,6 @@ struct s_chat {
     GDataInputStream *in;
     GSocketConnection *conn;
     GSocketClient *cli_conn;
-    GHashTable *stickers;
     char *auth_token;
     char *login;
     gchar *desc;
