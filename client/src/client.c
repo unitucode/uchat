@@ -1,5 +1,11 @@
 #include "client.h"
 
+/*
+ * Function: change_working_dir
+ * -------------------------------
+ * Changes working directory to MX_CLIENT if its exist
+ * and create files directory for downloaded files
+ */
 static void change_working_dir(void) {
     #ifdef MX_CLIENT
     if (chdir(MX_CLIENT)) {

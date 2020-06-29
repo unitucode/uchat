@@ -102,10 +102,10 @@ struct s_chat {
     t_dtp *data;
     gboolean upl_old_msgs;
     GtkBuilder *builder;
-    bool valid;
+    gboolean valid;
     void (*error_handler[ER_COUNT_ERRS])(GtkBuilder *builder);
     gboolean (*request_handler[RQ_COUNT_REQUEST])(t_dtp *dtp, struct s_chat *chat);
-    bool msg_placeholder;
+    gboolean msg_placeholder;
 };
 
 struct s_signal_data {
