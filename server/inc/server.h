@@ -41,6 +41,18 @@ typedef struct s_info t_info;
  */
 typedef struct s_send_helper t_send_helper;
 
+/* File helper
+ * ----------
+ * table: hash table that contains all members of room
+ * data: request that need to send
+ */
+typedef struct s_file_helper t_file_helper;
+
+struct s_file_helper {
+    GFile *file;
+    GSocketConnection *conn;  
+};
+
 struct s_info {
     GHashTable *users;
     sqlite3* database;

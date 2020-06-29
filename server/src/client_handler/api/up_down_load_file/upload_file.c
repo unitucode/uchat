@@ -33,8 +33,8 @@ static gboolean is_valid(t_client *client, guint64 room_id) {
 static gboolean create_file(t_client *client, guint64 size, guint64 room_id,
                             gchar *name) {
     gchar *filename = g_strdup_printf(
-        "%s%"G_GUINT64_FORMAT"%s%s", MX_FILES_DIR, mx_get_time(DB_MICROSECOND),
-        client->user->login, name);
+        "%s%"G_GUINT64_FORMAT"%s%s", MX_FILES_DIR,
+        mx_get_time(DB_MICROSECOND), client->user->login, name);
     if (!mx_read_file(client, size, filename)) {
         g_free(filename);
         return FALSE;
