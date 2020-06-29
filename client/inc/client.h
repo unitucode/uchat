@@ -56,6 +56,13 @@ typedef struct s_chat t_chat;
 typedef struct s_filter_data t_filter_data;
 typedef struct s_signal_data t_signal_data;
 typedef struct s_gsticker t_gsticker;
+// typedef struct s_msg_select t_msg_select;
+
+// struct s_msg_select {
+//     gint selected;
+//     gint another;
+//     gint notedit;
+// };
 
 struct s_groom {
     GtkListBox *box_rooms;
@@ -74,6 +81,7 @@ struct s_groom {
     char *desc;
     bool is_updated;
     gint uploaded;
+    // t_msg_select *msg_flags;
 };
 
 struct s_gmsg {
@@ -216,17 +224,6 @@ void mx_logout_client(t_chat *chat);
 void mx_reset_addroom(GtkButton *btn, GtkBuilder *builder);
 void mx_reset_auth(GtkNotebook *note, GtkWidget *page,
                    guint page_num, GtkBuilder *builder);
-void mx_connect_authorization(t_chat *chat);
-void mx_connect_addroom(t_chat *chat);
-void mx_connect_send_message(t_chat *chat);
-void mx_connect_profile_settings(t_chat *chat);
-void mx_connect_room_settings(t_chat *chat);
-void mx_connect_message_ctrl(t_chat *chat);
-void mx_connect_search(t_chat *chat);
-void mx_connect_join_to_room(t_chat *chat);
-void mx_connect_stickers(t_chat *chat);
-void mx_connect_ban_member(t_chat *chat);
-void mx_connect_test_request(t_chat *chat); // DELETE
 void mx_errmsg_wrong_authdata(GtkBuilder *builder);
 void mx_errmsg_user_exist(GtkBuilder *builder);
 void mx_delete_row_room(GtkListBoxRow *row, GtkBuilder *builder);
@@ -271,6 +268,19 @@ void mx_clear_found_msgs(GtkBuilder *builder);
 void mx_set_room_members(GtkBuilder *builder, t_groom *groom);
 void mx_show_user_info(GtkBuilder *builder, gchar *login, gchar *desc);
 void mx_gupd_clear_history(GtkBuilder *builder, guint64 room_id);
+void mx_search_members(GtkBuilder *builder, gchar *search_login);
+gboolean mx_stop_search_members(gpointer *entry,
+                                gpointer *data, GtkBuilder *builder);
+void mx_msgcreate_own_content(GtkWidget *box_info, t_gmsg *gmsg);
+void mx_msgcreate_content(GtkWidget *box_main,
+                          GtkWidget *box_info, t_gmsg *gmsg);
+t_groom *mx_init_groom();
+void mx_add_messages_box(t_groom *room, t_chat *chat);
+void mx_add_to_sett_members(gint *key,
+                            gchar *value, GtkBuilder *builder);
+void mx_add_to_info_members(gint *key,
+                            gchar *value, GtkBuilder *builder);
+void mx_reset_select_count();
 
 // gui utils
 void mx_scrlldwnd_connect(gchar *name, GtkWidget *scroll, GtkBuilder *builder, t_groom *room);
@@ -302,11 +312,41 @@ void mx_free_filter_data(t_filter_data *filter_data);
 gchar *mx_get_string_time(guint64 miliseconds, gint8 format);
 void mx_connect_set_placeholder(t_chat *chat);
 void mx_connect_unset_placeholder(t_chat *chat);
+void mx_connect_addroom(t_chat *chat);
+void mx_connect_send_message(t_chat *chat);
+void mx_connect_profile_settings(t_chat *chat);
+void mx_connect_room_settings(t_chat *chat);
+void mx_connect_message_ctrl(t_chat *chat);
+void mx_connect_authorization(t_chat *chat);
+void mx_connect_search(t_chat *chat);
+void mx_connect_join_to_room(t_chat *chat);
+void mx_connect_stickers(t_chat *chat);
+void mx_connect_ban_member(t_chat *chat);
+void mx_connect_test_request(t_chat *chat); // DELETE
 
-    // gui wrappers
-    // void mx_widget_show_all(GtkWidget *widget);
-    // void mx_widget_destroy(GtkWidget *widget);
-    // void mx_widget_show(GtkWidget *widget);
+// gui callbacks
+void mx_show_edit_msg(GtkButton *btn, t_chat *chat);
+void mx_delete_selected_msgs(GtkButton *btn, t_chat *chat);
+void mx_unselect_msg(GtkButton *btn, GtkBuilder *builder);
+void mx_req_get_member_info(GObject *popup, t_chat *chat);
+void mx_req_edit_desc(GtkButton *btn, t_chat *chat);
+void mx_req_logout(GtkButton *btn, t_chat *chat);
+void mx_set_profile_info(GtkButton *btn, t_chat *chat);
+void mx_set_room_sett(GtkButton *btn, t_chat *chat);
+void mx_req_room_sett(GtkButton *btn, t_chat *chat);
+void mx_req_room_clear(GtkButton *btn, t_chat *chat);
+void mx_req_room_del(GtkButton *btn, t_chat *chat);
+void mx_start_search_room(GtkSearchEntry *sentry, t_chat *chat);
+void mx_start_search_msgs(GtkSearchEntry *sentry, t_chat *chat);
+void mx_start_search_members(GtkSearchEntry *sentry, t_chat *chat);
+void mx_reset_addroom(GtkButton *btn, GtkBuilder *builder);
+void mx_set_current_room_sett(GtkBuilder *builder);
+void mx_select_room(GtkWidget *event_box, GdkEventButton *event,
+                    gpointer *user_data);
+void mx_show_join_to_room(GtkWidget *event_box, GdkEventButton *event,
+                          gpointer *user_data);
+
+// void mx_upload_file(gchar *path, gint room_id, t_chat *chat);
 bool mx_handle_request(char *request, t_chat *chat);
 void mx_send_auth_request(char *login, char *password,
                           t_chat *chat, t_request_type request_type);

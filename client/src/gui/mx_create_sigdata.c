@@ -9,3 +9,7 @@ t_signal_data *mx_create_sigdata(t_chat *chat, t_groom *groom,
     data->row_msg = row_msg;
     return data;
 }
+
+void mx_free_sigdata(t_signal_data *data) {
+    mx_free((void **)&data);
+}
