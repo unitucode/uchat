@@ -18,7 +18,7 @@ GTK_INC = `pkg-config --cflags gtk+-3.0`
 GTK_LIBS = -rdynamic `pkg-config --cflags --libs gtk+-3.0`
 
 SRCD = src src/client_handler src/client_handler/receiver \
-src/client_handler/api src/database
+src/client_handler/api src/database src/client_handler/api/up_down_load_file
 INCD = inc
 SRCS = $(foreach dir, $(SRCD), $(wildcard $(dir)/*.c))
 OBJS = $(addprefix $(OBJD)/, $(notdir $(SRCS:%.c=%.o)))

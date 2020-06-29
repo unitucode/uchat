@@ -35,11 +35,15 @@ static void download(t_client *client, GFile *file, gsize size) {
 }
 
 static void download_file(gchar *msg, t_client *client) {
-    GFile *file = g_file_new_for_path(msg);
-    GFileInfo *info = g_file_query_info(file, "standard::size,standard::name",
-                                        G_FILE_QUERY_INFO_NONE, NULL, NULL);
+    GFile *file = NULL;
+    GFileInfo *info = NULL;
     t_dtp *size = NULL;
 
+    if (!msg)
+        return;
+    file = g_file_new_for_path(msg);
+    info = g_file_query_info(file, "standard::size,standard::name",
+                                        G_FILE_QUERY_INFO_NONE, NULL, NULL);
     if (msg && g_file_query_exists(file, NULL)) {
         size = mx_size_request(g_file_info_get_size(info), msg);
         mx_send(client->out, size);
@@ -90,8 +94,8 @@ gboolean mx_download_file_handler(t_dtp *data, t_client *client) {
         return FALSE;
     }
     download_file(
-        mx_get_text_message_by_id(client->info->database, msg_id->valueint),
-        client);
+        mx_get_text_message_by_id(client->info->database,
+                                  msg_id->valuedouble), client);
     mx_free_user(&client->user);
     return TRUE;
 }

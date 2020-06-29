@@ -1,5 +1,16 @@
 #include "client.h"
 
+/*
+ * Function: mx_download_file_request
+ * -------------------------------
+ * Creates download file request
+ * 
+ * room_id: room id
+ * msg_id: message id that contains file
+ * token: SHA-256 hash + login
+ * 
+ * returns: new download file request
+ */
 t_dtp *mx_download_file_request(guint64 room_id, guint64 msg_id,
                                 gchar *token) {
     cJSON *res = cJSON_CreateObject();
@@ -52,6 +63,15 @@ static void file_ready(GObject *source_object, GAsyncResult *res,
     g_io_stream_close(G_IO_STREAM(user_data), NULL, NULL);
 }
 
+/*
+ * Function: mx_download_file
+ * -------------------------------
+ * Downloads file from server
+ * 
+ * room_id: room id
+ * msg_id: message id that contains file
+ * chat: information about chat
+ */
 void mx_download_file(guint64 room_id, guint64 msg_id, t_chat *chat) {
     GSocketConnection *conn = g_socket_client_connect_to_host(
         chat->cli_conn, chat->argv[1],
