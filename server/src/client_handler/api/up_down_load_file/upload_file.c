@@ -46,6 +46,16 @@ static gboolean create_file(t_client *client, guint64 size, guint64 room_id,
     return TRUE;
 }
 
+/*
+ * Function: mx_upload_file_handler
+ * -------------------------------
+ * Handles request from client
+ * 
+ * data: request from client
+ * client: client that sent this request
+ * 
+ * returns: success of handling
+ */
 gboolean mx_upload_file_handler(t_dtp *data, t_client *client) {
     cJSON *size = cJSON_GetObjectItemCaseSensitive(data->json, "size");
     cJSON *name = cJSON_GetObjectItemCaseSensitive(data->json, "name");
