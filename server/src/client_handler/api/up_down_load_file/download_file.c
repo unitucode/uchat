@@ -29,7 +29,7 @@ static void download(t_client *client, GFile *file, gsize size) {
     gsize bytes = 0;
 
     g_file_load_contents(file, NULL, &contents, &bytes, NULL, NULL);
-    g_output_stream_write(out, contents, size, NULL, NULL);
+    g_output_stream_write_all(out, contents, size, NULL, NULL, NULL);
     g_free(contents);
     g_io_stream_close(G_IO_STREAM(client->conn), NULL, NULL); // unrefs
 }

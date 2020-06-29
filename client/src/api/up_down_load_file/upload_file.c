@@ -9,7 +9,7 @@ static void file_ready(GObject *source_object, GAsyncResult *res,
 
     g_file_load_contents_finish(
         G_FILE(source_object), res, &contents, &length, NULL, NULL);
-    g_output_stream_write(out, contents, length, NULL, NULL);
+    g_output_stream_write_all(out, contents, length, NULL, NULL, NULL);
     g_io_stream_close(G_IO_STREAM(user_data), NULL, NULL);
     g_object_unref(G_FILE(source_object));
 }
