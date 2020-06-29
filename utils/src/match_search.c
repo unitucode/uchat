@@ -8,7 +8,6 @@ gboolean mx_match_nsearch(gchar *str, gchar *regex, gssize size) {
 
     buf[size] = 0;
     g_strlcpy(buf, str, size + 1);
-    puts(buf);
     g_reg = g_regex_new(regex, 0, 0, NULL);
     g_res = g_regex_match(g_reg, buf, 0, &match_info);
     g_match_info_free(match_info);

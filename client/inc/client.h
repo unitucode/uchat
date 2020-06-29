@@ -126,8 +126,6 @@ void mx_receiver(GObject *source_object, GAsyncResult *res, gpointer user_data);
 void mx_init_handlers(t_chat *chat);
 void mx_init_errors(t_chat *chat);
 void mx_get_data(t_chat *chat);
-// bool mx_connect(t_chat *chat);
-bool mx_reconnect(t_chat *chat);
 void mx_upload_file(gchar *path, gint room_id, t_chat *chat);
 
 
@@ -143,7 +141,6 @@ gboolean mx_upd_room_desc_handler(t_dtp *data, t_chat *chat); // HANDLER FOR ROO
 gboolean mx_upd_room_name_handler(t_dtp *data, t_chat *chat); // HANDLER FOR ROOM UPDATE NAME REQUEST
 gboolean mx_upd_user_desc_handler(t_dtp *data, t_chat *chat); // HANDLER FOR USER UPDATE DESCRIPTION REQUEST
 gboolean mx_update_users_handler(t_dtp *data, t_chat *chat); // HANDLER FOR USERS ONLINE UPDATE
-gboolean mx_reconnect_hanlder(t_dtp *token, t_chat *chat); // HANDLER FOR RECONNECT
 gboolean mx_del_room_handler(t_dtp *data, t_chat *chat);  // HANDLER FOR DELETE ROOM
 gboolean mx_edit_msg_handler(t_dtp *data, t_chat *chat); // HANDLER FOR EDIT MSG
 gboolean mx_del_msg_handler(t_dtp *data, t_chat *chat); // HANDLER FOR DEL MSG
