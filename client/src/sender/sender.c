@@ -5,10 +5,10 @@ gssize mx_send(GDataOutputStream *out, t_dtp *dtp) {
     gsize size = 0;
 
     if (!g_data_output_stream_put_string(out, dtp->str, NULL, &error)) {
-        mx_logger(MX_LOG_FILE, LOGERR, "Write string error\n");
+        mx_logger(MX_LOG_FILE, G_LOG_LEVEL_WARNING, "Write string error");
     }
     if (error) {
-        mx_logger(MX_LOG_FILE, LOGERR, "Error = %s\n", error->message);
+        mx_logger(MX_LOG_FILE, G_LOG_LEVEL_WARNING, "Error send");
         g_clear_error(&error);
     }
     return size;

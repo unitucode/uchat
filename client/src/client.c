@@ -3,15 +3,15 @@
 static void change_working_dir(void) {
     #ifdef MX_CLIENT
     if (chdir(MX_CLIENT)) {
-        mx_elogger(NULL, LOGERR,
-                   "No working directory %s\n", MX_CLIENT);
+        mx_logger(MX_LOG_FILE, G_LOG_LEVEL_ERROR,
+                  "No working directory mx_client");
     }
     if (g_mkdir_with_parents(MX_FILES_DIR, 0755)) {
-        mx_elogger(NULL, LOGERR,
-                   "No files directory %s\n", MX_FILES_DIR);
+        mx_logger(MX_LOG_FILE, G_LOG_LEVEL_ERROR,
+                  "No files directory mx_files_dir");
     }
     #else
-    mx_elogger(NULL, LOGERR, "No working directory");
+    mx_logger(MX_LOG_FILE, LOGERR, "No working directory");
     #endif
 }
 

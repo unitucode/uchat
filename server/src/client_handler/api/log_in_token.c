@@ -45,11 +45,10 @@ gboolean mx_log_in_token_handler(t_dtp *token, t_client *client) {
                                             user_token->valuestring);
     }
     if (!client->user) {
-        mx_logger(MX_LOG_FILE, LOGWAR, "Inccorect token\n");
+        mx_logger(MX_LOG_FILE, G_LOG_LEVEL_WARNING, "Inccorect token");
         return FALSE;
     }
-    mx_logger(MX_LOG_FILE, LOGMSG, "Logged by token %s\n",
-              client->user->login);
+    mx_logger(MX_LOG_FILE, G_LOG_LEVEL_MESSAGE, "Logged by token");
     reconnect = mx_reconnect_request(client->user->token,
                                      client->user->login);
     mx_send(client->out, reconnect);
