@@ -15,12 +15,13 @@ static gboolean is_valid(GFile *file, gsize bytes, gsize size) {
 
 static void file_read(gsize size, GFileOutputStream *out, GInputStream *in,
                       GFile *file) {
-    char buf[MX_BUF_FILE + 1];
+    char buf[MX_BUF_FILE];
     gsize bytes = 0;
     gssize read = 0;
 
     if (size <= MX_MAX_FILE_SIZE) {
-        while ((read = g_input_stream_read(in, buf, size, NULL, NULL)) > 0) {
+        while ((read = g_input_stream_read(in, buf, sizeof(buf), NULL,
+                                           NULL)) > 0) {
             bytes += read;
             if (bytes > size)
                 break;
