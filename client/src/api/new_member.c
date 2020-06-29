@@ -1,13 +1,15 @@
 #include "client.h"
 
-static gboolean add_member(char *login, guint64 user_id, guint64 room_id, t_chat *chat) {
+static gboolean add_member(char *login, guint64 user_id, guint64 room_id,
+                           t_chat *chat) {
     t_groom *groom = mx_get_groom_by_id(room_id, chat->builder);
 
     if (!groom)
         return FALSE;
     if (g_hash_table_lookup(groom->members, GINT_TO_POINTER(user_id)))
         return FALSE;
-    g_hash_table_insert(groom->members, GINT_TO_POINTER(user_id), g_strdup(login));
+    g_hash_table_insert(groom->members, GINT_TO_POINTER(user_id),
+                        g_strdup(login));
     return TRUE;
 }
 
