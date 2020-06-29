@@ -8,6 +8,7 @@
 #define MX_J_STR(m) (m) ? (m) : "(null)"
 #define MX_MAX_FILE_SIZE 50000000
 #define MX_FILES_DIR "files/"
+#define MX_BUF_FILE 2048
 
 /* Protocol object
  * ----------
@@ -35,34 +36,31 @@ typedef enum s_error_type {
 typedef enum s_request_type {
     RQ_LOG_IN = 0,
     RQ_SIGN_UP,
-    RQ_LOG_OUT,
     RQ_TOKEN,
     RQ_MSG,
-    RQ_NEW_ROOM,
-    RQ_DELETE_ROOM,
-    RQ_ERROR_MSG,
-    RQ_GET_ROOMS,
-    RQ_GET_NEW_MSGS,
-    RQ_UPD_ROOM_DESC,
-    RQ_UPD_ROOM_NAME,
-    RQ_UPD_USER_DESC,
-    RQ_UPD_USER_NAME,
-    RQ_OLD_MSGS,
-    RQ_RECONNECT,
-    RQ_DEL_ROOM,
-    RQ_DEL_USER,
     RQ_EDIT_MSG,
     RQ_DEL_MSG,
-    RQ_SEARCH_CH,
+    RQ_STICKER,
+    RQ_DEL_HIST,
+    RQ_GET_NEW_MSGS,
+    RQ_SEARCH_MSG,
+    RQ_ERROR_MSG,
+    RQ_OLD_MSGS,
+    RQ_GET_ROOMS,
+    RQ_NEW_ROOM,
+    RQ_DEL_ROOM,
     RQ_JOIN_ROOM,
+    RQ_UPD_ROOM_NAME,
+    RQ_UPD_ROOM_DESC,
+    RQ_SEARCH_CH,
     RQ_GET_MEMBERS,
     RQ_MEMBER_INFO,
     RQ_NEW_MEMBER,
     RQ_BAN_MEMBER,
-    RQ_STICKER,
-    RQ_SEARCH_MSG,
-    RQ_DEL_HIST,
-    RQ_FILE,
+    RQ_UPD_USER_DESC,
+    RQ_UPLOAD_FILE,
+    RQ_DOWNLOAD_FILE,
+    RQ_LOG_OUT,
     RQ_COUNT_REQUEST
 }            t_request_type;
 
@@ -124,17 +122,13 @@ struct s_dtp {
     int type;
 };
 
-
-//requests
-t_dtp *mx_get_transport_data(cJSON *json_result);
-
-//SSL
-bool mx_isvalid_hash(char *hash);
-bool mx_isvalid_login(char *login);
-bool mx_isvalid_token(char *token);
+gboolean mx_isvalid_hash(char *hash);
+gboolean mx_isvalid_login(char *login);
+gboolean mx_isvalid_token(char *token);
 void mx_create_token(char **token, char *login);
 
 //Protocol
+t_dtp *mx_get_transport_data(cJSON *json_result);
 int mx_get_type_dtp(t_dtp *dtp);
 t_dtp *mx_request_creation(char *req_body);
 void mx_free_request(t_dtp **request);

@@ -1,5 +1,10 @@
 #include "server.h"
 
+/*
+ * Function: 
+ * 
+ */
+
 static t_db_user *for_get_user(sqlite3_stmt *stmt) {
     t_db_user *user = NULL;
 
@@ -17,6 +22,11 @@ static t_db_user *for_get_user(sqlite3_stmt *stmt) {
     return user;
 }
 
+/*
+ * Function: 
+ * 
+ */
+
 t_db_user *mx_get_user_by_login(sqlite3 *db, gchar *login) {
     sqlite3_stmt *stmt;
     gint32 rv = 0;
@@ -27,6 +37,11 @@ t_db_user *mx_get_user_by_login(sqlite3 *db, gchar *login) {
     mx_error_sqlite(rv, "prepare", "get_user_by_login");
     return for_get_user(stmt);
 }
+
+/*
+ * Function: 
+ * 
+ */
 
 t_db_user *mx_get_user_by_id(sqlite3 *db, guint64 user_id) {
     sqlite3_stmt *stmt;
@@ -39,6 +54,11 @@ t_db_user *mx_get_user_by_id(sqlite3 *db, guint64 user_id) {
     return for_get_user(stmt);
 }
 
+/*
+ * Function: 
+ * 
+ */
+
 t_db_user *mx_get_user_by_token(sqlite3 *db, gchar *token) {
     sqlite3_stmt *stmt;
     gint32 rv = 0;
@@ -49,6 +69,11 @@ t_db_user *mx_get_user_by_token(sqlite3 *db, gchar *token) {
     sqlite3_bind_text(stmt, 1, token, -1, SQLITE_STATIC);
     return for_get_user(stmt);
 }
+
+/*
+ * Function: 
+ * 
+ */
 
 t_db_room *mx_get_room_by_id(sqlite3 *db, guint64 id) {
     t_db_room *room = NULL;

@@ -1,6 +1,5 @@
 #pragma once
 
-#include <glib.h>
 #include <gio/gio.h>
 #include "utils.h"
 #include "protocol.h"
@@ -14,7 +13,6 @@
 #define MX_DELAY (1000000 / MX_REQUEST_PER_SECOND)
 #define MX_MAX_ROOMS 20
 #define MX_MAX_MSGS 500
-#define MX_BUF_FILE 2048
 
 /* Client
  * ----------
@@ -46,7 +44,7 @@ typedef struct s_send_helper t_send_helper;
 struct s_info {
     GHashTable *users;
     sqlite3* database;
-    bool (*request_handler[RQ_COUNT_REQUEST])(t_dtp *dtp, t_client *chat);
+    gboolean (*request_handler[RQ_COUNT_REQUEST])(t_dtp *dtp, t_client *chat);
 };
 
 struct s_client {

@@ -1,5 +1,10 @@
 #include "server.h"
 
+/*
+ * Function: 
+ * 
+ */
+
 cJSON *mx_search_user(sqlite3 *db, gchar *str_search) {
     sqlite3_str *sql_str = sqlite3_str_new(db);
     gint32 rv =SQLITE_OK;
@@ -18,6 +23,11 @@ cJSON *mx_search_user(sqlite3 *db, gchar *str_search) {
     sqlite3_finalize(stmt);
     return users;
 }
+
+/*
+ * Function: 
+ * 
+ */
 
 cJSON *mx_search_room(sqlite3 *db, gchar *str_search, guint64 user_id) {
     sqlite3_str *sql_str = sqlite3_str_new(db);
@@ -41,6 +51,11 @@ cJSON *mx_search_room(sqlite3 *db, gchar *str_search, guint64 user_id) {
     return rooms;
 }
 
+/*
+ * Function: 
+ * 
+ */
+
 gboolean mx_check_user_by_login(sqlite3 *db, gchar *login) {
     sqlite3_stmt *stmt;
     gint32 rv = SQLITE_OK;
@@ -57,6 +72,11 @@ gboolean mx_check_user_by_login(sqlite3 *db, gchar *login) {
     sqlite3_finalize(stmt);
     return false;
 }
+
+/*
+ * Function: 
+ * 
+ */
 
 cJSON *mx_search_message(sqlite3 *db, gchar *str_search, guint64 room_id) {
     sqlite3_str *sql_str = sqlite3_str_new(db);

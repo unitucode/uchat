@@ -1,5 +1,10 @@
 #include "server.h"
 
+/*
+ * Function: 
+ * 
+ */
+
 guint64 mx_get_count_messages(sqlite3 *db, guint64 id) {
     sqlite3_stmt *stmt;
     sqlite3_str *str = sqlite3_str_new(db);
@@ -19,6 +24,11 @@ guint64 mx_get_count_messages(sqlite3 *db, guint64 id) {
     return count;
 }
 
+/*
+ * Function: 
+ * 
+ */
+
 guint64 mx_get_count_rooms(sqlite3 *db) {
     sqlite3_stmt *stmt;
     gint32 rv = SQLITE_OK;
@@ -31,6 +41,11 @@ guint64 mx_get_count_rooms(sqlite3 *db) {
     sqlite3_finalize(stmt);
     return count;
 }
+
+/*
+ * Function: 
+ * 
+ */
 
 guint64 mx_get_count_users(sqlite3 *db) {
     sqlite3_stmt *stmt;

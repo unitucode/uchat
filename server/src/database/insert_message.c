@@ -1,5 +1,10 @@
 #include "server.h"
 
+/*
+ * Function: 
+ * 
+ */
+
 static void get_id_msg(sqlite3 *db, t_db_message *message) {
     sqlite3_stmt *stmt;
     gint32 rv = SQLITE_OK;
@@ -15,6 +20,11 @@ static void get_id_msg(sqlite3 *db, t_db_message *message) {
     sqlite3_finalize(stmt);
 }
 
+/*
+ * Function: 
+ * 
+ */
+
 static void sqlite_bind_msg(sqlite3_stmt *stmt, t_db_message *message) {
     sqlite3_bind_int64(stmt, 1, message->user_id);
     sqlite3_bind_int64(stmt, 2, message->room_id);
@@ -28,11 +38,10 @@ static void sqlite_bind_msg(sqlite3_stmt *stmt, t_db_message *message) {
 }
 
 /*
- * writes data about the message to the database, takes an opaque database
- * structure sqlite3 and a structure t_db_message that contains all the data
- * except the time and status of the message, this data is entered by the
- * function itself
+ * Function: 
+ * 
  */
+
 void mx_insert_message(sqlite3 *db, t_db_message *message) {
     sqlite3_stmt *stmt;
     gint32 rv = SQLITE_OK;

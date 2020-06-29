@@ -1,7 +1,8 @@
 #include "api.h"
 
 static void incorrect_data(t_client *client) {
-    t_dtp *dtp = mx_error_msg_request(ER_AUTH_DATA, "The email or password inccorect");
+    t_dtp *dtp = mx_error_msg_request(ER_AUTH_DATA,
+                                      "The email or password inccorect");
 
     mx_send(client->out, dtp);
     mx_free_request(&dtp);
@@ -18,16 +19,18 @@ static void incorrect_data(t_client *client) {
  * returns: success of loging
  */
 static bool log_in(t_db_user *user, t_client *client) {
-    t_db_user *check_user = mx_get_user_by_login(client->info->database, user->login);
+    t_db_user *check_user = mx_get_user_by_login(client->info->database,
+                                                 user->login);
 
     if (!check_user) {
         incorrect_data(client);
         mx_logger(MX_LOG_FILE, LOGMSG, "user not found %s\n", user->login);
+        mx_free_user(&check_user);
         return true;
     }
     else if (strcmp(check_user->pass, user->pass)) {
         incorrect_data(client);
-        mx_logger(MX_LOG_FILE, LOGMSG, "Inccorect password %s\n", user->login);
+        mx_logger(MX_LOG_FILE, LOGMSG, "Inccorect pass %s\n", user->login);
         mx_free_user(&check_user);
         return true;
     }
@@ -46,23 +49,23 @@ static bool log_in(t_db_user *user, t_client *client) {
  * 
  * returns: success of handling
  */
-bool mx_log_in_handler(t_dtp *login_data, t_client *client) { //ADD ENCRYPT
+gboolean mx_log_in_handler(t_dtp *login_data, t_client *client) {
     t_db_user *user = mx_parse_json_user(login_data->json);
 
     if (!user)
-        return false;
+        return FALSE;
     if (!mx_match_search(user->login, MX_LOGIN_REGEX)) {
         mx_free_user(&user);
-        return false;
+        return FALSE;
     }
     if (!mx_match_search(user->pass, MX_HASH_REGEX)) {
         mx_free_user(&user);
-        return false;
+        return FALSE;
     }
     if (!log_in(user, client)) {
         mx_free_user(&user);
-        return false;
+        return FALSE;
     }
     mx_free_user(&user);
-    return true;
+    return TRUE;
 }

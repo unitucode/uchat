@@ -1,5 +1,10 @@
 #include "server.h"
 
+/*
+ * Function: 
+ * 
+ */
+
 void mx_insert_room_into_db(sqlite3 *db, t_db_room *room) {
     sqlite3_stmt *stmt;
     gint32 rv = SQLITE_OK;
@@ -51,6 +56,11 @@ void mx_insert_user_into_db(sqlite3 *db, t_db_user *user) {
     sqlite3_finalize(stmt);
     get_id_user(db, user);
 }
+
+/*
+ * Function: 
+ * 
+ */
 
 void mx_insert_member_into_db(sqlite3 *db, guint64 room_id, guint64 user_id,
                               gint8 permission) {

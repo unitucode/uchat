@@ -2,11 +2,14 @@
 
 t_gmsg *mx_get_gmsg_by_id(int msg_id, int room_id, GtkBuilder *builder) {
     t_groom *room = mx_get_groom_by_id(room_id, builder);
-    GtkListBox *box = room->box_messages;
+    GtkListBox *box = NULL;
     GtkListBoxRow *row = NULL;
     t_gmsg *gmsg = NULL;
     bool flag = true;
 
+    if (!room)
+        return NULL;
+    box = room->box_messages;
     for (int i = 0; flag; i++) {
         row = gtk_list_box_get_row_at_index(box, i);
         if (row == NULL)
@@ -26,23 +29,26 @@ void mx_delete_row_msg(GtkListBoxRow *row, GtkBuilder *builder) {
     gtk_widget_destroy(GTK_WIDGET(row));
 }
 
-void mx_gdel_msg(int msg_id, int room_id, GtkBuilder *builder) {
+void mx_gdel_msg(guint64 msg_id, guint64 room_id, GtkBuilder *builder) {
     t_gmsg *msg = mx_get_gmsg_by_id(msg_id, room_id, builder);
     t_groom *room = mx_get_groom_by_id(room_id, builder);
 
-    if (msg) {
+    if (msg && room) {
         room->uploaded--;
         mx_delete_row_msg(msg->row_msg, builder);
+        mx_unselect_curr_room_messages(builder);
     }
 }
 
-void mx_gupd_msg_text(int msg_id, int room_id,
+void mx_gupd_msg_text(guint64 msg_id, guint64 room_id,
                       char *text, GtkBuilder *builder) {
     t_gmsg *gmsg = mx_get_gmsg_by_id(msg_id, room_id, builder);
 
-    mx_free((void **)&(gmsg->msg));
-    gmsg->msg = mx_strdup(text);
-    gtk_label_set_markup(gmsg->label_text, mx_format_text(gmsg->msg));
-    gtk_widget_show_all(GTK_WIDGET(gmsg->label_text));
-    mx_unselect_curr_room_messages(builder);
+    if (gmsg) {
+        mx_free((void **)&(gmsg->msg));
+        gmsg->msg = mx_strdup(text);
+        gtk_label_set_text(gmsg->label_text, gmsg->msg);
+        gtk_widget_show_all(GTK_WIDGET(gmsg->label_text));
+        mx_unselect_curr_room_messages(builder);
+    }
 }

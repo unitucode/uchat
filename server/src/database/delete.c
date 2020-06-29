@@ -1,5 +1,13 @@
 #include "server.h"
 
+/*
+ * Function: mx_delete_message_by_id
+ * delete message
+ * 
+ * db: closed database structure
+ * id: message id
+ */
+
 void mx_delete_message_by_id(sqlite3 *db, guint64 id) {
     sqlite3_stmt *stmt;
     gint32 rv = SQLITE_OK;
@@ -11,6 +19,11 @@ void mx_delete_message_by_id(sqlite3 *db, guint64 id) {
     mx_error_sqlite(sqlite3_step(stmt), "step", "delete message");
     sqlite3_finalize(stmt);
 }
+
+/*
+ * Function: 
+ * 
+ */
 
 void mx_delete_room_by_id(sqlite3 *db, guint64 room_id) {
     gchar *request = NULL;
@@ -27,6 +40,11 @@ void mx_delete_room_by_id(sqlite3 *db, guint64 room_id) {
     mx_error_sqlite(rv, "exec", "delete room");
     sqlite3_free(request);
 }
+
+/*
+ * Function: 
+ * 
+ */
 
 void mx_delete_user_by_id(sqlite3 *db, guint64 id) {
     sqlite3_str *sqlite_str = sqlite3_str_new(db);

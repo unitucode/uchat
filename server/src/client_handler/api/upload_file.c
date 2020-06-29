@@ -7,7 +7,7 @@ static gboolean read_file(t_client *client, gsize size, char *name) {
     char buf[MX_BUF_FILE + 1];
     gssize read = 0;
     gsize bytes = 0;
-
+    //SET NEW NAME IF EXISTS
     if (size <= MX_MAX_FILE_SIZE) {
         while ((read = g_input_stream_read(client->in_s, buf, size, NULL, NULL)) > 0) {
             bytes += read;
@@ -48,7 +48,7 @@ static void resend_file(t_client *client, gchar *filename, gint room_id) {
     mx_free_request(&file_request);
 }
 
-bool mx_upload_file_handler(t_dtp *data, t_client *client) {
+gboolean mx_upload_file_handler(t_dtp *data, t_client *client) {
     cJSON *size = cJSON_GetObjectItemCaseSensitive(data->json, "size");
     cJSON *name = cJSON_GetObjectItemCaseSensitive(data->json, "name");
     cJSON *token = cJSON_GetObjectItemCaseSensitive(data->json, "token");
@@ -56,23 +56,24 @@ bool mx_upload_file_handler(t_dtp *data, t_client *client) {
     gchar *filename = NULL;
 
     if (!cJSON_IsNumber(size) || !cJSON_IsString(name))
-        return false;
+        return FALSE;
     if (!cJSON_IsString(token) || !cJSON_IsNumber(room_id))
-        return false;
-    client->user = mx_get_user_by_token(client->info->database, token->valuestring); // LEAKS
-    if (!mx_is_member(client->info->database, client->user->user_id, room_id->valueint))
-        return false;
-    if (mx_get_type_member(client->info->database, client->user->user_id, room_id->valueint) == DB_BANNED)
-        return false;
+        return FALSE;
+    client->user = mx_get_user_by_token(client->info->database, token->valuestring);
+    if (!mx_is_member(client->info->database, client->user->user_id, room_id->valuedouble))
+        return FALSE;
+    if (mx_get_type_member(client->info->database, client->user->user_id, room_id->valuedouble) == DB_BANNED)
+        return FALSE;
     filename = g_strdup_printf(
-        "%s%llu%s%s", MX_FILES_DIR, mx_get_time(DB_MICROSECOND),
+        "%s%"G_GUINT64_FORMAT"%s%s", MX_FILES_DIR, mx_get_time(DB_MICROSECOND),
         client->user->login, name->valuestring);
     if (!read_file(client, size->valueint, filename)) {
         g_free(filename);
-        return false;
+        return FALSE;
     }
     resend_file(client, filename, room_id->valueint);
     g_io_stream_close(G_IO_STREAM(client->conn), NULL, NULL);
     g_free(filename);
-    return true;
+    mx_free_user(&client->user);
+    return TRUE;
 }

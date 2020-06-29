@@ -29,14 +29,16 @@ t_dtp *mx_search_rooms_request(cJSON *array) {
  * 
  * returns: success of handling
  */
-bool mx_search_rooms_handler(t_dtp *data, t_client *client) {
+gboolean mx_search_rooms_handler(t_dtp *data, t_client *client) {
     cJSON *name = cJSON_GetObjectItemCaseSensitive(data->json, "name");
     t_dtp *answer = NULL;
 
     if (!cJSON_IsString(name))
-        return false;
-    answer = mx_search_rooms_request(mx_search_room(client->info->database, name->valuestring, client->user->user_id));
+        return FALSE;
+    answer = mx_search_rooms_request(mx_search_room(client->info->database,
+                                                    name->valuestring,
+                                                    client->user->user_id));
     mx_send(client->out, answer);
     mx_free_request(&answer);
-    return true;
+    return TRUE;
 }

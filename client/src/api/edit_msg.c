@@ -1,6 +1,17 @@
 #include "client.h"
 
-t_dtp *mx_edit_msg_request(char *msg, int room_id, int msg_id) {
+/*
+ * Function: mx_edit_msg_request
+ * -------------------------------
+ * Creates edit message request
+ * 
+ * msg: edited message
+ * room_id: room id that contains message
+ * msg_id: message id that need to edit
+ * 
+ * returns: edit message request
+ */
+t_dtp *mx_edit_msg_request(char *msg, guint64 room_id, guint64 msg_id) {
     cJSON *json_result = cJSON_CreateObject();
 
     if (!cJSON_AddNumberToObject(json_result, "type", RQ_EDIT_MSG))
@@ -14,18 +25,26 @@ t_dtp *mx_edit_msg_request(char *msg, int room_id, int msg_id) {
     return mx_get_transport_data(json_result);
 }
 
-bool mx_edit_msg_handler(t_dtp *data, t_chat *chat) {
+/*
+ * Function: mx_edit_msg_handler
+ * -------------------------------
+ * Handles request from server
+ * 
+ * data: request from server
+ * chat: information about chat
+ * 
+ * returns: success of handling
+ */
+gboolean mx_edit_msg_handler(t_dtp *data, t_chat *chat) {
     cJSON *msg = cJSON_GetObjectItemCaseSensitive(data->json, "msg");
     cJSON *room_id = cJSON_GetObjectItemCaseSensitive(data->json, "room_id");
     cJSON *msg_id = cJSON_GetObjectItemCaseSensitive(data->json, "msg_id");
 
-    if (!cJSON_IsString(msg))
-        return false;
-    if (!cJSON_IsNumber(room_id))
-        return false;
-    if (!cJSON_IsNumber(msg_id))
-        return false;
-    mx_gupd_msg_text(msg_id->valueint, room_id->valueint,
+    if (!cJSON_IsString(msg) || !cJSON_IsNumber(room_id)
+        || !cJSON_IsNumber(msg_id)) {
+        return FALSE;
+    }
+    mx_gupd_msg_text(msg_id->valuedouble, room_id->valuedouble,
                      msg->valuestring, chat->builder);
-    return true;
+    return TRUE;
 }

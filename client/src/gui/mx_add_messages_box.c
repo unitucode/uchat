@@ -18,7 +18,7 @@ void mx_add_messages_box(t_groom *room, t_chat *chat) {
     room->stack_msg = GTK_STACK(stack);
     room->page = GTK_SCROLLED_WINDOW(scroll);
     gtk_widget_show_all(scroll);
-    mx_scrlldwnd_connect(NULL, scroll, chat->builder);
+    mx_scrlldwnd_connect(NULL, scroll, chat->builder, room);
     g_signal_connect(scroll, "edge-reached",
                      G_CALLBACK(mx_box_messages_reached), chat);
 }

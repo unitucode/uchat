@@ -4,15 +4,12 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <sys/types.h>
-#include <libgen.h>
 #include <string.h>
 #include <netdb.h>
 #include <errno.h>
 #include <stdbool.h>
 #include <stdarg.h>
 #include <fcntl.h>
-#include <regex.h>
-#include <time.h>
 #include <gmodule.h>
 #include "sqlite3.h"
 #include "cJSON.h"

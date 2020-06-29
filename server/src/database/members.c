@@ -1,5 +1,10 @@
 #include "server.h"
 
+/*
+ * Function: 
+ * 
+ */
+
 gboolean mx_is_member(sqlite3 *db, guint64 user_id, guint64 room_id) {
     sqlite3_stmt *stmt;
     gint32 rv = SQLITE_OK;
@@ -18,6 +23,11 @@ gboolean mx_is_member(sqlite3 *db, guint64 user_id, guint64 room_id) {
     return false;
 }
 
+/*
+ * Function: 
+ * 
+ */
+
 GList *mx_get_login_members(sqlite3 *db, guint64 room_id) {
     sqlite3_stmt *stmt;
     gint rv = SQLITE_OK;
@@ -25,10 +35,11 @@ GList *mx_get_login_members(sqlite3 *db, guint64 room_id) {
 
     rv = sqlite3_prepare_v2(db, "select distinct login from users inner join "
                                 "members on users.id = members.user_id where "
-                                "room_id = ?1",
+                                "room_id = ?1 and permission != ?2",
                             -1, &stmt, 0);
     mx_error_sqlite(rv, "prepare", "get_users_in_room");
     sqlite3_bind_int64(stmt, 1, room_id);
+    sqlite3_bind_int(stmt, 2, DB_BANNED);
     while ((rv = sqlite3_step(stmt)) == SQLITE_ROW)
         list = g_list_append(list, strdup((char*)sqlite3_column_text(stmt,
                              0)));
@@ -36,6 +47,11 @@ GList *mx_get_login_members(sqlite3 *db, guint64 room_id) {
     sqlite3_finalize(stmt);
     return list;
 }
+
+/*
+ * Function: 
+ * 
+ */
 
 void mx_edit_type_member(sqlite3 *db, guint64 room_id, guint64 user_id,
                        gint8 new_type) {
@@ -52,6 +68,11 @@ void mx_edit_type_member(sqlite3 *db, guint64 room_id, guint64 user_id,
     sqlite3_free(request);
 }
 
+/*
+ * Function: 
+ * 
+ */
+
 static cJSON *get_object_user(sqlite3_stmt *stmt) {
     cJSON *user = cJSON_CreateObject();
 
@@ -61,6 +82,11 @@ static cJSON *get_object_user(sqlite3_stmt *stmt) {
     cJSON_AddNumberToObject(user, "type", sqlite3_column_int(stmt, 2));
     return user;
 }
+
+/*
+ * Function: 
+ * 
+ */
 
 cJSON *mx_get_json_members(sqlite3 *db, guint64 room_id) {
     cJSON *users = cJSON_CreateArray();
@@ -74,19 +100,17 @@ cJSON *mx_get_json_members(sqlite3 *db, guint64 room_id) {
     mx_error_sqlite(rv, "prepare", "get_json_members");
     sqlite3_bind_int64(stmt, 1, room_id);
     sqlite3_bind_int(stmt, 2, DB_BANNED);
-    printf("Ok\n");
     while ((rv = sqlite3_step(stmt)) == SQLITE_ROW)
         cJSON_AddItemToArray(users, get_object_user(stmt));
-    printf("Ok2 -> %s\n", cJSON_Print(users));
     sqlite3_finalize(stmt);
     return users;
 }
 
-
 /*
-* повертає тип прав користувача в кімнаті
-* якщо користувач не зареєсрований учасником кімнати повертає -1
-*/
+ * Function: 
+ * 
+ */
+
 gint8 mx_get_type_member(sqlite3 *db, guint64 user_id, guint64 room_id) {
     sqlite3_stmt *stmt;
     gint32 rv = 0;
