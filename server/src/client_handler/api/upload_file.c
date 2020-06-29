@@ -59,10 +59,10 @@ gboolean mx_upload_file_handler(t_dtp *data, t_client *client) {
         return FALSE;
     if (!cJSON_IsString(token) || !cJSON_IsNumber(room_id))
         return FALSE;
-    client->user = mx_get_user_by_token(client->info->database, token->valuestring); // LEAKS
-    if (!mx_is_member(client->info->database, client->user->user_id, room_id->valueint))
+    client->user = mx_get_user_by_token(client->info->database, token->valuestring);
+    if (!mx_is_member(client->info->database, client->user->user_id, room_id->valuedouble))
         return FALSE;
-    if (mx_get_type_member(client->info->database, client->user->user_id, room_id->valueint) == DB_BANNED)
+    if (mx_get_type_member(client->info->database, client->user->user_id, room_id->valuedouble) == DB_BANNED)
         return FALSE;
     filename = g_strdup_printf(
         "%s%"G_GUINT64_FORMAT"%s%s", MX_FILES_DIR, mx_get_time(DB_MICROSECOND),

@@ -155,6 +155,7 @@ gboolean mx_search_msgs_handler(t_dtp *data, t_chat *chat); //HANDLER FOR SEARCH
 gboolean mx_del_hist_handler(t_dtp *data, t_chat *chat); //HANDLER FOR DELETE HISTORY
 gboolean mx_old_msgs_hanlder(t_dtp *data, t_chat *chat); //HANDLER FOR UPD MSGS
 void mx_download_file(guint64 room_id, guint64 msg_id, t_chat *chat);
+void mx_file_read(gsize size, gchar *name, GInputStream *in);
 
 
 /*
