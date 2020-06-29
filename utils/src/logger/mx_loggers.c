@@ -3,8 +3,7 @@
 /*
  * Logs string to file
  */
-void mx_logger(const char *file, t_logtype type, const char *fmt, ...) {
-    va_list ap;
+void mx_logger(gchar *file, t_logtype type, gchar *error) {
     FILE *fd = NULL;
 
     if (file == NULL)
@@ -29,8 +28,7 @@ void mx_logger(const char *file, t_logtype type, const char *fmt, ...) {
 /*
  * Logs string to file with exit
  */
-void mx_elogger(const char *file, t_logtype type, const char *fmt, ...) {
-    va_list ap;
+void mx_elogger(gchar *file, t_logtype type, gchar *error) {
     FILE *fd = NULL;
 
     if (file == NULL)

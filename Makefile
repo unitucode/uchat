@@ -1,3 +1,7 @@
+UNIT_TEST = unit_test
+UNIT_TESTD = unit_test
+UNIT_TESTO = $(UNIT_TESTD)/$(UNIT_TEST)
+
 CLIENT = uchat
 SERVER = uchat_server
 UTILS = libutils
@@ -16,6 +20,7 @@ SERVERO = $(SERVERD)/$(SERVER)
 UTILSO = $(UTILSD)/$(UTILS).a
 CJSONO = libraries/lib/$(CJSON).a
 SQLITEO = libraries/lib/$(SQLITE).a
+
 
 all: $(SQLITE) $(CJSON) $(UTILS) $(CLIENT) $(SERVER)
 
@@ -60,4 +65,13 @@ clean:
 
 reinstall: uninstall all
 
-.PHONY: all uninstall clean reinstall $(CLIENTO) $(SERVERO) $(SQLITEO) $(CJSONO) $(UTILSO)
+unit_test: $(UNIT_TEST)
+
+$(UNIT_TEST): $(UNIT_TESTO)
+$(UNIT_TESTO): $(UNIT_TESTD)
+
+$(UNIT_TESTO):
+	make -C $<
+	cp $@ .
+
+.PHONY: + uninstall clean reinstall $(CLIENTO) $(SERVERO) $(SQLITEO) $(CJSONO) $(UTILSO)

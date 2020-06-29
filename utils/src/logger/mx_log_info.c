@@ -8,10 +8,10 @@ void mx_log_id(FILE *fd) {
     int pgid = getpgid(pid);
 
     if (pgid == -1) {
-        fprintf(stderr, "Logger error: getpgid problem\n");
+        g_fprintf(stderr, "Logger error: getpgid problem\n");
         exit(errno);
     }
-    fprintf(fd, "[pid: %d|pgid: %d]", pid, pgid);
+    g_fprintf(fd, "[pid: %d|pgid: %d]", pid, pgid);
 }
 
 /*
@@ -23,16 +23,16 @@ void mx_log_time(FILE *fd) {
     char *rtime;
 
     if (ttime == -1) {
-        fprintf(stderr, "Logger error: time problem\n");
+        g_fprintf(stderr, "Logger error: time problem\n");
         exit(errno);
     }
     stime = ctime(&ttime);
     if (stime == NULL) {
-        fprintf(stderr, "Logger error: ctime problem\n");
+        g_fprintf(stderr, "Logger error: ctime problem\n");
         exit(errno);
     }
     rtime = strndup(stime, strlen(stime) - 1);
-    fprintf(fd, "[%s] ", rtime);
+    g_fprintf(fd, "[%s] ", rtime);
     mx_free((void **)&rtime);
 }
 
@@ -41,11 +41,11 @@ void mx_log_time(FILE *fd) {
  */
 void mx_log_type(FILE *fd, t_logtype type) {
     if (type == LOGMSG)
-        fprintf(fd, "MESSAGE: ");
+        g_fprintf(fd, "MESSAGE: ");
     else if (type == LOGWAR)
-        fprintf(fd, "WARNING: ");
+        g_fprintf(fd, "WARNING: ");
     else if (type == LOGERR)
-        fprintf(fd, "ERROR: ");
+        g_fprintf(fd, "ERROR: ");
 }
 
 /*
@@ -53,7 +53,7 @@ void mx_log_type(FILE *fd, t_logtype type) {
  */
 void mx_log_errno(FILE *fd) {
     if (errno != 0) {
-        fprintf(fd, "[ERRNO is %d: %s] ", errno, strerror(errno));
+        g_fprintf(fd, "[ERRNO is %d: %s] ", errno, strerror(errno));
         errno = 0;
     }
 }
