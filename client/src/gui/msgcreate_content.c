@@ -7,7 +7,7 @@ void mx_msgcreate_own_content(GtkWidget *box_info,
         mx_msgcreate_label_text(box_info, gmsg, TRUE);
     }
     else if (gmsg->type == DB_STICKER) {
-        mx_widget_set_class(box_info, "box_sticker_info");
+        mx_widget_set_class(box_info, "box_own_sticker_info");
         mx_msgcreate_img_sticker(box_info, gmsg, TRUE);
     }
     else {

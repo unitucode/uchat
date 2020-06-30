@@ -60,9 +60,15 @@ void download(GtkButton *btn, t_chat *chat) {
     t_gmsg *gmsg = g_object_get_data(G_OBJECT(btn), "gmsg");
     t_dtp *dtp = NULL;
 
-    dtp = mx_download_file_request(groom->id, gmsg->message_id, gmsg->msg);
-    mx_send(chat->out, dtp);
-    mx_free_request(&dtp);
+    if (g_file_test(gmsg->msg, G_FILE_TEST_EXISTS)) {
+        system("open .");
+    }
+    else {
+        dtp = mx_download_file_request(groom->id,
+                                       gmsg->message_id, gmsg->msg);
+        mx_send(chat->out, dtp);
+        mx_free_request(&dtp);
+    }
 }
 
 void mx_msgcreate_file(GtkWidget *box_info, t_gmsg *gmsg,
