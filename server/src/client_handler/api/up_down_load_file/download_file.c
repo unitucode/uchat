@@ -89,7 +89,7 @@ gboolean mx_download_file_handler(t_dtp *data, t_client *client) {
     }
     client->user = mx_get_user_by_token(client->info->database,
                                         token->valuestring);
-    if (!is_valid(client, room_id->valuedouble)) {
+    if (client->user && !is_valid(client, room_id->valuedouble)) {
         mx_free_user(&client->user);
         return FALSE;
     }
