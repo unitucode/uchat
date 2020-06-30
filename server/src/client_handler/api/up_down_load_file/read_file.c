@@ -15,6 +15,13 @@ static gboolean is_valid(GFile *file, gsize size, gsize bytes) {
     return TRUE;
 }
 
+static gboolean is_online(t_client *client) {
+    if (!g_hash_table_lookup(client->info->users, client->user->login)) {
+        return FALSE;
+    }
+    return TRUE;
+}
+
 static gboolean read_file(t_client *client, GFile *file, gsize size,
                           GFileOutputStream *out) {
     char buf[MX_BUF_FILE];
@@ -23,7 +30,8 @@ static gboolean read_file(t_client *client, GFile *file, gsize size,
 
     if (size <= MX_MAX_FILE_SIZE) {
         while ((read = g_input_stream_read(client->in_s, buf, sizeof(buf),
-                                           NULL, NULL)) > 0) {
+                                           NULL, NULL)) > 0
+               && is_online(client)) {
             bytes += read;
             if (bytes > size)
                 break;

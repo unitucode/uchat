@@ -30,18 +30,34 @@ static gboolean is_valid(t_client *client, guint64 room_id) {
     return TRUE;
 }
 
+static gpointer upload_file_thread(gpointer data) {
+    t_file_helper *file = (t_file_helper*)data;
+    gchar *filename = g_strdup_printf(
+        "%s%"G_GUINT64_FORMAT"%s%s", MX_FILES_DIR,
+        mx_get_time(DB_MICROSECOND), file->client->user->login, file->name);
+
+    if (mx_read_file(file->client, file->size, filename)) {
+        resend_file(file->client, filename, file->room_id);
+    }
+    file->client->upload_file = FALSE;
+    mx_deinit_client(&file->client);
+    g_free(filename);
+    g_free(file->name);
+    g_free(file);
+    g_thread_exit(NULL);
+    return NULL;
+}
+
 static gboolean create_file(t_client *client, guint64 size, guint64 room_id,
                             gchar *name) {
-    gchar *filename = g_strdup_printf(
-        "%s%"G_GUINT64_FORMAT"%s%s", MX_FILES_DIR, mx_get_time(DB_MICROSECOND),
-        client->user->login, name);
-    if (!mx_read_file(client, size, filename)) {
-        g_free(filename);
-        return FALSE;
-    }
-    resend_file(client, filename, room_id);
-    g_io_stream_close(G_IO_STREAM(client->conn), NULL, NULL);
-    g_free(filename);
+    t_file_helper *file = g_malloc0(sizeof(t_file_helper));
+
+    file->size = size;
+    file->room_id = room_id;
+    file->client = client;
+    file->name = g_strdup(name);
+    client->upload_file = TRUE;
+    g_thread_new("upload_thread", upload_file_thread, file);
     return TRUE;
 }
 
@@ -73,6 +89,5 @@ gboolean mx_upload_file_handler(t_dtp *data, t_client *client) {
                      name->valuestring)) {
         return FALSE;
     }
-    mx_free_user(&client->user);
     return TRUE;
 }
