@@ -55,19 +55,6 @@ void mx_msgcreate_label_time(GtkWidget *box_info,
     g_free(long_time);
 }
 
-void download(GtkButton *btn, t_chat *chat) {
-    t_groom *groom = mx_get_selected_groom(chat->builder, MX_LOCAL_ROOMS);
-    t_gmsg *gmsg = g_object_get_data(G_OBJECT(btn), "gmsg");
-    t_signal_data *data = g_object_get_data(G_OBJECT(gmsg->row_msg),
-                                            "sigdata");
-
-    mx_select_msg(NULL, NULL, data);
-    if (g_file_test(gmsg->msg, G_FILE_TEST_EXISTS))
-        system("open files/");
-    else
-        mx_download_file(groom->id, gmsg->message_id, chat);
-}
-
 void mx_msgcreate_file(GtkWidget *box_info, t_gmsg *gmsg,
                        gboolean is_own, t_chat *chat) {
     GtkWidget *box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
@@ -75,9 +62,9 @@ void mx_msgcreate_file(GtkWidget *box_info, t_gmsg *gmsg,
                                                    GTK_ICON_SIZE_DIALOG);
     GtkWidget *filename = gtk_label_new(gmsg->msg);
 
+    gtk_widget_set_can_focus(btn, FALSE);
     g_object_set_data(G_OBJECT(btn), "gmsg", gmsg);
-    g_signal_connect(btn, "clicked",
-                     G_CALLBACK(download), chat);
+    g_signal_connect(btn, "clicked", G_CALLBACK(mx_open_files_dir), chat);
     gtk_label_set_line_wrap(GTK_LABEL(filename), TRUE);
     gtk_label_set_line_wrap_mode(GTK_LABEL(filename), PANGO_WRAP_WORD_CHAR);
     gtk_box_pack_start(GTK_BOX(box), btn, FALSE, TRUE, 0);

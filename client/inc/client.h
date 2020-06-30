@@ -285,6 +285,7 @@ void mx_add_to_sett_members(gint *key,
 void mx_add_to_info_members(gint *key,
                             gchar *value, GtkBuilder *builder);
 void mx_reset_select_count();
+void mx_open_files_dir(GtkButton *btn, t_chat *chat);
 
 // gui utils
 void mx_scrlldwnd_connect(gchar *name, GtkWidget *scroll, GtkBuilder *builder, t_groom *room);
