@@ -39,9 +39,9 @@ static gpointer upload_file_thread(gpointer data) {
     if (mx_read_file(file->client, file->size, filename)) {
         resend_file(file->client, filename, file->room_id);
     }
-    g_io_stream_close(G_IO_STREAM(file->client->conn), NULL, NULL);
+    file->client->upload_file = FALSE;
+    mx_deinit_client(&file->client);
     g_free(filename);
-    mx_free_user(&file->client->user);
     g_free(file->name);
     g_free(file);
     g_thread_exit(NULL);
@@ -56,6 +56,7 @@ static gboolean create_file(t_client *client, guint64 size, guint64 room_id,
     file->room_id = room_id;
     file->client = client;
     file->name = g_strdup(name);
+    client->upload_file = TRUE;
     g_thread_new("upload_thread", upload_file_thread, file);
     return TRUE;
 }

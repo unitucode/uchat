@@ -69,6 +69,7 @@ struct s_client {
     char *msg;
     t_db_user *user;
     t_info *info;
+    gboolean upload_file;
 };
 
 struct s_send_helper {
@@ -80,6 +81,7 @@ gssize mx_send(GDataOutputStream *out, t_dtp *dtp);
 t_info *mx_init_info(void);
 t_client *mx_new_client(socklen_t len);
 void mx_deinit_info(t_info **info);
+void mx_deinit_client(t_client **client);
 void mx_init_receiver(t_info *chat);
 
 void mx_get_client_info(t_client *client);
