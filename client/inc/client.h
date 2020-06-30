@@ -66,10 +66,10 @@ struct s_groom {
     GtkLabel *label_name;
     GHashTable *members;
     gboolean is_watched;
-    int id;
+    guint64 id;
     char *room_name;
     char *customer;
-    int customer_id;
+    guint64 customer_id;
     long int date;
     char *desc;
     bool is_updated;
@@ -102,10 +102,10 @@ struct s_chat {
     t_dtp *data;
     gboolean upl_old_msgs;
     GtkBuilder *builder;
-    bool valid;
+    gboolean valid;
     void (*error_handler[ER_COUNT_ERRS])(GtkBuilder *builder);
-    bool (*request_handler[RQ_COUNT_REQUEST])(t_dtp *dtp, struct s_chat *chat);
-    bool msg_placeholder;
+    gboolean (*request_handler[RQ_COUNT_REQUEST])(t_dtp *dtp, struct s_chat *chat);
+    gboolean msg_placeholder;
 };
 
 struct s_signal_data {
@@ -126,38 +126,36 @@ void mx_receiver(GObject *source_object, GAsyncResult *res, gpointer user_data);
 void mx_init_handlers(t_chat *chat);
 void mx_init_errors(t_chat *chat);
 void mx_get_data(t_chat *chat);
-// bool mx_connect(t_chat *chat);
-bool mx_reconnect(t_chat *chat);
 void mx_upload_file(gchar *path, gint room_id, t_chat *chat);
 
 
 //handlers
-bool mx_error_handler(t_dtp *data, t_chat *chat);
-bool mx_authorization_handler(t_dtp *token, t_chat *chat);
-bool mx_new_room_handler(t_dtp *data, t_chat *chat);
-bool mx_msg_handler(t_dtp *data, t_chat *chat);
-bool mx_rooms_hanlder(t_dtp *data, t_chat *chat);
-bool mx_log_out_handler(t_dtp *token, t_chat *chat);
-bool mx_new_msgs_hanlder(t_dtp *data, t_chat *chat);
-bool mx_upd_room_desc_handler(t_dtp *data, t_chat *chat); // HANDLER FOR ROOM UPDATE DESCRIPTION REQUEST
-bool mx_upd_room_name_handler(t_dtp *data, t_chat *chat); // HANDLER FOR ROOM UPDATE NAME REQUEST
-bool mx_upd_user_desc_handler(t_dtp *data, t_chat *chat); // HANDLER FOR USER UPDATE DESCRIPTION REQUEST
-bool mx_update_users_handler(t_dtp *data, t_chat *chat); // HANDLER FOR USERS ONLINE UPDATE
-bool mx_reconnect_hanlder(t_dtp *token, t_chat *chat); // HANDLER FOR RECONNECT
-bool mx_del_room_handler(t_dtp *data, t_chat *chat);  // HANDLER FOR DELETE ROOM
-bool mx_edit_msg_handler(t_dtp *data, t_chat *chat); // HANDLER FOR EDIT MSG
-bool mx_del_msg_handler(t_dtp *data, t_chat *chat); // HANDLER FOR DEL MSG
-bool mx_upload_file_handler(t_dtp *data, t_chat *chat); // HANDLER FOR GET FILE
-bool mx_search_rooms_handler(t_dtp *data, t_chat *chat); //HANDLER FOR SEARCHING
-bool mx_join_room_handler(t_dtp *data, t_chat *chat); //HANDLER FOR JOIN ROOM
-bool mx_get_members_handler(t_dtp *data, t_chat *chat); //HANDLER FOR USERS
-bool mx_member_info_handler(t_dtp *data, t_chat *chat); //HANDLER FOR INFO MEMBER
-bool mx_new_member_handler(t_dtp *data, t_chat *chat); //HANDLER FOR NEW MEMBER
-bool mx_ban_member_handler(t_dtp *data, t_chat *chat); //HANDLER FOR BAN MEMBER
-bool mx_search_msgs_handler(t_dtp *data, t_chat *chat); //HANDLER FOR SEARCH MSG
-bool mx_del_hist_handler(t_dtp *data, t_chat *chat); //HANDLER FOR DELETE HISTORY
-bool mx_old_msgs_hanlder(t_dtp *data, t_chat *chat); //HANDLER FOR UPD MSGS
+gboolean mx_error_handler(t_dtp *data, t_chat *chat);
+gboolean mx_authorization_handler(t_dtp *token, t_chat *chat);
+gboolean mx_new_room_handler(t_dtp *data, t_chat *chat);
+gboolean mx_msg_handler(t_dtp *data, t_chat *chat);
+gboolean mx_rooms_hanlder(t_dtp *data, t_chat *chat);
+gboolean mx_log_out_handler(t_dtp *token, t_chat *chat);
+gboolean mx_new_msgs_hanlder(t_dtp *data, t_chat *chat);
+gboolean mx_upd_room_desc_handler(t_dtp *data, t_chat *chat); // HANDLER FOR ROOM UPDATE DESCRIPTION REQUEST
+gboolean mx_upd_room_name_handler(t_dtp *data, t_chat *chat); // HANDLER FOR ROOM UPDATE NAME REQUEST
+gboolean mx_upd_user_desc_handler(t_dtp *data, t_chat *chat); // HANDLER FOR USER UPDATE DESCRIPTION REQUEST
+gboolean mx_update_users_handler(t_dtp *data, t_chat *chat); // HANDLER FOR USERS ONLINE UPDATE
+gboolean mx_del_room_handler(t_dtp *data, t_chat *chat);  // HANDLER FOR DELETE ROOM
+gboolean mx_edit_msg_handler(t_dtp *data, t_chat *chat); // HANDLER FOR EDIT MSG
+gboolean mx_del_msg_handler(t_dtp *data, t_chat *chat); // HANDLER FOR DEL MSG
+gboolean mx_upload_file_handler(t_dtp *data, t_chat *chat); // HANDLER FOR GET FILE
+gboolean mx_search_rooms_handler(t_dtp *data, t_chat *chat); //HANDLER FOR SEARCHING
+gboolean mx_join_room_handler(t_dtp *data, t_chat *chat); //HANDLER FOR JOIN ROOM
+gboolean mx_get_members_handler(t_dtp *data, t_chat *chat); //HANDLER FOR USERS
+gboolean mx_member_info_handler(t_dtp *data, t_chat *chat); //HANDLER FOR INFO MEMBER
+gboolean mx_new_member_handler(t_dtp *data, t_chat *chat); //HANDLER FOR NEW MEMBER
+gboolean mx_ban_member_handler(t_dtp *data, t_chat *chat); //HANDLER FOR BAN MEMBER
+gboolean mx_search_msgs_handler(t_dtp *data, t_chat *chat); //HANDLER FOR SEARCH MSG
+gboolean mx_del_hist_handler(t_dtp *data, t_chat *chat); //HANDLER FOR DELETE HISTORY
+gboolean mx_old_msgs_hanlder(t_dtp *data, t_chat *chat); //HANDLER FOR UPD MSGS
 void mx_download_file(guint64 room_id, guint64 msg_id, t_chat *chat);
+void mx_file_read(gsize size, gchar *name, GInputStream *in);
 
 
 /*
@@ -170,31 +168,31 @@ void mx_download_file(guint64 room_id, guint64 msg_id, t_chat *chat);
  */
 //api
 t_dtp *mx_new_room_request(char *room_name, char *desc, t_room_type type);
-t_dtp *mx_msg_request(char *msg, int room_id);
+t_dtp *mx_msg_request(char *msg, guint64 room_id);
 t_dtp *mx_token_request(char *token);
 t_dtp *mx_log_in_request(char *login, char *pass);
 t_dtp *mx_sign_up_request(char *login, char *pass);
-t_dtp *mx_get_rooms_request(long int date);
+t_dtp *mx_get_rooms_request(guint64 date);
 t_dtp *mx_log_out_request(char *token);
-t_dtp *mx_get_new_msgs_request(long int date, int room_id);
-t_dtp *mx_upd_room_desc_request(int room_id, char *desc); // FOR ROOM UPDATE DESCRIPTION CREATE REQUEST
-t_dtp *mx_upd_room_name_request(int room_id, char *name); // FOR ROOM UPDATE NAME CREATE REQUEST
+t_dtp *mx_get_new_msgs_request(guint64 date, guint64 room_id);
+t_dtp *mx_upd_room_desc_request(guint64 room_id, char *desc); // FOR ROOM UPDATE DESCRIPTION CREATE REQUEST
+t_dtp *mx_upd_room_name_request(guint64 room_id, char *name); // FOR ROOM UPDATE NAME CREATE REQUEST
 t_dtp *mx_upd_user_desc_request(char *desc); // FOR USER DESCRIPTION UPDATE
-t_dtp *mx_del_room_request(int room_id); // FOR DELETE ROOM
-t_dtp *mx_edit_msg_request(char *msg, int room_id, int msg_id); // FOR EDIT MSG
+t_dtp *mx_del_room_request(guint64 room_id); // FOR DELETE ROOM
 t_dtp *mx_upd_user_name_request(char *name); //TODO
-t_dtp *mx_del_msg_request(int room_id, int msg_id); // FOR DELETE MESSAGE FROM ROOM
-t_dtp *mx_edit_msg_request(char *msg, int room_id, int msg_id); // FOR EDIT MESSAGE IN ROOM
+t_dtp *mx_del_msg_request(guint64 room_id, guint64 msg_id); // FOR DELETE MESSAGE FROM ROOM
+t_dtp *mx_edit_msg_request(char *msg, guint64 room_id, guint64 msg_id); // FOR EDIT MESSAGE IN ROOM
 t_dtp *mx_search_rooms_request(char *room_name); // FOR SEARCHING CHANNEL
-t_dtp *mx_join_room_request(int room_id); //FOR JOIN TO ROOM
-t_dtp *mx_get_members_request(int room_id); //FOR MEMEBERS
-t_dtp *mx_member_info_request(int user_id); //FOR INFO ABOUT MEMBER
-t_dtp *mx_ban_member_request(int room_id, int user_id); // FOR BAN MEMBER
-t_dtp *mx_sticker_request(char *sticker, int room_id); // FOR STICKER
-t_dtp *mx_search_msgs_request(char *msg, int room_id); // FOR SEARCH MSGS
-t_dtp *mx_del_hist_request(int room_id); // FOR DELETE HISTORY
-t_dtp *mx_old_msgs_request(guint64 date, int room_id); // FOR UPD MSGS REQUEST
-t_dtp *mx_upload_file_request(const char *name, goffset size, char *token, gint room_id); // FOR FILE
+t_dtp *mx_join_room_request(guint64 room_id); //FOR JOIN TO ROOM
+t_dtp *mx_get_members_request(guint64 room_id); //FOR MEMEBERS
+t_dtp *mx_member_info_request(guint64 user_id); //FOR INFO ABOUT MEMBER
+t_dtp *mx_ban_member_request(guint64 room_id, guint64 user_id); // FOR BAN MEMBER
+t_dtp *mx_sticker_request(char *sticker, guint64 room_id); // FOR STICKER
+t_dtp *mx_search_msgs_request(char *msg, guint64 room_id); // FOR SEARCH MSGS
+t_dtp *mx_del_hist_request(guint64 room_id); // FOR DELETE HISTORY
+t_dtp *mx_old_msgs_request(guint64 date, guint64 room_id); // FOR UPD MSGS REQUEST
+t_dtp *mx_upload_file_request(const char *name, goffset size,
+                              char *token, guint64 room_id); // FOR FILE
 t_dtp *mx_download_file_request(guint64 room_id, guint64 msg_id, gchar *token);
 
 //errors api
@@ -218,28 +216,17 @@ void mx_logout_client(t_chat *chat);
 void mx_reset_addroom(GtkButton *btn, GtkBuilder *builder);
 void mx_reset_auth(GtkNotebook *note, GtkWidget *page,
                    guint page_num, GtkBuilder *builder);
-void mx_connect_authorization(t_chat *chat);
-void mx_connect_addroom(t_chat *chat);
-void mx_connect_send_message(t_chat *chat);
-void mx_connect_profile_settings(t_chat *chat);
-void mx_connect_room_settings(t_chat *chat);
-void mx_connect_message_ctrl(t_chat *chat);
-void mx_connect_search(t_chat *chat);
-void mx_connect_join_to_room(t_chat *chat);
-void mx_connect_stickers(t_chat *chat);
-void mx_connect_ban_member(t_chat *chat);
-void mx_connect_test_request(t_chat *chat); // DELETE
 void mx_errmsg_wrong_authdata(GtkBuilder *builder);
 void mx_errmsg_user_exist(GtkBuilder *builder);
 void mx_delete_row_room(GtkListBoxRow *row, GtkBuilder *builder);
 void mx_set_default_room_sett(GtkBuilder *builder);
 void mx_set_current_room_sett(GtkBuilder *builder);
-void mx_gupd_room_desc(gint id, gchar *desc, GtkBuilder *builder);
-void mx_gupd_room_name(gint id, gchar *name, GtkBuilder *builder);
-void mx_gdel_room(gint id, GtkBuilder *builder);
-void mx_gdel_msg(gint msg_id, gint room_id, GtkBuilder *builder);
-void mx_gupd_msg_text(gint msg_id, gint room_id,
-                      gchar *text, GtkBuilder *builder);
+void mx_gupd_room_desc(guint64 id, char *desc, GtkBuilder *builder);
+void mx_gupd_room_name(guint64 id, char *name, GtkBuilder *builder);
+void mx_gdel_room(guint64 id, GtkBuilder *builder);
+void mx_gdel_msg(guint64 msg_id, guint64 room_id, GtkBuilder *builder);
+void mx_gupd_msg_text(guint64 msg_id, guint64 room_id,
+                      char *text, GtkBuilder *builder);
 void mx_reset_messege_room(t_groom *new_selected, GtkBuilder *builder);
 void mx_hide_msg_editing(GtkButton *btn, GtkBuilder *builder);
 void mx_set_room_widgets_visibility(GtkBuilder *builder, bool visibility);
@@ -272,7 +259,20 @@ void mx_add_message_to_found(t_gmsg *gmsg, t_chat *chat);
 void mx_clear_found_msgs(GtkBuilder *builder);
 void mx_set_room_members(GtkBuilder *builder, t_groom *groom);
 void mx_show_user_info(GtkBuilder *builder, gchar *login, gchar *desc);
-void mx_gupd_clear_history(GtkBuilder *builder, gint room_id);
+void mx_gupd_clear_history(GtkBuilder *builder, guint64 room_id);
+void mx_search_members(GtkBuilder *builder, gchar *search_login);
+gboolean mx_stop_search_members(gpointer *entry,
+                                gpointer *data, GtkBuilder *builder);
+void mx_msgcreate_own_content(GtkWidget *box_info, t_gmsg *gmsg);
+void mx_msgcreate_content(GtkWidget *box_main,
+                          GtkWidget *box_info, t_gmsg *gmsg);
+t_groom *mx_init_groom();
+void mx_add_messages_box(t_groom *room, t_chat *chat);
+void mx_add_to_sett_members(gint *key,
+                            gchar *value, GtkBuilder *builder);
+void mx_add_to_info_members(gint *key,
+                            gchar *value, GtkBuilder *builder);
+void mx_reset_select_count();
 
 // gui utils
 void mx_scrlldwnd_connect(gchar *name, GtkWidget *scroll, GtkBuilder *builder, t_groom *room);
@@ -286,7 +286,7 @@ void mx_widget_set_visibility_by_name(GtkBuilder *builder,
 void mx_widget_switch_visibility(GtkWidget *usr_ctrl, GtkWidget *widget);
 void mx_widget_switch_visibility_by_name(GtkBuilder *builder, gchar *name);
 t_groom *mx_get_selected_groom(GtkBuilder *builder, gchar *list_name);
-t_groom *mx_get_groom_by_id(gint room_id, GtkBuilder *builder);
+t_groom *mx_get_groom_by_id(guint64 room_id, GtkBuilder *builder);
 t_gmsg *mx_get_selected_gmsg(GtkBuilder *builder);
 t_gmsg *mx_get_gmsg_by_id(gint msg_id, gint room_id, GtkBuilder *builder);
 void mx_unselect_room(t_groom *groom, GtkBuilder *builder);
@@ -304,11 +304,42 @@ void mx_free_filter_data(t_filter_data *filter_data);
 gchar *mx_get_string_time(guint64 miliseconds, gint8 format);
 void mx_connect_set_placeholder(t_chat *chat);
 void mx_connect_unset_placeholder(t_chat *chat);
+void mx_connect_addroom(t_chat *chat);
+void mx_connect_send_message(t_chat *chat);
+void mx_connect_profile_settings(t_chat *chat);
+void mx_connect_room_settings(t_chat *chat);
+void mx_connect_message_ctrl(t_chat *chat);
+void mx_connect_authorization(t_chat *chat);
+void mx_connect_search(t_chat *chat);
+void mx_connect_join_to_room(t_chat *chat);
+void mx_connect_stickers(t_chat *chat);
+void mx_connect_ban_member(t_chat *chat);
+void mx_connect_test_request(t_chat *chat); // DELETE
+void mx_connect_filechooser(t_chat *chat);
 
-    // gui wrappers
-    // void mx_widget_show_all(GtkWidget *widget);
-    // void mx_widget_destroy(GtkWidget *widget);
-    // void mx_widget_show(GtkWidget *widget);
+// gui callbacks
+void mx_show_edit_msg(GtkButton *btn, t_chat *chat);
+void mx_delete_selected_msgs(GtkButton *btn, t_chat *chat);
+void mx_unselect_msg(GtkButton *btn, GtkBuilder *builder);
+void mx_req_get_member_info(GObject *popup, t_chat *chat);
+void mx_req_edit_desc(GtkButton *btn, t_chat *chat);
+void mx_req_logout(GtkButton *btn, t_chat *chat);
+void mx_set_profile_info(GtkButton *btn, t_chat *chat);
+void mx_set_room_sett(GtkButton *btn, t_chat *chat);
+void mx_req_room_sett(GtkButton *btn, t_chat *chat);
+void mx_req_room_clear(GtkButton *btn, t_chat *chat);
+void mx_req_room_del(GtkButton *btn, t_chat *chat);
+void mx_start_search_room(GtkSearchEntry *sentry, t_chat *chat);
+void mx_start_search_msgs(GtkSearchEntry *sentry, t_chat *chat);
+void mx_start_search_members(GtkSearchEntry *sentry, t_chat *chat);
+void mx_reset_addroom(GtkButton *btn, GtkBuilder *builder);
+void mx_set_current_room_sett(GtkBuilder *builder);
+void mx_select_room(GtkWidget *event_box, GdkEventButton *event,
+                    gpointer *user_data);
+void mx_show_join_to_room(GtkWidget *event_box, GdkEventButton *event,
+                          gpointer *user_data);
+
+// void mx_upload_file(gchar *path, gint room_id, t_chat *chat);
 bool mx_handle_request(char *request, t_chat *chat);
 void mx_send_auth_request(char *login, char *password,
                           t_chat *chat, t_request_type request_type);

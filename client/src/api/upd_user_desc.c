@@ -1,5 +1,14 @@
 #include "client.h"
 
+/*
+ * Function: mx_upd_user_desc_request
+ * -------------------------------
+ * Creates update user description request
+ * 
+ * desc: new description
+ * 
+ * returns: update description user request
+ */
 t_dtp *mx_upd_user_desc_request(char *desc) {
     cJSON *json_result = cJSON_CreateObject();
 
@@ -10,13 +19,23 @@ t_dtp *mx_upd_user_desc_request(char *desc) {
     return mx_get_transport_data(json_result);
 }
 
-bool mx_upd_user_desc_handler(t_dtp *data, t_chat *chat) {
+/*
+ * Function: mx_upd_user_desc_handler
+ * -------------------------------
+ * Handles request from server
+ * 
+ * data: request from server
+ * chat: information about chat
+ * 
+ * returns: success of handling
+ */
+gboolean mx_upd_user_desc_handler(t_dtp *data, t_chat *chat) {
     cJSON *desc = cJSON_GetObjectItemCaseSensitive(data->json, "desc");
 
     if (!cJSON_IsString(desc))
-        return false;
+        return FALSE;
     if (chat->desc)
         g_free(chat->desc);
     chat->desc = g_strdup(desc->valuestring);
-    return true;
+    return TRUE;
 }

@@ -8,7 +8,7 @@
 #define MX_J_STR(m) (m) ? (m) : "(null)"
 #define MX_MAX_FILE_SIZE 50000000
 #define MX_FILES_DIR "files/"
-#define MX_BUF_FILE 2048
+#define MX_BUF_FILE 16384
 
 /* Protocol object
  * ----------
@@ -61,9 +61,6 @@ typedef enum s_request_type {
     RQ_UPLOAD_FILE,
     RQ_DOWNLOAD_FILE,
     RQ_LOG_OUT,
-    RQ_UPD_USER_NAME, // TO DELETE
-    RQ_DEL_USER, // TO DELETE
-    RQ_RECONNECT, // TO DELETE
     RQ_COUNT_REQUEST
 }            t_request_type;
 
@@ -125,17 +122,13 @@ struct s_dtp {
     int type;
 };
 
-
-//requests
-t_dtp *mx_get_transport_data(cJSON *json_result);
-
-//SSL
-bool mx_isvalid_hash(char *hash);
-bool mx_isvalid_login(char *login);
-bool mx_isvalid_token(char *token);
+gboolean mx_isvalid_hash(char *hash);
+gboolean mx_isvalid_login(char *login);
+gboolean mx_isvalid_token(char *token);
 void mx_create_token(char **token, char *login);
 
 //Protocol
+t_dtp *mx_get_transport_data(cJSON *json_result);
 int mx_get_type_dtp(t_dtp *dtp);
 t_dtp *mx_request_creation(char *req_body);
 void mx_free_request(t_dtp **request);

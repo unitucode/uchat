@@ -48,8 +48,10 @@ gboolean mx_del_hist_handler(t_dtp *msg, t_client *client);
 gboolean mx_old_msgs_handler(t_dtp *data, t_client *client);
 gboolean mx_upload_file_handler(t_dtp *file, t_client *client);
 gboolean mx_download_file_handler(t_dtp *data, t_client *client);
+gboolean mx_read_file(t_client *client, gsize size, char *name);
 
 /*
  * Main request handler
  */
 gboolean mx_handle_request(char *request, t_client *client);
+gboolean mx_handle_message(t_client *client);

@@ -1,5 +1,15 @@
 #include "client.h"
 
+/*
+ * Function: mx_send
+ * -------------------------------
+ * Sends request to server
+ * 
+ * out: output stream to server
+ * dtp: reqeust that need to send
+ * 
+ * returns: count of sent bytes
+ */
 gssize mx_send(GDataOutputStream *out, t_dtp *dtp) {
     GError *error = NULL;
     gsize size = 0;

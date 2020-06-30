@@ -32,7 +32,7 @@ static void mx_init_room_handlers(t_info *chat) {
  */
 void mx_init_receiver(t_info *chat) {
     chat->request_handler[RQ_SIGN_UP] = mx_sign_up_handler;
-    chat->request_handler[RQ_TOKEN] = mx_log_in_token_handler;
+    chat->request_handler[RQ_TOKEN] = NULL;
     chat->request_handler[RQ_LOG_IN] = mx_log_in_handler;
     chat->request_handler[RQ_MSG] = mx_msg_handler;
     chat->request_handler[RQ_LOG_OUT] = mx_log_out_handler;
@@ -40,10 +40,25 @@ void mx_init_receiver(t_info *chat) {
     chat->request_handler[RQ_EDIT_MSG] = mx_edit_msg_handler;
     chat->request_handler[RQ_SEARCH_MSG] = mx_search_msgs_handler;
     chat->request_handler[RQ_UPLOAD_FILE] = mx_upload_file_handler;
-    chat->request_handler[RQ_RECONNECT] = NULL;
     chat->request_handler[RQ_OLD_MSGS] = mx_old_msgs_handler;
     chat->request_handler[RQ_DOWNLOAD_FILE] = mx_download_file_handler;
     mx_init_room_handlers(chat);
+}
+
+gboolean mx_handle_message(t_client *client) {
+    if (client->upload_file)
+        return FALSE;
+    if (!client->msg) {
+        g_message("2Closed receiver for\n");
+        mx_deinit_client(&client);
+        return FALSE;
+    }
+    if (!mx_handle_request(client->msg, client)) {
+        g_message("3Closed receiver for\n");
+        mx_deinit_client(&client);
+        return FALSE;
+    }
+    return TRUE;
 }
 
 /*
@@ -74,7 +89,7 @@ gboolean mx_handle_request(char *request, t_client *client) {
         else
             return false;
         mx_free_request(&data);
-        usleep(MX_DELAY);
+        g_usleep(MX_DELAY);
     }
     return true;
 }

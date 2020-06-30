@@ -3,7 +3,7 @@
 /*
  * Returns groom by id, if not found NULL is returned
  */
-t_groom *mx_get_groom_by_id(gint room_id, GtkBuilder *builder) {
+t_groom *mx_get_groom_by_id(guint64 room_id, GtkBuilder *builder) {
     GObject *list = gtk_builder_get_object(builder,
                                            "listbox_rooms");
     GtkListBoxRow *row = NULL;

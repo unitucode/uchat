@@ -29,3 +29,17 @@ void mx_deinit_info(t_info **info) {
     free(*info);
     *info = NULL;
 }
+
+void mx_deinit_client(t_client **client) {
+    if (client && *client) {
+        if ((*client)->info->users && (*client)->out)
+            g_hash_table_remove((*client)->info->users, (*client)->out);
+        if ((*client)->msg)
+            g_free((*client)->msg);
+        if ((*client)->conn)
+            g_io_stream_close(G_IO_STREAM((*client)->conn), NULL, NULL);
+        (*client)->msg = NULL;
+        g_free(*client);
+        *client = NULL;
+    }
+}

@@ -23,35 +23,3 @@ t_dtp *mx_token_request(char *token, char *login, char *desc) {
         return NULL;
     return mx_get_transport_data(json_result);
 }
-
-/*
- * Function: mx_log_in_token_handler
- * -------------------------------
- * Handles request from client
- * 
- * room: request from client
- * client: client that sent this request
- * 
- * returns: success of handling
- */
-gboolean mx_log_in_token_handler(t_dtp *token, t_client *client) {
-    cJSON *user_token = cJSON_GetObjectItemCaseSensitive(token->json,
-                                                         "token");
-    t_dtp *reconnect = NULL;
-
-    if (cJSON_IsString(user_token)
-        && mx_isvalid_token(user_token->valuestring)) {
-        client->user = mx_get_user_by_token(client->info->database,
-                                            user_token->valuestring);
-    }
-    if (!client->user) {
-        mx_logger(MX_LOG_FILE, G_LOG_LEVEL_WARNING, "Inccorect token");
-        return FALSE;
-    }
-    mx_logger(MX_LOG_FILE, G_LOG_LEVEL_MESSAGE, "Logged by token");
-    reconnect = mx_reconnect_request(client->user->token,
-                                     client->user->login);
-    mx_send(client->out, reconnect);
-    mx_free_request(&reconnect);
-    return TRUE;
-}

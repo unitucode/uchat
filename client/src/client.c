@@ -1,5 +1,11 @@
 #include "client.h"
 
+/*
+ * Function: change_working_dir
+ * -------------------------------
+ * Changes working directory to MX_CLIENT if its exist
+ * and create files directory for downloaded files
+ */
 static void change_working_dir(void) {
     #ifdef MX_CLIENT
     if (chdir(MX_CLIENT)) {
@@ -24,7 +30,6 @@ static gboolean is_valid(int argc) {
 }
 
 int main(int argc, char **argv) {
-    GError *error = NULL;
     GSocketConnection *connection = NULL;
     GSocketClient *client = g_socket_client_new();
     t_chat *chat = NULL;
@@ -33,8 +38,8 @@ int main(int argc, char **argv) {
     if (!is_valid(argc))
         return -1;
     connection = g_socket_client_connect_to_host(
-        client, argv[1], g_ascii_strtoll(argv[2], NULL, 10), NULL, &error);
-    if (!connection || error) {
+        client, argv[1], g_ascii_strtoll(argv[2], NULL, 10), NULL, NULL);
+    if (!connection) {
         g_printerr("Invalid port or ip\n");
         return -1;
     }

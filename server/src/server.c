@@ -38,20 +38,12 @@ static void message_ready(GObject *source_object, GAsyncResult *res,
         || g_output_stream_is_closed(G_OUTPUT_STREAM(cli->out))
         || g_input_stream_is_closed(G_INPUT_STREAM(in))) {
             g_message("1Closed receiver for\n");
-        g_hash_table_remove(cli->info->users, cli->out);
+        mx_deinit_client(&cli);
         return;
     }
     cli->msg = g_data_input_stream_read_line_finish(in, res, &count, NULL);
-    if (!cli->msg) {
-        g_message("2Closed receiver for\n");
+    if (!mx_handle_message(cli))
         return;
-    }
-    if (!mx_handle_request(cli->msg, cli)) {
-        g_free(cli->msg);
-        g_message("3Closed receiver for\n");
-        return;
-    }
-    g_free(cli->msg);
     g_data_input_stream_read_line_async(in, G_PRIORITY_DEFAULT, NULL,
                                         message_ready, cli);
 }
@@ -76,12 +68,13 @@ static gboolean incoming(GSocketService *service, GSocketConnection *conn,
     GDataInputStream *in = g_data_input_stream_new(in_s);
     t_client *gclient = mx_malloc(sizeof(t_client));
 
-    gclient->out = g_object_ref(out);
+    gclient->out = out;
     gclient->info = (t_info*)user_data;
     gclient->conn = g_object_ref(conn);
     gclient->user = NULL;
-    gclient->in = g_object_ref(in);
-    gclient->in_s = g_object_ref(in_s);
+    gclient->in = in;
+    gclient->in_s = in_s;
+    gclient->upload_file = FALSE;
     g_data_input_stream_read_line_async(in, G_PRIORITY_DEFAULT, NULL,
                                         message_ready, gclient);
     (void)source_object;

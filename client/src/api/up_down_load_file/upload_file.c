@@ -9,7 +9,7 @@ static void file_ready(GObject *source_object, GAsyncResult *res,
 
     g_file_load_contents_finish(
         G_FILE(source_object), res, &contents, &length, NULL, NULL);
-    g_output_stream_write(out, contents, length, NULL, NULL);
+    g_output_stream_write_all(out, contents, length, NULL, NULL, NULL);
     g_io_stream_close(G_IO_STREAM(user_data), NULL, NULL);
     g_object_unref(G_FILE(source_object));
 }
@@ -26,6 +26,15 @@ static void send_file(t_dtp *request, GFile *file, t_chat *chat) {
     g_file_load_contents_async(file, NULL, file_ready, conn);
 }
 
+/*
+ * Function: mx_upload_file
+ * -------------------------------
+ * Uploads file to server
+ * 
+ * path: path to file
+ * room_id: room id
+ * chat: information about chat
+ */
 void mx_upload_file(gchar *path, gint room_id, t_chat *chat) {
     GFile *file = g_file_new_for_path(path);
     GFileInfo *info = g_file_query_info(file, "standard::size,standard::name",
