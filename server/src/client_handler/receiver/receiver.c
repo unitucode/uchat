@@ -58,8 +58,6 @@ gboolean mx_handle_message(t_client *client) {
         mx_deinit_client(&client);
         return FALSE;
     }
-    if (client->msg)
-        g_free(client->msg);
     return TRUE;
 }
 
