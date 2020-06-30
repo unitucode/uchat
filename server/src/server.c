@@ -19,6 +19,7 @@ void mx_change_working_dir(void) {
     #else
     mx_elogger(NULL, LOGERR, "No working directory");
     #endif
+    // mx_daemon(); 
 }
 
 /*
