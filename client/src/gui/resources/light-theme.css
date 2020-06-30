@@ -18,7 +18,7 @@ list row {
 .dialog_auth entry, .wnd_main entry, .box-room-settings textview,
 .dialog_auth textview, .wnd_main textview, .box-room-settings entry,
 .box-room-info textview, #dialog_profile_prefs textview,
-.dialog_addroom entry {
+.dialog_addroom entry, .wnd-room-info entry {
     caret-color: #737A82;
     color: #737A82;
 }
@@ -48,7 +48,7 @@ box stack, entry, .dialog_notebook header {
 .dialog_addroom .dialog-action-area {
     margin-top: 15px;
 }
-.dialog_auth entry, .wnd_main entry, .dialog_addroom entry {
+.dialog_auth entry, .dialog_addroom entry {
 	box-shadow: none;
     font-size: 15px;
     font-weight: 400;
@@ -176,7 +176,8 @@ dialog headerbar {
 	background-color: #F2F4FF;
 	border-radius: 5px;
     padding: 2px 8px 1px 8px;
-    font-weight: 100;
+    font-weight: 300;
+    font-size: 14px;
 }
 .box-rooms .search {
     margin: 18px 25px 15px 25px;
@@ -213,6 +214,9 @@ dialog headerbar {
     border-left: 2px solid rgb(87,113,229);
     border-right: 2px solid rgb(87,113,229);
     margin: 5px 18px;
+}
+.rooms-list row:selected:hover label {
+    margin: 5px 14px;
 }
 /* Class for room with new messages */
 .rooms-list row .has-messages {
@@ -280,7 +284,11 @@ dialog headerbar {
 .box_titlebar button {
     background-color: #F2F4FF;
     padding: 3px 8px;
-	margin: 7px 0;
+    margin-top: 7px;
+    margin-bottom: 7px;
+}
+.box_titlebar button:nth-child(3) {
+	margin-right: 7px;
 }
 .box_titlebar button:hover, .boxroom_header-in button:hover,
 .btns-msg-box:hover, .button_send_message:hover {
@@ -311,7 +319,7 @@ dialog headerbar {
     color: #8895A3;
 }
 .stack_messages list .box_msg_info label:nth-child(1) {
-	background-color: #FAFCFE;
+	background-color: #F2F4FF;
 	padding: 10px 15px;
 	border-radius: 0 8px 8px 8px;
 	margin-top: 7px;
@@ -561,21 +569,21 @@ dialog headerbar {
 
 /* Dialog join to room styles */
 
-.dialog_join_to_room .dialog-vbox {
+.dialog_confirmation .dialog-vbox {
     margin-top: 40px;
     color: #737A82;
 }
-.dialog_join_to_room .dialog-vbox > box:first-child label:first-child {
+.dialog_confirmation .dialog-vbox > box:first-child label:first-child {
 	font-size: 16px;
 	font-weight: 300;
     margin-bottom: 9px;
     color: #8895A3;
 }
-.dialog_join_to_room .dialog-vbox > box:first-child label:last-child {
+.dialog_confirmation .dialog-vbox > box:first-child label:last-child {
 	font-size: 18px;
 	font-weight: 500;
 }
-.dialog_join_to_room .dialog-vbox > box:first-child {
+.dialog_confirmation .dialog-vbox > box:first-child {
     margin-bottom: 9px;
 }
 
@@ -648,4 +656,10 @@ overshoot.top {
 .box_stickers_area grid button:hover, .wnd-room-info headerbar button:hover,
 .profile-settings-wnd headerbar button:hover {
     opacity: .8;
+}
+.wnd-room-info entry {
+    font-size: 13px;
+    font-weight: 300;
+    margin-bottom: 7px;
+    padding: 0 8px;
 }
