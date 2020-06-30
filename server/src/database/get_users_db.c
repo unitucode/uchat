@@ -1,8 +1,13 @@
 #include "server.h"
 
 /*
- * Function: 
+ * Function: mx_get_object_user
+ * -------------------------------
+ * creates an json object with user data
  * 
+ * stmt: sqlite request
+ * 
+ * return: json object
  */
 
 cJSON *mx_get_object_user(sqlite3_stmt *stmt) {
@@ -24,8 +29,14 @@ cJSON *mx_get_object_user(sqlite3_stmt *stmt) {
 }
 
 /*
- * Function: 
+ * Function: mx_get_user
+ * -------------------------------
+ * finds and returns data about users, 
+ * users registered so far are not taken into account
  * 
+ * date: time in milisecond
+ * 
+ * return: json object
  */
 
 cJSON *mx_get_users(sqlite3 *db, guint64 date) {

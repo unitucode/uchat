@@ -1,8 +1,13 @@
 #include "server.h"
 
 /*
- * Function: 
+ * Function: mx_get_time
+ * -------------------------------
+ * get time utc-0 in second milisecond and microsecond
  * 
+ * type: SECOND, MILISECOND, MICROSECOND
+ * 
+ * return time
  */
 
 guint64 mx_get_time(gint8 type) {

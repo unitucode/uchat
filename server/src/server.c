@@ -9,15 +9,13 @@
 void mx_change_working_dir(void) {
     #ifdef MX_SERVER
     if (g_chdir(MX_SERVER)) {
-        mx_elogger(NULL, LOGERR,
-                   "No working directory %s\n", MX_SERVER);
+        mx_logger(MX_LOG_FILE, G_LOG_LEVEL_ERROR, "No working directory mx_server");
     }
     if (g_mkdir_with_parents(MX_FILES_DIR, 0755)) {
-        mx_elogger(NULL, LOGERR,
-                   "No files directory %s\n", MX_FILES_DIR);
+        mx_logger(MX_LOG_FILE, G_LOG_LEVEL_ERROR, "No files directory mx_files_dir");
     }
     #else
-    mx_elogger(NULL, LOGERR, "No working directory");
+    mx_logger(MX_LOG_FILE, G_LOG_LEVEL_ERROR, "No working directory");
     #endif
     // mx_daemon(); 
 }
@@ -94,6 +92,7 @@ static bool is_valid_args(int argc) {
 }
 
 int main(int argc, char **argv) {
+    mx_logger(MX_LOG_FILE, G_LOG_LEVEL_MESSAGE, "hello loger");
     GSocketService *service = g_socket_service_new();
     GMainLoop *loop = NULL;
     t_info *info = NULL;
@@ -115,3 +114,4 @@ int main(int argc, char **argv) {
     g_main_loop_run(loop);
     return 0;
 }
+
