@@ -59,6 +59,10 @@ void download(GtkButton *btn, t_chat *chat) {
     t_groom *groom = mx_get_selected_groom(chat->builder, MX_LOCAL_ROOMS);
     t_gmsg *gmsg = g_object_get_data(G_OBJECT(btn), "gmsg");
 
+    t_signal_data *data = g_object_get_data(G_OBJECT(gmsg->row_msg), "sigdata");
+    if (!data)
+        puts("NULL");
+    mx_select_msg(NULL, NULL, data);
     if (g_file_test(gmsg->msg, G_FILE_TEST_EXISTS)) {
         g_message("%s EXIST", gmsg->msg);
     }
@@ -74,7 +78,6 @@ void mx_msgcreate_file(GtkWidget *box_info, t_gmsg *gmsg,
                                                    GTK_ICON_SIZE_DIALOG);
     GtkWidget *filename = gtk_label_new(gmsg->msg);
 
-    gtk_widget_set_events(btn,GDK_BUTTON_RELEASE_MASK);
     g_object_set_data(G_OBJECT(btn), "gmsg", gmsg);
     g_signal_connect(btn, "clicked",
                      G_CALLBACK(download), chat);
