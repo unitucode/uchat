@@ -38,6 +38,7 @@ void mx_deinit_client(t_client **client) {
             g_free((*client)->msg);
         if ((*client)->conn)
             g_io_stream_close(G_IO_STREAM((*client)->conn), NULL, NULL);
+        (*client)->msg = NULL;
         g_free(*client);
         *client = NULL;
     }
