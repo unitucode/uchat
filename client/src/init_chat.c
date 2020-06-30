@@ -8,6 +8,7 @@ static void init_fields(t_chat *chat) {
     chat->builder = NULL;
     chat->upl_old_msgs = FALSE;
     chat->msg_placeholder = TRUE;
+    chat->cssProv = NULL;
 }
 
 /*
@@ -41,5 +42,6 @@ t_chat *mx_init_chat(GSocketConnection *connection, int argc, char **argv) {
     mx_init_errors(chat);
     g_data_input_stream_read_line_async(in, G_PRIORITY_DEFAULT, NULL,
                                         mx_receiver, chat);
+    mx_css_connect_from_file(chat);
     return chat;
 }
