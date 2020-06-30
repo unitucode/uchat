@@ -1,8 +1,13 @@
 #include "server.h"
 
 /*
- * Function: 
+ * Function: mx_get_text_message
+ * -------------------------------
+ * returns the message text from the messages tab
  * 
+ * message_id: message id
+ * 
+ * return: text in gchar
  */
 
 gchar *mx_get_text_message_by_id(sqlite3 *db, guint64 message_id) {
@@ -13,9 +18,9 @@ gchar *mx_get_text_message_by_id(sqlite3 *db, guint64 message_id) {
     rv = sqlite3_prepare_v2(db, "select message from messages where message_id "
                            "= ?1", -1, &stmt, 0);
     printf("rv = %d\n", rv);
-    mx_error_sqlite(rv, "prepare", "get text msg");
+    mx_error_sqlite(rv);
     sqlite3_bind_int64(stmt, 1, message_id);
-    mx_error_sqlite(sqlite3_step(stmt), "step", "get text msg");
+    mx_error_sqlite(sqlite3_step(stmt));
     if (sqlite3_column_text(stmt, 0) != NULL) {
         result = strdup((const char*)sqlite3_column_text(stmt, 0));
         printf("Ok\n");
@@ -23,10 +28,15 @@ gchar *mx_get_text_message_by_id(sqlite3 *db, guint64 message_id) {
     return result;
 }
 
-
 /*
- * Function: 
+ * Function: mx_is_owner_msg
+ * -------------------------------
+ * checks if the user is the owner of the message
  * 
+ * user_id: user id
+ * msg_id: message id
+ * 
+ * return true if user is owner
  */
 
 gboolean mx_is_owner_msg(sqlite3 *db, guint64 user_id, guint64 msg_id) {
@@ -36,19 +46,22 @@ gboolean mx_is_owner_msg(sqlite3 *db, guint64 user_id, guint64 msg_id) {
 
     rv = sqlite3_prepare_v2(db, "select * from messages where message_id = ?1 "
                                 "and user_id = ?2 ", -1, &stmt, NULL);
-    mx_error_sqlite(rv, "step", "is owner");
+    mx_error_sqlite(rv);
     sqlite3_bind_int64(stmt, 1, msg_id);
     sqlite3_bind_int64(stmt, 2, user_id);
     if ((rv = sqlite3_step(stmt)) == SQLITE_ROW)
         is_owner = true;
-    mx_error_sqlite(rv, "step", "is owner");
+    mx_error_sqlite(rv);
     sqlite3_finalize(stmt);
     return is_owner;
 }
 
 /*
- * Function: 
+ * Function: mx_delete_all_messages
+ * -------------------------------
+ * delete all messages from this room
  * 
+ * room_id: room id
  */
 
 void mx_delete_all_messages(sqlite3 *db, guint64 room_id) {
@@ -59,7 +72,7 @@ void mx_delete_all_messages(sqlite3 *db, guint64 room_id) {
                                     "room_id = %llu",
                         room_id);
     request = sqlite3_str_finish(sqlite_str);
-    mx_error_sqlite(sqlite3_exec(db, request, 0, 0, 0), "exec", "del all msg");
+    mx_error_sqlite(sqlite3_exec(db, request, 0, 0, 0));
     sqlite3_free(request);
 }
 

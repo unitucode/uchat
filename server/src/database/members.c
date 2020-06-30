@@ -1,8 +1,15 @@
 #include "server.h"
 
 /*
- * Function: 
+ * Function: mx_is_members
+ * -------------------------------
+ * checks for a record of the connection of this 
+ * user with this room
  * 
+ * user_id: user id
+ * room_id: room id
+ * 
+ * return: true or false
  */
 
 gboolean mx_is_member(sqlite3 *db, guint64 user_id, guint64 room_id) {
@@ -11,21 +18,27 @@ gboolean mx_is_member(sqlite3 *db, guint64 user_id, guint64 room_id) {
 
     rv = sqlite3_prepare_v2(db, "select * from members where user_id = ?1 "
                                 "and room_id = ?2", -1, &stmt, 0);
-    mx_error_sqlite(rv, "prepare", "user contains");
+    mx_error_sqlite(rv);
     sqlite3_bind_int64(stmt, 1, user_id);
     sqlite3_bind_int64(stmt, 2, room_id);
     if ((rv = sqlite3_step(stmt)) == SQLITE_ROW) {
         sqlite3_finalize(stmt);
         return true;
     }
-    mx_error_sqlite(rv, "step", "user contains");
+    mx_error_sqlite(rv);
     sqlite3_finalize(stmt);
     return false;
 }
 
 /*
- * Function: 
+ * Function: mx_get_login_members
+ * -------------------------------
+ * finds and writes in GList logins of users which are in the given room
+ * and are not forbidden
  * 
+ * room_id: room id
+ * 
+ * return: GList with login users
  */
 
 GList *mx_get_login_members(sqlite3 *db, guint64 room_id) {
@@ -37,35 +50,15 @@ GList *mx_get_login_members(sqlite3 *db, guint64 room_id) {
                                 "members on users.id = members.user_id where "
                                 "room_id = ?1 and permission != ?2",
                             -1, &stmt, 0);
-    mx_error_sqlite(rv, "prepare", "get_users_in_room");
+    mx_error_sqlite(rv);
     sqlite3_bind_int64(stmt, 1, room_id);
     sqlite3_bind_int(stmt, 2, DB_BANNED);
     while ((rv = sqlite3_step(stmt)) == SQLITE_ROW)
         list = g_list_append(list, strdup((char*)sqlite3_column_text(stmt,
                              0)));
-    mx_error_sqlite(rv, "step", "get_users_in_room");
+    mx_error_sqlite(rv);
     sqlite3_finalize(stmt);
     return list;
-}
-
-/*
- * Function: 
- * 
- */
-
-void mx_edit_type_member(sqlite3 *db, guint64 room_id, guint64 user_id,
-                       gint8 new_type) {
-    sqlite3_str *sqlite_str = sqlite3_str_new(db);
-    gchar *request = NULL;
-    gint32 rv = SQLITE_OK;
-
-    sqlite3_str_appendf(sqlite_str, "update members set permission = %d where "
-                                    "room_id = %llu and user_id = %llu",
-                        new_type, room_id, user_id);
-    request = sqlite3_str_finish(sqlite_str);
-    rv = sqlite3_exec(db, request, 0, 0, 0);
-    mx_error_sqlite(rv, "exec", "edit members");
-    sqlite3_free(request);
 }
 
 /*
@@ -84,8 +77,14 @@ static cJSON *get_object_user(sqlite3_stmt *stmt) {
 }
 
 /*
- * Function: 
+ * Function: mx_get_json_members
+ * -------------------------------
+ * retrieves from the database and enters in json an 
+ * array of all user data that is in the room
  * 
+ * room_id: room id
+ * 
+ * return: json object
  */
 
 cJSON *mx_get_json_members(sqlite3 *db, guint64 room_id) {
@@ -97,7 +96,7 @@ cJSON *mx_get_json_members(sqlite3 *db, guint64 room_id) {
                                 " join members on users.id = members.user_id "
                                 "where room_id = ?1 and permission != ?2",
                             -1, &stmt, NULL);
-    mx_error_sqlite(rv, "prepare", "get_json_members");
+    mx_error_sqlite(rv);
     sqlite3_bind_int64(stmt, 1, room_id);
     sqlite3_bind_int(stmt, 2, DB_BANNED);
     while ((rv = sqlite3_step(stmt)) == SQLITE_ROW)
@@ -107,8 +106,14 @@ cJSON *mx_get_json_members(sqlite3 *db, guint64 room_id) {
 }
 
 /*
- * Function: 
+ * Function: mx_get_type_member
+ * -------------------------------
+ * determines what rights this user has in this room
  * 
+ * user_id: user id
+ * room_id: room id
+ * 
+ * return permissiom user in this room
  */
 
 gint8 mx_get_type_member(sqlite3 *db, guint64 user_id, guint64 room_id) {
@@ -119,11 +124,12 @@ gint8 mx_get_type_member(sqlite3 *db, guint64 user_id, guint64 room_id) {
     rv = sqlite3_prepare_v2(db, "select permission from members where "
                                 "room_id = ?1 and user_id = ?2 ", 
                             -1, &stmt, NULL);
+    mx_error_sqlite(rv);
     sqlite3_bind_int64(stmt, 1, room_id);
     sqlite3_bind_int64(stmt, 2, user_id);
     if ((rv = sqlite3_step(stmt)) == SQLITE_ROW)
         perm_user = sqlite3_column_int(stmt, 0);
-    mx_error_sqlite(rv, "step", "get type members");
+    mx_error_sqlite(rv);
     sqlite3_finalize(stmt);
     return perm_user;
 }

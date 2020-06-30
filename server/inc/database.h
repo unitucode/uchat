@@ -12,8 +12,7 @@ typedef struct s_db_message t_db_message;
 typedef struct s_db_room t_db_room;
 
 typedef enum s_type_db {
-    DB_CURR_MESSAGE = 0,
-    DB_NEW_MESSAGE,
+    DB_NEW_MESSAGE = 0,
     DB_OLD_MESSAGE,
     DB_SECOND,
     DB_MILISECOND,
@@ -84,7 +83,7 @@ guint64 mx_get_count_rooms(sqlite3 *db);
 guint64 mx_get_count_messages(sqlite3 *db, guint64 id);
 
 // error
-gboolean mx_error_sqlite(gint32 rv, gchar *error, gchar *where_error);
+gboolean mx_error_sqlite(gint32 rv);
 
 // queue
 void mx_db_push_queue_by_id(sqlite3 *db, guint64 user_id,
@@ -106,7 +105,6 @@ cJSON *mx_get_new_messages_by_id(sqlite3 *db, guint64 room_id, guint64 date,
                                  gint64 count);
 cJSON *mx_get_old_messages_by_id(sqlite3 *db, guint64 room_id, guint64 date,
                                  gint64 count);
-cJSON *mx_get_curr_messages_by_id(sqlite3 *db, guint64 room_id, gint64 count);
 
 // edit
 void mx_edit_user_name_by_id(sqlite3 *db, guint64 id, gchar *new_name);

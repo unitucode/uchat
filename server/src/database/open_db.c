@@ -1,8 +1,11 @@
 #include "server.h"
 
 /*
- * Function: 
+ * Function: mx_open_db
+ * -------------------------------
+ * open or create database
  * 
+ * name_db: the name of the database you want to open
  */
 
 sqlite3 *mx_open_db(gchar *name_db) {

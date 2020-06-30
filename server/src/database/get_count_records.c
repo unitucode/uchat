@@ -1,8 +1,13 @@
 #include "server.h"
 
 /*
- * Function: 
+ * Function: mx_get_count_messages
+ * -------------------------------
+ * determines and returns the number of messages in a specific room
  * 
+ * id: room id
+ * 
+ * return: count messages
  */
 
 guint64 mx_get_count_messages(sqlite3 *db, guint64 id) {
@@ -16,8 +21,8 @@ guint64 mx_get_count_messages(sqlite3 *db, guint64 id) {
                              "where room_id = %lu", id);
     request = sqlite3_str_finish(str);
     rv = sqlite3_prepare_v2(db, request, -1, &stmt, NULL);
-    mx_error_sqlite(rv, "prepare", "count messages");
-    mx_error_sqlite(sqlite3_step(stmt), "step", "count messages");
+    mx_error_sqlite(rv);
+    mx_error_sqlite(sqlite3_step(stmt));
     count = sqlite3_column_int64(stmt, 0);
     sqlite3_free(request);
     sqlite3_finalize(stmt);
@@ -26,7 +31,10 @@ guint64 mx_get_count_messages(sqlite3 *db, guint64 id) {
 
 /*
  * Function: 
+ * -------------------------------
+ * determines and returns the number of rooms
  * 
+ * return: count rooms
  */
 
 guint64 mx_get_count_rooms(sqlite3 *db) {
@@ -35,8 +43,8 @@ guint64 mx_get_count_rooms(sqlite3 *db) {
     guint64 count;
 
     rv = sqlite3_prepare_v2(db, "select count() from rooms", -1, &stmt, NULL);
-    mx_error_sqlite(rv, "prepare", "count rooms");
-    mx_error_sqlite(sqlite3_step(stmt), "step", "count rooms");
+    mx_error_sqlite(rv);
+    mx_error_sqlite(sqlite3_step(stmt));
     count = sqlite3_column_int(stmt, 0);
     sqlite3_finalize(stmt);
     return count;
@@ -44,7 +52,10 @@ guint64 mx_get_count_rooms(sqlite3 *db) {
 
 /*
  * Function: 
+ * -------------------------------
+ * determines and returns the number of users
  * 
+ * return: count users
  */
 
 guint64 mx_get_count_users(sqlite3 *db) {
@@ -53,8 +64,8 @@ guint64 mx_get_count_users(sqlite3 *db) {
     guint64 count;
 
     rv = sqlite3_prepare_v2(db, "select count() from users", -1, &stmt, NULL);
-    mx_error_sqlite(rv, "prepare", "get count users");
-    mx_error_sqlite(sqlite3_step(stmt), "step", "get count users");
+    mx_error_sqlite(rv);
+    mx_error_sqlite(sqlite3_step(stmt));
     count = sqlite3_column_int(stmt, 0);
     sqlite3_finalize(stmt);
     return count;

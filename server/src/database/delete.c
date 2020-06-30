@@ -2,6 +2,7 @@
 
 /*
  * Function: mx_delete_message_by_id
+ * -------------------------------
  * delete message
  * 
  * db: closed database structure
@@ -15,14 +16,19 @@ void mx_delete_message_by_id(sqlite3 *db, guint64 id) {
     rv = sqlite3_prepare_v2(db, "delete from messages where message_id "
                                 "= ?1", -1, &stmt, NULL);
     sqlite3_bind_int(stmt, 1, id);
-    mx_error_sqlite(rv, "prepare", "delete message");
-    mx_error_sqlite(sqlite3_step(stmt), "step", "delete message");
+    mx_error_sqlite(rv);
+    mx_error_sqlite(sqlite3_step(stmt));
     sqlite3_finalize(stmt);
 }
 
 /*
- * Function: 
+ * Function: mx_delete_room_by_id
+ * -------------------------------
+ * delete room and members with the room 
+ * and messages in the room
  * 
+ * db: closed database structure
+ * id: room_id
  */
 
 void mx_delete_room_by_id(sqlite3 *db, guint64 room_id) {
@@ -37,13 +43,17 @@ void mx_delete_room_by_id(sqlite3 *db, guint64 room_id) {
                         room_id, room_id, room_id);
     request = sqlite3_str_finish(sqlite_str);
     rv = sqlite3_exec(db, request, 0, 0, 0);
-    mx_error_sqlite(rv, "exec", "delete room");
+    mx_error_sqlite(rv);
     sqlite3_free(request);
 }
 
 /*
- * Function: 
+ * Function: mx_delete_user_by_id
+ * -------------------------------
+ * delete user and contacts with user
  * 
+ * db: closed database structure
+ * id: user_id
  */
 
 void mx_delete_user_by_id(sqlite3 *db, guint64 id) {
@@ -56,6 +66,6 @@ void mx_delete_user_by_id(sqlite3 *db, guint64 id) {
                                     "re user_contact_id = %lu;", id, id, id);
     request = sqlite3_str_finish(sqlite_str);
     rv = sqlite3_exec(db, request, 0, 0, 0);
-    mx_error_sqlite(rv, "exec", "delete user");
+    mx_error_sqlite(rv);
     sqlite3_free(request);
 }

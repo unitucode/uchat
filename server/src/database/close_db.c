@@ -2,7 +2,7 @@
 
 /*
  * Function: mx_close_db
- * 
+ * -------------------------------
  * cleans structure sqlite3
  * 
  * db: pointer to the structure sqlite3
