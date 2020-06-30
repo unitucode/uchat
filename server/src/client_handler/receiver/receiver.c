@@ -45,6 +45,23 @@ void mx_init_receiver(t_info *chat) {
     mx_init_room_handlers(chat);
 }
 
+gboolean mx_handle_message(t_client *client) {
+    if (client->upload_file)
+        return FALSE;
+    if (!client->msg) {
+        g_message("2Closed receiver for\n");
+        mx_deinit_client(&client);
+        return FALSE;
+    }
+    if (!mx_handle_request(client->msg, client)) {
+        g_message("3Closed receiver for\n");
+        mx_deinit_client(&client);
+        return FALSE;
+    }
+    g_free(client->msg);
+    return TRUE;
+}
+
 /*
  * Function: mx_handle_request
  * -------------------------------
