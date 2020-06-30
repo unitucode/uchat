@@ -49,8 +49,10 @@ typedef struct s_send_helper t_send_helper;
 typedef struct s_file_helper t_file_helper;
 
 struct s_file_helper {
-    GFile *file;
-    GSocketConnection *conn;  
+    t_client *client;
+    guint64 size;
+    guint64 room_id;
+    gchar *name;
 };
 
 struct s_info {
