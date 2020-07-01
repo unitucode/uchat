@@ -58,13 +58,22 @@ void mx_msgcreate_label_time(GtkWidget *box_info,
 void download(GtkButton *btn, t_chat *chat) {
     t_groom *groom = mx_get_selected_groom(chat->builder, MX_LOCAL_ROOMS);
     t_gmsg *gmsg = g_object_get_data(G_OBJECT(btn), "gmsg");
+    GFile *file = g_file_new_for_path(gmsg->msg);
+    gchar *uri = NULL;
 
     if (g_file_test(gmsg->msg, G_FILE_TEST_EXISTS)) {
-        g_message("%s EXIST", gmsg->msg);
+        if (file)
+            uri = g_file_get_uri(file);
+        if (uri)
+            g_app_info_launch_default_for_uri(uri, NULL, NULL);
     }
     else {
         mx_download_file(groom->id, gmsg->message_id, chat);
     }
+    if (file)
+        g_object_unref(file);
+    if (uri)
+        g_free(uri);
 }
 
 void mx_msgcreate_file(GtkWidget *box_info, t_gmsg *gmsg,

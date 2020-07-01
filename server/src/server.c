@@ -17,7 +17,7 @@ void mx_change_working_dir(void) {
     #else
     mx_logger(MX_LOG_FILE, G_LOG_LEVEL_ERROR, "No working directory");
     #endif
-    // mx_daemon(); 
+    // mx_daemon();
 }
 
 /*
@@ -92,7 +92,6 @@ static bool is_valid_args(int argc) {
 }
 
 int main(int argc, char **argv) {
-    mx_logger(MX_LOG_FILE, G_LOG_LEVEL_MESSAGE, "hello loger");
     GSocketService *service = g_socket_service_new();
     GMainLoop *loop = NULL;
     t_info *info = NULL;
