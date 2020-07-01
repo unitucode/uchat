@@ -246,7 +246,7 @@ dialog headerbar {
 .boxroom_header-in {
     border-bottom: 1px solid #424E78;
     background-color: #364165;
-    padding: 7px 25px;
+    padding: 0 25px;
     font-size: 17px;
 }
 .boxroom_header-in button {
@@ -256,6 +256,12 @@ dialog headerbar {
 }
 .boxroom_header-in label {
     color: #fff;
+}
+.boxroom_header-in button:nth-child(3) {
+	margin-right: 2px;
+}
+.boxroom_header-in entry {
+	margin-right: 2px;
 }
 .wnd_main list {
     color: #fff;
