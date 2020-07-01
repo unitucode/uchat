@@ -7,7 +7,7 @@ created four tables for convenient data storage
 - messages
 - members
 
-![ups no images](./schema.png)
+![there should be a picture with database tables](./schema.png)
 
 ---
 
