@@ -58,8 +58,8 @@ void mx_msgcreate_label_time(GtkWidget *box_info,
 void mx_msgcreate_file(GtkWidget *box_info, t_gmsg *gmsg,
                        gboolean is_own, t_chat *chat) {
     GtkWidget *box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
-    GtkWidget *btn = gtk_button_new_from_icon_name("document",
-                                                   GTK_ICON_SIZE_DIALOG);
+    GtkWidget *btn = gtk_button_new_from_icon_name("download",
+                                                   GTK_ICON_SIZE_MENU);
     GtkWidget *filename = gtk_label_new(gmsg->msg);
 
     gtk_widget_set_can_focus(btn, FALSE);
