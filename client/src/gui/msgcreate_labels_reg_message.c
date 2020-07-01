@@ -58,10 +58,13 @@ void mx_msgcreate_label_time(GtkWidget *box_info,
 void mx_msgcreate_file(GtkWidget *box_info, t_gmsg *gmsg,
                        gboolean is_own, t_chat *chat) {
     GtkWidget *box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
-    GtkWidget *btn = gtk_button_new_from_icon_name("download",
-                                                   GTK_ICON_SIZE_MENU);
+    GtkWidget *btn = NULL;
     GtkWidget *filename = gtk_label_new(gmsg->msg);
 
+    if (g_file_test(gmsg->msg, G_FILE_TEST_EXISTS))
+        btn = gtk_button_new_from_icon_name("document", GTK_ICON_SIZE_DIALOG);
+    else
+        btn = gtk_button_new_from_icon_name("download", GTK_ICON_SIZE_DIALOG);
     gtk_widget_set_can_focus(btn, FALSE);
     g_object_set_data(G_OBJECT(btn), "gmsg", gmsg);
     g_signal_connect(btn, "clicked", G_CALLBACK(mx_open_files_dir), chat);

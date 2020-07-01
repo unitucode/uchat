@@ -21,10 +21,13 @@ void mx_open_files_dir(GtkButton *btn, t_chat *chat) {
     t_gmsg *gmsg = g_object_get_data(G_OBJECT(btn), "gmsg");
     t_signal_data *data = g_object_get_data(G_OBJECT(gmsg->row_msg),
                                             "sigdata");
+    GtkImage *img = GTK_IMAGE(gtk_button_get_image(btn));
 
     mx_select_msg(NULL, NULL, data);
-    if (g_file_test(gmsg->msg, G_FILE_TEST_EXISTS))
+    if (g_file_test(gmsg->msg, G_FILE_TEST_EXISTS)) {
+        gtk_image_set_from_icon_name(img, "document", GTK_ICON_SIZE_DIALOG);
         open_dir(gmsg->msg);
+    }
     else
         mx_download_file(groom->id, gmsg->message_id, chat);
 }
