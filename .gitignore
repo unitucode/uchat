@@ -13,7 +13,9 @@ libraries/**/*.o
 libraries/lib/*
 libraries/include/*
 client/uchat_wd/info.log
+client/uchat_wd/files/*
 server/uchat_server_wd/info.log
+server/uchat_server_wd/files/*
 utils/libutils.a
 users.db
 info.log

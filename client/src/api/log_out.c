@@ -1,5 +1,14 @@
 #include "client.h"
 
+/*
+ * Function: mx_log_out_request
+ * -------------------------------
+ * Creates join room request
+ * 
+ * token: SHA-256 hash + login
+ * 
+ * returns: log out request
+ */
 t_dtp *mx_log_out_request(char *token) {
     cJSON *json_result = cJSON_CreateObject();
 
@@ -10,15 +19,25 @@ t_dtp *mx_log_out_request(char *token) {
     return mx_get_transport_data(json_result);
 }
 
-bool mx_log_out_handler(t_dtp *token, t_chat *chat) {
+/*
+ * Function: mx_log_out_handler
+ * -------------------------------
+ * Handles request from server
+ * 
+ * data: request from server
+ * chat: information about chat
+ * 
+ * returns: success of handling
+ */
+gboolean mx_log_out_handler(t_dtp *token, t_chat *chat) {
     cJSON *tok = cJSON_GetObjectItemCaseSensitive(token->json, "token");
 
     if (!cJSON_IsString(tok) || !mx_isvalid_token(tok->valuestring))
-        return false;
-    if (strcmp(chat->auth_token, tok->valuestring))
-        return false;
+        return FALSE;
+    if (g_strcmp0(chat->auth_token, tok->valuestring))
+        return FALSE;
     mx_free((void**)&chat->auth_token);
     mx_free((void**)&chat->login);
     mx_logout_client(chat);
-    return true;
+    return TRUE;
 }

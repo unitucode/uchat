@@ -22,14 +22,13 @@ static gboolean sign_up(t_db_user *user, t_client *client) {
 
     if (mx_check_user_by_login(client->info->database, user->login)) {
         incorrect_data(client);
-        mx_logger(MX_LOG_FILE, LOGMSG,
-                  "Already exist user %s\n", user->login);
+        mx_logger(MX_LOG_FILE, G_LOG_LEVEL_MESSAGE, "Already exist user");
         return FALSE;
     }
     mx_create_token(&token, user->login);
     user->token = token;
     mx_insert_user_into_db(client->info->database, user);
-    mx_logger(MX_LOG_FILE, LOGMSG, "Success signup user %s\n", user->login);
+    mx_logger(MX_LOG_FILE, G_LOG_LEVEL_MESSAGE, "Success signup user");
     client->user = user;
     mx_correct_data(client);
     return TRUE;

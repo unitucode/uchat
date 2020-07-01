@@ -41,6 +41,20 @@ typedef struct s_info t_info;
  */
 typedef struct s_send_helper t_send_helper;
 
+/* File helper
+ * ----------
+ * table: hash table that contains all members of room
+ * data: request that need to send
+ */
+typedef struct s_file_helper t_file_helper;
+
+struct s_file_helper {
+    t_client *client;
+    guint64 size;
+    guint64 room_id;
+    gchar *name;
+};
+
 struct s_info {
     GHashTable *users;
     sqlite3* database;
@@ -55,6 +69,7 @@ struct s_client {
     char *msg;
     t_db_user *user;
     t_info *info;
+    gboolean upload_file;
 };
 
 struct s_send_helper {
@@ -66,6 +81,7 @@ gssize mx_send(GDataOutputStream *out, t_dtp *dtp);
 t_info *mx_init_info(void);
 t_client *mx_new_client(socklen_t len);
 void mx_deinit_info(t_info **info);
+void mx_deinit_client(t_client **client);
 void mx_init_receiver(t_info *chat);
 
 void mx_get_client_info(t_client *client);
@@ -74,7 +90,7 @@ void mx_disconnect_client(t_client *client);
 void mx_delete_client(void **client);
 void *mx_receiver(void *arg);
 void mx_send_to_all(t_dtp *data, t_client *client, guint64 room_id);
-
+void mx_daemon(void);
 //Authorization
 bool mx_valid_authorization_data(t_dtp *data, char **login,
                                  char **pass, t_client *client);

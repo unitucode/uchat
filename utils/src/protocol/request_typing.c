@@ -29,13 +29,13 @@ static t_dtp *get_filled_dtp(char *str, size_t buf_size) {
     req->len = buf_size - 1;
     req->json = cJSON_Parse(req->str);
     if ((type = mx_get_type_dtp(req)) < 0 || type >= RQ_COUNT_REQUEST) {
-        mx_logger(MX_LOG_FILE, LOGWAR, "Invalid message type\n");
+        mx_logger(MX_LOG_FILE, G_LOG_LEVEL_WARNING, "Invalid message type");
         mx_free_request(&req);
         return NULL;
     }
     req->type = type;
     if (!req->json || req->type == -1) {
-        mx_logger(MX_LOG_FILE, LOGWAR, "Invalid json\n");
+        mx_logger(MX_LOG_FILE, G_LOG_LEVEL_WARNING, "Invalid json");
         mx_free_request(&req);
         return NULL;
     }

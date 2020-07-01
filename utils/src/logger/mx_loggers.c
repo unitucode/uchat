@@ -1,51 +1,32 @@
+#include <glib/gprintf.h>
 #include "utils.h"
+#include "unistd.h"
+
+static void log_lvl(FILE *fd, GLogLevelFlags flags) {
+    if (flags == G_LOG_LEVEL_WARNING)
+        g_fprintf(fd, "WARNING  ");
+    else if (flags == G_LOG_LEVEL_MESSAGE)
+        g_fprintf(fd, "MESSAGE  ");
+    else if (flags == G_LOG_LEVEL_ERROR)
+        g_fprintf(fd, "ERROR  ");
+}
 
 /*
  * Logs string to file
  */
-void mx_logger(gchar *file, t_logtype type, gchar *error) {
-    FILE *fd = NULL;
 
-    if (file == NULL)
-        fd = stderr;
-    if (fd == stderr
-        || (fd = mx_fopen(file, "a")) != NULL) {
-        mx_log_time(fd);
-        mx_log_id(fd);
-        mx_log_errno(fd);
-        mx_log_type(fd, type);
-        va_start(ap, fmt);
-        vfprintf(fd, fmt, ap);
-        va_end(ap);
-        mx_fclose(fd);
-    }
-    else {
-        perror("Can't open/create logfile");
-        errno = 0;
-    }
-}
+void mx_logger(gchar *file_name, GLogLevelFlags flags, gchar *error) {
+    FILE *fd = fopen(file_name, "a");
+    gchar *date = NULL;
+    GDateTime *dt = g_date_time_new_now_local();
 
-/*
- * Logs string to file with exit
- */
-void mx_elogger(gchar *file, t_logtype type, gchar *error) {
-    FILE *fd = NULL;
-
-    if (file == NULL)
-        fd = stderr;
-    if (fd == stderr
-        || (fd = mx_fopen(file, "a")) != NULL) {
-        mx_log_time(fd);
-        mx_log_id(fd);
-        mx_log_errno(fd);
-        mx_log_type(fd, type);
-        va_start(ap, fmt);
-        vfprintf(fd, fmt, ap);
-        va_end(ap);
+    date = g_date_time_format(dt, "%T %e.%m.%Y");
+    g_fprintf(fd, "date:%s  ", date);
+    g_fprintf(fd, "pid:%d  ", getpid());
+    log_lvl(fd, flags);
+    g_fprintf(fd, "'%s'\n", error);
+    g_free(date);
+    fclose(fd);
+    if (flags == G_LOG_LEVEL_ERROR)
         exit(1);
-    }
-    else {
-        perror("Can't open/create logfile");
-        errno = 0;
-    }
 }

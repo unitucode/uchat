@@ -18,7 +18,7 @@ GTK_INC = `pkg-config --cflags gtk+-3.0`
 GTK_LIBS = -rdynamic `pkg-config --cflags --libs gtk+-3.0`
 
 SRCD = src src/client_handler src/client_handler/receiver \
-src/client_handler/api src/database
+src/client_handler/api src/database src/client_handler/api/up_down_load_file
 INCD = inc
 SRCS = $(foreach dir, $(SRCD), $(wildcard $(dir)/*.c))
 OBJS = $(addprefix $(OBJD)/, $(notdir $(SRCS:%.c=%.o)))
@@ -36,7 +36,7 @@ LIBS = $(LIBD_LIBS) $(GTK_LIBS) -L/usr/local/opt/openssl/lib \
 all: $(SERVER)
 
 $(SERVER): $(OBJS)
-	@$(CC) -fsanitize=address -o $@ $^ $(UTILS_LIB) $(LIBS)
+	@$(CC) -fsanitize=address -g -o $@ $^ $(UTILS_LIB) $(LIBS)
 	@printf "\033[32;1m$@ created\033[0m\n"
 
 $(OBJS): obj/%.o: %.c $(INCS) | $(OBJD)

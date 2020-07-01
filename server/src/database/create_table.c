@@ -2,6 +2,7 @@
 
 /*
  * Function: mx_create_table
+ * -------------------------------
  * creates all initial tables in the database
  * 
  * db: closed database structure
@@ -31,6 +32,7 @@ void mx_create_table(sqlite3 *db) {
 
 /*
  * Function: mx_create_table_messages
+ * -------------------------------
  * Create table messages
  * 
  * db: closed database structure
@@ -52,6 +54,7 @@ void mx_create_table_messages(sqlite3 *db) {
 
 /*
  * Function: mx_create_table_users
+ * -------------------------------
  * create table users
  * 
  * db: closed database structure
@@ -71,6 +74,7 @@ void mx_create_table_users(sqlite3 *db) {
 
 /*
  * Function: mx_create_table_rooms
+ * -------------------------------
  * create table rooms
  * 
  * db: closed database structure

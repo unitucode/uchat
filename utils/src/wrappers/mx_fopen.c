@@ -7,6 +7,6 @@ FILE *mx_fopen(const char * restrict path, const char * restrict mode) {
     FILE *result = fopen(path, mode);
 
     if (result == NULL)
-        mx_elogger(MX_LOG_FILE, LOGERR, "fopen\n");
+        mx_logger(MX_LOG_FILE, G_LOG_LEVEL_WARNING, "fopen");
     return result;
 }

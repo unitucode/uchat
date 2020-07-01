@@ -1,8 +1,12 @@
 #include "server.h"
 
 /*
- * Function: 
+ * Function: mx_edit_room_name_by_id
+ * -------------------------------
+ * changes the name of the room
  * 
+ * id: room_id
+ * new_name: new room name
  */
 
 void mx_edit_room_name_by_id(sqlite3 *db, guint64 id, gchar *new_name) {
@@ -12,16 +16,20 @@ void mx_edit_room_name_by_id(sqlite3 *db, guint64 id, gchar *new_name) {
     rv = sqlite3_prepare_v2(db, "update rooms set name = ?1 "
                                 "where id = ?2", -1,
                             &stmt, NULL);
-    mx_error_sqlite(rv, "prepare", "edit name room");
+    mx_error_sqlite(rv);
     sqlite3_bind_text(stmt, 1, new_name, -1, SQLITE_STATIC);
     sqlite3_bind_int64(stmt, 2, id);
-    mx_error_sqlite(sqlite3_step(stmt), "step", "edit room name");
+    mx_error_sqlite(sqlite3_step(stmt));
     sqlite3_finalize(stmt);
 }
 
 /*
- * Function: 
+ * Function: mx_edit_user_name_by_id
+ * -------------------------------
+ * changes the name of the user
  * 
+ * id: user_id
+ * new_name: new user name
  */
 
 void mx_edit_user_name_by_id(sqlite3 *db, guint64 id, gchar *new_name) {
@@ -31,16 +39,20 @@ void mx_edit_user_name_by_id(sqlite3 *db, guint64 id, gchar *new_name) {
     rv = sqlite3_prepare_v2(db, "update users set login = ?1 "
                                 "where id = ?2", -1,
                             &stmt, NULL);
-    mx_error_sqlite(rv, "prepare", "edit name user");
+    mx_error_sqlite(rv);
     sqlite3_bind_text(stmt, 1, new_name, -1, SQLITE_STATIC);
     sqlite3_bind_int64(stmt, 2, id);
-    mx_error_sqlite(sqlite3_step(stmt), "step", "edit room user");
+    mx_error_sqlite(sqlite3_step(stmt));
     sqlite3_finalize(stmt);
 }
 
 /*
- * Function: 
+ * Function: edit message by id
+ * -------------------------------
+ * changes the message
  * 
+ * id: message id
+ * new: new message
  */
 
 void mx_edit_message_by_id(sqlite3 *db, guint64 id, gchar *new) {
@@ -52,10 +64,34 @@ void mx_edit_message_by_id(sqlite3 *db, guint64 id, gchar *new) {
                              "message_id = %lu",
                         id);
     request = sqlite3_str_finish(str);
-    mx_error_sqlite(sqlite3_prepare(db, request, -1, &stmt, NULL), "prepare",
-                    "edit message");
+    mx_error_sqlite(sqlite3_prepare(db, request, -1, &stmt, NULL));
     sqlite3_bind_text(stmt, 1, new, -1, SQLITE_STATIC);
-    mx_error_sqlite(sqlite3_step(stmt), "step", "edit message");
+    mx_error_sqlite(sqlite3_step(stmt));
     sqlite3_free(request);
     sqlite3_finalize(stmt);
+}
+
+/*
+ * Function: edit message by id
+ * -------------------------------
+ * changes permission of user in this room
+ * 
+ * room_id: room id
+ * user_id: user id
+ * new type: new permission
+ */
+
+void mx_edit_type_member(sqlite3 *db, guint64 room_id, guint64 user_id,
+                         gint8 new_type) {
+    sqlite3_str *sqlite_str = sqlite3_str_new(db);
+    gchar *request = NULL;
+    gint32 rv = SQLITE_OK;
+
+    sqlite3_str_appendf(sqlite_str, "update members set permission = %d where "
+                                    "room_id = %llu and user_id = %llu",
+                        new_type, room_id, user_id);
+    request = sqlite3_str_finish(sqlite_str);
+    rv = sqlite3_exec(db, request, 0, 0, 0);
+    mx_error_sqlite(rv);
+    sqlite3_free(request);
 }

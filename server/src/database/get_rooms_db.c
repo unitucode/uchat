@@ -1,8 +1,13 @@
 #include "server.h"
 
 /*
- * Function: 
+ * Function: mx_get_object_room
+ * -------------------------------
+ * creates an json object with room data
  * 
+ * stmt: sqlite request
+ * 
+ * return: json object
  */
 
 cJSON *mx_get_object_room(sqlite3_stmt *stmt) {
@@ -21,8 +26,15 @@ cJSON *mx_get_object_room(sqlite3_stmt *stmt) {
 }
 
 /*
- * Function: 
+ * Function: mx_get_rooms
+ * -------------------------------
+ * returns all user rooms where he can be active
+ * rooms that have been created so far are not taken into account
  * 
+ * date: time in milisecond
+ * user_id: user id
+ * 
+ * return: json object
  */
 
 cJSON *mx_get_rooms(sqlite3 *db, guint64 date, guint64 user_id) {

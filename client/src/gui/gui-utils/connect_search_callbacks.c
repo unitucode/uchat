@@ -2,7 +2,6 @@
 
 static void req_search_global_rooms(gchar *search_name, t_chat *chat) {
     t_dtp *dtp = mx_search_rooms_request(search_name);
-puts(search_name);
 
     mx_send(chat->out, dtp);
     mx_free_request(&dtp);
@@ -25,6 +24,7 @@ void mx_start_search_room(GtkSearchEntry *sentry, t_chat *chat) {
 
 void mx_start_search_msgs(GtkSearchEntry *sentry, t_chat *chat) {
     gchar *search_text = (gchar*)gtk_entry_get_text(GTK_ENTRY(sentry));
+
     mx_clear_found_msgs(chat->builder);
     if (!strlen(search_text))
         mx_stop_search_message(NULL, NULL, chat->builder);
@@ -43,14 +43,11 @@ void mx_start_search_msgs(GtkSearchEntry *sentry, t_chat *chat) {
     }
 }
 
-void mx_connect_search(t_chat *chat) {
-    GObject *sentry_rooms = gtk_builder_get_object(chat->builder,
-                                                   "sentry_rooms");
-    GObject *sentry_messages = gtk_builder_get_object(chat->builder,
-                                                      "sentry_messages");
+void mx_start_search_members(GtkSearchEntry *sentry, t_chat *chat) {
+    gchar *search_login = (gchar*)gtk_entry_get_text(GTK_ENTRY(sentry));
 
-    g_signal_connect(GTK_SEARCH_ENTRY(sentry_rooms), "search-changed",
-                     G_CALLBACK(mx_start_search_room), chat);
-    g_signal_connect(GTK_SEARCH_ENTRY(sentry_messages), "search-changed",
-                     G_CALLBACK(mx_start_search_msgs), chat);
+    if (!strlen(search_login))
+        mx_stop_search_members(NULL, NULL, chat->builder);
+    else
+        mx_search_members(chat->builder, search_login);
 }

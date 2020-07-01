@@ -9,16 +9,15 @@
 void mx_change_working_dir(void) {
     #ifdef MX_SERVER
     if (g_chdir(MX_SERVER)) {
-        mx_elogger(NULL, LOGERR,
-                   "No working directory %s\n", MX_SERVER);
+        mx_logger(MX_LOG_FILE, G_LOG_LEVEL_ERROR, "No working directory mx_server");
     }
     if (g_mkdir_with_parents(MX_FILES_DIR, 0755)) {
-        mx_elogger(NULL, LOGERR,
-                   "No files directory %s\n", MX_FILES_DIR);
+        mx_logger(MX_LOG_FILE, G_LOG_LEVEL_ERROR, "No files directory mx_files_dir");
     }
     #else
-    mx_elogger(NULL, LOGERR, "No working directory");
+    mx_logger(MX_LOG_FILE, G_LOG_LEVEL_ERROR, "No working directory");
     #endif
+    // mx_daemon(); 
 }
 
 /*
@@ -40,20 +39,12 @@ static void message_ready(GObject *source_object, GAsyncResult *res,
         || g_output_stream_is_closed(G_OUTPUT_STREAM(cli->out))
         || g_input_stream_is_closed(G_INPUT_STREAM(in))) {
             g_message("1Closed receiver for\n");
-        g_hash_table_remove(cli->info->users, cli->out);
+        mx_deinit_client(&cli);
         return;
     }
     cli->msg = g_data_input_stream_read_line_finish(in, res, &count, NULL);
-    if (!cli->msg) {
-        g_message("2Closed receiver for\n");
+    if (!mx_handle_message(cli))
         return;
-    }
-    if (!mx_handle_request(cli->msg, cli)) {
-        g_free(cli->msg);
-        g_message("3Closed receiver for\n");
-        return;
-    }
-    g_free(cli->msg);
     g_data_input_stream_read_line_async(in, G_PRIORITY_DEFAULT, NULL,
                                         message_ready, cli);
 }
@@ -78,12 +69,13 @@ static gboolean incoming(GSocketService *service, GSocketConnection *conn,
     GDataInputStream *in = g_data_input_stream_new(in_s);
     t_client *gclient = mx_malloc(sizeof(t_client));
 
-    gclient->out = g_object_ref(out);
+    gclient->out = out;
     gclient->info = (t_info*)user_data;
     gclient->conn = g_object_ref(conn);
     gclient->user = NULL;
-    gclient->in = g_object_ref(in);
-    gclient->in_s = g_object_ref(in_s);
+    gclient->in = in;
+    gclient->in_s = in_s;
+    gclient->upload_file = FALSE;
     g_data_input_stream_read_line_async(in, G_PRIORITY_DEFAULT, NULL,
                                         message_ready, gclient);
     (void)source_object;
@@ -100,6 +92,7 @@ static bool is_valid_args(int argc) {
 }
 
 int main(int argc, char **argv) {
+    mx_logger(MX_LOG_FILE, G_LOG_LEVEL_MESSAGE, "hello loger");
     GSocketService *service = g_socket_service_new();
     GMainLoop *loop = NULL;
     t_info *info = NULL;
@@ -121,3 +114,4 @@ int main(int argc, char **argv) {
     g_main_loop_run(loop);
     return 0;
 }
+
