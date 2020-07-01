@@ -1,8 +1,10 @@
 #include "client.h"
 
 void mx_go_down(GtkButton *btn, GtkBuilder *builder) {
-    g_message("GO DOWN\n");
-    (void)builder;
+    t_groom *groom = mx_get_selected_groom(builder, MX_LOCAL_ROOMS);
+    GtkAdjustment *adj = gtk_scrolled_window_get_vadjustment(groom->page);
+
+    gtk_adjustment_set_value(adj, gtk_adjustment_get_upper(adj));
     (void)btn;
 }
 

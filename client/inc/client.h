@@ -25,6 +25,9 @@
 #define MX_LOCAL_ROOMS "listbox_rooms"
 #define MX_GLOBAL_ROOMS "listbox_global_rooms"
 
+#define MX_DARK_THEME "../src/gui/resources/dark-theme.css"
+#define MX_LIGHT_THEME "../src/gui/resources/light-theme.css"
+
 //settings
 #define MX_BUF_MSGS 30
 #define MX_MAX_LENGTH_QUEUE 30
@@ -106,6 +109,7 @@ struct s_chat {
     void (*error_handler[ER_COUNT_ERRS])(GtkBuilder *builder);
     gboolean (*request_handler[RQ_COUNT_REQUEST])(t_dtp *dtp, struct s_chat *chat);
     gboolean msg_placeholder;
+    GtkCssProvider *cssProv;
 };
 
 struct s_signal_data {
@@ -282,6 +286,7 @@ void mx_add_to_sett_members(gint *key,
 void mx_add_to_info_members(gint *key,
                             gchar *value, GtkBuilder *builder);
 void mx_reset_select_count();
+void mx_open_files_dir(GtkButton *btn, t_chat *chat);
 
 // gui utils
 void mx_scrlldwnd_connect(gchar *name, GtkWidget *scroll, GtkBuilder *builder, t_groom *room);
@@ -352,5 +357,8 @@ void mx_show_join_to_room(GtkWidget *event_box, GdkEventButton *event,
 bool mx_handle_request(char *request, t_chat *chat);
 void mx_send_auth_request(char *login, char *password,
                           t_chat *chat, t_request_type request_type);
-void mx_css_connect();
+void mx_css_connect(char *theme, t_chat *chat);
+void mx_css_connect_from_file(t_chat *chat);
+void mx_connect_theme_switcher(t_chat *chat);
+void change_theme_icon(t_chat *chat, gchar *icon_name);
 gchar *mx_format_text(gchar *text);

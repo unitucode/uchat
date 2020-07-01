@@ -18,7 +18,7 @@ list row {
 .dialog_auth entry, .wnd_main entry, .box-room-settings textview,
 .dialog_auth textview, .wnd_main textview, .box-room-settings entry,
 .box-room-info textview, #dialog_profile_prefs textview,
-.dialog_addroom entry {
+.dialog_addroom entry, .wnd-room-info entry, .dialog_user_info textview {
     caret-color: #fff;
     color: #fff;
 }
@@ -27,14 +27,14 @@ button, .input, entry, notebook, .dialog_auth .titlebar, button image  {
 }
 .dialog_auth, .wnd_main, .dialog_addroom,
 .profile-settings-wnd, .wnd-room-info, .wnd-room-settings,
-.dialog_join_to_room {
+.dialog_confirmation, .dialog_user_info {
     background: rgb(57,69,107);
     background-image: linear-gradient(173deg, rgb(57, 69, 107) 0%, rgb(35,41,65) 100%);
 }
 .dialog_auth entry selection, .wnd_main entry selection,
 .dialog_auth textview selection, .wnd_main textview selection,
 .box-room-settings textview selection, .box-room-info textview selection,
-#dialog_profile_prefs textview selection {
+#dialog_profile_prefs textview selection, .dialog_user_info textview selection {
 	background-color: #6785FF;
 }
 box stack, entry, .dialog_notebook header {
@@ -51,6 +51,7 @@ box stack, entry, .dialog_notebook header {
     font-size: 15px;
     font-weight: 300;
 }
+
 .dialog_auth entry, .dialog_addroom entry {
 	background-color: #3A466B;
 	border-radius: 5px;
@@ -104,7 +105,7 @@ button label {
     color: red;
 }
 headerbar {
-    min-height: 40px;
+    min-height: 35px;
 }
 .dialog_auth decoration, .wnd-room-info decoration,
 .wnd-room-settings decoration, .profile-settings-wnd decoration {
@@ -160,7 +161,6 @@ headerbar box label {
 dialog headerbar {
     background: rgb(229,229,229);
     background: linear-gradient(180deg, rgba(229,229,229,1) 0%, rgba(205,205,205,1) 100%);
-    box-shadow: 0 -1px #A8A7A6 inset;
 }
 .rooms-list, .stack_messages list, .rooms-list .activatable:selected {
 	background: transparent;
@@ -267,7 +267,11 @@ dialog headerbar {
 .box_titlebar button {
     background-color: #3A466B;
     padding: 3px 8px;
-	margin: 7px 0;
+    margin-top: 7px;
+    margin-bottom: 7px;
+}
+.box_titlebar button:nth-child(3) {
+	margin-right: 7px;
 }
 .box_titlebar button:hover, .boxroom_header-in button:hover,
 .btns-msg-box:hover, .button_send_message:hover {
@@ -465,7 +469,7 @@ dialog headerbar {
     font-size: 14px;
 }
 .box-room-settings textview text, .box-room-info textview text,
-#dialog_profile_prefs textview text {
+#dialog_profile_prefs textview text, .dialog_user_info textview text {
     background-color: #3A466B;
     box-shadow: none;
     border: 1px solid #48547E;
@@ -614,21 +618,21 @@ overshoot.top {
 
 /* Dialog join to room styles */
 
-.dialog_join_to_room .dialog-vbox {
+.dialog_confirmation .dialog-vbox {
     margin-top: 40px;
     color: #fff;
 }
-.dialog_join_to_room .dialog-vbox > box:first-child label:first-child {
+.dialog_confirmation .dialog-vbox > box:first-child label:first-child {
 	font-size: 16px;
 	font-weight: 300;
     margin-bottom: 9px;
     color: #D8DCE8;
 }
-.dialog_join_to_room .dialog-vbox > box:first-child label:last-child {
+.dialog_confirmation .dialog-vbox > box:first-child label:last-child {
 	font-size: 18px;
 	font-weight: 500;
 }
-.dialog_join_to_room .dialog-vbox > box:first-child {
+.dialog_confirmation .dialog-vbox > box:first-child {
     margin-bottom: 9px;
 }
 .listbox_info_members row {
@@ -650,4 +654,16 @@ overshoot.top {
 }
 .dialog_addroom .dialog-action-area {
     margin-top: 15px;
+}
+.wnd-room-info entry {
+    font-size: 13px;
+    font-weight: 300;
+    margin-bottom: 7px;
+    padding: 0 8px;
+}
+
+/* User info styles */
+
+.dialog_user_info textview {
+    background-color: transparent;
 }
