@@ -18,7 +18,9 @@ static void file_read(gsize size, GFileOutputStream *out, GInputStream *in,
     gsize bytes = 0;
 
     if (size <= MX_MAX_FILE_SIZE) {
-        bytes = g_output_stream_splice(G_OUTPUT_STREAM(out), in, G_OUTPUT_STREAM_SPLICE_CLOSE_TARGET, NULL, NULL);
+        bytes = g_output_stream_splice(
+            G_OUTPUT_STREAM(out), in, G_OUTPUT_STREAM_SPLICE_CLOSE_TARGET,
+            NULL, NULL);
     }
     g_print("bytes = %ld\n", bytes);
     if (!is_valid(file, bytes, size))

@@ -15,32 +15,27 @@ static gboolean is_valid(GFile *file, gsize size, gsize bytes) {
     return TRUE;
 }
 
-static gboolean is_online(t_client *client) {
-    if (!g_hash_table_lookup(client->info->users, client->user->login)) {
-        return FALSE;
-    }
-    return TRUE;
+static void send_ready(t_client *client) {
+    cJSON *ready = cJSON_CreateObject();
+    t_dtp *ready_dtp = NULL;
+
+    cJSON_AddNumberToObject(ready, "type", RQ_READY_READ);
+    ready_dtp = mx_get_transport_data(ready);
+    mx_send(client->out, ready_dtp);
+    mx_free_request(&ready_dtp);
 }
 
 static gboolean read_file(t_client *client, GFile *file, gsize size,
                           GFileOutputStream *out) {
-    char buf[MX_BUF_FILE];
-    gssize read = 0;
     gsize bytes = 0;
 
     if (size <= MX_MAX_FILE_SIZE) {
-        while ((read = g_input_stream_read(client->in_s, buf, sizeof(buf),
-                                           NULL, NULL)) > 0
-               && is_online(client)) {
-            bytes += read;
-            if (bytes > size)
-                break;
-            if (g_output_stream_write(G_OUTPUT_STREAM(out), buf, read, NULL,
-                                      NULL) < 0) {
-                break;
-            }
-        }
+        bytes = g_output_stream_splice(
+            G_OUTPUT_STREAM(out), client->in_s,
+            G_OUTPUT_STREAM_SPLICE_CLOSE_TARGET,
+            NULL, NULL);
     }
+    g_print("bytes = %ld size = %ld\n", bytes, size);
     if (!is_valid(file, size, bytes))
         return FALSE;
     return TRUE;
@@ -50,7 +45,8 @@ gboolean mx_read_file(t_client *client, gsize size, char *name) {
     GFile *file = g_file_new_for_path(name);
     GFileOutputStream *out = g_file_create(file, G_FILE_CREATE_NONE,
                                            NULL, NULL);
-
+    
+    send_ready(client);
     if (!out || !read_file(client, file, size, out)) {
         g_object_unref(file);
         return FALSE;
