@@ -1,5 +1,5 @@
 #include "client.h"
-
+ 
 static gboolean is_valid(GFile *file, gsize bytes, gsize size) {
     if (bytes != size) {
         g_file_delete(file, NULL, NULL);
