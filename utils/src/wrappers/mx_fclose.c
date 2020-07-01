@@ -3,10 +3,10 @@
 /*
  * Wrapper of standart function fclose
  */
-int mx_fclose(FILE *stream) {
-    int result = fclose(stream);
+gint mx_fclose(FILE *stream) {
+    gint result = fclose(stream);
 
     if (result == EOF)
-        mx_elogger(MX_LOG_FILE, LOGERR, "fclose\n");
+        mx_logger(MX_LOG_FILE, G_LOG_LEVEL_WARNING, "fclose");
     return result;
 }

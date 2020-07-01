@@ -24,13 +24,13 @@ static bool log_in(t_db_user *user, t_client *client) {
 
     if (!check_user) {
         incorrect_data(client);
-        mx_logger(MX_LOG_FILE, LOGMSG, "user not found %s\n", user->login);
+        mx_logger(MX_LOG_FILE, G_LOG_LEVEL_MESSAGE, "user not found");
         mx_free_user(&check_user);
         return true;
     }
     else if (strcmp(check_user->pass, user->pass)) {
         incorrect_data(client);
-        mx_logger(MX_LOG_FILE, LOGMSG, "Inccorect pass %s\n", user->login);
+        mx_logger(MX_LOG_FILE, G_LOG_LEVEL_MESSAGE, "Inccorect pass");
         mx_free_user(&check_user);
         return true;
     }

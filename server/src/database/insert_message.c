@@ -12,10 +12,10 @@ static void get_id_msg(sqlite3 *db, t_db_message *message) {
     rv = sqlite3_prepare_v2(db, "select message_id from messages where "
                                 "room_id = ?1 and date = ?2",
                             -1, &stmt, NULL);
-    mx_error_sqlite(rv, "prepare", "get id msg");
+    mx_error_sqlite(rv);
     sqlite3_bind_int64(stmt, 1, message->room_id);
     sqlite3_bind_int64(stmt, 2, message->date);
-    mx_error_sqlite(sqlite3_step(stmt), "step", "get id msg");
+    mx_error_sqlite(sqlite3_step(stmt));
     message->message_id = sqlite3_column_int64(stmt, 0);
     sqlite3_finalize(stmt);
 }
@@ -38,8 +38,15 @@ static void sqlite_bind_msg(sqlite3_stmt *stmt, t_db_message *message) {
 }
 
 /*
- * Function: 
+ * Function: mx_insert_message
+ * -------------------------------
+ * makes an entry in the database in the messages table
+ * in which enters data from the structure t_db_message
  * 
+ * room: structure t_db_message with filled fields 
+ * except room_id and date and status
+ * 
+ * return: complements the structure of t_db_message
  */
 
 void mx_insert_message(sqlite3 *db, t_db_message *message) {
@@ -53,9 +60,9 @@ void mx_insert_message(sqlite3 *db, t_db_message *message) {
                                 "date_dead)values(?1, ?2, ?3, ?4, ?5, ?6, ?7,"
                                 "?8, ?9)",
                             -1, &stmt, NULL);
-    mx_error_sqlite(rv, "prepare", "insert_msg_file");
+    mx_error_sqlite(rv);
     sqlite_bind_msg(stmt, message);
-    mx_error_sqlite(sqlite3_step(stmt), "step", "insert_msg_file");
+    mx_error_sqlite(sqlite3_step(stmt));
     sqlite3_finalize(stmt);
     get_id_msg(db, message);
 }

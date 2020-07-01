@@ -61,6 +61,7 @@ typedef enum s_request_type {
     RQ_UPLOAD_FILE,
     RQ_DOWNLOAD_FILE,
     RQ_LOG_OUT,
+    RQ_READY_READ,
     RQ_COUNT_REQUEST
 }            t_request_type;
 
