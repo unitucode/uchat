@@ -5,11 +5,14 @@ I created and worked with four tables
 - rooms
 - messages
 - members
+
+![](./schema.png)
+
 ---
 
 ## users
 *a table that stores data about all users*
-- __id__    -> unique user number (created from the primary key)
+- __id__    -> unique user number **created from the primary key**
 - __name__  -> not a unique username
 - __login__ -> unique user login for login
 - __pass__  -> user password
@@ -20,7 +23,7 @@ I created and worked with four tables
 --- 
 ## rooms
 *a table that stores data about all users*
-- __id__ -> unique room number (created from the primary key)
+- __id__ -> unique room number **created from the primary key**
 - __name__ -> not a unique room name
 - __customer_id__ -> id of the user who created this room
 - __date__ -> time to create a commandant in milliseconds
@@ -31,7 +34,7 @@ I created and worked with four tables
 *a table that stores data about all messages*
 - __user_id__ -> the number of the user who created this message
 - __room_id__ -> the number of the room to which the message was sent
-- __message_id__ -> unique message number (created from the primary key)
+- __message_id__ -> unique message number **created from the primary key**
 - __date__ -> message creation time in milliseconds
 - __message__ -> if the message has a message then it is its text else `NULL`
 - __type__ -> type message, example: `DB_TEXT_MSG, DB_FILE_MSG, DB_FILE_TEXT_MSG, DB_STICKER`
