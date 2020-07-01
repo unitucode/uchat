@@ -45,6 +45,7 @@ struct s_db_message {
     gint8 status;
     gint8 type;
     guint64 file_size;
+    gdouble power;
     gchar *message;
     gchar *file_name;
 };
@@ -54,6 +55,7 @@ struct s_db_room {
     guint64 room_id;
     guint64 customer_id;
     gint8 type;
+    gdouble power;
     gchar *desc;
     gchar *room_name;
 };
