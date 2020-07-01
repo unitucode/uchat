@@ -22,12 +22,20 @@ t_dtp *mx_size_request(goffset size, gchar *name) {
     return mx_get_transport_data(result);
 }
 
-static void download(t_client *client, GFile *file) {
+static void download(t_client *client, GFile *file, GDataInputStream *in_d) {
     GOutputStream *out = g_io_stream_get_output_stream(
         G_IO_STREAM(client->conn));
     GFileInputStream *in = g_file_read(file, NULL, NULL);
+    gchar *ready = g_data_input_stream_read_line(in_d, NULL, NULL, NULL);
+    t_dtp *dtp = mx_request_creation(ready);
 
-    g_print("splice = %ld\n", g_output_stream_splice(out, G_INPUT_STREAM(in), G_OUTPUT_STREAM_SPLICE_CLOSE_SOURCE, NULL, NULL));
+    if (dtp && dtp->type == RQ_READY_READ) {
+        g_print("splice = %ld\n", g_output_stream_splice(out, G_INPUT_STREAM(in), G_OUTPUT_STREAM_SPLICE_CLOSE_SOURCE, NULL, NULL));
+    }
+    if (ready)
+        g_free(ready);
+    if (dtp)
+        mx_free_request(&dtp);
     g_io_stream_close(G_IO_STREAM(client->conn), NULL, NULL); // unrefs
 }
 
@@ -45,7 +53,7 @@ static void download_file(gchar *msg, t_client *client) {
         size = mx_size_request(g_file_info_get_size(info), msg);
         mx_send(client->out, size);
         mx_free_request(&size);
-        download(client, file);
+        download(client, file, client->in);
     }
     else
         g_io_stream_close(G_IO_STREAM(client->conn), NULL, NULL);

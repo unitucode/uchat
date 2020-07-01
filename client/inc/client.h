@@ -127,6 +127,7 @@ void mx_init_handlers(t_chat *chat);
 void mx_init_errors(t_chat *chat);
 void mx_get_data(t_chat *chat);
 void mx_upload_file(gchar *path, gint room_id, t_chat *chat);
+void mx_send_ready(GSocketConnection *conn);
 
 
 //handlers

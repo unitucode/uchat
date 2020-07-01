@@ -20,8 +20,21 @@ static void file_read(gsize size, GFileOutputStream *out, GInputStream *in,
     if (size <= MX_MAX_FILE_SIZE) {
         bytes = g_output_stream_splice(G_OUTPUT_STREAM(out), in, G_OUTPUT_STREAM_SPLICE_CLOSE_TARGET, NULL, NULL);
     }
-    if (FALSE && !is_valid(file, bytes, size))
+    g_print("bytes = %ld\n", bytes);
+    if (!is_valid(file, bytes, size))
         return;
+}
+
+void mx_send_ready(GSocketConnection *conn) {
+    GOutputStream *out = g_io_stream_get_output_stream(G_IO_STREAM(conn));
+    GDataOutputStream *out_d = g_data_output_stream_new(out);
+    cJSON *ready = cJSON_CreateObject();
+    t_dtp *ready_dtp = NULL;
+
+    cJSON_AddNumberToObject(ready, "type", RQ_READY_READ);
+    ready_dtp = mx_get_transport_data(ready);
+    mx_send(out_d, ready_dtp);
+    mx_free_request(&ready_dtp);
 }
 
 void mx_file_read(gsize size, gchar *name, GInputStream *in) {
