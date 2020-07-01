@@ -5,6 +5,9 @@ I created and worked with four tables
 - rooms
 - messages
 - members
+
+![](./schema.png)
+
 ---
 
 ## users
