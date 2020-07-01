@@ -2,6 +2,7 @@
 
 /*
  * Function:  mx_insert_contact
+ * -------------------------------
  * adds an entry to the user contact database
  * 
  * db: closed database structure
@@ -20,12 +21,13 @@ void mx_insert_contact(sqlite3 *db, guint64 user_id, guint64 contact_id,
                                     " type)values(%llu, %llu, %d)", user_id, 
                         contact_id, type);
     request = sqlite3_str_finish(sqlite_str);
-    mx_error_sqlite(sqlite3_exec(db, request, 0, 0, 0), "exec", "insert cont");
+    mx_error_sqlite(sqlite3_exec(db, request, 0, 0, 0));
     sqlite3_free(request);
 }
 
 /*
  * Function: mx_delete_contact
+ * -------------------------------
  * deletes a record from users' contact data
  * 
  * db: closed database structure
@@ -41,12 +43,13 @@ void mx_delete_contact(sqlite3 *db, guint64 user_id, guint64 contact_id) {
                                     " and contact_id = %llu",
                         user_id, contact_id);
     request = sqlite3_str_finish(sqlite_str);
-    mx_error_sqlite(sqlite3_exec(db, request, 0, 0, 0), "exec", "delete cont");
+    mx_error_sqlite(sqlite3_exec(db, request, 0, 0, 0));
     sqlite3_free(request);
 }
 
 /*
  * Function: create_object_contact
+ * -------------------------------
  * creates and returns an json object with the contact
  * information it takes from the database using the stmt object
  * 
@@ -65,6 +68,7 @@ static cJSON *create_object_contact(sqlite3_stmt *stmt) {
 
 /*
  * Function: mx_get_contacts
+ * -------------------------------
  * takes from the database all records about
  * the specified type of user contacts and returns in json format
  * 
@@ -83,12 +87,12 @@ cJSON *mx_get_contacts(sqlite3 *db, guint64 user_id, gint8 type) {
 
     rv = sqlite3_prepare_v2(db, "select * from contacts where user_id = ?1 "
                                 "and type = ?2", -1, &stmt, 0);
-    mx_error_sqlite(rv, "prepare", "get contact of user");
+    mx_error_sqlite(rv);
     sqlite3_bind_int64(stmt, 1, user_id);
     sqlite3_bind_int(stmt, 2, type);
     while ((rv = sqlite3_step(stmt) == SQLITE_ROW))
         cJSON_AddItemToArray(contacts, create_object_contact(stmt));
-    mx_error_sqlite(rv, "step", "get contact of user");
+    mx_error_sqlite(rv);
     return contacts;
 }
 

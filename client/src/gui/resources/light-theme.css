@@ -613,10 +613,7 @@ dialog headerbar {
 .listbox_members row {
     margin: 7px 7px 0 7px;
     border-radius: 5px;
-    padding: 0 15px;
-}
-.listbox_members row button:hover {
-    opacity: .7;
+    padding: 0 10px;
 }
 .listbox_members row:last-child {
     margin-bottom: 7px;
@@ -633,6 +630,13 @@ dialog headerbar {
 }
 .listbox_members row:selected:hover {
     background-color: rgb(83, 107, 215);
+}
+}
+.listbox_members row button {
+    padding: 0;
+}
+.listbox_members row button:hover {
+    opacity: .7;
 }
 
 /* Overshoot deactivation */
@@ -708,6 +712,39 @@ overshoot.top {
 	margin-bottom: 5px;
 }
 .file-button {
-	background: #3A466B;
-	border-radius: 8px;
+    border-radius: 8px;
+    padding: 0;
+    color: #737A82;
+}
+.stack_messages list row:hover .file-button button {
+    opacity: .8;
+}
+.box_file_info > label, .box_own_file_info > label {
+	font-size: 13px;
+    font-weight: 300;
+    color: #C2C2C2;
+}
+.box_file_info > label {
+    margin-left: 10px;
+}
+.box_file_info, .box_own_file_info {
+    margin-top: 7px;
+}
+.box_own_file_info > label {
+    margin-right: 5px;
+}
+.box_own_file_info > box label, .box_file_info > box label {
+    font-size: 14px;
+	font-weight: 300;
+	margin-left: 5px;
+}
+.stack_messages list row:selected .box_file_info .file-button {
+    border-left: 8px solid #5771E5;
+    border-radius: 5px;
+    padding-left: 7px;
+}
+.stack_messages list row:selected .box_own_file_info .file-button {
+    border-right: 8px solid #5771E5;
+    border-radius: 5px;
+    padding-right: 7px;
 }

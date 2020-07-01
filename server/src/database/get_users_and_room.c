@@ -1,7 +1,8 @@
 #include "server.h"
 
 /*
- * Function: 
+ * Function:
+ * -------------------------------
  * 
  */
 
@@ -23,8 +24,13 @@ static t_db_user *for_get_user(sqlite3_stmt *stmt) {
 }
 
 /*
- * Function: 
+ * Function: mx_get_user_by_login
+ * -------------------------------
+ * get data of user in t_db_user
  * 
+ * login: login of user
+ * 
+ * return: struct t_db_room with data of user
  */
 
 t_db_user *mx_get_user_by_login(sqlite3 *db, gchar *login) {
@@ -34,13 +40,18 @@ t_db_user *mx_get_user_by_login(sqlite3 *db, gchar *login) {
     rv = sqlite3_prepare_v3(db, "select * from users where login = ?1",
                             -1, 0, &stmt, NULL);
     sqlite3_bind_text(stmt, 1, login, -1, SQLITE_STATIC);
-    mx_error_sqlite(rv, "prepare", "get_user_by_login");
+    mx_error_sqlite(rv);
     return for_get_user(stmt);
 }
 
 /*
- * Function: 
+ * Function: mx_get_user_by_id
+ * -------------------------------
+ * get data of user in t_db_user
  * 
+ * user_id: user id
+ * 
+ * return: struct t_db_room with data of user
  */
 
 t_db_user *mx_get_user_by_id(sqlite3 *db, guint64 user_id) {
@@ -49,14 +60,19 @@ t_db_user *mx_get_user_by_id(sqlite3 *db, guint64 user_id) {
 
     rv = sqlite3_prepare_v3(db, "select * from users where id = ?1",
                             -1, 0, &stmt, NULL);
-    mx_error_sqlite(rv, "prepare", "get user by token");
+    mx_error_sqlite(rv);
     sqlite3_bind_int64(stmt, 1, user_id);
     return for_get_user(stmt);
 }
 
 /*
- * Function: 
+ * Function: mx_get_user_by_token
+ * -------------------------------
+ * get data of user in t_db_user
  * 
+ * token: token of user
+ * 
+ * return: struct t_db_room with data of user
  */
 
 t_db_user *mx_get_user_by_token(sqlite3 *db, gchar *token) {
@@ -65,14 +81,19 @@ t_db_user *mx_get_user_by_token(sqlite3 *db, gchar *token) {
 
     rv = sqlite3_prepare_v3(db, "select * from users where token = ?1",
                             -1, 0, &stmt, NULL);
-    mx_error_sqlite(rv, "prepare", "get user by token");
+    mx_error_sqlite(rv);
     sqlite3_bind_text(stmt, 1, token, -1, SQLITE_STATIC);
     return for_get_user(stmt);
 }
 
 /*
- * Function: 
+ * Function: mx_get_room_by_id
+ * -------------------------------
+ * get data of room in t_db_room
  * 
+ * id: room id
+ * 
+ * return: struct t_db_room with data of room
  */
 
 t_db_room *mx_get_room_by_id(sqlite3 *db, guint64 id) {
@@ -81,8 +102,7 @@ t_db_room *mx_get_room_by_id(sqlite3 *db, guint64 id) {
 
     mx_error_sqlite(sqlite3_prepare_v3(db, "select * from rooms where "
                                            "id = ?1",
-                                       -1, 0, &stmt, NULL),
-                    "prepare", "get_room");
+                                       -1, 0, &stmt, NULL));
     sqlite3_bind_int(stmt, 1, id);
     if (sqlite3_step(stmt) == 100) {
         room = malloc(sizeof(t_db_room));

@@ -59,6 +59,7 @@ static void file_ready(GObject *source_object, GAsyncResult *res,
         cJSON_Delete(answer);
         return;
     }
+    mx_send_ready(user_data);
     file_read(size->valuedouble, name->valuestring, in_s);
     g_io_stream_close(G_IO_STREAM(user_data), NULL, NULL);
 }
@@ -81,6 +82,7 @@ void mx_download_file(guint64 room_id, guint64 msg_id, t_chat *chat) {
     t_dtp *file = mx_download_file_request(room_id, msg_id, chat->auth_token);
 
     prepare_file(file, conn);
+    // file_read(461348, "test.png", in_s);
     g_data_input_stream_read_line_async(in, G_PRIORITY_DEFAULT, NULL,
                                         file_ready, conn);
 }
