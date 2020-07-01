@@ -6,7 +6,7 @@
 #include "utils.h"
 
 #define MX_J_STR(m) (m) ? (m) : "(null)"
-#define MX_MAX_FILE_SIZE 50000000
+#define MX_MAX_FILE_SIZE 10000000
 #define MX_FILES_DIR "files/"
 #define MX_BUF_FILE 16384
 
