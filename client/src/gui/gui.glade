@@ -395,6 +395,7 @@
   <object class="GtkImage" id="image8">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
+    <property name="pixel_size">12</property>
     <property name="icon_name">close</property>
   </object>
   <object class="GtkImage" id="image9">
@@ -1129,7 +1130,6 @@
                             <property name="can_focus">False</property>
                             <property name="label" translatable="yes">Choose any room to start dialog</property>
                             <attributes>
-                              <attribute name="foreground" value="#eeeeeeeeecec"/>
                               <attribute name="absolute-size" value="20000"/>
                             </attributes>
                           </object>
@@ -2311,6 +2311,9 @@
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="activate_on_single_click">False</property>
+                            <style>
+                              <class name="listbox_members"/>
+                            </style>
                           </object>
                         </child>
                       </object>
@@ -2587,6 +2590,9 @@
             <property name="position">1</property>
           </packing>
         </child>
+        <style>
+          <class name="box_user_info"/>
+        </style>
       </object>
     </child>
     <style>
@@ -2787,6 +2793,9 @@
                       <object class="GtkListBox" id="listbox_info_members">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
+                        <style>
+                          <class name="listbox_members"/>
+                        </style>
                       </object>
                     </child>
                   </object>
