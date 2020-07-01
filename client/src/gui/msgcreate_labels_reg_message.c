@@ -65,6 +65,7 @@ void mx_msgcreate_file(GtkWidget *box_info, t_gmsg *gmsg,
         btn = gtk_button_new_from_icon_name("document", GTK_ICON_SIZE_DIALOG);
     else
         btn = gtk_button_new_from_icon_name("download", GTK_ICON_SIZE_DIALOG);
+    mx_widget_set_class(box, "file-button");
     gtk_widget_set_can_focus(btn, FALSE);
     g_object_set_data(G_OBJECT(btn), "gmsg", gmsg);
     g_signal_connect(btn, "clicked", G_CALLBACK(mx_open_files_dir), chat);
