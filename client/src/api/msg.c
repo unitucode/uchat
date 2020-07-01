@@ -44,7 +44,8 @@ gboolean mx_msg_handler(t_dtp *data, t_chat *chat) {
     groom = mx_get_groom_by_id(gmsg->room_id, chat->builder);
     if (!groom)
         return FALSE;
-    mx_widget_set_class(GTK_WIDGET(groom->label_name), "has-messages");
+    if (g_strcmp0(gmsg->login, chat->login))
+        mx_widget_set_class(GTK_WIDGET(groom->label_name), "has-messages");
     groom->uploaded++;
     return TRUE;
 }

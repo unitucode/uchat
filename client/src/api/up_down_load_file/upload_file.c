@@ -1,17 +1,20 @@
 #include "client.h"
 
-static void file_ready(GObject *source_object, GAsyncResult *res,
-                       gpointer user_data) {
-    GOutputStream *out = g_io_stream_get_output_stream(
-        G_IO_STREAM(user_data));
-    char *contents = NULL;
-    gsize length = 0;
+static gboolean is_server_ready(GSocketConnection *conn) {
+    GInputStream *in = g_io_stream_get_input_stream(G_IO_STREAM(conn));
+    GDataInputStream *in_d = g_data_input_stream_new(in);
+    gchar *ready = g_data_input_stream_read_line(in_d, NULL, NULL, NULL);
+    t_dtp *dtp = mx_request_creation(ready);
 
-    g_file_load_contents_finish(
-        G_FILE(source_object), res, &contents, &length, NULL, NULL);
-    g_output_stream_write_all(out, contents, length, NULL, NULL, NULL);
-    g_io_stream_close(G_IO_STREAM(user_data), NULL, NULL);
-    g_object_unref(G_FILE(source_object));
+    if (dtp && dtp->type == RQ_READY_READ) {
+        mx_free_request(&dtp);
+        if (ready)
+            g_free(ready);
+        return TRUE;
+    }
+    if (ready)
+        g_free(ready);
+    return FALSE;
 }
 
 static void send_file(t_dtp *request, GFile *file, t_chat *chat) {
@@ -20,10 +23,15 @@ static void send_file(t_dtp *request, GFile *file, t_chat *chat) {
         g_ascii_strtoll(chat->argv[2], NULL, 10), NULL, NULL);
     GOutputStream *out = g_io_stream_get_output_stream(G_IO_STREAM(conn));
     GDataOutputStream *d_out = g_data_output_stream_new(G_OUTPUT_STREAM(out));
+    GFileInputStream *file_in = g_file_read(file, NULL, NULL);
 
     mx_send(d_out, request);
     mx_free_request(&request);
-    g_file_load_contents_async(file, NULL, file_ready, conn);
+    if (is_server_ready(conn)) {
+        g_output_stream_splice(out, G_INPUT_STREAM(file_in),
+                            G_OUTPUT_STREAM_SPLICE_CLOSE_SOURCE, NULL, NULL);
+    }
+    g_io_stream_close(G_IO_STREAM(conn), NULL, NULL);
 }
 
 /*
@@ -43,6 +51,7 @@ void mx_upload_file(gchar *path, gint room_id, t_chat *chat) {
         g_file_info_get_name(info), g_file_info_get_size(info),
         chat->auth_token, room_id);
 
-    send_file(file_request, file, chat);
+    if (g_file_info_get_size(info) <= MX_MAX_FILE_SIZE) 
+        send_file(file_request, file, chat);
     g_object_unref(info);
 }
