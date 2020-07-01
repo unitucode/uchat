@@ -27,6 +27,7 @@
 
 #define MX_DARK_THEME "../src/gui/resources/dark-theme.css"
 #define MX_LIGHT_THEME "../src/gui/resources/light-theme.css"
+#define MX_THEME_FILE "../set-theme"
 
 //settings
 #define MX_BUF_MSGS 30

@@ -188,19 +188,37 @@ dialog headerbar {
 }
 .rooms-list row:hover label {
     background-color: rgb(58,70, 107);
-    margin: 5px 20px;
+    margin-left: 20px;
+    margin-right: 20px;
 }
 .rooms-list row:selected label {
 	background-color: rgb(66,78, 120);
     border-left: 3px solid rgb(83,102,187);
     border-right: 3px solid rgb(83,102,187);
-    margin: 5px 18px;
+    margin-left: 18px;
+    margin-right: 18px;
+}
+.rooms-list row:selected:hover label {
+    margin-left: 14px;
+    margin-right: 14px;
 }
 
 /* Class for room with new messages */
 .rooms-list row .has-messages {
     border-left: 3px solid transparent;
     border-right: 3px solid #28E1B2;
+	animation-name: pulse;
+	animation-duration: .8s;
+	animation-timing-function: ease;
+	animation-iteration-count: infinity;
+}
+.rooms-list row:hover .has-messages {
+	animation: none;
+}
+@keyframes pulse {
+    0% {margin-left: 25px; margin-right: 25px;}
+    75% {margin-left: 21px; margin-right: 21px;}
+    100% {margin-left: 25px; margin-right: 25px;}
 }
 .add-room-button {
 	background: none;
@@ -299,6 +317,9 @@ dialog headerbar {
 }
 .box_msg_send scrolledwindow {
 	border: 1px solid #424E78;
+}
+.stack_messages > label {
+    color: #B8C2E5;
 }
 .stack_messages list .box_msg_info label:nth-child(1) {
 	background-color: #424E78;
@@ -531,7 +552,8 @@ overshoot.top {
 	background-color: #364165;
 }
 .box_stickers_header label {
-	color: #fff;
+    color: #fff;
+    font-size: 14px;
 }
 .box_stickers_header button {
 	font-weight: 300;
@@ -635,21 +657,21 @@ overshoot.top {
 .dialog_confirmation .dialog-vbox > box:first-child {
     margin-bottom: 9px;
 }
-.listbox_info_members row {
+.listbox_members row {
     margin: 7px 7px 0 7px;
     border-radius: 5px;
     padding: 0 15px;
 }
-.listbox_info_members row:last-child {
+.listbox_members row:last-child {
     margin-bottom: 7px;
 }
-.listbox_info_members row:hover {
+.listbox_members row:hover {
     background-color: #424E78;
 }
-.listbox_info_members row:selected {
+.listbox_members row:selected {
 	background-color: #6785FF;
 }
-.listbox_info_members row:selected:hover {
+.listbox_members row:selected:hover {
 	background-color: #5F7BEE;
 }
 .dialog_addroom .dialog-action-area {
@@ -666,4 +688,24 @@ overshoot.top {
 
 .dialog_user_info textview {
     background-color: transparent;
+}
+.box_user_info {
+	padding: 25px 30px 30px;
+}
+.box_user_info > box {
+	color: #fff;
+}
+.box_user_info > box label:first-child {
+	font-size:14px;
+	font-weight: 500;
+}
+.box_user_info > box label:last-child {
+	font-size:16px;
+}
+.box_user_info > box:last-child label {
+	margin-bottom: 5px;
+}
+.file-button {
+	background: #3A466B;
+	border-radius: 8px;
 }

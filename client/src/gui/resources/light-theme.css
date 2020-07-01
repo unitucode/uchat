@@ -207,20 +207,35 @@ dialog headerbar {
     background-color: transparent;
 }
 .rooms-list row:hover label {
-    margin: 5px 20px;
+    margin-left: 20px;
+    margin-right: 20px;
 }
 .rooms-list row:selected label {
     border-color: transparent;
     border-left: 2px solid rgb(87,113,229);
     border-right: 2px solid rgb(87,113,229);
-    margin: 5px 18px;
+    margin-left: 18px;
+    margin-right: 18px;
 }
 .rooms-list row:selected:hover label {
-    margin: 5px 14px;
+    margin-left: 14px;
+    margin-right: 14px;
 }
 /* Class for room with new messages */
 .rooms-list row .has-messages {
     border-right: 2px solid #28E1B2;
+	animation-name: pulse;
+	animation-duration: .8s;
+	animation-timing-function: ease;
+	animation-iteration-count: infinity;
+}
+.rooms-list row:hover .has-messages {
+	animation: none;
+}
+@keyframes pulse {
+    0% {margin-left: 25px; margin-right: 25px;}
+    75% {margin-left: 21px; margin-right: 21px;}
+    100% {margin-left: 25px; margin-right: 25px;}
 }
 .add-room-button {
 	background: none;
@@ -589,28 +604,28 @@ dialog headerbar {
 
 /* Members list styles */
 
-.listbox_info_members row {
+.listbox_members row {
     margin: 7px 7px 0 7px;
     border-radius: 5px;
     padding: 0 15px;
 }
-.listbox_info_members row button:hover {
+.listbox_members row button:hover {
     opacity: .7;
 }
-.listbox_info_members row:last-child {
+.listbox_members row:last-child {
     margin-bottom: 7px;
 }
-.listbox_info_members row:hover {
+.listbox_members row:hover {
     background-color: rgb(229, 231, 244);
 }
-.listbox_info_members row:selected {
+.listbox_members row:selected {
     background-color: #5771E5;
 }
-.listbox_info_members row:selected label,
-.listbox_info_members row:selected:hover {
+.listbox_members row:selected label,
+.listbox_members row:selected:hover {
     color: #fff;
 }
-.listbox_info_members row:selected:hover {
+.listbox_members row:selected:hover {
     background-color: rgb(83, 107, 215);
 }
 
@@ -641,6 +656,7 @@ overshoot.top {
 }
 .box_stickers_header label {
     color: #323B59;
+    font-size: 14px;
 }
 .box_stickers_header button {
 	font-weight: 300;
@@ -662,4 +678,30 @@ overshoot.top {
     font-weight: 300;
     margin-bottom: 7px;
     padding: 0 8px;
+}
+
+/* User info styles */
+
+.dialog_user_info textview {
+    background-color: transparent;
+}
+.box_user_info {
+	padding: 25px 30px 30px;
+}
+.box_user_info > box {
+	color: #737A82;
+}
+.box_user_info > box label:first-child {
+	font-size:14px;
+	font-weight: 500;
+}
+.box_user_info > box label:last-child {
+	font-size:16px;
+}
+.box_user_info > box:last-child label {
+	margin-bottom: 5px;
+}
+.file-button {
+	background: #3A466B;
+	border-radius: 8px;
 }
