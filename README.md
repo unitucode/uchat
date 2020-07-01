@@ -1,3 +1,3 @@
 # uchat
 ### [Uchat api](UCHAT_API.md)
-### [Database](DATABASE.md)
+### [Database](server/src/database/DATABASE.md)
