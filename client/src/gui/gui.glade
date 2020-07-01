@@ -345,16 +345,16 @@
     <property name="pixel_size">18</property>
     <property name="icon_name">edit-clear-symbolic</property>
   </object>
+  <object class="GtkImage" id="image18">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="icon_name">go-down</property>
+  </object>
   <object class="GtkImage" id="image19">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
     <property name="pixel_size">15</property>
     <property name="icon_name">dark-theme</property>
-  </object>
-  <object class="GtkImage" id="image18">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="icon_name">go-down</property>
   </object>
   <object class="GtkImage" id="image2">
     <property name="visible">True</property>
@@ -2298,6 +2298,7 @@
                 </child>
                 <child>
                   <object class="GtkScrolledWindow">
+                    <property name="height_request">160</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="shadow_type">in</property>
@@ -2496,6 +2497,7 @@
           <object class="GtkBox">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
+            <property name="orientation">vertical</property>
             <child>
               <object class="GtkLabel">
                 <property name="height_request">20</property>
@@ -2649,6 +2651,7 @@
           <object class="GtkBox">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
+            <property name="orientation">vertical</property>
             <child>
               <object class="GtkLabel">
                 <property name="height_request">20</property>
@@ -2772,6 +2775,7 @@
             </child>
             <child>
               <object class="GtkScrolledWindow">
+                <property name="height_request">160</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="shadow_type">in</property>
