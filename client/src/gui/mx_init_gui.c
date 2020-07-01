@@ -15,4 +15,5 @@ void mx_init_gui(t_chat *chat) {
     mx_connect_set_placeholder(chat);
     mx_connect_unset_placeholder(chat);
     mx_connect_filechooser(chat);
+    mx_connect_theme_switcher(chat);
 }
