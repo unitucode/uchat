@@ -8,8 +8,9 @@ static void mx_show_go_down(GtkAdjustment *adj, GtkBuilder *builder) {
     gdouble upper = gtk_adjustment_get_upper(adj);
     gdouble value = gtk_adjustment_get_value(adj);
 
-    if (value < (upper - gtk_adjustment_get_page_size(adj) - 50))
+    if (value < (upper - gtk_adjustment_get_page_size(adj) - 50)) {
         mx_widget_set_visibility(GTK_WIDGET(go_down), TRUE);
+    }
     else
         mx_widget_set_visibility(GTK_WIDGET(go_down), FALSE);
 }
