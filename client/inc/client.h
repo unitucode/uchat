@@ -18,6 +18,7 @@
 #define MX_ERRMSG_DIFPASS "Passwords must match"
 #define MX_ERRMSG_INCCRDATA "The login or password inccorect"
 #define MX_ERRMSG_USEREXIST "User already exist"
+#define MX_ERRMSG_CLIEXIST "User already authorized"
 
 #define MX_ROOM_CTRL 0
 #define MX_MSG_CTRL 1
@@ -207,6 +208,7 @@ t_dtp *mx_download_file_request(guint64 room_id, guint64 msg_id, gchar *token);
 //errors api
 void mx_err_auth_data_handler(GtkBuilder *builder);
 void mx_err_user_exist_handler(GtkBuilder *builder);
+void mx_err_cli_exist_handler(GtkBuilder *builder);
 
 //gui
 GtkBuilder *mx_init_window(int argc, char **argv);

@@ -3,6 +3,7 @@
 void mx_init_errors(t_chat *chat) {
     chat->error_handler[ER_AUTH_DATA] = mx_err_auth_data_handler;
     chat->error_handler[ER_USER_EXST] = mx_err_user_exist_handler;
+    chat->error_handler[ER_CLI_EXST] = mx_err_cli_exist_handler;
 }
 
 void mx_init_room_handlers(t_chat *chat) {

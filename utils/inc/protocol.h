@@ -27,6 +27,7 @@ typedef struct s_dtp t_dtp;
 typedef enum s_error_type {
     ER_AUTH_DATA = 0,
     ER_USER_EXST,
+    ER_CLI_EXST,
     ER_COUNT_ERRS
 }            t_error_type;
 
