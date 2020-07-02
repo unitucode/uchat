@@ -18,6 +18,7 @@ void mx_init_room_handlers(t_chat *chat) {
     chat->request_handler[RQ_JOIN_ROOM] = mx_join_room_handler;
     chat->request_handler[RQ_GET_MEMBERS] = mx_get_members_handler;
     chat->request_handler[RQ_DEL_HIST] = mx_del_hist_handler;
+    chat->request_handler[RQ_UPD_ROOM_POWR] = mx_upd_room_power_handler;
 }
 
 /*

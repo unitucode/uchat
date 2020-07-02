@@ -74,6 +74,7 @@ t_db_room *mx_parse_json_room(cJSON *room_j) {
     if (!(json = mx_json_is_valid(room_j, "type", cJSON_IsNumber)))
         return NULL;
     room->type = json->valueint;
+    room->power = 0;
     return room;
 }
 
@@ -103,6 +104,7 @@ t_db_message *mx_parse_message(cJSON *message_j) {
     message->message = g_strstrip(g_strdup(json->valuestring));
     message->file_name = g_strdup("");
     message->date_dead = 0;
+    message->power = 2;
     return message;
 }
 

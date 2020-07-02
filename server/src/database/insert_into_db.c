@@ -11,19 +11,27 @@
  * return: complements the structure of t_db_room
  */
 
-void mx_insert_room_into_db(sqlite3 *db, t_db_room *room) {
-    sqlite3_stmt *stmt;
-    gint32 rv = SQLITE_OK;
-
-    room->date = mx_get_time(DB_MILISECOND);
-    rv = sqlite3_prepare_v2(db, "insert into rooms(name, customer_id, date, "
-                                "desc, type)values(?1, ?2, ?3, ?4, ?5);",
-                            -1, &stmt, 0);
+static void sqlite_bind_room(sqlite3_stmt *stmt, t_db_room *room) {
     sqlite3_bind_text(stmt, 1, room->room_name, -1, SQLITE_STATIC);
     sqlite3_bind_int64(stmt, 2, room->customer_id);
     sqlite3_bind_int64(stmt, 3, room->date);
     sqlite3_bind_text(stmt, 4, room->desc, -1, SQLITE_STATIC);
     sqlite3_bind_int(stmt, 5, room->type);
+    sqlite3_bind_double(stmt, 6, room->power);
+}
+
+
+void mx_insert_room_into_db(sqlite3 *db, t_db_room *room) {
+    sqlite3_stmt *stmt;
+    gint32 rv = SQLITE_OK;
+
+    room->date = mx_get_time(DB_MILISECOND);
+    rv = sqlite3_prepare_v2(db, "insert into rooms(name, customer_id, date,"
+                                " desc, type, power)values(?1, ?2, ?3, ?4, "
+                                "?5, ?6);",
+                            -1, &stmt, 0);
+    mx_error_sqlite(rv);
+    sqlite_bind_room(stmt, room);
     mx_error_sqlite(sqlite3_step(stmt));
     sqlite3_finalize(stmt);
     sqlite3_prepare_v2(db, "select max(id) from rooms", -1, &stmt, NULL);

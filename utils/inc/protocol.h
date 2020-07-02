@@ -6,7 +6,7 @@
 #include "utils.h"
 
 #define MX_J_STR(m) (m) ? (m) : "(null)"
-#define MX_MAX_FILE_SIZE 50000000
+#define MX_MAX_FILE_SIZE 10000000
 #define MX_FILES_DIR "files/"
 #define MX_BUF_FILE 16384
 
@@ -52,6 +52,7 @@ typedef enum s_request_type {
     RQ_JOIN_ROOM,
     RQ_UPD_ROOM_NAME,
     RQ_UPD_ROOM_DESC,
+    RQ_UPD_ROOM_POWR,
     RQ_SEARCH_CH,
     RQ_GET_MEMBERS,
     RQ_MEMBER_INFO,
