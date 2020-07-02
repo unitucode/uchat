@@ -9,6 +9,7 @@
 #define MX_MAX_FILE_SIZE 10000000
 #define MX_FILES_DIR "files/"
 #define MX_BUF_FILE 16384
+#define MX_FILE_DELIM "__"
 
 /* Protocol object
  * ----------
