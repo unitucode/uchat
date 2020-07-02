@@ -1,11 +1,5 @@
 #include "api.h"
 
-static void func(gpointer key, gpointer value, gpointer user_data) {
-    (void)key;
-    (void)value;
-    (void)user_data;
-}
-
 /*
  * Function: mx_correct_data
  * -------------------------------
@@ -20,7 +14,6 @@ void mx_correct_data(t_client *client) {
 
     mx_send(client->out, dtp);
     mx_logger(MX_LOG_FILE, G_LOG_LEVEL_MESSAGE, "Logged in correct");
-    g_hash_table_foreach(client->info->users, func, NULL);
     g_hash_table_insert(client->info->users, client->user->login,
                         client->out);
     mx_free_request(&dtp);

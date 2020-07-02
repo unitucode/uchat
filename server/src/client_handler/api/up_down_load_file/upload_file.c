@@ -33,7 +33,7 @@ static gboolean is_valid(t_client *client, guint64 room_id) {
 static gpointer upload_file_thread(gpointer data) {
     t_file_helper *file = (t_file_helper*)data;
     gchar *filename = g_strdup_printf(
-        "%s%"G_GUINT64_FORMAT"%s%s", MX_FILES_DIR,
+        "%s%"G_GUINT64_FORMAT"%s_%s", MX_FILES_DIR,
         mx_get_time(DB_MICROSECOND), file->client->user->login, file->name);
 
     if (mx_read_file(file->client, file->size, filename)) {
