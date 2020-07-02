@@ -18,7 +18,7 @@ list row {
 .dialog_auth entry, .wnd_main entry, .box-room-settings textview,
 .dialog_auth textview, .wnd_main textview, .box-room-settings entry,
 .box-room-info textview, #dialog_profile_prefs textview,
-.dialog_addroom entry, .wnd-room-info entry {
+.dialog_addroom entry, .wnd-room-info entry, .dialog_user_info textview {
     caret-color: #737A82;
     color: #737A82;
 }
@@ -27,13 +27,13 @@ button, .input, entry, notebook, .dialog_auth .titlebar, button image  {
 }
 .dialog_auth, .wnd_main, .dialog_addroom,
 .profile-settings-wnd, .wnd-room-info, .wnd-room-settings,
-.dialog_join_to_room {
+.dialog_join_to_room, .dialog_user_info {
     background: #fff;
 }
 .dialog_auth entry selection, .wnd_main entry selection,
 .dialog_auth textview selection, .wnd_main textview selection,
 .box-room-settings textview selection, .box-room-info textview selection,
-#dialog_profile_prefs textview selection {
+#dialog_profile_prefs textview selection, .dialog_user_info textview selection {
 	background-color: #5771E5;
 }
 box stack, entry, .dialog_notebook header {
@@ -514,7 +514,7 @@ dialog headerbar {
     font-size: 14px;
 }
 .box-room-settings textview text, .box-room-info textview text,
-#dialog_profile_prefs textview text {
+#dialog_profile_prefs textview text, .dialog_user_info textview text {
     background-color: #F2F4FF;
     box-shadow: none;
     border: 1px solid #E8ECF8;
@@ -597,8 +597,11 @@ dialog headerbar {
 #dialog_profile_prefs > box:first-child label:last-child  {
 	font-size: 16px;
 }
-#dialog_profile_prefs > box:first-child box:last-child label {
+#dialog_profile_prefs > box:first-child box:last-child > label {
 	margin: 10px 0 7px;
+}
+#dialog_profile_prefs > box:first-child box:last-child > button {
+    margin-top: 6px;
 }
 #dialog_profile_prefs .dialog-action-area {
     margin-top: 12px;
@@ -731,4 +734,12 @@ overshoot.top {
 }
 .box_user_info > box:last-child label {
 	margin-bottom: 5px;
+}
+
+.arrow-down-btn {
+	background: #E8ECF8;
+	border-radius: 10px;
+}
+.arrow-down-btn:hover {
+    opacity: .7 ;
 }

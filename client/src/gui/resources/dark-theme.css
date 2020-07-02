@@ -651,8 +651,11 @@ overshoot.top {
 #dialog_profile_prefs > box:first-child label:last-child  {
 	font-size: 16px;
 }
-#dialog_profile_prefs > box:first-child box:last-child label {
+#dialog_profile_prefs > box:first-child box:last-child > label {
 	margin: 10px 0 7px;
+}
+#dialog_profile_prefs > box:first-child box:last-child > button {
+    margin-top: 6px;
 }
 #dialog_profile_prefs .dialog-action-area {
     margin-top: 12px;
@@ -745,4 +748,7 @@ overshoot.top {
 .arrow-down-btn {
 	background: #3A466B;
 	border-radius: 10px;
+}
+.arrow-down-btn:hover {
+    opacity: .7 ;
 }
