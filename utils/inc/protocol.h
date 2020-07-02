@@ -27,6 +27,7 @@ typedef struct s_dtp t_dtp;
 typedef enum s_error_type {
     ER_AUTH_DATA = 0,
     ER_USER_EXST,
+    ER_CLI_EXST,
     ER_COUNT_ERRS
 }            t_error_type;
 
@@ -41,7 +42,6 @@ typedef enum s_request_type {
     RQ_MSG,
     RQ_EDIT_MSG,
     RQ_DEL_MSG,
-    RQ_STICKER,
     RQ_DEL_HIST,
     RQ_GET_NEW_MSGS,
     RQ_SEARCH_MSG,
