@@ -47,6 +47,5 @@ gboolean mx_msg_handler(t_dtp *data, t_chat *chat) {
     if (g_strcmp0(gmsg->login, chat->login))
         mx_widget_set_class(GTK_WIDGET(groom->label_name), "has-messages");
     groom->uploaded++;
-    g_message("power = %f power here client/src/api/msg.c\n", gmsg->power); // TODELETE
     return TRUE;
 }

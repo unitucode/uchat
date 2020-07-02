@@ -16,7 +16,6 @@ gboolean mx_upd_room_power_handler(t_dtp *data, t_chat *chat) {
 
     if (!cJSON_IsNumber(room_id) || !cJSON_IsNumber(power))
         return FALSE;
-    g_message("update power for %d room, power = %f PLEASE CHECK IF ROOM EXIST client/src/api/upd_room_power.c\n", room_id->valueint, power->valuedouble);
-    (void)chat; // TODELETE
+    mx_gupd_room_power(room_id->valueint, power->valuedouble, chat->builder);
     return TRUE;
 }
