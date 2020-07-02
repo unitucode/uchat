@@ -57,6 +57,8 @@ uninstall: clean
 
 clean:
 	@rm -rf $(OBJD)
+	@rm -rf $(SERVER_WD)/files
+	@rm -rf $(SERVER_WD)/database.db
 	@printf "\033[34;1mdeleted $(OBJD)\033[0m\n"
 
 reinstall: uninstall all

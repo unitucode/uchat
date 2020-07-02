@@ -54,6 +54,7 @@ uninstall: clean
 
 clean:
 	@rm -rf $(OBJD)
+	@rm -rf $(CLIENT_WD)/files
 	@printf "\033[34;1mdeleted $(OBJD)\033[0m\n"
 
 reinstall: uninstall all
