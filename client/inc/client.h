@@ -340,6 +340,8 @@ void mx_connect_ban_member(t_chat *chat);
 void mx_connect_test_request(t_chat *chat); // DELETE
 void mx_connect_filechooser(t_chat *chat);
 gchar *mx_get_filename(gchar *full_name);
+gboolean mx_is_file_image(gchar *filename);
+gboolean mx_is_file_animation(gchar *filename);
 
 // gui callbacks
 void mx_show_edit_msg(GtkButton *btn, t_chat *chat);
