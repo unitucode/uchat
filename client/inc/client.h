@@ -74,10 +74,11 @@ struct s_groom {
     char *room_name;
     char *customer;
     guint64 customer_id;
-    long int date;
+    guint64 date;
     char *desc;
-    bool is_updated;
+    gboolean is_updated;
     gint uploaded;
+    gdouble power;
 };
 
 struct s_gmsg {
@@ -87,8 +88,9 @@ struct s_gmsg {
     char *msg;
     char *login;
     guint64 date;
-    int room_id;
-    int message_id;
+    guint64 room_id;
+    guint64 message_id;
+    gdouble power;
 };
 
 struct s_chat {
@@ -160,6 +162,7 @@ gboolean mx_ban_member_handler(t_dtp *data, t_chat *chat); //HANDLER FOR BAN MEM
 gboolean mx_search_msgs_handler(t_dtp *data, t_chat *chat); //HANDLER FOR SEARCH MSG
 gboolean mx_del_hist_handler(t_dtp *data, t_chat *chat); //HANDLER FOR DELETE HISTORY
 gboolean mx_old_msgs_hanlder(t_dtp *data, t_chat *chat); //HANDLER FOR UPD MSGS
+gboolean mx_upd_room_power_handler(t_dtp *data, t_chat *chat); //HANDLER FOR UPD POWER ROOM
 void mx_download_file(guint64 room_id, guint64 msg_id, t_chat *chat);
 void mx_file_read(gsize size, gchar *name, GInputStream *in);
 
@@ -303,7 +306,8 @@ void mx_widget_switch_visibility_by_name(GtkBuilder *builder, gchar *name);
 t_groom *mx_get_selected_groom(GtkBuilder *builder, gchar *list_name);
 t_groom *mx_get_groom_by_id(guint64 room_id, GtkBuilder *builder);
 t_gmsg *mx_get_selected_gmsg(GtkBuilder *builder);
-t_gmsg *mx_get_gmsg_by_id(gint msg_id, gint room_id, GtkBuilder *builder);
+t_gmsg *mx_get_gmsg_by_id(guint64 msg_id, guint64 room_id,
+                          GtkBuilder *builder);
 void mx_unselect_room(t_groom *groom, GtkBuilder *builder);
 void mx_entry_set_icon_by_path(GtkEntry *entry, gchar *path,
                                GtkEntryIconPosition icon_pos);

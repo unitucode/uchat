@@ -52,6 +52,7 @@ typedef enum s_request_type {
     RQ_JOIN_ROOM,
     RQ_UPD_ROOM_NAME,
     RQ_UPD_ROOM_DESC,
+    RQ_UPD_ROOM_POWR,
     RQ_SEARCH_CH,
     RQ_GET_MEMBERS,
     RQ_MEMBER_INFO,
