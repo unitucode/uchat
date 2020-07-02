@@ -32,8 +32,10 @@ void mx_deinit_info(t_info **info) {
 
 void mx_deinit_client(t_client **client) {
     if (client && *client) {
-        if ((*client)->info->users && (*client)->out)
-            g_hash_table_remove((*client)->info->users, (*client)->out);
+        if ((*client)->info->users && (*client)->out && (*client)->user) {
+            g_hash_table_remove((*client)->info->users,
+                                (*client)->user->login);
+        }
         if ((*client)->msg)
             g_free((*client)->msg);
         if ((*client)->conn)

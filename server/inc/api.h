@@ -20,6 +20,8 @@ t_dtp *mx_search_msgs_request(cJSON *array);
 t_dtp *mx_del_hist_request(int room_id);
 t_dtp *mx_msg_request(t_db_message *msg);
 t_dtp *mx_size_request(goffset size, gchar *name);
+t_dtp *mx_edit_msg_request(char *msg, guint64 room_id, guint64 msg_id,
+                           gdouble power);
 
 /*
  * Handlers for requests
@@ -49,6 +51,8 @@ gboolean mx_old_msgs_handler(t_dtp *data, t_client *client);
 gboolean mx_upload_file_handler(t_dtp *file, t_client *client);
 gboolean mx_download_file_handler(t_dtp *data, t_client *client);
 gboolean mx_read_file(t_client *client, gsize size, char *name);
+
+void mx_update_room_power(t_client *client, guint64 room_id);
 
 /*
  * Main request handler

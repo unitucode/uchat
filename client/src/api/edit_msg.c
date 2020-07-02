@@ -39,12 +39,14 @@ gboolean mx_edit_msg_handler(t_dtp *data, t_chat *chat) {
     cJSON *msg = cJSON_GetObjectItemCaseSensitive(data->json, "msg");
     cJSON *room_id = cJSON_GetObjectItemCaseSensitive(data->json, "room_id");
     cJSON *msg_id = cJSON_GetObjectItemCaseSensitive(data->json, "msg_id");
+    cJSON *power = cJSON_GetObjectItemCaseSensitive(data->json, "power");
 
     if (!cJSON_IsString(msg) || !cJSON_IsNumber(room_id)
-        || !cJSON_IsNumber(msg_id)) {
+        || !cJSON_IsNumber(msg_id) || !cJSON_IsNumber(power)) {
         return FALSE;
     }
     mx_gupd_msg_text(msg_id->valuedouble, room_id->valuedouble,
                      msg->valuestring, chat->builder);
+    g_message("update power here client/src/api/edit_msg.c\n");
     return TRUE;
 }
