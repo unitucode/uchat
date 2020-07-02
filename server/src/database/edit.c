@@ -58,8 +58,12 @@ void mx_edit_user_name_by_id(sqlite3 *db, guint64 id, gchar *new_name) {
 void mx_edit_message_by_id(sqlite3 *db, guint64 id, gchar *new) {
     sqlite3_str *str = sqlite3_str_new(db);
     sqlite3_stmt *stmt;
+    gdouble new_power = strlen(new) * K_POWER;
+    gdouble last_power = 0;
     gchar *request = NULL;
 
+    if (strlen(new) < 15)
+        new_power *= 2;
     sqlite3_str_appendf(str, "update messages set message = ?1 where "
                              "message_id = %lu",
                         id);
@@ -69,6 +73,7 @@ void mx_edit_message_by_id(sqlite3 *db, guint64 id, gchar *new) {
     mx_error_sqlite(sqlite3_step(stmt));
     sqlite3_free(request);
     sqlite3_finalize(stmt);
+    sqlite3_str_appendf(sqlite_str, "update");
 }
 
 /*
