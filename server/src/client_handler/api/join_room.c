@@ -15,6 +15,8 @@ static t_dtp *get_resend_room(t_db_room *room) {
         return NULL;
     if (!cJSON_AddStringToObject(send, "desc", MX_J_STR(room->desc)))
         return NULL;
+    if (!cJSON_AddNumberToObject((send), "power", room->power))
+        return NULL;
     return mx_get_transport_data(send);
 }
 
