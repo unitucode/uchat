@@ -16,6 +16,18 @@ static void open_dir(gchar *filename) {
         g_object_unref(file);
 }
 
+gboolean show_on_image_view(gchar *file_path, GtkBuilder *builder) {
+    GObject *img = gtk_builder_get_object(builder, "img_view");
+    
+    if (g_str_has_suffix(file_path, ".png")
+        || g_str_has_suffix(file_path, ".jpg")) {
+        
+        return TRUE;
+    }
+    return FALSE;
+    (void)builder;
+}
+
 void mx_open_files_dir(GtkButton *btn, t_chat *chat) {
     t_groom *groom = mx_get_selected_groom(chat->builder, MX_LOCAL_ROOMS);
     t_gmsg *gmsg = g_object_get_data(G_OBJECT(btn), "gmsg");
@@ -25,7 +37,8 @@ void mx_open_files_dir(GtkButton *btn, t_chat *chat) {
 
     mx_select_msg(NULL, NULL, data);
     if (g_file_test(gmsg->msg, G_FILE_TEST_EXISTS)) {
-        open_dir(gmsg->msg);
+        if (!show_on_image_view(gmsg->msg, chat->builder))
+            open_dir(gmsg->msg);
     }
     else {
         mx_download_file(groom->id, gmsg->message_id, chat);
