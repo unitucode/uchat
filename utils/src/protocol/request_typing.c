@@ -1,16 +1,18 @@
 #include "protocol.h"
 
-int mx_get_type_dtp(t_dtp *dtp) {
+gint64 mx_get_type_dtp(t_dtp *dtp) {
     cJSON *type = cJSON_GetObjectItemCaseSensitive(dtp->json, "type");
-    int result = -1;
+    gint64 result = -1;
 
-    if (type && !cJSON_IsNumber(type)) {
+    g_print("result = %lld\n", result);
+    g_print("json = %s\n", cJSON_Print(dtp->json));
+    if (!cJSON_IsNumber(type)) {
+        g_print("HERE!!!!!!!!");
         cJSON_Delete(type);
         return result;
     }
-    if (!type)
-        return result;
-    result = type->valueint;
+    g_print("result = %lld\n", result);
+    result = (gint64)type->valuedouble;
     return result;
 }
 

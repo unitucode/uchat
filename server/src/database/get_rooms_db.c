@@ -54,6 +54,5 @@ cJSON *mx_get_rooms(sqlite3 *db, guint64 date, guint64 user_id) {
     while ((rv = sqlite3_step(stmt)) == SQLITE_ROW)
         cJSON_AddItemToArray(rooms, mx_get_object_room(stmt));
     sqlite3_finalize(stmt);
-    g_print("%s\n", cJSON_Print(rooms));
     return rooms;
 }

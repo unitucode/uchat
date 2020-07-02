@@ -132,6 +132,6 @@ void mx_create_token(char **token, char *login);
 
 //Protocol
 t_dtp *mx_get_transport_data(cJSON *json_result);
-int mx_get_type_dtp(t_dtp *dtp);
+gint64 mx_get_type_dtp(t_dtp *dtp);
 t_dtp *mx_request_creation(char *req_body);
 void mx_free_request(t_dtp **request);
