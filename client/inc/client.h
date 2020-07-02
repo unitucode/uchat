@@ -257,6 +257,7 @@ void mx_msgcreate_img_sticker(GtkWidget *box_info,
 void mx_msgcreate_file(GtkWidget *box_info, t_gmsg *gmsg,
                        gboolean is_own, t_chat *chat);
 GtkWidget *mx_create_message_row(t_chat *chat, t_gmsg *gmsg);
+void mx_msgcreate_box_energy(GtkWidget *box_status, t_gmsg *gmsg);
 void mx_msgcreate_label_time(GtkWidget *box_info,
                              t_gmsg *gmsg, gboolean is_own);
 void mx_search_delim_set_visibility(GtkBuilder *builder, gboolean is_visible);

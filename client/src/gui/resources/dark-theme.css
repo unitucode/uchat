@@ -246,7 +246,7 @@ dialog headerbar {
 .boxroom_header-in {
     border-bottom: 1px solid #424E78;
     background-color: #364165;
-    padding: 7px 25px;
+    padding: 0 25px;
     font-size: 17px;
 }
 .boxroom_header-in button {
@@ -256,6 +256,12 @@ dialog headerbar {
 }
 .boxroom_header-in label {
     color: #fff;
+}
+.boxroom_header-in button:nth-child(3) {
+	margin-right: 2px;
+}
+.boxroom_header-in entry {
+	margin-right: 2px;
 }
 .wnd_main list {
     color: #fff;
@@ -590,10 +596,11 @@ overshoot.top {
 .box-room-info box label:last-child {
     font-size: 16px;
 }
-.box-room-info box:nth-child(3) label, .box-room-info box:nth-child(4) label {
+.box-room-info > box:nth-child(3) label,
+.box-room-info > box:nth-child(4) > label {
 	margin-bottom: 7px;
 }
-.box-room-info box:nth-child(4) label {
+.box-room-info > box:nth-child(4) > label {
 	margin-top: 3px;
 }
 .box-room-info box:last-child list {
@@ -660,7 +667,7 @@ overshoot.top {
 .listbox_members row {
     margin: 7px 7px 0 7px;
     border-radius: 5px;
-    padding: 0 15px;
+    padding: 0 10px;
 }
 .listbox_members row:last-child {
     margin-bottom: 7px;
@@ -673,6 +680,12 @@ overshoot.top {
 }
 .listbox_members row:selected:hover {
 	background-color: #5F7BEE;
+}
+.listbox_members row button {
+    padding: 0;
+}
+.listbox_members row button:hover {
+    opacity: .6;
 }
 .dialog_addroom .dialog-action-area {
     margin-top: 15px;
@@ -706,6 +719,39 @@ overshoot.top {
 	margin-bottom: 5px;
 }
 .file-button {
-	background: #3A466B;
-	border-radius: 8px;
+    border-radius: 8px;
+    padding: 0;
+    color: rgb(201, 209, 238);
+}
+.stack_messages list row:hover .file-button button {
+    opacity: .8;
+}
+.box_file_info > label, .box_own_file_info > label {
+	font-size: 13px;
+    font-weight: 300;
+    color: #737A82;
+}
+.box_file_info > label {
+    margin-left: 10px;
+}
+.box_file_info, .box_own_file_info {
+    margin-top: 7px;
+}
+.box_own_file_info > label {
+    margin-right: 5px;
+}
+.box_own_file_info > box label, .box_file_info > box label {
+    font-size: 14px;
+	font-weight: 300;
+	margin-left: 5px;
+}
+.stack_messages list row:selected .box_file_info .file-button {
+    border-left: 8px solid #6785FF;
+    border-radius: 5px;
+    padding-left: 7px;
+}
+.stack_messages list row:selected .box_own_file_info .file-button {
+    border-right: 8px solid #6785FF;
+    border-radius: 5px;
+    padding-right: 7px;
 }
