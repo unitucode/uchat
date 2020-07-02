@@ -742,3 +742,7 @@ overshoot.top {
 .box_user_info > box:last-child label {
 	margin-bottom: 5px;
 }
+.arrow-down-btn {
+	background: #3A466B;
+	border-radius: 10px;
+}
