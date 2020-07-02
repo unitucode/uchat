@@ -881,6 +881,9 @@
                         <property name="margin_bottom">4</property>
                         <property name="image">image18</property>
                         <signal name="clicked" handler="mx_go_down" swapped="no"/>
+                        <style>
+                          <class name="arrow-down-btn"/>
+                        </style>
                       </object>
                       <packing>
                         <property name="expand">False</property>

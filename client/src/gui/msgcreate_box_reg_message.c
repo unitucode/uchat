@@ -9,11 +9,11 @@ GtkWidget *mx_msgcreate_eventbox() {
 
 GtkWidget *mx_msgcreate_box_main(GtkWidget *eventbox, gboolean is_own) {
     GtkWidget *box_main = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
-(void)is_own;
-    // if (is_own)
-    //     mx_widget_set_class(box_main, "main_own_msg_box");
-    // else
-    //     mx_widget_set_class(box_main, "main_msg_box");
+    
+    if (is_own)
+        mx_widget_set_class(box_main, "main_own_msg_box");
+    else
+        mx_widget_set_class(box_main, "main_msg_box");
     gtk_container_add(GTK_CONTAINER(eventbox), GTK_WIDGET(box_main));
     return box_main;
 }
