@@ -59,12 +59,13 @@ void mx_msgcreate_file(GtkWidget *box_info, t_gmsg *gmsg,
                        gboolean is_own, t_chat *chat) {
     GtkWidget *box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
     GtkWidget *btn = NULL;
-    GtkWidget *filename = gtk_label_new(gmsg->msg);
+    gchar *file = mx_get_filename(gmsg->msg);
+    GtkWidget *filename = gtk_label_new(file);
 
     if (g_file_test(gmsg->msg, G_FILE_TEST_EXISTS))
-        btn = gtk_button_new_from_icon_name("document", GTK_ICON_SIZE_DIALOG);
+        btn = gtk_button_new_from_icon_name("document", GTK_ICON_SIZE_DND);
     else
-        btn = gtk_button_new_from_icon_name("download", GTK_ICON_SIZE_DIALOG);
+        btn = gtk_button_new_from_icon_name("download", GTK_ICON_SIZE_DND);
     mx_widget_set_class(box, "file-button");
     gtk_widget_set_can_focus(btn, FALSE);
     g_object_set_data(G_OBJECT(btn), "gmsg", gmsg);

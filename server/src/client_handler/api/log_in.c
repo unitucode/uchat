@@ -8,6 +8,36 @@ static void incorrect_data(t_client *client) {
     mx_free_request(&dtp);
 }
 
+static void exist_client(t_client *client) {
+    t_dtp *dtp = mx_error_msg_request(ER_CLI_EXST, "User already authorized");
+
+    mx_send(client->out, dtp);
+    mx_free_request(&dtp);
+}
+
+static gboolean check_user(t_db_user *check, t_db_user *user,
+                           t_client *client) {
+    if (!check) {
+        incorrect_data(client);
+        mx_logger(MX_LOG_FILE, G_LOG_LEVEL_MESSAGE, "user not found");
+        mx_free_user(&check);
+        return FALSE;
+    }
+    else if (g_strcmp0(check->pass, user->pass)) {
+        incorrect_data(client);
+        mx_logger(MX_LOG_FILE, G_LOG_LEVEL_MESSAGE, "Inccorect pass");
+        mx_free_user(&check);
+        return FALSE;
+    }
+    else if (g_hash_table_lookup(client->info->users, check->login)) {
+        exist_client(client);
+        mx_logger(MX_LOG_FILE, G_LOG_LEVEL_MESSAGE, "Already online");
+        mx_free_user(&check);
+        return FALSE;
+    }
+    return TRUE;
+}
+
 /*
  * Function: log_in
  * -------------------------------
@@ -18,25 +48,14 @@ static void incorrect_data(t_client *client) {
  * 
  * returns: success of loging
  */
-static bool log_in(t_db_user *user, t_client *client) {
-    t_db_user *check_user = mx_get_user_by_login(client->info->database,
+static gboolean log_in(t_db_user *user, t_client *client) {
+    t_db_user *check = mx_get_user_by_login(client->info->database,
                                                  user->login);
-
-    if (!check_user) {
-        incorrect_data(client);
-        mx_logger(MX_LOG_FILE, G_LOG_LEVEL_MESSAGE, "user not found");
-        mx_free_user(&check_user);
-        return true;
-    }
-    else if (strcmp(check_user->pass, user->pass)) {
-        incorrect_data(client);
-        mx_logger(MX_LOG_FILE, G_LOG_LEVEL_MESSAGE, "Inccorect pass");
-        mx_free_user(&check_user);
-        return true;
-    }
-    client->user = check_user;
+    if (!check_user(check, user, client))
+        return TRUE;
+    client->user = check;
     mx_correct_data(client);
-    return true;
+    return TRUE;
 }
 
 /*

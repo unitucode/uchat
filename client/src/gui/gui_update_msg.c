@@ -1,6 +1,7 @@
 #include "client.h"
 
-t_gmsg *mx_get_gmsg_by_id(int msg_id, int room_id, GtkBuilder *builder) {
+t_gmsg *mx_get_gmsg_by_id(guint64 msg_id, guint64 room_id,
+                          GtkBuilder *builder) {
     t_groom *room = mx_get_groom_by_id(room_id, builder);
     GtkListBox *box = NULL;
     GtkListBoxRow *row = NULL;
@@ -10,7 +11,7 @@ t_gmsg *mx_get_gmsg_by_id(int msg_id, int room_id, GtkBuilder *builder) {
     if (!room)
         return NULL;
     box = room->box_messages;
-    for (int i = 0; flag; i++) {
+    for (guint64 i = 0; flag; i++) {
         row = gtk_list_box_get_row_at_index(box, i);
         if (row == NULL)
             flag = false;
