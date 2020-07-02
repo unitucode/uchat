@@ -263,16 +263,16 @@ dialog headerbar {
     background-image: none;
     background-color: transparent;
     border: 1px solid #CFD6EC;
-    padding: 5px 8px;
+    padding: 4px 7px;
 }
 .boxroom_header-in label {
     color: #323B59;
 }
-.boxroom_header-in button:nth-child(3) {
-	margin-right: 2px;
+.boxroom_header-in button:nth-child(4) {
+	margin-left: 2px;
 }
-.boxroom_header-in entry {
-	margin-right: 2px;
+.boxroom_header-in button:nth-child(3) {
+	margin-left: 2px;
 }
 .wnd_main list {
     color: #fff;
@@ -339,26 +339,6 @@ dialog headerbar {
 .stack_messages > label {
     color: #8895A3;
 }
-.stack_messages list .box_msg_info label:nth-child(1) {
-	background-color: #F2F4FF;
-	padding: 10px 15px;
-	border-radius: 0 8px 8px 8px;
-	margin-top: 7px;
-	margin-left: 7px; 
-	font-weight: 300;
-	font-size: 14px;
-	color: #737A82; 
-}
-.stack_messages list .box_own_msg_info label:nth-child(2) {
-	background-color: #E7F3FF;
-	padding: 10px 15px;
-	border-radius: 8px 8px 0 8px;
-	margin-top: 7px;
-	margin-left: 7px;
-	font-weight: 300;
-	font-size: 14px;
-	color: #737A82; 
-}
 .main_msg_box {
 	padding: 0 180px 0 0;
 }
@@ -368,65 +348,106 @@ dialog headerbar {
 .stack_messages list {
 	margin: 7px 38px 14px 38px;
 }
-.sender_login {
-    color: #798097;
-    margin-top: 10px;
-	font-size: 14px;
-}
 .stack_messages list row {
     padding: 0;
 }
 .stack_messages list row:selected {
 	background-color: transparent;
 }
-.stack_messages list .box_msg_info label:nth-child(2){
-	font-size: 13px;
+
+/* Message styling */
+
+.sender_login {
+    color: #798097;
+    margin-top: 10px;
+    font-size: 14px;
+}
+.stack_messages list .box_msg_info > label,
+.stack_messages list .box_own_msg_info > label,
+.box_own_file_info .file-button, 
+.box_file_info .file-button {
+	padding: 10px 15px;
+	margin-top: 7px;
+	margin-left: 7px; 
+	font-weight: 300;
+	font-size: 14px;
+	color: #737A82; 
+}
+.stack_messages list .box_msg_info > label, .box_file_info .file-button {
+    background-color: #F2F4FF;
+    border-radius: 0 8px 8px 8px;
+}
+.stack_messages list .box_own_msg_info > label, .box_own_file_info .file-button {
+	background-color: #E7F3FF;
+	border-radius: 8px 8px 0 8px;
+}
+.stack_messages list .box_msg_info > box > label,
+.stack_messages list .box_sticker_info > box > label,
+.stack_messages list .box_own_msg_info > box > label,
+.stack_messages list .box_own_sticker_info > box > label,
+.box_own_file_info > box:first-child > label,
+.box_file_info > box:last-child > label {
+    font-size: 13px;
     font-weight: 300;
     color: #C2C2C2;
+}
+.stack_messages list .box_msg_info >  box ,
+.stack_messages list .box_sticker_info > box,
+.box_file_info > box:last-child  {
     margin-left: 10px;
 }
-.stack_messages list .box_sticker_info label:nth-child(2){
-	font-size: 13px;
-    font-weight: 300;
-    color: #C2C2C2;
-    margin-left: 10px;
+.box_own_msg_info > box, .box_own_file_info > box:first-child {
+    margin-right: 7px;
 }
-.stack_messages list .box_own_msg_info label:nth-child(1){
-	font-size: 13px;
-    font-weight: 300;
-    color: #C2C2C2;
-    margin-right: 10px;
+.stack_messages list .box_own_sticker_info > box {
+	margin-right: 10px;
 }
-.stack_messages list .box_own_sticker_info label:nth-child(1){
-	font-size: 13px;
-    font-weight: 300;
-    color: #C2C2C2;
-    margin-right: 10px;
-}
-.stack_messages list .box_own_sticker_info image {
+.stack_messages list .box_own_sticker_info > image,
+.stack_messages list .box_sticker_info > image {
     margin-top: 7px;
     border-color: transparent;
 }
-.stack_messages list .box_sticker_info image {
-    margin-top: 7px;
-    border-color: transparent;
-}
-.stack_messages list row:selected .box_msg_info label:nth-child(1) {
+.stack_messages list row:selected .box_msg_info > label,
+.stack_messages list row:selected .box_own_msg_info > label {
     background-color: #5771E5;
     color: #fff;
 }
-.stack_messages list row:selected .box_own_msg_info label:nth-child(2) {
-    background-color: #5771E5;
-    color: #fff;
-}
-.stack_messages list row:selected .box_own_sticker_info image:nth-child(2) {
+.stack_messages list row:selected .box_own_sticker_info > image {
     border-right: 8px solid #5771E5;
     border-radius: 5px;
+    padding-right: 7px;
 }
-.stack_messages list row:selected .box_sticker_info image:nth-child(1) {
+.stack_messages list row:selected .box_sticker_info > image {
     border-left: 8px solid #5771E5;
     border-radius: 5px;
+    padding-left: 7px;
 }
+.box_file_info > box > box, .box_own_file_info > box > box,
+.stack_messages list .box_msg_info > box > box,
+.stack_messages list .box_sticker_info > box > box,
+.stack_messages list .box_own_msg_info > box > box,
+.stack_messages list .box_own_sticker_info > box > box {
+	font-size: 13px;
+	color: #B8C2E5;
+}
+
+/* Box file info styles */
+
+.file-button > label {
+	color: #737A82; 
+}
+.stack_messages list row:hover .file-button button {
+    opacity: .8;
+}
+.stack_messages list row:selected .box_file_info .file-button,
+.stack_messages list row:selected .box_own_file_info .file-button {
+    background-color: #5771E5;
+}
+.stack_messages list row:selected .box_file_info .file-button label,
+.stack_messages list row:selected .box_own_file_info .file-button label {
+    color: #fff;
+}
+
 .stack_messages list row label {
 	transition: none;
 }
@@ -540,10 +561,11 @@ dialog headerbar {
 .box-room-info box label:last-child {
     font-size: 16px;
 }
-.box-room-info box:nth-child(3) label, .box-room-info box:nth-child(4) label {
+.box-room-info > box:nth-child(3) label,
+.box-room-info > box:nth-child(4) > label {
 	margin-bottom: 7px;
 }
-.box-room-info box:nth-child(4) label {
+.box-room-info > box:nth-child(4) > label {
 	margin-top: 3px;
 }
 .box-room-info box:last-child list {
@@ -631,7 +653,6 @@ dialog headerbar {
 .listbox_members row:selected:hover {
     background-color: rgb(83, 107, 215);
 }
-}
 .listbox_members row button {
     padding: 0;
 }
@@ -710,41 +731,4 @@ overshoot.top {
 }
 .box_user_info > box:last-child label {
 	margin-bottom: 5px;
-}
-.file-button {
-    border-radius: 8px;
-    padding: 0;
-    color: #737A82;
-}
-.stack_messages list row:hover .file-button button {
-    opacity: .8;
-}
-.box_file_info > label, .box_own_file_info > label {
-	font-size: 13px;
-    font-weight: 300;
-    color: #C2C2C2;
-}
-.box_file_info > label {
-    margin-left: 10px;
-}
-.box_file_info, .box_own_file_info {
-    margin-top: 7px;
-}
-.box_own_file_info > label {
-    margin-right: 5px;
-}
-.box_own_file_info > box label, .box_file_info > box label {
-    font-size: 14px;
-	font-weight: 300;
-	margin-left: 5px;
-}
-.stack_messages list row:selected .box_file_info .file-button {
-    border-left: 8px solid #5771E5;
-    border-radius: 5px;
-    padding-left: 7px;
-}
-.stack_messages list row:selected .box_own_file_info .file-button {
-    border-right: 8px solid #5771E5;
-    border-radius: 5px;
-    padding-right: 7px;
 }

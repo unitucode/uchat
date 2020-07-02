@@ -257,11 +257,11 @@ dialog headerbar {
 .boxroom_header-in label {
     color: #fff;
 }
-.boxroom_header-in button:nth-child(3) {
-	margin-right: 2px;
+.boxroom_header-in button:nth-child(4) {
+	margin-left: 2px;
 }
-.boxroom_header-in entry {
-	margin-right: 2px;
+.boxroom_header-in button:nth-child(3) {
+	margin-left: 2px;
 }
 .wnd_main list {
     color: #fff;
@@ -327,95 +327,114 @@ dialog headerbar {
 .stack_messages > label {
     color: #B8C2E5;
 }
-.stack_messages list .box_msg_info label:nth-child(1) {
-	background-color: #424E78;
-	padding: 10px 15px;
-	border-radius: 0 8px 8px 8px;
-	margin-top: 7px;
-	margin-left: 7px; 
-	font-weight: 300;
-	font-size: 14px;
-	color: #B8C2E5; 
-}
-.stack_messages list .box_own_msg_info label:nth-child(2) {
-	background-color: rgb(86, 102, 160);
-	padding: 10px 15px;
-	border-radius: 8px 8px 0 8px;
-	margin-top: 7px;
-	margin-left: 7px;
-	font-weight: 300;
-	font-size: 14px;
-	color: #B8C2E5; 
-}
 .main_msg_box {
 	padding: 0 180px 0 0;
 }
 .main_own_msg_box {
 	padding: 0 0 0 180px;
 }
-
-
 .stack_messages list {
 	margin: 7px 38px 14px 38px;
-}
-.sender_login {
-    margin-top: 10px;
-	font-size: 14px;
 }
 .stack_messages list row {
     padding: 0;
 }
 .stack_messages list row:selected {
-	background-color: transparent;
+    background-color: transparent;
 }
-.stack_messages list .box_msg_info label:nth-child(2){
-	font-size: 13px;
+
+/* Message styling */
+
+.sender_login {
+    margin-top: 10px;
+    font-size: 14px;
+}
+.stack_messages list .box_msg_info > label,
+.stack_messages list .box_own_msg_info > label,
+.box_own_file_info .file-button, 
+.box_file_info .file-button {
+	padding: 10px 15px;
+	margin-top: 7px;
+	margin-left: 7px; 
+	font-weight: 300;
+	font-size: 14px;
+	color: #B8C2E5; 
+}
+.stack_messages list .box_msg_info > label, .box_file_info .file-button {
+    background-color: #424E78;
+    border-radius: 0 8px 8px 8px;
+}
+.stack_messages list .box_own_msg_info > label, .box_own_file_info .file-button {
+	background-color: rgb(86, 102, 160);
+	border-radius: 8px 8px 0 8px;
+}
+.stack_messages list .box_msg_info > box > label,
+.stack_messages list .box_sticker_info > box > label,
+.stack_messages list .box_own_msg_info > box > label,
+.stack_messages list .box_own_sticker_info > box > label,
+.box_own_file_info > box:first-child > label,
+.box_file_info > box:last-child > label {
+    font-size: 13px;
     font-weight: 300;
     color: #919CC0;
+}
+.stack_messages list .box_msg_info >  box ,
+.stack_messages list .box_sticker_info > box,
+.box_file_info > box:last-child  {
     margin-left: 10px;
 }
-.stack_messages list .box_sticker_info label:nth-child(2){
-	font-size: 13px;
-    font-weight: 300;
-    color: #919CC0;
-    margin-left: 10px;
+.box_own_msg_info > box, .box_own_file_info > box:first-child {
+    margin-right: 7px;
 }
-.stack_messages list .box_own_msg_info label:nth-child(1){
-	font-size: 13px;
-    font-weight: 300;
-    color: #919CC0;
-    margin-right: 10px;
+.stack_messages list .box_own_sticker_info > box {
+	margin-right: 10px;
 }
-.stack_messages list .box_own_sticker_info label:nth-child(1){
-	font-size: 13px;
-    font-weight: 300;
-    color: #919CC0;
-    margin-right: 10px;
-}
-.stack_messages list .box_own_sticker_info image {
+.stack_messages list .box_own_sticker_info > image,
+.stack_messages list .box_sticker_info > image {
     margin-top: 7px;
     border-color: transparent;
 }
-.stack_messages list .box_sticker_info image {
-    margin-top: 7px;
-    border-color: transparent;
-}
-.stack_messages list row:selected .box_msg_info label:nth-child(1) {
+.stack_messages list row:selected .box_msg_info > label,
+.stack_messages list row:selected .box_own_msg_info > label {
     background-color: #6785FF;
     color: #fff;
 }
-.stack_messages list row:selected .box_own_msg_info label:nth-child(2) {
-    background-color: #6785FF;
-    color: #fff;
-}
-.stack_messages list row:selected .box_own_sticker_info image:nth-child(2) {
+.stack_messages list row:selected .box_own_sticker_info > image {
     border-right: 8px solid #6785FF;
     border-radius: 5px;
+    padding-right: 7px;
 }
-.stack_messages list row:selected .box_sticker_info image:nth-child(1) {
+.stack_messages list row:selected .box_sticker_info > image {
     border-left: 8px solid #6785FF;
     border-radius: 5px;
+    padding-left: 7px;
 }
+.box_file_info > box > box, .box_own_file_info > box > box,
+.stack_messages list .box_msg_info > box > box,
+.stack_messages list .box_sticker_info > box > box,
+.stack_messages list .box_own_msg_info > box > box,
+.stack_messages list .box_own_sticker_info > box > box {
+	font-size: 13px;
+	color: #B8C2E5;
+}
+
+/* Box file info styles */
+
+.file-button > label {
+	color: #B8C2E5; 
+}
+.stack_messages list row:hover .file-button button {
+    opacity: .8;
+}
+.stack_messages list row:selected .box_file_info .file-button,
+.stack_messages list row:selected .box_own_file_info .file-button {
+    background-color: #6785FF;
+}
+.stack_messages list row:selected .box_file_info .file-button label,
+.stack_messages list row:selected .box_own_file_info .file-button label {
+    color: #fff;
+}
+
 .stack_messages list row label {
 	transition: none;
 }
@@ -664,6 +683,9 @@ overshoot.top {
 .dialog_confirmation .dialog-vbox > box:first-child {
     margin-bottom: 9px;
 }
+
+/* Members list styles */
+
 .listbox_members row {
     margin: 7px 7px 0 7px;
     border-radius: 5px;
@@ -687,6 +709,8 @@ overshoot.top {
 .listbox_members row button:hover {
     opacity: .6;
 }
+
+
 .dialog_addroom .dialog-action-area {
     margin-top: 15px;
 }
@@ -717,41 +741,4 @@ overshoot.top {
 }
 .box_user_info > box:last-child label {
 	margin-bottom: 5px;
-}
-.file-button {
-    border-radius: 8px;
-    padding: 0;
-    color: rgb(201, 209, 238);
-}
-.stack_messages list row:hover .file-button button {
-    opacity: .8;
-}
-.box_file_info > label, .box_own_file_info > label {
-	font-size: 13px;
-    font-weight: 300;
-    color: #737A82;
-}
-.box_file_info > label {
-    margin-left: 10px;
-}
-.box_file_info, .box_own_file_info {
-    margin-top: 7px;
-}
-.box_own_file_info > label {
-    margin-right: 5px;
-}
-.box_own_file_info > box label, .box_file_info > box label {
-    font-size: 14px;
-	font-weight: 300;
-	margin-left: 5px;
-}
-.stack_messages list row:selected .box_file_info .file-button {
-    border-left: 8px solid #6785FF;
-    border-radius: 5px;
-    padding-left: 7px;
-}
-.stack_messages list row:selected .box_own_file_info .file-button {
-    border-right: 8px solid #6785FF;
-    border-radius: 5px;
-    padding-right: 7px;
 }
