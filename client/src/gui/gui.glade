@@ -367,7 +367,7 @@
     <property name="can_focus">False</property>
     <property name="icon_name">edit-clear-symbolic</property>
   </object>
-  <object class="GtkWindow" id="popup_image_view">
+  <object class="GtkWindow" id="popup_image_viewer">
     <property name="width_request">400</property>
     <property name="height_request">250</property>
     <property name="can_focus">False</property>
@@ -389,7 +389,7 @@
             <property name="receives_default">True</property>
             <property name="image">image20</property>
             <property name="relief">none</property>
-            <signal name="clicked" handler="mx_widget_switch_visibility" object="popup_image_view" swapped="no"/>
+            <signal name="clicked" handler="mx_widget_switch_visibility" object="popup_image_viewer" swapped="no"/>
           </object>
           <packing>
             <property name="pack_type">end</property>

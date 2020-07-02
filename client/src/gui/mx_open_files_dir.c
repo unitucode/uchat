@@ -17,15 +17,16 @@ static void open_dir(gchar *filename) {
 }
 
 gboolean show_on_image_view(gchar *file_path, GtkBuilder *builder) {
+    GObject *viewer = gtk_builder_get_object(builder, "popup_image_viewer");
     GObject *img = gtk_builder_get_object(builder, "img_view");
-    
+
     if (g_str_has_suffix(file_path, ".png")
         || g_str_has_suffix(file_path, ".jpg")) {
-        
+        mx_widget_set_visibility(GTK_WIDGET(viewer), TRUE);
+        gtk_image_set_from_file(GTK_IMAGE(img), file_path);
         return TRUE;
     }
     return FALSE;
-    (void)builder;
 }
 
 void mx_open_files_dir(GtkButton *btn, t_chat *chat) {
