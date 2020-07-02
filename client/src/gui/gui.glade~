@@ -389,6 +389,7 @@
             <property name="receives_default">True</property>
             <property name="image">image20</property>
             <property name="relief">none</property>
+            <signal name="clicked" handler="mx_widget_switch_visibility" object="popup_image_view" swapped="no"/>
           </object>
           <packing>
             <property name="pack_type">end</property>
