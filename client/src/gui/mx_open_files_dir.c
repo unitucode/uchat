@@ -25,7 +25,7 @@ void mx_open_files_dir(GtkButton *btn, t_chat *chat) {
 
     mx_select_msg(NULL, NULL, data);
     if (g_file_test(gmsg->msg, G_FILE_TEST_EXISTS)) {
-        gtk_image_set_from_icon_name(img, "document", GTK_ICON_SIZE_DIALOG);
+        gtk_image_set_from_icon_name(img, "document", GTK_ICON_SIZE_DND);
         open_dir(gmsg->msg);
     }
     else
