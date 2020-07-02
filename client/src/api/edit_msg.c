@@ -47,6 +47,7 @@ gboolean mx_edit_msg_handler(t_dtp *data, t_chat *chat) {
     }
     mx_gupd_msg_text(msg_id->valuedouble, room_id->valuedouble,
                      msg->valuestring, chat->builder);
-    (void)power;
+    mx_gupd_msg_power(msg_id->valueint, room_id->valuedouble,
+                      power->valuedouble, chat->builder);
     return TRUE;
 }

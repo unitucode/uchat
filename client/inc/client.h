@@ -85,6 +85,7 @@ struct s_groom {
 struct s_gmsg {
     GtkListBoxRow *row_msg;
     GtkLabel *label_text;
+    GtkLabel *label_power;
     gint type;
     char *msg;
     char *login;
@@ -240,6 +241,8 @@ void mx_gdel_room(guint64 id, GtkBuilder *builder);
 void mx_gdel_msg(guint64 msg_id, guint64 room_id, GtkBuilder *builder);
 void mx_gupd_msg_text(guint64 msg_id, guint64 room_id,
                       char *text, GtkBuilder *builder);
+void mx_gupd_msg_power(guint64 msg_id, guint64 room_id,
+                       gdouble power, GtkBuilder *builder);
 void mx_reset_messege_room(t_groom *new_selected, GtkBuilder *builder);
 void mx_hide_msg_editing(GtkButton *btn, GtkBuilder *builder);
 void mx_set_room_widgets_visibility(GtkBuilder *builder, bool visibility);
