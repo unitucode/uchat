@@ -876,6 +876,9 @@
                         <property name="focus_on_click">False</property>
                         <property name="receives_default">True</property>
                         <property name="no_show_all">True</property>
+                        <property name="valign">end</property>
+                        <property name="margin_left">7</property>
+                        <property name="margin_bottom">4</property>
                         <property name="image">image18</property>
                         <signal name="clicked" handler="mx_go_down" swapped="no"/>
                       </object>
