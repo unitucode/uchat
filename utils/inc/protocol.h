@@ -42,7 +42,6 @@ typedef enum s_request_type {
     RQ_MSG,
     RQ_EDIT_MSG,
     RQ_DEL_MSG,
-    RQ_STICKER,
     RQ_DEL_HIST,
     RQ_GET_NEW_MSGS,
     RQ_SEARCH_MSG,
