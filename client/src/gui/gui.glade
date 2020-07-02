@@ -367,44 +367,6 @@
     <property name="can_focus">False</property>
     <property name="icon_name">edit-clear-symbolic</property>
   </object>
-  <object class="GtkWindow" id="popup_image_viewer">
-    <property name="width_request">400</property>
-    <property name="height_request">250</property>
-    <property name="can_focus">False</property>
-    <property name="resizable">False</property>
-    <property name="modal">True</property>
-    <property name="default_width">400</property>
-    <property name="default_height">250</property>
-    <property name="skip_taskbar_hint">True</property>
-    <property name="skip_pager_hint">True</property>
-    <property name="deletable">False</property>
-    <child type="titlebar">
-      <object class="GtkHeaderBar">
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <child>
-          <object class="GtkButton">
-            <property name="visible">True</property>
-            <property name="can_focus">True</property>
-            <property name="receives_default">True</property>
-            <property name="image">image20</property>
-            <property name="relief">none</property>
-            <signal name="clicked" handler="mx_widget_switch_visibility" object="popup_image_viewer" swapped="no"/>
-          </object>
-          <packing>
-            <property name="pack_type">end</property>
-          </packing>
-        </child>
-      </object>
-    </child>
-    <child>
-      <object class="GtkImage" id="img_view">
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <property name="stock">gtk-missing-image</property>
-      </object>
-    </child>
-  </object>
   <object class="GtkImage" id="image3">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
@@ -2504,6 +2466,47 @@
         <child>
           <placeholder/>
         </child>
+      </object>
+    </child>
+  </object>
+  <object class="GtkWindow" id="popup_image_viewer">
+    <property name="width_request">100</property>
+    <property name="height_request">50</property>
+    <property name="can_focus">False</property>
+    <property name="resizable">False</property>
+    <property name="modal">True</property>
+    <property name="window_position">center-on-parent</property>
+    <property name="default_width">100</property>
+    <property name="default_height">50</property>
+    <property name="skip_taskbar_hint">True</property>
+    <property name="skip_pager_hint">True</property>
+    <property name="deletable">False</property>
+    <property name="gravity">static</property>
+    <property name="transient_for">wnd_main</property>
+    <child type="titlebar">
+      <object class="GtkHeaderBar">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <child>
+          <object class="GtkButton">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="image">image20</property>
+            <property name="relief">none</property>
+            <signal name="clicked" handler="mx_widget_switch_visibility" object="popup_image_viewer" swapped="no"/>
+          </object>
+          <packing>
+            <property name="pack_type">end</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="GtkImage" id="img_view">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="stock">gtk-missing-image</property>
       </object>
     </child>
   </object>
