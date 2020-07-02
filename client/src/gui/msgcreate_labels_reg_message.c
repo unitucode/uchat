@@ -59,9 +59,7 @@ void mx_msgcreate_file(GtkWidget *box_info, t_gmsg *gmsg,
                        gboolean is_own, t_chat *chat) {
     GtkWidget *box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
     GtkWidget *btn = NULL;
-    gchar *file = g_strstr_len(gmsg->msg, strlen(gmsg->msg), MX_FILE_DELIM);
-    if (file && strlen(file) > strlen(MX_FILE_DELIM))
-        file += strlen(MX_FILE_DELIM);
+    gchar *file = mx_get_filename(gmsg->msg);
     GtkWidget *filename = gtk_label_new(file);
 
     if (g_file_test(gmsg->msg, G_FILE_TEST_EXISTS))

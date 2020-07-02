@@ -233,6 +233,7 @@ void mx_set_default_room_sett(GtkBuilder *builder);
 void mx_set_current_room_sett(GtkBuilder *builder);
 void mx_gupd_room_desc(guint64 id, char *desc, GtkBuilder *builder);
 void mx_gupd_room_name(guint64 id, char *name, GtkBuilder *builder);
+void mx_gupd_room_power(guint64 id, gdouble value, GtkBuilder *builder);
 void mx_gdel_room(guint64 id, GtkBuilder *builder);
 void mx_gdel_msg(guint64 msg_id, guint64 room_id, GtkBuilder *builder);
 void mx_gupd_msg_text(guint64 msg_id, guint64 room_id,
@@ -336,6 +337,7 @@ void mx_connect_stickers(t_chat *chat);
 void mx_connect_ban_member(t_chat *chat);
 void mx_connect_test_request(t_chat *chat); // DELETE
 void mx_connect_filechooser(t_chat *chat);
+gchar *mx_get_filename(gchar *full_name);
 
 // gui callbacks
 void mx_show_edit_msg(GtkButton *btn, t_chat *chat);

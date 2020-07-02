@@ -46,6 +46,5 @@ gboolean mx_new_room_handler(t_dtp *data, t_chat *chat) {
     mx_send(chat->out, members);
     mx_free_request(&members);
     mx_add_groom(room, chat);
-    g_message("power of room = %f here client/src/api/new_room.c\n", room->power);
     return TRUE;
 }
