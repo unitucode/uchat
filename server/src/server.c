@@ -76,6 +76,7 @@ static gboolean incoming(GSocketService *service, GSocketConnection *conn,
     gclient->in = in;
     gclient->in_s = in_s;
     gclient->upload_file = FALSE;
+    gclient->is_file = FALSE;
     g_data_input_stream_read_line_async(in, G_PRIORITY_DEFAULT, NULL,
                                         message_ready, gclient);
     (void)source_object;

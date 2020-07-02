@@ -80,6 +80,7 @@ gboolean mx_upload_file_handler(t_dtp *data, t_client *client) {
     cJSON *token = cJSON_GetObjectItemCaseSensitive(data->json, "token");
     cJSON *room_id = cJSON_GetObjectItemCaseSensitive(data->json, "room_id");
 
+    client->is_file = TRUE;
     if (!cJSON_IsNumber(size) || !cJSON_IsString(name))
         return FALSE;
     if (!cJSON_IsString(token) || !cJSON_IsNumber(room_id))
