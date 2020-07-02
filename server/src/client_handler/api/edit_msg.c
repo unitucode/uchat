@@ -11,7 +11,8 @@
  * 
  * returns: new request
  */
-t_dtp *mx_edit_msg_request(char *msg, int room_id, int msg_id) {
+t_dtp *mx_edit_msg_request(char *msg, guint64 room_id, guint64 msg_id,
+                           gdouble power) {
     cJSON *json_result = cJSON_CreateObject();
 
     if (!cJSON_AddNumberToObject(json_result, "type", RQ_EDIT_MSG))
@@ -21,6 +22,8 @@ t_dtp *mx_edit_msg_request(char *msg, int room_id, int msg_id) {
     if (!cJSON_AddNumberToObject(json_result, "msg_id", msg_id))
         return NULL;
     if (!cJSON_AddStringToObject(json_result, "msg", msg))
+        return NULL;
+    if (!cJSON_AddNumberToObject(json_result, "power", power))
         return NULL;
     return mx_get_transport_data(json_result);
 }
@@ -65,9 +68,11 @@ gboolean mx_edit_msg_handler(t_dtp *msg, t_client *client) {
         return FALSE;
     mx_edit_message_by_id(client->info->database, msg_id->valueint,
                           msg_str->valuestring);
-    resend = mx_edit_msg_request(msg_str->valuestring,
-                                 room_id->valueint, msg_id->valueint);
+    resend = mx_edit_msg_request(
+        msg_str->valuestring, room_id->valuedouble, msg_id->valuedouble, 
+        mx_get_power_of_message(client->info->database, msg_id->valuedouble));
     mx_send_to_all(resend, client, room_id->valueint);
     mx_free_request(&resend);
+    mx_update_room_power(client, room_id->valuedouble);
     return TRUE;
 }
