@@ -1,6 +1,6 @@
 #include "client.h"
 
-static void open_dir(gchar *filename) {
+void mx_open_file_folder(gchar *filename) {
     gchar *path = g_path_get_dirname(filename);
     GFile *file = g_file_new_for_path(path);
     gchar *uri = NULL;
@@ -16,14 +16,21 @@ static void open_dir(gchar *filename) {
         g_object_unref(file);
 }
 
-gboolean show_on_image_view(gchar *file_path, GtkBuilder *builder) {
+static gboolean show_image_viewer(gchar *file_path, GtkBuilder *builder) {
     GObject *viewer = gtk_builder_get_object(builder, "popup_image_viewer");
+    GdkPixbuf *pixbuf = gdk_pixbuf_new_from_file_at_size(file_path, 800,
+                                                         -1, NULL);
     GObject *img = gtk_builder_get_object(builder, "img_view");
 
     if (g_str_has_suffix(file_path, ".png")
         || g_str_has_suffix(file_path, ".jpg")) {
         mx_widget_set_visibility(GTK_WIDGET(viewer), TRUE);
-        gtk_image_set_from_file(GTK_IMAGE(img), file_path);
+        gtk_image_set_from_pixbuf(GTK_IMAGE(img), GDK_PIXBUF(pixbuf));
+        return TRUE;
+    }
+    else if (g_str_has_suffix(file_path, ".gif")) {
+        mx_widget_set_visibility(GTK_WIDGET(viewer), TRUE);
+        gtk_image_set_from_animation(GTK_IMAGE(img), gdk_pixbuf_animation_new_from_file(file_path, NULL));
         return TRUE;
     }
     return FALSE;
@@ -38,8 +45,8 @@ void mx_open_files_dir(GtkButton *btn, t_chat *chat) {
 
     mx_select_msg(NULL, NULL, data);
     if (g_file_test(gmsg->msg, G_FILE_TEST_EXISTS)) {
-        if (!show_on_image_view(gmsg->msg, chat->builder))
-            open_dir(gmsg->msg);
+        if (!show_image_viewer(gmsg->msg, chat->builder))
+            mx_open_file_folder(gmsg->msg);
     }
     else {
         mx_download_file(groom->id, gmsg->message_id, chat);

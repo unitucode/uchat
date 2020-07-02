@@ -869,15 +869,21 @@
                     </child>
                     <child>
                       <object class="GtkButton" id="btn_go_down">
-                        <property name="width_request">48</property>
-                        <property name="height_request">48</property>
+                        <property name="width_request">40</property>
+                        <property name="height_request">40</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="focus_on_click">False</property>
                         <property name="receives_default">True</property>
                         <property name="no_show_all">True</property>
+                        <property name="valign">end</property>
+                        <property name="margin_left">7</property>
+                        <property name="margin_bottom">4</property>
                         <property name="image">image18</property>
                         <signal name="clicked" handler="mx_go_down" swapped="no"/>
+                        <style>
+                          <class name="arrow-down-btn"/>
+                        </style>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -2470,14 +2476,10 @@
     </child>
   </object>
   <object class="GtkWindow" id="popup_image_viewer">
-    <property name="width_request">100</property>
-    <property name="height_request">50</property>
     <property name="can_focus">False</property>
     <property name="resizable">False</property>
     <property name="modal">True</property>
     <property name="window_position">center-on-parent</property>
-    <property name="default_width">100</property>
-    <property name="default_height">50</property>
     <property name="skip_taskbar_hint">True</property>
     <property name="skip_pager_hint">True</property>
     <property name="deletable">False</property>
@@ -2487,10 +2489,11 @@
       <object class="GtkHeaderBar">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
+        <property name="title" translatable="yes">Image view</property>
         <child>
           <object class="GtkButton">
             <property name="visible">True</property>
-            <property name="can_focus">True</property>
+            <property name="can_focus">False</property>
             <property name="receives_default">True</property>
             <property name="image">image20</property>
             <property name="relief">none</property>
@@ -2506,7 +2509,6 @@
       <object class="GtkImage" id="img_view">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
-        <property name="stock">gtk-missing-image</property>
       </object>
     </child>
   </object>
