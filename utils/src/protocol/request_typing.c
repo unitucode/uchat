@@ -7,12 +7,11 @@ gint64 mx_get_type_dtp(t_dtp *dtp) {
     g_print("result = %lld\n", result);
     g_print("json = %s\n", cJSON_Print(dtp->json));
     if (!cJSON_IsNumber(type)) {
-        g_print("HERE!!!!!!!!");
         cJSON_Delete(type);
         return result;
     }
-    g_print("result = %lld\n", result);
     result = (gint64)type->valuedouble;
+    g_print("result = %lld\n", result);
     return result;
 }
 

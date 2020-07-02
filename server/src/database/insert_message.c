@@ -34,7 +34,7 @@ static void sqlite_bind_msg(sqlite3_stmt *stmt, t_db_message *message) {
     sqlite3_bind_int64(stmt, 6, message->file_size);
     sqlite3_bind_text(stmt, 7, message->file_name, -1, SQLITE_STATIC);
     sqlite3_bind_int(stmt, 8, message->status);
-    sqlite3_bind_double(stmt, 9, message->power);
+    sqlite3_bind_int64(stmt, 9, message->power);
 }
 
 /*

@@ -22,7 +22,7 @@ cJSON *mx_get_object_room(sqlite3_stmt *stmt) {
     cJSON_AddStringToObject(room, "desc", 
                             MX_J_STR((char*)sqlite3_column_text(stmt, 4)));
     cJSON_AddNumberToObject(room, "type", sqlite3_column_int(stmt, 5));
-    cJSON_AddNumberToObject(room, "power", sqlite3_column_double(stmt, 6));
+    cJSON_AddNumberToObject(room, "power", sqlite3_column_int64(stmt, 6));
     return room;
 }
 

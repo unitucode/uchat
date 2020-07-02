@@ -49,7 +49,7 @@ void mx_create_table_messages(sqlite3 *db) {
                      "file_size     integer                     ,"
                      "file_name     text                        ,"
                      "status        integer             not null,"
-                     "power         real                not null);", 0, 0, 0);
+                     "power         integer             not null);", 0, 0, 0);
 }
 
 /*
@@ -88,6 +88,6 @@ void mx_create_table_rooms(sqlite3 *db) {
                            "date               int                 not null,"
                            "desc               text,"
                            "type               int                 not null,"
-                           "power              real             not null);",
+                           "power              integer             not null);",
                         0, 0, 0);
 }

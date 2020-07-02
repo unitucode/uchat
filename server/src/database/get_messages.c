@@ -24,7 +24,7 @@ cJSON *mx_get_object_message(sqlite3_stmt *stmt) {
     cJSON_AddStringToObject(o_m, "file_name",
                             MX_J_STR((char*)sqlite3_column_text(stmt, 7)));
     cJSON_AddNumberToObject(o_m, "status", sqlite3_column_int(stmt, 8));
-    cJSON_AddNumberToObject(o_m, "power", sqlite3_column_double(stmt, 9));
+    cJSON_AddNumberToObject(o_m, "power", sqlite3_column_int64(stmt, 9));
     return o_m;
 }
 
