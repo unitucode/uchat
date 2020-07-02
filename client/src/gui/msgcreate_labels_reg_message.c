@@ -3,7 +3,7 @@
 void mx_msgcreate_label_login(GtkWidget *box_main, t_gmsg *gmsg) {
     GtkWidget *label_login = gtk_label_new(gmsg->login);
 
-    // mx_widget_set_class(label_login, "sender_login");
+    mx_widget_set_class(label_login, "sender_login");
     gtk_box_pack_start(GTK_BOX(box_main), label_login, FALSE, FALSE, 0);
     gtk_widget_set_halign(label_login, GTK_ALIGN_START);
 }
