@@ -70,6 +70,7 @@ struct s_client {
     t_db_user *user;
     t_info *info;
     gboolean upload_file;
+    gboolean is_file;
 };
 
 struct s_send_helper {

@@ -88,6 +88,7 @@ gboolean mx_download_file_handler(t_dtp *data, t_client *client) {
     cJSON *room_id = cJSON_GetObjectItemCaseSensitive(data->json, "room_id");
     cJSON *msg_id = cJSON_GetObjectItemCaseSensitive(data->json, "msg_id");
 
+    client->is_file = TRUE;
     if (!cJSON_IsNumber(msg_id) || !cJSON_IsNumber(room_id)
         || !cJSON_IsString(token)) {
         return FALSE;

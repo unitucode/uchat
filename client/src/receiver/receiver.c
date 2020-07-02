@@ -59,11 +59,14 @@ void mx_receiver(GObject *source_object, GAsyncResult *res,
     if (!is_connected(chat, in))
         return;
     msg = g_data_input_stream_read_line_finish(in, res, &count, NULL);
-    if (!msg)
+    if (!msg) {
+        g_print("here\n");
         return;
+    }
     if (!mx_handle_request(msg, chat)) {
         g_free(msg);
         g_io_stream_close(G_IO_STREAM(chat->conn), NULL, NULL);
+        g_print("here\n");
         return;
     }
     g_free(msg);

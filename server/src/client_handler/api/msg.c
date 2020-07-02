@@ -33,6 +33,7 @@ t_dtp *mx_msg_request(t_db_message *msg) {
 
 static void resend_msg(t_db_message *msg, t_client *client) {
     t_dtp *resend = mx_msg_request(msg);
+
     mx_send_to_all(resend, client, msg->room_id);
     mx_free_request(&resend);
 }

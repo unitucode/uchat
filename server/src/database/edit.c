@@ -46,8 +46,31 @@ void mx_edit_user_name_by_id(sqlite3 *db, guint64 id, gchar *new_name) {
     sqlite3_finalize(stmt);
 }
 
+
+static void update_power_message(sqlite3 *db, gdouble power, guint64 id) {
+    gint32 rv = SQLITE_OK;
+    guint64 room_id = 0;
+    sqlite3_stmt *stmt;
+
+    rv = sqlite3_prepare_v2(db, "select room_id, power from messages "
+                                "where message_id = ?1", -1, &stmt, NULL);
+    sqlite3_bind_int64(stmt, 1, id);
+    mx_error_sqlite(sqlite3_step(stmt));
+    if (sqlite3_column_int64(stmt, 0))
+        room_id = sqlite3_column_int64(stmt, 0);
+    if (sqlite3_column_double(stmt, 1))
+        power += sqlite3_column_double(stmt, 1);
+    sqlite3_finalize(stmt);
+    rv = sqlite3_prepare_v2(db, "update messages set power = ?1 where "
+                                "message_id = ?2", -1, &stmt, NULL);
+    sqlite3_bind_double(stmt, 1, power);
+    sqlite3_bind_double(stmt, 2, id);
+    mx_error_sqlite(sqlite3_step(stmt));
+    sqlite3_finalize(stmt);
+    mx_db_update_room_power(db, power, room_id);
+}
 /*
- * Function: edit message by id
+ * Function: mx_edit_message_by_id
  * -------------------------------
  * changes the message
  * 
@@ -69,10 +92,11 @@ void mx_edit_message_by_id(sqlite3 *db, guint64 id, gchar *new) {
     mx_error_sqlite(sqlite3_step(stmt));
     sqlite3_free(request);
     sqlite3_finalize(stmt);
+    update_power_message(db, mx_get_used_power(strlen(new)), id);
 }
 
 /*
- * Function: edit message by id
+ * Function: mx_edit_type_member
  * -------------------------------
  * changes permission of user in this room
  * 

@@ -1,17 +1,7 @@
 #include "server.h"
 
-// void mx_func() {}
 
-/*
- * Function: mx_get_power_of_room
- * -------------------------------
- * returns the power value in the room
- * 
- * room_id: id of the room from which the power value will be taken
- * 
- * return: power of room
- */
-void mx_set_room_power(sqlite3 *db, gdouble power, guint64 room_id) {
+void mx_db_update_room_power(sqlite3 *db, gdouble power, guint64 room_id) {
     gdouble new_power = power;
     sqlite3_str *sqlite_str = sqlite3_str_new(db);
     gchar *request = NULL;
@@ -29,6 +19,15 @@ void mx_set_room_power(sqlite3 *db, gdouble power, guint64 room_id) {
 }
 
 
+/*
+ * Function: mx_get_power_of_room
+ * -------------------------------
+ * returns the power value in the room
+ * 
+ * room_id: id of the room from which the power value will be taken
+ * 
+ * return: power of room
+ */
 gdouble mx_get_power_of_room(sqlite3 *db, guint64 room_id) {
     gint32 rv = SQLITE_OK;
     sqlite3_stmt *stmt;
