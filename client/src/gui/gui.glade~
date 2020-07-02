@@ -2482,12 +2482,23 @@
     <child type="titlebar">
       <object class="GtkHeaderBar">
         <property name="visible">True</property>
-        <property name="sensitive">False</property>
         <property name="can_focus">False</property>
         <child>
           <object class="GtkButton">
+            <property name="label" translatable="yes">Open in folder</property>
             <property name="visible">True</property>
             <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <signal name="clicked" handler="mx_widget_switch_visibility" object="popup_image_viewer" swapped="no"/>
+          </object>
+          <packing>
+            <property name="position">1</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButton">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
             <property name="receives_default">True</property>
             <property name="image">image20</property>
             <property name="relief">none</property>
