@@ -65,5 +65,5 @@ void mx_insert_message(sqlite3 *db, t_db_message *message) {
     mx_error_sqlite(sqlite3_step(stmt));
     sqlite3_finalize(stmt);
     get_id_msg(db, message);
-    mx_set_room_power(db, message->power, message->room_id);
+    mx_db_update_room_power(db, message->power, message->room_id);
 }

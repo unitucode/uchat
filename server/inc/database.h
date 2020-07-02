@@ -168,4 +168,4 @@ gchar *mx_get_text_message_by_id(sqlite3 *db, guint64 message_id);
 // power
 gdouble mx_get_power_of_message(sqlite3 *db, guint64 message_id);
 gdouble mx_get_power_of_room(sqlite3 *db, guint64 room_id);
-void mx_set_room_power(sqlite3 *db, gdouble power, guint64 room_id);
+void mx_db_update_room_power(sqlite3 *db, gdouble power, guint64 room_id);
