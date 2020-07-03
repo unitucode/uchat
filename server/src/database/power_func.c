@@ -39,7 +39,7 @@ guint64 mx_get_power_of_room(sqlite3 *db, guint64 room_id) {
     if (sqlite3_column_int64(stmt, 0))
         power_of_room = sqlite3_column_int64(stmt, 0);
     sqlite3_finalize(stmt);
-    return power_of_rooms;
+    return power_of_room;
 }
 
 /*
