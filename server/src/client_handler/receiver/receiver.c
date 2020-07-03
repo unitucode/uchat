@@ -95,5 +95,7 @@ gboolean mx_handle_request(char *request, t_client *client) {
         mx_free_request(&data);
         g_usleep(MX_DELAY);
     }
+    else
+        g_print("NULL\n");
     return true;
 }

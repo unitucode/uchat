@@ -29,7 +29,7 @@ INCS = $(foreach dir, $(INCD), $(wildcard $(dir)/*.h))
 CC = clang
 
 CFLAGS = -std=c11 $(addprefix -W, all extra error pedantic)
-CPPFLAGS = -DMX_CLIENT='"$(CLIENT_WD)"' $(INCD_CLIENT) -D_GNU_SOURCE \
+CPPFLAGS = -DMX_UNIT_TEST -DMX_CLIENT='"$(CLIENT_WD)"' $(INCD_CLIENT) -D_GNU_SOURCE \
 $(UTILS_INC) $(GTK_INC) $(INCD_LIBS) -I/usr/local/opt/openssl/include
 LIBS = $(GTK_LIBS) $(LIBD_LIBS) -L/usr/local/opt/openssl/lib \
 -lssl -lcjson -lcrypto -lsqlite3 -lpthread

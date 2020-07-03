@@ -65,13 +65,4 @@ clean:
 
 reinstall: uninstall all
 
-unit_test: $(UNIT_TEST)
-
-$(UNIT_TEST): $(UNIT_TESTO)
-$(UNIT_TESTO): $(UNIT_TESTD)
-
-$(UNIT_TESTO):
-	make -C $<
-	cp $@ .
-
 .PHONY: + uninstall clean reinstall $(CLIENTO) $(SERVERO) $(SQLITEO) $(CJSONO) $(UTILSO)
