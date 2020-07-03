@@ -10,6 +10,8 @@
 #define MX_FILES_DIR "files/"
 #define MX_BUF_FILE 16384
 #define MX_FILE_DELIM "__"
+#define MX_MAX_ROOM_NAME 20
+#define MX_MAX_MESSAGE 20
 
 /* Protocol object
  * ----------
