@@ -9,8 +9,10 @@ static void set_main_info_current_room_sett(GtkBuilder *builder,
                                             t_groom *groom) {
     GObject *name = gtk_builder_get_object(builder, "label_prefs_roomname");
     GObject *energy = gtk_builder_get_object(builder, "label_room_energy");
+    GObject *go_down = gtk_builder_get_object(builder, "btn_go_down");
     gchar *value = g_strdup_printf("%.2f Wt", groom->power);
 
+    gtk_widget_hide(GTK_WIDGET(go_down));
     gtk_label_set_text(GTK_LABEL(name), groom->room_name);
     gtk_label_set_text(GTK_LABEL(energy), value);
     g_free(value);
