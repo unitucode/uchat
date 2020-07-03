@@ -4,14 +4,11 @@ gint64 mx_get_type_dtp(t_dtp *dtp) {
     cJSON *type = cJSON_GetObjectItemCaseSensitive(dtp->json, "type");
     gint64 result = -1;
 
-    g_print("result = %lld\n", result);
-    g_print("json = %s\n", cJSON_Print(dtp->json));
     if (!cJSON_IsNumber(type)) {
         cJSON_Delete(type);
         return result;
     }
     result = (gint64)type->valuedouble;
-    g_print("result = %lld\n", result);
     return result;
 }
 

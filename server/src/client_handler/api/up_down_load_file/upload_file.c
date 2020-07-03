@@ -11,7 +11,7 @@ static void resend_file(t_client *client, gchar *filename, guint64 room_id,
     cJSON_AddNumberToObject(msg, "msg_type", DB_FILE_MSG);
     db_msg = mx_parse_message(msg);
     db_msg->user_id = client->user->user_id;
-    db_msg->power = mx_get_used_power(size);
+    db_msg->power = size;
     mx_insert_message(client->info->database, db_msg);
     file_request = mx_msg_request(db_msg);
     mx_free_message(&db_msg);
