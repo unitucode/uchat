@@ -6,7 +6,7 @@ t_gmsg *mx_get_gmsg_by_id(guint64 msg_id, guint64 room_id,
     GtkListBox *box = NULL;
     GtkListBoxRow *row = NULL;
     t_gmsg *gmsg = NULL;
-    bool flag = true;
+    gboolean flag = TRUE;
 
     if (!room)
         return NULL;
@@ -14,7 +14,7 @@ t_gmsg *mx_get_gmsg_by_id(guint64 msg_id, guint64 room_id,
     for (guint64 i = 0; flag; i++) {
         row = gtk_list_box_get_row_at_index(box, i);
         if (row == NULL)
-            flag = false;
+            flag = FALSE;
         else {
             gmsg = (t_gmsg*)g_object_get_data(G_OBJECT(row), "gmsg");
             if (msg_id == gmsg->message_id)

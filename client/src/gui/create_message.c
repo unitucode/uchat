@@ -1,16 +1,16 @@
 #include "client.h"
 
-static bool get_data(cJSON *msg, cJSON **data, char *field) {
+static gboolean get_data(cJSON *msg, cJSON **data, char *field) {
     *data = cJSON_GetObjectItemCaseSensitive(msg, field);
     if (!*data)
-        return false;
-    return true;
+        return FALSE;
+    return TRUE;
 }
 
 t_gmsg *mx_create_gmsg(cJSON *msg, t_chat *chat) {
     t_gmsg *gmsg = mx_malloc(sizeof(t_gmsg));
     cJSON *data = NULL;
-    bool valid = true;
+    gboolean valid = TRUE;
     t_groom *groom = NULL;
 
     if ((valid = get_data(msg, &data, "message")) && cJSON_IsString(data))
@@ -27,7 +27,7 @@ t_gmsg *mx_create_gmsg(cJSON *msg, t_chat *chat) {
     if ((valid = get_data(msg, &data, "msg_type")) && cJSON_IsNumber(data))
         gmsg->type = data->valuedouble;
     if ((valid = get_data(msg, &data, "power")) && cJSON_IsNumber(data))
-        gmsg->power = data->valuedouble;
+        gmsg->power = mx_get_used_power(data->valuedouble);
     if (!valid) {
         mx_delete_gmsg(gmsg);
         return NULL;

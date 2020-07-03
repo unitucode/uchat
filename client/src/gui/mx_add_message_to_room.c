@@ -18,11 +18,11 @@ static void add_message_row_end(t_gmsg *msg, t_chat *chat) {
     gtk_container_add(GTK_CONTAINER(row), event);
     g_signal_connect(event, "button_release_event",
                      G_CALLBACK(mx_select_msg), data);
-    groom->is_updated = true;
+    groom->is_updated = TRUE;
     gtk_list_box_insert(box, row, -1);
     gtk_list_box_row_changed(groom->row_room);
-    groom->is_updated = false;
-    groom->is_watched = false;
+    groom->is_updated = FALSE;
+    groom->is_watched = FALSE;
     gtk_widget_show_all(GTK_WIDGET(box));
     g_object_set_data_full(G_OBJECT(row), "gmsg", msg,
                            (GDestroyNotify)mx_delete_gmsg);
@@ -48,11 +48,11 @@ static void add_message_row_start(t_gmsg *msg, t_chat *chat) { //TO FIX
     gtk_container_add(GTK_CONTAINER(row), event);
     g_signal_connect(event, "button_release_event",
                      G_CALLBACK(mx_select_msg), data);
-    groom->is_updated = true;
+    groom->is_updated = TRUE;
     gtk_list_box_insert(box, row, 0);
     gtk_list_box_row_changed(groom->row_room);
-    groom->is_updated = false;
-    groom->is_watched = false;
+    groom->is_updated = FALSE;
+    groom->is_watched = FALSE;
     gtk_widget_show_all(GTK_WIDGET(box));
     g_object_set_data_full(G_OBJECT(row), "gmsg", msg,
                            (GDestroyNotify)mx_delete_gmsg);

@@ -22,6 +22,14 @@ t_dtp *mx_upd_room_desc_request(int room_id, char *desc) {
     return mx_get_transport_data(json_result);
 }
 
+static gboolean is_valid(cJSON *desc) {
+    gsize len = strlen(desc->valuestring);
+
+    if (len <= 0 || len > MX_MAX_MESSAGE)
+        return FALSE;
+    return TRUE;
+}
+
 /*
  * Function: mx_upd_room_desc_handler
  * -------------------------------
@@ -37,7 +45,7 @@ gboolean mx_upd_room_desc_handler(t_dtp *room, t_client *client) {
     cJSON *desc = cJSON_GetObjectItemCaseSensitive(room->json, "desc");
     t_dtp *resend = NULL;
 
-    if (!cJSON_IsNumber(room_id) || !cJSON_IsString(desc))
+    if (!cJSON_IsNumber(room_id) || !cJSON_IsString(desc) || !is_valid(desc))
         return FALSE;
     if (mx_get_type_member(client->info->database, client->user->user_id,
                            room_id->valueint) != DB_CUSTOMER) {

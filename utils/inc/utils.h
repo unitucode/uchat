@@ -4,18 +4,11 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <sys/types.h>
-#include <string.h>
-#include <netdb.h>
 #include <errno.h>
-#include <stdbool.h>
-#include <stdarg.h>
 #include <fcntl.h>
 #include <gmodule.h>
 #include "sqlite3.h"
 #include "cJSON.h"
-
-#define MX_IN_ITOA(m) #m
-#define MX_ITOA(m) MX_IN_ITOA(m)
 
 #define MX_LOG_FILE "info.log"
 #define MX_HASH_REGEX "^[A-Fa-f0-9]{64}$"
@@ -50,8 +43,6 @@ gboolean mx_match_search(gchar *str, gchar *regex);
 gboolean mx_match_nsearch(gchar *str, gchar *regex, gssize size);
 void mx_randomize_str(char *str, size_t count);
 long long mx_get_current_time(void);
-
-
 
 //wrappers
 char *mx_strdup(char *str);

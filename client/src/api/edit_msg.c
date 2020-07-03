@@ -40,14 +40,16 @@ gboolean mx_edit_msg_handler(t_dtp *data, t_chat *chat) {
     cJSON *room_id = cJSON_GetObjectItemCaseSensitive(data->json, "room_id");
     cJSON *msg_id = cJSON_GetObjectItemCaseSensitive(data->json, "msg_id");
     cJSON *power = cJSON_GetObjectItemCaseSensitive(data->json, "power");
+    gdouble power_d = 0;
 
     if (!cJSON_IsString(msg) || !cJSON_IsNumber(room_id)
         || !cJSON_IsNumber(msg_id) || !cJSON_IsNumber(power)) {
         return FALSE;
     }
+    power_d = mx_get_used_power(power->valuedouble);
     mx_gupd_msg_text(msg_id->valuedouble, room_id->valuedouble,
                      msg->valuestring, chat->builder);
     mx_gupd_msg_power(msg_id->valueint, room_id->valuedouble,
-                      power->valuedouble, chat->builder);
+                      power_d, chat->builder);
     return TRUE;
 }

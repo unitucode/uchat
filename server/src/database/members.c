@@ -9,7 +9,7 @@
  * user_id: user id
  * room_id: room id
  * 
- * return: true or false
+ * return: TRUE or FALSE
  */
 
 gboolean mx_is_member(sqlite3 *db, guint64 user_id, guint64 room_id) {
@@ -23,11 +23,11 @@ gboolean mx_is_member(sqlite3 *db, guint64 user_id, guint64 room_id) {
     sqlite3_bind_int64(stmt, 2, room_id);
     if ((rv = sqlite3_step(stmt)) == SQLITE_ROW) {
         sqlite3_finalize(stmt);
-        return true;
+        return TRUE;
     }
     mx_error_sqlite(rv);
     sqlite3_finalize(stmt);
-    return false;
+    return FALSE;
 }
 
 /*

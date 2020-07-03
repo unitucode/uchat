@@ -38,6 +38,17 @@ static void resend_msg(t_db_message *msg, t_client *client) {
     mx_free_request(&resend);
 }
 
+static gboolean is_valid(t_db_message *msg) {
+    gsize len = 0;
+
+    if (!msg)
+        return FALSE;
+    len = strlen(msg->message);
+    if (len <= 0 || len > MX_MAX_MESSAGE)
+        return FALSE;
+    return TRUE;
+}
+
 /*
  * Function: mx_msg_handler
  * -------------------------------
@@ -51,7 +62,7 @@ static void resend_msg(t_db_message *msg, t_client *client) {
 gboolean mx_msg_handler(t_dtp *data, t_client *client) { // TODO leaks
     t_db_message *msg = mx_parse_message(data->json);
 
-    if (!msg || !strlen(msg->message))
+    if (!is_valid(msg))
         return FALSE;
     if (!mx_is_member(client->info->database, client->user->user_id,
                       msg->room_id)) {

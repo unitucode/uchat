@@ -19,6 +19,14 @@ t_dtp *mx_upd_user_desc_request(char *desc) {
     return mx_get_transport_data(json_result);
 }
 
+static gboolean is_valid(gchar *desc) {
+    gsize len = strlen(desc);
+
+    if (len <= 0 || len > MX_MAX_MESSAGE)
+        return FALSE;
+    return TRUE;
+}
+
 /*
  * Function: mx_upd_user_desc_handler
  * -------------------------------
@@ -33,7 +41,7 @@ gboolean mx_upd_user_desc_handler(t_dtp *desc_data, t_client *client) {
     cJSON *desc = cJSON_GetObjectItemCaseSensitive(desc_data->json, "desc");
     t_dtp *resend = NULL;
     
-    if (!cJSON_IsString(desc))
+    if (!cJSON_IsString(desc) || !is_valid(desc->valuestring))
         return FALSE;
     mx_edit_desc_user(client->info->database, client->user->user_id,
                       desc->valuestring);

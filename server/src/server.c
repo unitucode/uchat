@@ -84,12 +84,12 @@ static gboolean incoming(GSocketService *service, GSocketConnection *conn,
     return FALSE;
 }
 
-static bool is_valid_args(int argc) {
+static gboolean is_valid_args(int argc) {
     if (argc != 2) {
         g_printerr("Usage ./uchat_server <port>\n");
-        return false;
+        return FALSE;
     }
-    return true;
+    return TRUE;
 }
 
 int main(int argc, char **argv) {
