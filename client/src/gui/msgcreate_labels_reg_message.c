@@ -62,8 +62,12 @@ void mx_msgcreate_file(GtkWidget *box_info, t_gmsg *gmsg,
     gchar *file = mx_get_filename(gmsg->msg);
     GtkWidget *filename = gtk_label_new(file);
 
-    if (g_file_test(gmsg->msg, G_FILE_TEST_EXISTS))
-        btn = gtk_button_new_from_icon_name("document", GTK_ICON_SIZE_DND);
+    if (g_file_test(gmsg->msg, G_FILE_TEST_EXISTS)) {
+        if (mx_is_file_image(gmsg->msg) || mx_is_file_animation(gmsg->msg))
+            btn = gtk_button_new_from_icon_name("image", GTK_ICON_SIZE_DND);
+        else
+            btn = gtk_button_new_from_icon_name("document", GTK_ICON_SIZE_DND);
+    }
     else
         btn = gtk_button_new_from_icon_name("download", GTK_ICON_SIZE_DND);
     mx_widget_set_class(box, "file-button");
