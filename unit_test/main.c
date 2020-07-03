@@ -1,4 +1,3 @@
-#include <gtk/gtk.h>
 #include "client.h"
 
 gchar *mx_get_buffer_text(GtkTextBuffer *buffer) {
