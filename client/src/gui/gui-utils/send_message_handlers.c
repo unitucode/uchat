@@ -11,8 +11,7 @@ void mx_send_message_handle_enter(GtkTextView *textview,
     g_usleep(0);
     if (event->key.keyval == (gint)65293) {
         if (shift_hold)
-            gtk_text_buffer_insert_at_cursor(buffer,
-                                             "\n", -1);
+            gtk_text_buffer_insert_at_cursor(buffer, "\n", -1);
         else {
             mx_req_send_message(NULL, chat);
             mx_clear_buffer_text("buffer_message", chat->builder);
