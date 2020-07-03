@@ -33,9 +33,9 @@ void mx_reset_auth(GtkNotebook *note, GtkWidget *page,
                               GTK_ENTRY_ICON_SECONDARY);
     mx_entry_set_icon_by_path(GTK_ENTRY(signup), MX_IMG_EYE,
                               GTK_ENTRY_ICON_SECONDARY);
-    gtk_entry_set_visibility(GTK_ENTRY(login), false);
-    gtk_entry_set_visibility(GTK_ENTRY(signup), false);
-    gtk_entry_set_visibility(GTK_ENTRY(confirm), false);
+    gtk_entry_set_visibility(GTK_ENTRY(login), FALSE);
+    gtk_entry_set_visibility(GTK_ENTRY(signup), FALSE);
+    gtk_entry_set_visibility(GTK_ENTRY(confirm), FALSE);
     mx_clear_buffer_text("buffer_login", builder);
     mx_clear_buffer_text("buffer_password", builder);
     mx_clear_buffer_text("buffer_password_confirm", builder);
@@ -55,15 +55,15 @@ void mx_show_password(GtkEntry *entry, GtkEntryIconPosition icon_pos,
                       GdkEvent *event, gpointer *entry_second) {
     if (gtk_entry_get_visibility(entry)) {
         mx_entry_set_icon_by_path(entry, MX_IMG_EYE, icon_pos);
-        gtk_entry_set_visibility(entry, false);
+        gtk_entry_set_visibility(entry, FALSE);
         if (GTK_IS_ENTRY(entry_second))
-            gtk_entry_set_visibility(GTK_ENTRY(entry_second), false);
+            gtk_entry_set_visibility(GTK_ENTRY(entry_second), FALSE);
     }
     else { 
         mx_entry_set_icon_by_path(entry, MX_IMG_CLOSEDEYE, icon_pos);
-        gtk_entry_set_visibility(entry, true);
+        gtk_entry_set_visibility(entry, TRUE);
         if (GTK_IS_ENTRY(entry_second))
-            gtk_entry_set_visibility(GTK_ENTRY(entry_second), true);
+            gtk_entry_set_visibility(GTK_ENTRY(entry_second), TRUE);
     }
     (void)event;
 }

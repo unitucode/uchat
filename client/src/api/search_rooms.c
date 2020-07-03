@@ -25,7 +25,7 @@ static gboolean handle_room(cJSON *room, t_chat *chat) {
     if (!groom)
         return FALSE;
     mx_add_room_row(groom, chat, MX_GLOBAL_ROOMS);
-    return true;
+    return TRUE;
 }
 
 /*

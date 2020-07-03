@@ -5,7 +5,7 @@ gint select_own;
 gint select_another;
 gint select_notedit;
 
-void mx_reset_select_count() {
+void mx_reset_select_count(void) {
     select_own = 0;
     select_another = 0;
     select_notedit = 0;

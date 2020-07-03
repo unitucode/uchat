@@ -18,7 +18,7 @@ void mx_box_messages_reached(GtkScrolledWindow *scroll,
 
         mx_send(chat->out, get_old);
         mx_free_request(&get_old);
-        chat->upl_old_msgs = true;
+        chat->upl_old_msgs = TRUE;
     }
     if (pos == GTK_POS_TOP) {
         GtkAdjustment *adj = gtk_scrolled_window_get_vadjustment(scroll);
@@ -26,7 +26,7 @@ void mx_box_messages_reached(GtkScrolledWindow *scroll,
         gtk_adjustment_set_value(adj, gtk_adjustment_get_value(adj) + 1);
     }
     if (pos == GTK_POS_BOTTOM) {
-        chat->upl_old_msgs = true;
+        chat->upl_old_msgs = TRUE;
         while (groom->uploaded > MX_BUF_MSGS) {
             GtkRequisition req;
             GtkRequisition req2;
@@ -39,7 +39,7 @@ void mx_box_messages_reached(GtkScrolledWindow *scroll,
             gtk_adjustment_set_value(adj, gtk_adjustment_get_upper(adj) - gtk_adjustment_get_page_size(adj));
             groom->uploaded--;
         }
-        chat->upl_old_msgs = false;
+        chat->upl_old_msgs = FALSE;
     }
     (void)scroll;
 }
