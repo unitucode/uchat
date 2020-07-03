@@ -8,7 +8,7 @@ static void init_fields(t_chat *chat) {
     chat->builder = NULL;
     chat->upl_old_msgs = FALSE;
     chat->msg_placeholder = TRUE;
-    chat->cssProv = NULL;
+    chat->css_prov = NULL;
 }
 
 /*
