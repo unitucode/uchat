@@ -1,6 +1,6 @@
 #include "client.h"
 
-t_groom *mx_init_groom() {
+t_groom *mx_init_groom(void) {
     t_groom *room = mx_malloc(sizeof(t_groom));
 
     room->room_name = NULL;
