@@ -1,7 +1,3 @@
-UNIT_TEST = unit_test
-UNIT_TESTD = unit_test
-UNIT_TESTO = $(UNIT_TESTD)/$(UNIT_TEST)
-
 CLIENT = uchat
 SERVER = uchat_server
 UTILS = libutils
