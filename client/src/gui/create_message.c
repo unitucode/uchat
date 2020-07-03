@@ -27,7 +27,7 @@ t_gmsg *mx_create_gmsg(cJSON *msg, t_chat *chat) {
     if ((valid = get_data(msg, &data, "msg_type")) && cJSON_IsNumber(data))
         gmsg->type = data->valuedouble;
     if ((valid = get_data(msg, &data, "power")) && cJSON_IsNumber(data))
-        gmsg->power = data->valuedouble;
+        gmsg->power = mx_get_used_power(data->valuedouble);
     if (!valid) {
         mx_delete_gmsg(gmsg);
         return NULL;

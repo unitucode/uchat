@@ -22,6 +22,14 @@ t_dtp *mx_upd_room_name_request(int room_id, char *room_name) {
     return mx_get_transport_data(json_result);
 }
 
+static gboolean is_valid(gchar *room_name) {
+    gsize len = strlen(room_name);
+
+    if (len <= 0 || len > MX_MAX_ROOM_NAME)
+        return FALSE;
+    return TRUE;
+}
+
 /*
  * Function: mx_upd_room_name_handler
  * -------------------------------
@@ -39,6 +47,8 @@ gboolean mx_upd_room_name_handler(t_dtp *room, t_client *client) {
     t_dtp *resend = NULL;
 
     if (!cJSON_IsNumber(room_id) || !cJSON_IsString(room_name))
+        return FALSE;
+    if (!is_valid(room_name->valuestring))
         return FALSE;
     if (mx_get_type_member(client->info->database, client->user->user_id,
                            room_id->valueint) != DB_CUSTOMER) {
