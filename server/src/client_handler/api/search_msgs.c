@@ -19,6 +19,14 @@ t_dtp *mx_search_msgs_request(cJSON *array) {
     return mx_get_transport_data(res);
 }
 
+static gboolean is_valid(cJSON *msg) {
+    gsize len = strlen(msg->valuestring);
+
+    if (len <= 0 || len > MX_MAX_MESSAGE)
+        return FALSE;
+    return TRUE;
+}
+
 /*
  * Function: mx_search_msgs_handler
  * -------------------------------
@@ -34,7 +42,7 @@ gboolean mx_search_msgs_handler(t_dtp *data, t_client *client) {
     cJSON *room_id = cJSON_GetObjectItemCaseSensitive(data->json, "room_id");
     t_dtp *answer = NULL;
 
-    if (!cJSON_IsString(msg) || !cJSON_IsNumber(room_id))
+    if (!cJSON_IsString(msg) || !cJSON_IsNumber(room_id) || !is_valid(msg))
         return FALSE;
     if (!mx_is_member(client->info->database, client->user->user_id,
                       room_id->valueint)) {

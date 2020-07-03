@@ -377,3 +377,4 @@ void mx_css_connect_from_file(t_chat *chat);
 void mx_connect_theme_switcher(t_chat *chat);
 void change_theme_icon(t_chat *chat, gchar *icon_name);
 gchar *mx_format_text(gchar *text);
+gdouble mx_get_used_power(guint64 chars);

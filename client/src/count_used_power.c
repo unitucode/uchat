@@ -1,4 +1,4 @@
-#include "server.h"
+#include "client.h"
 
 /*
  * Function: mx_get_used_power
@@ -10,5 +10,5 @@
  * returns: used power
  */
 gdouble mx_get_used_power(guint64 chars) {
-    return 0.03 * chars;
+    return 0.02675 * chars;
 }
