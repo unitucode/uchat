@@ -8,7 +8,7 @@ void mx_go_down(GtkButton *btn, GtkBuilder *builder) {
     (void)btn;
 }
 
-static void req_send_message(GtkButton *btn, t_chat *chat) {
+void mx_req_send_message(GtkButton *btn, t_chat *chat) {
     gchar *message_text = mx_get_buffer_text("buffer_message", chat->builder);
     t_groom *room = mx_get_selected_groom(chat->builder,  MX_LOCAL_ROOMS);
     t_dtp *dtp = NULL;
@@ -43,7 +43,14 @@ void mx_connect_send_message(t_chat *chat) {
     GObject *btn_send = gtk_builder_get_object(chat->builder, "btn_send_msg");
     GObject *btn_edit = gtk_builder_get_object(chat->builder,
                                                "btn_edit_msg_apply");
+    GObject *textview = gtk_builder_get_object(chat->builder, "msg_entry");
 
-    g_signal_connect(btn_send, "clicked", G_CALLBACK(req_send_message), chat);
+
+    g_signal_connect(textview, "key-press-event",
+                     G_CALLBACK(mx_send_message_handle_enter), chat);
+    g_signal_connect(textview, "key-release-event",
+                     G_CALLBACK(mx_send_message_handle_shift), chat->builder);
+    g_signal_connect(btn_send, "clicked",
+                     G_CALLBACK(mx_req_send_message), chat);
     g_signal_connect(btn_edit, "clicked", G_CALLBACK(req_edit_message), chat);
 }

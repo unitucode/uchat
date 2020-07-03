@@ -298,6 +298,7 @@ void mx_add_to_info_members(gint *key,
                             gchar *value, GtkBuilder *builder);
 void mx_reset_select_count();
 void mx_open_files_dir(GtkButton *btn, t_chat *chat);
+void mx_req_send_message(GtkButton *btn, t_chat *chat);
 
 // gui utils
 void mx_scrlldwnd_connect(gchar *name, GtkWidget *scroll, GtkBuilder *builder, t_groom *room);
@@ -367,6 +368,10 @@ void mx_select_room(GtkWidget *event_box, GdkEventButton *event,
                     gpointer *user_data);
 void mx_show_join_to_room(GtkWidget *event_box, GdkEventButton *event,
                           gpointer *user_data);
+void mx_send_message_handle_enter(GtkWidget *textview,
+                                  GdkEvent *event, t_chat *chat);
+void mx_send_message_handle_shift(GtkWidget *textview,
+                                  GdkEvent *event, GtkBuilder *builder);
 
 // void mx_upload_file(gchar *path, gint room_id, t_chat *chat);
 bool mx_handle_request(char *request, t_chat *chat);

@@ -789,6 +789,9 @@
                           <object class="GtkTextView" id="msg_entry">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
+                            <property name="has_focus">True</property>
+                            <property name="is_focus">True</property>
+                            <property name="events">GDK_KEY_PRESS_MASK</property>
                             <property name="wrap_mode">word-char</property>
                             <property name="left_margin">10</property>
                             <property name="right_margin">10</property>
@@ -881,6 +884,9 @@
                         <property name="margin_bottom">4</property>
                         <property name="image">image18</property>
                         <signal name="clicked" handler="mx_go_down" swapped="no"/>
+                        <style>
+                          <class name="arrow-down-btn"/>
+                        </style>
                       </object>
                       <packing>
                         <property name="expand">False</property>
