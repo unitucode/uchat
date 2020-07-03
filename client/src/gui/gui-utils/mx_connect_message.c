@@ -13,7 +13,7 @@ static void req_send_message(GtkButton *btn, t_chat *chat) {
     t_groom *room = mx_get_selected_groom(chat->builder,  MX_LOCAL_ROOMS);
     t_dtp *dtp = NULL;
 
-    if (room && !chat->msg_placeholder) {
+    if (room && !chat->msg_placeholder && strlen(message_text) > 0) {
         dtp = mx_msg_request(message_text, room->id);
         mx_send(chat->out, dtp);
         mx_free_request(&dtp);
