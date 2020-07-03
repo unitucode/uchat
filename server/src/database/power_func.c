@@ -9,7 +9,7 @@ void mx_db_update_room_power(sqlite3 *db, guint64 power, guint64 room_id) {
 
     if (mx_get_power_of_room(db, room_id) != 0)
         new_power += mx_get_power_of_room(db, room_id);
-    sqlite3_str_appendf(sqlite_str, "update rooms set power = %f "
+    sqlite3_str_appendf(sqlite_str, "update rooms set power = %llu"
                                         "where id = %llu",
                             new_power, room_id);
     request = sqlite3_str_finish(sqlite_str);
