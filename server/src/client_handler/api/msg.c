@@ -63,7 +63,7 @@ gboolean mx_msg_handler(t_dtp *data, t_client *client) { // TODO leaks
         mx_free_message(&msg);
         return FALSE;
     }
-    msg->power = mx_get_used_power(data->len);
+    msg->power = data->len;
     msg->user_id = client->user->user_id;
     mx_insert_message(client->info->database, msg);
     resend_msg(msg, client);

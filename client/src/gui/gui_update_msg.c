@@ -50,7 +50,19 @@ void mx_gupd_msg_text(guint64 msg_id, guint64 room_id,
         gmsg->msg = mx_strdup(text);
         gtk_label_set_markup(GTK_LABEL(gmsg->label_text),
                              mx_format_text(gmsg->msg));
-        gtk_widget_show_all(GTK_WIDGET(gmsg->label_text));
+        gtk_widget_show_all(GTK_WIDGET(gmsg->row_msg));
         mx_unselect_curr_room_messages(builder);
     }
+}
+
+void mx_gupd_msg_power(guint64 msg_id, guint64 room_id,
+                       gdouble power, GtkBuilder *builder) {
+    t_gmsg *gmsg = mx_get_gmsg_by_id(msg_id, room_id, builder);
+    gchar *value = g_strdup_printf("%.2f Wt", power);
+
+    gmsg->power = power;
+    gtk_label_set_text(gmsg->label_power, value);
+    gtk_widget_show_all(GTK_WIDGET(gmsg->row_msg));
+    mx_unselect_curr_room_messages(builder);
+    g_free(value);
 }
