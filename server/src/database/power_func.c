@@ -2,17 +2,16 @@
 
 
 void mx_db_update_room_power(sqlite3 *db, guint64 power, guint64 room_id) {
-    guint64 new_power = power;
+    guint64 new_power = power + mx_get_power_of_room(db, room_id);
     sqlite3_str *sqlite_str = sqlite3_str_new(db);
     gchar *request = NULL;
     gint32 rv = SQLITE_OK;
 
-    if (mx_get_power_of_room(db, room_id) != 0)
-        new_power += mx_get_power_of_room(db, room_id);
     sqlite3_str_appendf(sqlite_str, "update rooms set power = %llu"
-                                        "where id = %llu",
+                                        " where id = %llu",
                             new_power, room_id);
     request = sqlite3_str_finish(sqlite_str);
+    g_print("\n\n----------------Ok--------------\n\n");
     rv = sqlite3_exec(db, request, 0, 0, 0);
     mx_error_sqlite(rv);
     sqlite3_free(request);
