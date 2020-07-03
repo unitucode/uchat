@@ -41,7 +41,7 @@ guint64 mx_get_power_of_room(sqlite3 *db, guint64 room_id) {
     if (sqlite3_column_int64(stmt, 0))
         power_of_room = sqlite3_column_int64(stmt, 0);
     sqlite3_finalize(stmt);
-    return power_of_room;
+    return power_of_rooms;
 }
 
 /*
@@ -59,7 +59,7 @@ guint64 mx_get_power_of_message(sqlite3 *db, guint64 message_id) {
     gdouble power_of_message = -1;
 
     sqlite3_prepare_v2(db, "select power from messages where message_id = ?1",
-                        -1, &stmt, NULL);
+                       -1, &stmt, NULL);
     mx_error_sqlite(rv);
     sqlite3_bind_int64(stmt, 1, message_id);
     mx_error_sqlite(sqlite3_step(stmt));
