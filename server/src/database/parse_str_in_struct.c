@@ -104,7 +104,6 @@ t_db_message *mx_parse_message(cJSON *message_j) {
     message->message = g_strstrip(g_strdup(json->valuestring));
     message->file_name = g_strdup("");
     message->date_dead = 0;
-    message->power = 2;
     return message;
 }
 
