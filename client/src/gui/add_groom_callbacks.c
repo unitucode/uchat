@@ -5,9 +5,21 @@ void mx_reset_addroom(GtkButton *btn, GtkBuilder *builder) {
     (void)btn;
 }
 
+static void set_main_info_current_room_sett(GtkBuilder *builder,
+                                            t_groom *groom) {
+    GObject *name = gtk_builder_get_object(builder, "label_prefs_roomname");
+    GObject *energy = gtk_builder_get_object(builder, "label_room_energy");
+    GObject *go_down = gtk_builder_get_object(builder, "btn_go_down");
+    gchar *value = g_strdup_printf("%.2f Wt", groom->power);
+
+    gtk_widget_hide(GTK_WIDGET(go_down));
+    gtk_label_set_text(GTK_LABEL(name), groom->room_name);
+    gtk_label_set_text(GTK_LABEL(energy), value);
+    g_free(value);
+}
+
 void mx_set_current_room_sett(GtkBuilder *builder) {
     t_groom *groom = mx_get_selected_groom(builder, MX_LOCAL_ROOMS);
-    GObject *name = gtk_builder_get_object(builder, "label_prefs_roomname");
     GObject *customer = gtk_builder_get_object(builder,
                                                "label_prefs_customer");
     GObject *desc = gtk_builder_get_object(builder, "buffer_room_desc");
@@ -15,11 +27,11 @@ void mx_set_current_room_sett(GtkBuilder *builder) {
                                                   "label_header_roomname");
 
     if (groom) {
-        gtk_label_set_text(GTK_LABEL(name), groom->room_name);
         gtk_text_buffer_set_text(GTK_TEXT_BUFFER(desc), groom->desc, -1);
         gtk_label_set_text(GTK_LABEL(customer), groom->customer);
         gtk_label_set_text(GTK_LABEL(header_name), groom->room_name);
         mx_set_room_members(builder, groom);
+        set_main_info_current_room_sett(builder, groom);
     }
     mx_reset_select_count();
 }

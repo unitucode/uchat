@@ -17,7 +17,7 @@ static void select_row(t_groom *groom, t_gmsg *gmsg,
     gtk_list_box_select_row(GTK_LIST_BOX(groom->box_messages),
                             GTK_LIST_BOX_ROW(row));
 
-    if (gmsg->type == DB_STICKER)
+    if (gmsg->type == DB_STICKER || gmsg->type == DB_FILE_MSG)
         select_notedit++;
     if (is_own)
         select_own++;
@@ -31,7 +31,7 @@ static void unselect_row(t_groom *groom, t_gmsg *gmsg,
     gtk_list_box_unselect_row(GTK_LIST_BOX(groom->box_messages),
                             GTK_LIST_BOX_ROW(row));
 
-    if (gmsg->type == DB_STICKER)
+    if (gmsg->type == DB_STICKER || gmsg->type == DB_FILE_MSG)
         select_notedit--;
     if (is_own)
         select_own--;

@@ -18,7 +18,7 @@ list row {
 .dialog_auth entry, .wnd_main entry, .box-room-settings textview,
 .dialog_auth textview, .wnd_main textview, .box-room-settings entry,
 .box-room-info textview, #dialog_profile_prefs textview,
-.dialog_addroom entry {
+.dialog_addroom entry, .wnd-room-info entry, .dialog_user_info textview {
     caret-color: #fff;
     color: #fff;
 }
@@ -27,14 +27,14 @@ button, .input, entry, notebook, .dialog_auth .titlebar, button image  {
 }
 .dialog_auth, .wnd_main, .dialog_addroom,
 .profile-settings-wnd, .wnd-room-info, .wnd-room-settings,
-.dialog_join_to_room {
+.dialog_confirmation, .dialog_user_info {
     background: rgb(57,69,107);
     background-image: linear-gradient(173deg, rgb(57, 69, 107) 0%, rgb(35,41,65) 100%);
 }
 .dialog_auth entry selection, .wnd_main entry selection,
 .dialog_auth textview selection, .wnd_main textview selection,
 .box-room-settings textview selection, .box-room-info textview selection,
-#dialog_profile_prefs textview selection {
+#dialog_profile_prefs textview selection, .dialog_user_info textview selection {
 	background-color: #6785FF;
 }
 box stack, entry, .dialog_notebook header {
@@ -51,6 +51,7 @@ box stack, entry, .dialog_notebook header {
     font-size: 15px;
     font-weight: 300;
 }
+
 .dialog_auth entry, .dialog_addroom entry {
 	background-color: #3A466B;
 	border-radius: 5px;
@@ -104,7 +105,7 @@ button label {
     color: red;
 }
 headerbar {
-    min-height: 40px;
+    min-height: 35px;
 }
 .dialog_auth decoration, .wnd-room-info decoration,
 .wnd-room-settings decoration, .profile-settings-wnd decoration {
@@ -160,7 +161,6 @@ headerbar box label {
 dialog headerbar {
     background: rgb(229,229,229);
     background: linear-gradient(180deg, rgba(229,229,229,1) 0%, rgba(205,205,205,1) 100%);
-    box-shadow: 0 -1px #A8A7A6 inset;
 }
 .rooms-list, .stack_messages list, .rooms-list .activatable:selected {
 	background: transparent;
@@ -188,19 +188,37 @@ dialog headerbar {
 }
 .rooms-list row:hover label {
     background-color: rgb(58,70, 107);
-    margin: 5px 20px;
+    margin-left: 20px;
+    margin-right: 20px;
 }
 .rooms-list row:selected label {
 	background-color: rgb(66,78, 120);
     border-left: 3px solid rgb(83,102,187);
     border-right: 3px solid rgb(83,102,187);
-    margin: 5px 18px;
+    margin-left: 18px;
+    margin-right: 18px;
+}
+.rooms-list row:selected:hover label {
+    margin-left: 14px;
+    margin-right: 14px;
 }
 
 /* Class for room with new messages */
 .rooms-list row .has-messages {
     border-left: 3px solid transparent;
     border-right: 3px solid #28E1B2;
+	animation-name: pulse;
+	animation-duration: .8s;
+	animation-timing-function: ease;
+	animation-iteration-count: infinity;
+}
+.rooms-list row:hover .has-messages {
+	animation: none;
+}
+@keyframes pulse {
+    0% {margin-left: 25px; margin-right: 25px;}
+    75% {margin-left: 21px; margin-right: 21px;}
+    100% {margin-left: 25px; margin-right: 25px;}
 }
 .add-room-button {
 	background: none;
@@ -228,7 +246,7 @@ dialog headerbar {
 .boxroom_header-in {
     border-bottom: 1px solid #424E78;
     background-color: #364165;
-    padding: 7px 25px;
+    padding: 0 25px;
     font-size: 17px;
 }
 .boxroom_header-in button {
@@ -238,6 +256,12 @@ dialog headerbar {
 }
 .boxroom_header-in label {
     color: #fff;
+}
+.boxroom_header-in button:nth-child(4) {
+	margin-left: 2px;
+}
+.boxroom_header-in button:nth-child(3) {
+	margin-left: 2px;
 }
 .wnd_main list {
     color: #fff;
@@ -267,7 +291,11 @@ dialog headerbar {
 .box_titlebar button {
     background-color: #3A466B;
     padding: 3px 8px;
-	margin: 7px 0;
+    margin-top: 7px;
+    margin-bottom: 7px;
+}
+.box_titlebar button:nth-child(3) {
+	margin-right: 7px;
 }
 .box_titlebar button:hover, .boxroom_header-in button:hover,
 .btns-msg-box:hover, .button_send_message:hover {
@@ -296,25 +324,8 @@ dialog headerbar {
 .box_msg_send scrolledwindow {
 	border: 1px solid #424E78;
 }
-.stack_messages list .box_msg_info label:nth-child(1) {
-	background-color: #424E78;
-	padding: 10px 15px;
-	border-radius: 0 8px 8px 8px;
-	margin-top: 7px;
-	margin-left: 7px; 
-	font-weight: 300;
-	font-size: 14px;
-	color: #B8C2E5; 
-}
-.stack_messages list .box_own_msg_info label:nth-child(2) {
-	background-color: rgb(86, 102, 160);
-	padding: 10px 15px;
-	border-radius: 8px 8px 0 8px;
-	margin-top: 7px;
-	margin-left: 7px;
-	font-weight: 300;
-	font-size: 14px;
-	color: #B8C2E5; 
+.stack_messages > label {
+    color: #B8C2E5;
 }
 .main_msg_box {
 	padding: 0 180px 0 0;
@@ -322,69 +333,108 @@ dialog headerbar {
 .main_own_msg_box {
 	padding: 0 0 0 180px;
 }
-
-
 .stack_messages list {
 	margin: 7px 38px 14px 38px;
-}
-.sender_login {
-    margin-top: 10px;
-	font-size: 14px;
 }
 .stack_messages list row {
     padding: 0;
 }
 .stack_messages list row:selected {
-	background-color: transparent;
+    background-color: transparent;
 }
-.stack_messages list .box_msg_info label:nth-child(2){
-	font-size: 13px;
+
+/* Message styling */
+
+.sender_login {
+    margin-top: 10px;
+    font-size: 14px;
+}
+.stack_messages list .box_msg_info > label,
+.stack_messages list .box_own_msg_info > label,
+.box_own_file_info .file-button, 
+.box_file_info .file-button {
+	padding: 10px 15px;
+	margin-top: 7px;
+	margin-left: 7px; 
+	font-weight: 300;
+	font-size: 14px;
+	color: #B8C2E5; 
+}
+.stack_messages list .box_msg_info > label, .box_file_info .file-button {
+    background-color: #424E78;
+    border-radius: 0 8px 8px 8px;
+}
+.stack_messages list .box_own_msg_info > label, .box_own_file_info .file-button {
+	background-color: rgb(86, 102, 160);
+	border-radius: 8px 8px 0 8px;
+}
+.stack_messages list .box_msg_info > box > label,
+.stack_messages list .box_sticker_info > box > label,
+.stack_messages list .box_own_msg_info > box > label,
+.stack_messages list .box_own_sticker_info > box > label,
+.box_own_file_info > box:first-child > label,
+.box_file_info > box:last-child > label {
+    font-size: 13px;
     font-weight: 300;
     color: #919CC0;
+}
+.stack_messages list .box_msg_info >  box ,
+.stack_messages list .box_sticker_info > box,
+.box_file_info > box:last-child  {
     margin-left: 10px;
 }
-.stack_messages list .box_sticker_info label:nth-child(2){
-	font-size: 13px;
-    font-weight: 300;
-    color: #919CC0;
-    margin-left: 10px;
+.box_own_msg_info > box, .box_own_file_info > box:first-child {
+    margin-right: 7px;
 }
-.stack_messages list .box_own_msg_info label:nth-child(1){
-	font-size: 13px;
-    font-weight: 300;
-    color: #919CC0;
-    margin-right: 10px;
+.stack_messages list .box_own_sticker_info > box {
+	margin-right: 10px;
 }
-.stack_messages list .box_own_sticker_info label:nth-child(1){
-	font-size: 13px;
-    font-weight: 300;
-    color: #919CC0;
-    margin-right: 10px;
-}
-.stack_messages list .box_own_sticker_info image {
+.stack_messages list .box_own_sticker_info > image,
+.stack_messages list .box_sticker_info > image {
     margin-top: 7px;
     border-color: transparent;
 }
-.stack_messages list .box_sticker_info image {
-    margin-top: 7px;
-    border-color: transparent;
-}
-.stack_messages list row:selected .box_msg_info label:nth-child(1) {
+.stack_messages list row:selected .box_msg_info > label,
+.stack_messages list row:selected .box_own_msg_info > label {
     background-color: #6785FF;
     color: #fff;
 }
-.stack_messages list row:selected .box_own_msg_info label:nth-child(2) {
-    background-color: #6785FF;
-    color: #fff;
-}
-.stack_messages list row:selected .box_own_sticker_info image:nth-child(2) {
+.stack_messages list row:selected .box_own_sticker_info > image {
     border-right: 8px solid #6785FF;
     border-radius: 5px;
+    padding-right: 7px;
 }
-.stack_messages list row:selected .box_sticker_info image:nth-child(1) {
+.stack_messages list row:selected .box_sticker_info > image {
     border-left: 8px solid #6785FF;
     border-radius: 5px;
+    padding-left: 7px;
 }
+.box_file_info > box > box, .box_own_file_info > box > box,
+.stack_messages list .box_msg_info > box > box,
+.stack_messages list .box_sticker_info > box > box,
+.stack_messages list .box_own_msg_info > box > box,
+.stack_messages list .box_own_sticker_info > box > box {
+	font-size: 13px;
+	color: #B8C2E5;
+}
+
+/* Box file info styles */
+
+.file-button > label {
+	color: #B8C2E5; 
+}
+.stack_messages list row:hover .file-button button {
+    opacity: .8;
+}
+.stack_messages list row:selected .box_file_info .file-button,
+.stack_messages list row:selected .box_own_file_info .file-button {
+    background-color: #6785FF;
+}
+.stack_messages list row:selected .box_file_info .file-button label,
+.stack_messages list row:selected .box_own_file_info .file-button label {
+    color: #fff;
+}
+
 .stack_messages list row label {
 	transition: none;
 }
@@ -465,7 +515,7 @@ dialog headerbar {
     font-size: 14px;
 }
 .box-room-settings textview text, .box-room-info textview text,
-#dialog_profile_prefs textview text {
+#dialog_profile_prefs textview text, .dialog_user_info textview text {
     background-color: #3A466B;
     box-shadow: none;
     border: 1px solid #48547E;
@@ -527,7 +577,8 @@ overshoot.top {
 	background-color: #364165;
 }
 .box_stickers_header label {
-	color: #fff;
+    color: #fff;
+    font-size: 14px;
 }
 .box_stickers_header button {
 	font-weight: 300;
@@ -564,10 +615,11 @@ overshoot.top {
 .box-room-info box label:last-child {
     font-size: 16px;
 }
-.box-room-info box:nth-child(3) label, .box-room-info box:nth-child(4) label {
+.box-room-info > box:nth-child(3) label,
+.box-room-info > box:nth-child(4) > label {
 	margin-bottom: 7px;
 }
-.box-room-info box:nth-child(4) label {
+.box-room-info > box:nth-child(4) > label {
 	margin-top: 3px;
 }
 .box-room-info box:last-child list {
@@ -599,8 +651,11 @@ overshoot.top {
 #dialog_profile_prefs > box:first-child label:last-child  {
 	font-size: 16px;
 }
-#dialog_profile_prefs > box:first-child box:last-child label {
+#dialog_profile_prefs > box:first-child box:last-child > label {
 	margin: 10px 0 7px;
+}
+#dialog_profile_prefs > box:first-child box:last-child > button {
+    margin-top: 6px;
 }
 #dialog_profile_prefs .dialog-action-area {
     margin-top: 12px;
@@ -614,40 +669,86 @@ overshoot.top {
 
 /* Dialog join to room styles */
 
-.dialog_join_to_room .dialog-vbox {
+.dialog_confirmation .dialog-vbox {
     margin-top: 40px;
     color: #fff;
 }
-.dialog_join_to_room .dialog-vbox > box:first-child label:first-child {
+.dialog_confirmation .dialog-vbox > box:first-child label:first-child {
 	font-size: 16px;
 	font-weight: 300;
     margin-bottom: 9px;
     color: #D8DCE8;
 }
-.dialog_join_to_room .dialog-vbox > box:first-child label:last-child {
+.dialog_confirmation .dialog-vbox > box:first-child label:last-child {
 	font-size: 18px;
 	font-weight: 500;
 }
-.dialog_join_to_room .dialog-vbox > box:first-child {
+.dialog_confirmation .dialog-vbox > box:first-child {
     margin-bottom: 9px;
 }
-.listbox_info_members row {
+
+/* Members list styles */
+
+.listbox_members row {
     margin: 7px 7px 0 7px;
     border-radius: 5px;
-    padding: 0 15px;
+    padding: 0 10px;
 }
-.listbox_info_members row:last-child {
+.listbox_members row:last-child {
     margin-bottom: 7px;
 }
-.listbox_info_members row:hover {
+.listbox_members row:hover {
     background-color: #424E78;
 }
-.listbox_info_members row:selected {
+.listbox_members row:selected {
 	background-color: #6785FF;
 }
-.listbox_info_members row:selected:hover {
+.listbox_members row:selected:hover {
 	background-color: #5F7BEE;
 }
+.listbox_members row button {
+    padding: 0;
+}
+.listbox_members row button:hover {
+    opacity: .6;
+}
+
+
 .dialog_addroom .dialog-action-area {
     margin-top: 15px;
+}
+.wnd-room-info entry {
+    font-size: 13px;
+    font-weight: 300;
+    margin-bottom: 7px;
+    padding: 0 8px;
+}
+
+/* User info styles */
+
+.dialog_user_info textview {
+    background-color: transparent;
+}
+.box_user_info {
+	padding: 25px 30px 30px;
+}
+.box_user_info > box {
+	color: #fff;
+}
+.box_user_info > box label:first-child {
+	font-size:14px;
+	font-weight: 500;
+}
+.box_user_info > box label:last-child {
+	font-size:16px;
+}
+.box_user_info > box:last-child label {
+	margin-bottom: 5px;
+}
+.arrow-down-btn {
+	background: #3A466B;
+	border-radius: 10px;
+}
+.arrow-down-btn:hover {
+    opacity: .7 ;
 }

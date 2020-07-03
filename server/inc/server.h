@@ -70,6 +70,7 @@ struct s_client {
     t_db_user *user;
     t_info *info;
     gboolean upload_file;
+    gboolean is_file;
 };
 
 struct s_send_helper {
@@ -95,4 +96,4 @@ void mx_daemon(void);
 bool mx_valid_authorization_data(t_dtp *data, char **login,
                                  char **pass, t_client *client);
 void mx_correct_data(t_client *client);
-
+gdouble mx_get_used_power(guint64 chars);

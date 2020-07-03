@@ -7,16 +7,16 @@ GtkBuilder *mx_init_window(int argc, char **argv) {
     builder = gtk_builder_new();
     gtk_builder_add_from_file(builder, MX_GUI_PATH, NULL);
     gtk_builder_connect_signals(builder, builder);
-    mx_css_connect();
     return builder;
 }
 
 static void change_icontheme_paths(GtkBuilder *builder) {
     GObject *desc = gtk_builder_get_object(builder, "buffer_message");
     const gchar *path[] = {"../src/gui/resources",
-                           "../src/gui/resources/stickers"};
+                           "../src/gui/resources/stickers",
+                           "../src/gui/resources/Adwaita"};
 
-    gtk_icon_theme_set_search_path(gtk_icon_theme_get_default(), path, 2);
+    gtk_icon_theme_set_search_path(gtk_icon_theme_get_default(), path, 3);
     gtk_text_buffer_set_text(GTK_TEXT_BUFFER(desc), "Enter your message", -1);
 }
 

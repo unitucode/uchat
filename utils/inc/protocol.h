@@ -6,9 +6,12 @@
 #include "utils.h"
 
 #define MX_J_STR(m) (m) ? (m) : "(null)"
-#define MX_MAX_FILE_SIZE 50000000
+#define MX_MAX_FILE_SIZE 10000000
 #define MX_FILES_DIR "files/"
 #define MX_BUF_FILE 16384
+#define MX_FILE_DELIM "__"
+#define MX_MAX_ROOM_NAME 20
+#define MX_MAX_MESSAGE 20
 
 /* Protocol object
  * ----------
@@ -26,6 +29,7 @@ typedef struct s_dtp t_dtp;
 typedef enum s_error_type {
     ER_AUTH_DATA = 0,
     ER_USER_EXST,
+    ER_CLI_EXST,
     ER_COUNT_ERRS
 }            t_error_type;
 
@@ -40,7 +44,6 @@ typedef enum s_request_type {
     RQ_MSG,
     RQ_EDIT_MSG,
     RQ_DEL_MSG,
-    RQ_STICKER,
     RQ_DEL_HIST,
     RQ_GET_NEW_MSGS,
     RQ_SEARCH_MSG,
@@ -52,6 +55,7 @@ typedef enum s_request_type {
     RQ_JOIN_ROOM,
     RQ_UPD_ROOM_NAME,
     RQ_UPD_ROOM_DESC,
+    RQ_UPD_ROOM_POWR,
     RQ_SEARCH_CH,
     RQ_GET_MEMBERS,
     RQ_MEMBER_INFO,
@@ -61,6 +65,7 @@ typedef enum s_request_type {
     RQ_UPLOAD_FILE,
     RQ_DOWNLOAD_FILE,
     RQ_LOG_OUT,
+    RQ_READY_READ,
     RQ_COUNT_REQUEST
 }            t_request_type;
 
@@ -129,6 +134,6 @@ void mx_create_token(char **token, char *login);
 
 //Protocol
 t_dtp *mx_get_transport_data(cJSON *json_result);
-int mx_get_type_dtp(t_dtp *dtp);
+gint64 mx_get_type_dtp(t_dtp *dtp);
 t_dtp *mx_request_creation(char *req_body);
 void mx_free_request(t_dtp **request);

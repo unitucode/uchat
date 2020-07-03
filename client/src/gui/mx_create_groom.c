@@ -36,13 +36,15 @@ t_groom *mx_create_groom(cJSON *room) {
     if ((valid = get_data(room, &data, "name")) && cJSON_IsString(data))
         groom->room_name = strdup(data->valuestring);
     if ((valid = get_data(room, &data, "customer_id")) && cJSON_IsNumber(data))
-        groom->customer_id = data->valueint;
+        groom->customer_id = data->valuedouble;
     if ((valid = get_data(room, &data, "id")) && cJSON_IsNumber(data))
-        groom->id = data->valueint;
+        groom->id = data->valuedouble;
     if ((valid = get_data(room, &data, "date")) && cJSON_IsNumber(data))
         groom->date = data->valuedouble;
     if ((valid = get_data(room, &data, "desc")) && cJSON_IsString(data))
         groom->desc = strdup(data->valuestring);
+    if ((valid = get_data(room, &data, "power")) && cJSON_IsNumber(data))
+        groom->power = data->valuedouble;
     if (!valid) {
         mx_delete_groom(groom);
         return NULL;

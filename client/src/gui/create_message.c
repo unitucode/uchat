@@ -16,16 +16,18 @@ t_gmsg *mx_create_gmsg(cJSON *msg, t_chat *chat) {
     if ((valid = get_data(msg, &data, "message")) && cJSON_IsString(data))
         gmsg->msg = strdup(data->valuestring);
     if ((valid = get_data(msg, &data, "room_id")) && cJSON_IsNumber(data))
-        gmsg->room_id = data->valueint;
-    groom = mx_get_groom_by_id(data->valueint, chat->builder);
+        gmsg->room_id = data->valuedouble;
+    groom = mx_get_groom_by_id(data->valuedouble, chat->builder);
     if ((valid = get_data(msg, &data, "user_id")) && cJSON_IsNumber(data))
         gmsg->login = g_strdup(MX_J_STR(g_hash_table_lookup(groom->members, GINT_TO_POINTER(data->valueint))));
     if ((valid = get_data(msg, &data, "date")) && cJSON_IsNumber(data))
         gmsg->date = data->valuedouble;
     if ((valid = get_data(msg, &data, "message_id")) && cJSON_IsNumber(data))
-        gmsg->message_id = data->valueint;
+        gmsg->message_id = data->valuedouble;
     if ((valid = get_data(msg, &data, "msg_type")) && cJSON_IsNumber(data))
-        gmsg->type = data->valueint;
+        gmsg->type = data->valuedouble;
+    if ((valid = get_data(msg, &data, "power")) && cJSON_IsNumber(data))
+        gmsg->power = mx_get_used_power(data->valuedouble);
     if (!valid) {
         mx_delete_gmsg(gmsg);
         return NULL;

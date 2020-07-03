@@ -22,15 +22,20 @@ t_dtp *mx_size_request(goffset size, gchar *name) {
     return mx_get_transport_data(result);
 }
 
-static void download(t_client *client, GFile *file, gsize size) {
+static void download(t_client *client, GFile *file, GDataInputStream *in_d) {
     GOutputStream *out = g_io_stream_get_output_stream(
         G_IO_STREAM(client->conn));
-    gchar *contents = NULL;
-    gsize bytes = 0;
+    GFileInputStream *in = g_file_read(file, NULL, NULL);
+    gchar *ready = g_data_input_stream_read_line(in_d, NULL, NULL, NULL);
+    t_dtp *dtp = mx_request_creation(ready);
 
-    g_file_load_contents(file, NULL, &contents, &bytes, NULL, NULL);
-    g_output_stream_write_all(out, contents, size, NULL, NULL, NULL);
-    g_free(contents);
+    if (dtp && dtp->type == RQ_READY_READ) {
+        g_print("splice = %ld\n", g_output_stream_splice(out, G_INPUT_STREAM(in), G_OUTPUT_STREAM_SPLICE_CLOSE_SOURCE, NULL, NULL));
+    }
+    if (ready)
+        g_free(ready);
+    if (dtp)
+        mx_free_request(&dtp);
     g_io_stream_close(G_IO_STREAM(client->conn), NULL, NULL); // unrefs
 }
 
@@ -48,7 +53,7 @@ static void download_file(gchar *msg, t_client *client) {
         size = mx_size_request(g_file_info_get_size(info), msg);
         mx_send(client->out, size);
         mx_free_request(&size);
-        download(client, file, g_file_info_get_size(info));
+        download(client, file, client->in);
     }
     else
         g_io_stream_close(G_IO_STREAM(client->conn), NULL, NULL);
@@ -83,6 +88,7 @@ gboolean mx_download_file_handler(t_dtp *data, t_client *client) {
     cJSON *room_id = cJSON_GetObjectItemCaseSensitive(data->json, "room_id");
     cJSON *msg_id = cJSON_GetObjectItemCaseSensitive(data->json, "msg_id");
 
+    client->is_file = TRUE;
     if (!cJSON_IsNumber(msg_id) || !cJSON_IsNumber(room_id)
         || !cJSON_IsString(token)) {
         return FALSE;

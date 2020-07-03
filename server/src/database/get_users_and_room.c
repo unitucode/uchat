@@ -112,6 +112,7 @@ t_db_room *mx_get_room_by_id(sqlite3 *db, guint64 id) {
         room->date = sqlite3_column_int64(stmt, 3);
         room->desc = strdup(MX_J_STR((char*)sqlite3_column_text(stmt, 4)));
         room->type = sqlite3_column_int(stmt, 5);
+        room->power = sqlite3_column_int64(stmt, 6);
     }
     sqlite3_finalize(stmt);
     return room;

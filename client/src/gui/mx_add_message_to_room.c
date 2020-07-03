@@ -26,7 +26,7 @@ static void add_message_row_end(t_gmsg *msg, t_chat *chat) {
     gtk_widget_show_all(GTK_WIDGET(box));
     g_object_set_data_full(G_OBJECT(row), "gmsg", msg,
                            (GDestroyNotify)mx_delete_gmsg);
-    g_object_set_data_full(G_OBJECT(event), "sigdata", data,
+    g_object_set_data_full(G_OBJECT(row), "sigdata", data,
                            (GDestroyNotify)mx_free_sigdata);
 }
 
@@ -56,7 +56,7 @@ static void add_message_row_start(t_gmsg *msg, t_chat *chat) { //TO FIX
     gtk_widget_show_all(GTK_WIDGET(box));
     g_object_set_data_full(G_OBJECT(row), "gmsg", msg,
                            (GDestroyNotify)mx_delete_gmsg);
-    g_object_set_data_full(G_OBJECT(event), "sigdata", data,
+    g_object_set_data_full(G_OBJECT(row), "sigdata", data,
                            (GDestroyNotify)mx_free_sigdata);
 }
 

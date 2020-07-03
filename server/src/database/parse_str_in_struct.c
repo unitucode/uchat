@@ -74,6 +74,7 @@ t_db_room *mx_parse_json_room(cJSON *room_j) {
     if (!(json = mx_json_is_valid(room_j, "type", cJSON_IsNumber)))
         return NULL;
     room->type = json->valueint;
+    room->power = 0;
     return room;
 }
 

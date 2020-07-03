@@ -1,8 +1,10 @@
 #include "client.h"
 
 void mx_go_down(GtkButton *btn, GtkBuilder *builder) {
-    g_message("GO DOWN\n");
-    (void)builder;
+    t_groom *groom = mx_get_selected_groom(builder, MX_LOCAL_ROOMS);
+    GtkAdjustment *adj = gtk_scrolled_window_get_vadjustment(groom->page);
+
+    gtk_adjustment_set_value(adj, gtk_adjustment_get_upper(adj));
     (void)btn;
 }
 
@@ -11,7 +13,7 @@ static void req_send_message(GtkButton *btn, t_chat *chat) {
     t_groom *room = mx_get_selected_groom(chat->builder,  MX_LOCAL_ROOMS);
     t_dtp *dtp = NULL;
 
-    if (room && !chat->msg_placeholder) {
+    if (room && !chat->msg_placeholder && strlen(message_text) > 0) {
         dtp = mx_msg_request(message_text, room->id);
         mx_send(chat->out, dtp);
         mx_free_request(&dtp);

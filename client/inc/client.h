@@ -18,12 +18,17 @@
 #define MX_ERRMSG_DIFPASS "Passwords must match"
 #define MX_ERRMSG_INCCRDATA "The login or password inccorect"
 #define MX_ERRMSG_USEREXIST "User already exist"
+#define MX_ERRMSG_CLIEXIST "User already authorized"
 
 #define MX_ROOM_CTRL 0
 #define MX_MSG_CTRL 1
 
 #define MX_LOCAL_ROOMS "listbox_rooms"
 #define MX_GLOBAL_ROOMS "listbox_global_rooms"
+
+#define MX_DARK_THEME "../src/gui/resources/dark-theme.css"
+#define MX_LIGHT_THEME "../src/gui/resources/light-theme.css"
+#define MX_THEME_FILE "../set-theme"
 
 //settings
 #define MX_BUF_MSGS 30
@@ -70,21 +75,24 @@ struct s_groom {
     char *room_name;
     char *customer;
     guint64 customer_id;
-    long int date;
+    guint64 date;
     char *desc;
-    bool is_updated;
+    gboolean is_updated;
     gint uploaded;
+    gdouble power;
 };
 
 struct s_gmsg {
     GtkListBoxRow *row_msg;
     GtkLabel *label_text;
+    GtkLabel *label_power;
     gint type;
     char *msg;
     char *login;
     guint64 date;
-    int room_id;
-    int message_id;
+    guint64 room_id;
+    guint64 message_id;
+    gdouble power;
 };
 
 struct s_chat {
@@ -106,6 +114,7 @@ struct s_chat {
     void (*error_handler[ER_COUNT_ERRS])(GtkBuilder *builder);
     gboolean (*request_handler[RQ_COUNT_REQUEST])(t_dtp *dtp, struct s_chat *chat);
     gboolean msg_placeholder;
+    GtkCssProvider *cssProv;
 };
 
 struct s_signal_data {
@@ -127,6 +136,7 @@ void mx_init_handlers(t_chat *chat);
 void mx_init_errors(t_chat *chat);
 void mx_get_data(t_chat *chat);
 void mx_upload_file(gchar *path, gint room_id, t_chat *chat);
+void mx_send_ready(GSocketConnection *conn);
 
 
 //handlers
@@ -154,6 +164,7 @@ gboolean mx_ban_member_handler(t_dtp *data, t_chat *chat); //HANDLER FOR BAN MEM
 gboolean mx_search_msgs_handler(t_dtp *data, t_chat *chat); //HANDLER FOR SEARCH MSG
 gboolean mx_del_hist_handler(t_dtp *data, t_chat *chat); //HANDLER FOR DELETE HISTORY
 gboolean mx_old_msgs_hanlder(t_dtp *data, t_chat *chat); //HANDLER FOR UPD MSGS
+gboolean mx_upd_room_power_handler(t_dtp *data, t_chat *chat); //HANDLER FOR UPD POWER ROOM
 void mx_download_file(guint64 room_id, guint64 msg_id, t_chat *chat);
 void mx_file_read(gsize size, gchar *name, GInputStream *in);
 
@@ -198,6 +209,7 @@ t_dtp *mx_download_file_request(guint64 room_id, guint64 msg_id, gchar *token);
 //errors api
 void mx_err_auth_data_handler(GtkBuilder *builder);
 void mx_err_user_exist_handler(GtkBuilder *builder);
+void mx_err_cli_exist_handler(GtkBuilder *builder);
 
 //gui
 GtkBuilder *mx_init_window(int argc, char **argv);
@@ -224,10 +236,13 @@ void mx_set_default_room_sett(GtkBuilder *builder);
 void mx_set_current_room_sett(GtkBuilder *builder);
 void mx_gupd_room_desc(guint64 id, char *desc, GtkBuilder *builder);
 void mx_gupd_room_name(guint64 id, char *name, GtkBuilder *builder);
+void mx_gupd_room_power(guint64 id, gdouble value, GtkBuilder *builder);
 void mx_gdel_room(guint64 id, GtkBuilder *builder);
 void mx_gdel_msg(guint64 msg_id, guint64 room_id, GtkBuilder *builder);
 void mx_gupd_msg_text(guint64 msg_id, guint64 room_id,
                       char *text, GtkBuilder *builder);
+void mx_gupd_msg_power(guint64 msg_id, guint64 room_id,
+                       gdouble power, GtkBuilder *builder);
 void mx_reset_messege_room(t_groom *new_selected, GtkBuilder *builder);
 void mx_hide_msg_editing(GtkButton *btn, GtkBuilder *builder);
 void mx_set_room_widgets_visibility(GtkBuilder *builder, bool visibility);
@@ -248,6 +263,7 @@ void mx_msgcreate_img_sticker(GtkWidget *box_info,
 void mx_msgcreate_file(GtkWidget *box_info, t_gmsg *gmsg,
                        gboolean is_own, t_chat *chat);
 GtkWidget *mx_create_message_row(t_chat *chat, t_gmsg *gmsg);
+void mx_msgcreate_box_energy(GtkWidget *box_status, t_gmsg *gmsg);
 void mx_msgcreate_label_time(GtkWidget *box_info,
                              t_gmsg *gmsg, gboolean is_own);
 void mx_search_delim_set_visibility(GtkBuilder *builder, gboolean is_visible);
@@ -281,6 +297,7 @@ void mx_add_to_sett_members(gint *key,
 void mx_add_to_info_members(gint *key,
                             gchar *value, GtkBuilder *builder);
 void mx_reset_select_count();
+void mx_open_files_dir(GtkButton *btn, t_chat *chat);
 
 // gui utils
 void mx_scrlldwnd_connect(gchar *name, GtkWidget *scroll, GtkBuilder *builder, t_groom *room);
@@ -296,7 +313,8 @@ void mx_widget_switch_visibility_by_name(GtkBuilder *builder, gchar *name);
 t_groom *mx_get_selected_groom(GtkBuilder *builder, gchar *list_name);
 t_groom *mx_get_groom_by_id(guint64 room_id, GtkBuilder *builder);
 t_gmsg *mx_get_selected_gmsg(GtkBuilder *builder);
-t_gmsg *mx_get_gmsg_by_id(gint msg_id, gint room_id, GtkBuilder *builder);
+t_gmsg *mx_get_gmsg_by_id(guint64 msg_id, guint64 room_id,
+                          GtkBuilder *builder);
 void mx_unselect_room(t_groom *groom, GtkBuilder *builder);
 void mx_entry_set_icon_by_path(GtkEntry *entry, gchar *path,
                                GtkEntryIconPosition icon_pos);
@@ -324,6 +342,9 @@ void mx_connect_stickers(t_chat *chat);
 void mx_connect_ban_member(t_chat *chat);
 void mx_connect_test_request(t_chat *chat); // DELETE
 void mx_connect_filechooser(t_chat *chat);
+gchar *mx_get_filename(gchar *full_name);
+gboolean mx_is_file_image(gchar *filename);
+gboolean mx_is_file_animation(gchar *filename);
 
 // gui callbacks
 void mx_show_edit_msg(GtkButton *btn, t_chat *chat);
@@ -351,5 +372,9 @@ void mx_show_join_to_room(GtkWidget *event_box, GdkEventButton *event,
 bool mx_handle_request(char *request, t_chat *chat);
 void mx_send_auth_request(char *login, char *password,
                           t_chat *chat, t_request_type request_type);
-void mx_css_connect();
+void mx_css_connect(char *theme, t_chat *chat);
+void mx_css_connect_from_file(t_chat *chat);
+void mx_connect_theme_switcher(t_chat *chat);
+void change_theme_icon(t_chat *chat, gchar *icon_name);
 gchar *mx_format_text(gchar *text);
+gdouble mx_get_used_power(guint64 chars);
