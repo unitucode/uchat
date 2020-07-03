@@ -97,10 +97,44 @@ typedef struct s_groom t_groom;
  * power: power that message used
  */
 typedef struct s_gmsg t_gmsg;
+
+/* Chat
+ * ----------
+ * out: data output stream to server
+ * in: data input stream to server
+ * cli_conn: client connection to server
+ * auth_token: authorization token
+ * login: user login
+ * desc: user description
+ * argc: arguments count
+ * argv: arguments array
+ * id: user id
+ * curr_room: current selected room in chat
+ * data: dtp data
+ * upl_old_msgs: status of uploading
+ * builder: gtk builder
+ * valid: validation packets
+ * error_handler: array of error handlers
+ * request_hanlder: array of request handlers
+ * msg_placeholder: status of placeholder
+ * css_prov:
+ */
 typedef struct s_chat t_chat;
+
+/* Filter data
+ * ----------
+ * is_found_rooms:
+ * search_name:
+ */
 typedef struct s_filter_data t_filter_data;
+
+/* Signal data
+ * ----------
+ * groom:
+ * chat:
+ * row_msg:
+ */
 typedef struct s_signal_data t_signal_data;
-typedef struct s_gsticker t_gsticker;
 
 struct s_groom {
     GtkListBox *box_rooms;
@@ -155,7 +189,7 @@ struct s_chat {
     gboolean (*request_handler[RQ_COUNT_REQUEST])(t_dtp *dtp,
                                                   struct s_chat *chat);
     gboolean msg_placeholder;
-    GtkCssProvider *cssProv;
+    GtkCssProvider *css_prov;
 };
 
 struct s_signal_data {

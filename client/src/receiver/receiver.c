@@ -27,8 +27,9 @@ gboolean mx_handle_request(char *request, t_chat *chat) {
             return FALSE;
         }
         mx_free_request(&data);
+        return TRUE;
     }
-    return TRUE;
+    return FALSE;
 }
 
 static gboolean is_connected(t_chat *chat, GDataInputStream *in) {

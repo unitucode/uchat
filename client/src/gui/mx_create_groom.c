@@ -21,7 +21,7 @@ t_groom *mx_init_groom(void) {
     return room;
 }
 
-gboolean get_data(cJSON *msg, cJSON **data, char *field) { // TO FIX IN GMSG GET_DATA
+gboolean get_data(cJSON *msg, cJSON **data, char *field) {
     *data = cJSON_GetObjectItemCaseSensitive(msg, field);
     if (!*data)
         return FALSE;
