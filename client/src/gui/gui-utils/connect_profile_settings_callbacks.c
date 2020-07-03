@@ -21,6 +21,7 @@ void mx_req_edit_desc(GtkButton *btn, t_chat *chat) {
     gchar *desc = mx_get_buffer_text("buffer_profile_desc", chat->builder);
     t_dtp *dtp = NULL;
 
+    mx_trim_message(&desc);
     dtp = mx_upd_user_desc_request(desc);
     mx_send(chat->out, dtp);
     mx_free_request(&dtp);

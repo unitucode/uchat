@@ -377,6 +377,7 @@ void mx_add_to_info_members(gint *key,
                             gchar *value, GtkBuilder *builder);
 void mx_reset_select_count(void);
 void mx_open_files_dir(GtkButton *btn, t_chat *chat);
+void mx_req_send_message(GtkButton *btn, t_chat *chat);
 
 // gui utils
 void mx_scrlldwnd_connect(gchar *name, GtkWidget *scroll, GtkBuilder *builder,
@@ -424,6 +425,7 @@ void mx_connect_filechooser(t_chat *chat);
 gchar *mx_get_filename(gchar *full_name);
 gboolean mx_is_file_image(gchar *filename);
 gboolean mx_is_file_animation(gchar *filename);
+void mx_trim_message(gchar **message);
 
 /*
  * Gui callbacks
@@ -448,6 +450,13 @@ void mx_select_room(GtkWidget *event_box, GdkEventButton *event,
                     gpointer *user_data);
 void mx_show_join_to_room(GtkWidget *event_box, GdkEventButton *event,
                           gpointer *user_data);
+void mx_send_message_handle_enter(GtkTextView *textview,
+                                  GdkEvent *event, t_chat *chat);
+void mx_send_message_handle_shift(GtkWidget *textview,
+                                  GdkEvent *event, GtkBuilder *builder);
+
+// void mx_upload_file(gchar *path, gint room_id, t_chat *chat);
+gboolean mx_handle_request(char *request, t_chat *chat);
 void mx_send_auth_request(char *login, char *password,
                           t_chat *chat, t_request_type request_type);
 void mx_css_connect(char *theme, t_chat *chat);
