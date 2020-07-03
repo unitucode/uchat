@@ -28,6 +28,7 @@ void mx_req_room_sett(GtkButton *btn, t_chat *chat) {
                                               chat->builder);
     char *new_desc = mx_get_buffer_text("buffer_room_desc", chat->builder);
 
+    mx_trim_message(&new_desc);
     if (strcmp(groom->room_name, new_name)) {
         dtp = mx_upd_room_name_request(groom->id, new_name);
         mx_send(chat->out, dtp);
