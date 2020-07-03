@@ -29,7 +29,7 @@ void mx_db_update_room_power(sqlite3 *db, guint64 power, guint64 room_id) {
 guint64 mx_get_power_of_room(sqlite3 *db, guint64 room_id) {
     gint32 rv = SQLITE_OK;
     sqlite3_stmt *stmt;
-    gdouble power_of_room = 0;
+    guint64 power_of_room = 0;
 
     sqlite3_prepare_v2(db, "select power from rooms where id = ?1",
                         -1, &stmt, NULL);
@@ -54,7 +54,7 @@ guint64 mx_get_power_of_room(sqlite3 *db, guint64 room_id) {
 guint64 mx_get_power_of_message(sqlite3 *db, guint64 message_id) {
     gint32 rv = SQLITE_OK;
     sqlite3_stmt *stmt;
-    gdouble power_of_message = -1;
+    guint64 power_of_message = 0;
 
     sqlite3_prepare_v2(db, "select power from messages where message_id = ?1",
                         -1, &stmt, NULL);
