@@ -63,12 +63,12 @@
 
 /* Groom
  * ----------
- * box_rooms:
- * page:
- * row_room:
- * stack_msg:
- * box_messages:
- * label_name:
+ * box_rooms: GtkLisBox of all rooms
+ * page: GtkStack page of this room with messages
+ * row_room: pointer to room GtkListBoxRow
+ * stack_msg: GtkStack of pages with messages
+ * box_messages: GtkListBox of all messages or room
+ * label_name: pointer to GtkLabel with room name
  * members: hash table with all members in room
  * is_watched: flag that check is watched new messages in room
  * id: room id
@@ -85,9 +85,9 @@ typedef struct s_groom t_groom;
 
 /* Gmsg
  * ----------
- * row_msg: 
- * label_text:
- * label_power:
+ * row_msg: pointer to message GtkListBoxRow
+ * label_text: pointer to GtkLabel with message content
+ * label_power: pointer to label with message power
  * type: type of message (STICKER, FILE ...)
  * msg: text of message
  * login: login of sender
