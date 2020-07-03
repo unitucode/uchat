@@ -368,7 +368,7 @@ void mx_select_room(GtkWidget *event_box, GdkEventButton *event,
                     gpointer *user_data);
 void mx_show_join_to_room(GtkWidget *event_box, GdkEventButton *event,
                           gpointer *user_data);
-void mx_send_message_handle_enter(GtkWidget *textview,
+void mx_send_message_handle_enter(GtkTextView *textview,
                                   GdkEvent *event, t_chat *chat);
 void mx_send_message_handle_shift(GtkWidget *textview,
                                   GdkEvent *event, GtkBuilder *builder);
