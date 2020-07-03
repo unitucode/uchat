@@ -17,7 +17,7 @@ static void sqlite_bind_room(sqlite3_stmt *stmt, t_db_room *room) {
     sqlite3_bind_int64(stmt, 3, room->date);
     sqlite3_bind_text(stmt, 4, room->desc, -1, SQLITE_STATIC);
     sqlite3_bind_int(stmt, 5, room->type);
-    sqlite3_bind_double(stmt, 6, room->power);
+    sqlite3_bind_int64(stmt, 6, room->power);
 }
 
 

@@ -1,13 +1,13 @@
 #include "server.h"
 
 
-void mx_db_update_room_power(sqlite3 *db, gdouble power, guint64 room_id) {
-    gdouble new_power = power;
+void mx_db_update_room_power(sqlite3 *db, guint64 power, guint64 room_id) {
+    guint64 new_power = power;
     sqlite3_str *sqlite_str = sqlite3_str_new(db);
     gchar *request = NULL;
     gint32 rv = SQLITE_OK;
 
-    if (mx_get_power_of_room(db, room_id) != -1)
+    if (mx_get_power_of_room(db, room_id) != 0)
         new_power += mx_get_power_of_room(db, room_id);
     sqlite3_str_appendf(sqlite_str, "update rooms set power = %f "
                                         "where id = %llu",
@@ -28,18 +28,18 @@ void mx_db_update_room_power(sqlite3 *db, gdouble power, guint64 room_id) {
  * 
  * return: power of room
  */
-gdouble mx_get_power_of_room(sqlite3 *db, guint64 room_id) {
+guint64 mx_get_power_of_room(sqlite3 *db, guint64 room_id) {
     gint32 rv = SQLITE_OK;
     sqlite3_stmt *stmt;
-    gdouble power_of_room = -1;
+    gdouble power_of_room = 0;
 
     sqlite3_prepare_v2(db, "select power from rooms where id = ?1",
                         -1, &stmt, NULL);
     mx_error_sqlite(rv);
     sqlite3_bind_int64(stmt, 1, room_id);
     mx_error_sqlite(sqlite3_step(stmt));
-    if (sqlite3_column_double(stmt, 0))
-        power_of_room = sqlite3_column_double(stmt, 0);
+    if (sqlite3_column_int64(stmt, 0))
+        power_of_room = sqlite3_column_int64(stmt, 0);
     sqlite3_finalize(stmt);
     return power_of_room;
 }
@@ -53,7 +53,7 @@ gdouble mx_get_power_of_room(sqlite3 *db, guint64 room_id) {
  * 
  * return: power of message
  */
-gdouble mx_get_power_of_message(sqlite3 *db, guint64 message_id) {
+guint64 mx_get_power_of_message(sqlite3 *db, guint64 message_id) {
     gint32 rv = SQLITE_OK;
     sqlite3_stmt *stmt;
     gdouble power_of_message = -1;
@@ -63,8 +63,8 @@ gdouble mx_get_power_of_message(sqlite3 *db, guint64 message_id) {
     mx_error_sqlite(rv);
     sqlite3_bind_int64(stmt, 1, message_id);
     mx_error_sqlite(sqlite3_step(stmt));
-    if (sqlite3_column_double(stmt, 0))
-        power_of_message = sqlite3_column_double(stmt, 0);
+    if (sqlite3_column_int64(stmt, 0))
+        power_of_message = sqlite3_column_int64(stmt, 0);
     sqlite3_finalize(stmt);
     return power_of_message;
 }

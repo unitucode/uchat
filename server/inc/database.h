@@ -45,7 +45,7 @@ struct s_db_message {
     gint8 status;
     gint8 type;
     guint64 file_size;
-    gdouble power;
+    guint64 power;
     gchar *message;
     gchar *file_name;
 };
@@ -55,7 +55,7 @@ struct s_db_room {
     guint64 room_id;
     guint64 customer_id;
     gint8 type;
-    gdouble power;
+    guint64 power;
     gchar *desc;
     gchar *room_name;
 };
@@ -166,6 +166,6 @@ cJSON *mx_get_object_message(sqlite3_stmt *stmt);
 gchar *mx_get_text_message_by_id(sqlite3 *db, guint64 message_id);
 
 // power
-gdouble mx_get_power_of_message(sqlite3 *db, guint64 message_id);
-gdouble mx_get_power_of_room(sqlite3 *db, guint64 room_id);
-void mx_db_update_room_power(sqlite3 *db, gdouble power, guint64 room_id);
+guint64 mx_get_power_of_message(sqlite3 *db, guint64 message_id);
+guint64 mx_get_power_of_room(sqlite3 *db, guint64 room_id);
+void mx_db_update_room_power(sqlite3 *db, guint64 power, guint64 room_id);
