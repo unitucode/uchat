@@ -93,7 +93,7 @@ void *mx_receiver(void *arg);
 void mx_send_to_all(t_dtp *data, t_client *client, guint64 room_id);
 void mx_daemon(void);
 //Authorization
-bool mx_valid_authorization_data(t_dtp *data, char **login,
+gboolean mx_valid_authorization_data(t_dtp *data, char **login,
                                  char **pass, t_client *client);
 void mx_correct_data(t_client *client);
 gdouble mx_get_used_power(guint64 chars);

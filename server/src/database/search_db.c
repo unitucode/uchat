@@ -69,7 +69,7 @@ cJSON *mx_search_room(sqlite3 *db, gchar *str_search, guint64 user_id) {
  * 
  * login: login user
  * 
- * return: true if the user exists
+ * return: TRUE if the user exists
  */
 
 gboolean mx_check_user_by_login(sqlite3 *db, gchar *login) {
@@ -82,11 +82,11 @@ gboolean mx_check_user_by_login(sqlite3 *db, gchar *login) {
     sqlite3_bind_text(stmt, 1, login, -1, SQLITE_STATIC);
     if ((rv = sqlite3_step(stmt)) == SQLITE_ROW) {
         sqlite3_finalize(stmt);
-        return true;
+        return TRUE;
     }
     mx_error_sqlite(rv);
     sqlite3_finalize(stmt);
-    return false;
+    return FALSE;
 }
 
 /*

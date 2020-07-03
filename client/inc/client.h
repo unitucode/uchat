@@ -245,7 +245,7 @@ void mx_gupd_msg_power(guint64 msg_id, guint64 room_id,
                        gdouble power, GtkBuilder *builder);
 void mx_reset_messege_room(t_groom *new_selected, GtkBuilder *builder);
 void mx_hide_msg_editing(GtkButton *btn, GtkBuilder *builder);
-void mx_set_room_widgets_visibility(GtkBuilder *builder, bool visibility);
+void mx_set_room_widgets_visibility(GtkBuilder *builder, gboolean visibility);
 void mx_switch_room_header(GtkBuilder *builder, gint page_index);
 void mx_unselect_curr_room_messages(GtkBuilder *builder);
 void mx_select_msg(gpointer *eventbox, gpointer *event, t_signal_data *data);
@@ -369,7 +369,7 @@ void mx_show_join_to_room(GtkWidget *event_box, GdkEventButton *event,
                           gpointer *user_data);
 
 // void mx_upload_file(gchar *path, gint room_id, t_chat *chat);
-bool mx_handle_request(char *request, t_chat *chat);
+gboolean mx_handle_request(char *request, t_chat *chat);
 void mx_send_auth_request(char *login, char *password,
                           t_chat *chat, t_request_type request_type);
 void mx_css_connect(char *theme, t_chat *chat);

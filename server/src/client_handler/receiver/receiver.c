@@ -87,13 +87,13 @@ gboolean mx_handle_request(char *request, t_client *client) {
             || data->type == RQ_DOWNLOAD_FILE) {
             if (!client->info->request_handler[data->type]
                 || !client->info->request_handler[data->type](data, client)) {
-                    return false;
+                    return FALSE;
             }
         }
         else
-            return false;
+            return FALSE;
         mx_free_request(&data);
         g_usleep(MX_DELAY);
     }
-    return true;
+    return TRUE;
 }

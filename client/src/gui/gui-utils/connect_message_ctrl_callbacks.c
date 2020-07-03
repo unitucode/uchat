@@ -25,7 +25,7 @@ void mx_show_edit_msg(GtkButton *btn, t_chat *chat) {
     t_gmsg *msg = mx_get_selected_gmsg(chat->builder);
     gchar *old_text = g_strdelimit(g_strdup(msg->msg), "\n", ' ');
 
-    chat->msg_placeholder = false;
+    chat->msg_placeholder = FALSE;
     gtk_label_set_text(GTK_LABEL(label_text), old_text);
     gtk_text_buffer_set_text(GTK_TEXT_BUFFER(buffer), msg->msg, -1);
     mx_switch_room_header(chat->builder, MX_ROOM_CTRL);

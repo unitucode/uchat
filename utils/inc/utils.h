@@ -7,7 +7,6 @@
 #include <string.h>
 #include <netdb.h>
 #include <errno.h>
-#include <stdbool.h>
 #include <stdarg.h>
 #include <fcntl.h>
 #include <gmodule.h>

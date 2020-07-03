@@ -11,7 +11,7 @@
 gboolean mx_error_sqlite(gint32 rv) {
     if (rv != SQLITE_OK && rv != SQLITE_DONE && rv != SQLITE_ROW) {
         mx_logger(MX_LOG_FILE, G_LOG_LEVEL_WARNING, "error database");
-        return true;
+        return TRUE;
     }
-    return false;
+    return FALSE;
 }
