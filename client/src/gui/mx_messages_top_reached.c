@@ -38,7 +38,7 @@ static void delete_message_from_upper(GtkScrolledWindow *scroll,
     delete_older_message(groom);
     gtk_adjustment_set_upper(adj, gtk_adjustment_get_upper(adj) - req2.height);
     gtk_adjustment_set_value(adj, gtk_adjustment_get_upper(adj)
-                                   - gtk_adjustment_get_page_size(adj));
+                                  - gtk_adjustment_get_page_size(adj));
     groom->uploaded--;
 }
 
