@@ -33,6 +33,12 @@
 #define MX_MSG_CTRL 1
 
 /*
+ * Keybord
+ */
+#define MX_KEY_ENTER (gint)65293
+#define MX_KEY_SHIFT (gint)65505
+
+/*
  * GtkListBox of room lists
  */
 #define MX_LOCAL_ROOMS "listbox_rooms"
@@ -204,6 +210,7 @@ struct s_chat {
     gboolean (*request_handler[RQ_COUNT_REQUEST])(t_dtp *dtp,
                                                   struct s_chat *chat);
     gboolean msg_placeholder;
+    gboolean shift_hold;
     GtkCssProvider *css_prov;
 };
 
@@ -470,8 +477,7 @@ void mx_show_join_to_room(GtkWidget *event_box, GdkEventButton *event,
 void mx_send_message_handle_enter(GtkTextView *textview,
                                   GdkEvent *event, t_chat *chat);
 void mx_send_message_handle_shift(GtkWidget *textview,
-                                  GdkEvent *event, GtkBuilder *builder);
-
+                                  GdkEvent *event, t_chat *chat);
 
 void mx_send_auth_request(char *login, char *password,
                           t_chat *chat, t_request_type request_type);

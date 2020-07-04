@@ -31,6 +31,7 @@ t_chat *mx_init_chat(GSocketConnection *connection, int argc, char **argv) {
         G_IO_STREAM(connection));
     GDataInputStream *in = g_data_input_stream_new(in_s);
 
+    chat->shift_hold = FALSE;
     chat->conn = connection;
     chat->out = out;
     chat->in = in;
