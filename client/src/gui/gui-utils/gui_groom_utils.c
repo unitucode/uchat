@@ -33,3 +33,12 @@ t_groom *mx_get_selected_groom(GtkBuilder *builder, gchar *list_name) {
         groom = (t_groom*)g_object_get_data(row, "groom");
     return groom;
 }
+
+gboolean mx_is_same_groom(t_groom *groom, GtkBuilder *builder) {
+    t_groom *current_groom = mx_get_selected_groom(builder, MX_LOCAL_ROOMS);
+
+    if (!current_groom || !(current_groom->id == groom->id))
+        return TRUE;
+    else
+        return FALSE;
+}

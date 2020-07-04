@@ -427,6 +427,7 @@ void mx_widget_switch_visibility(GtkWidget *usr_ctrl, GtkWidget *widget);
 void mx_widget_switch_visibility_by_name(GtkBuilder *builder, gchar *name);
 t_groom *mx_get_selected_groom(GtkBuilder *builder, gchar *list_name);
 t_groom *mx_get_groom_by_id(guint64 room_id, GtkBuilder *builder);
+gboolean mx_is_same_groom(t_groom *groom, GtkBuilder *builder);
 t_gmsg *mx_get_selected_gmsg(GtkBuilder *builder);
 t_gmsg *mx_get_gmsg_by_id(guint64 msg_id, guint64 room_id,
                           GtkBuilder *builder);
