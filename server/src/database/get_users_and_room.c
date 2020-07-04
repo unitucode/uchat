@@ -5,7 +5,6 @@
  * -------------------------------
  * 
  */
-
 static t_db_user *for_get_user(sqlite3_stmt *stmt) {
     t_db_user *user = NULL;
 
@@ -32,7 +31,6 @@ static t_db_user *for_get_user(sqlite3_stmt *stmt) {
  * 
  * return: struct t_db_room with data of user
  */
-
 t_db_user *mx_get_user_by_login(sqlite3 *db, gchar *login) {
     sqlite3_stmt *stmt;
     gint32 rv = 0;
@@ -40,7 +38,7 @@ t_db_user *mx_get_user_by_login(sqlite3 *db, gchar *login) {
     rv = sqlite3_prepare_v3(db, "select * from users where login = ?1",
                             -1, 0, &stmt, NULL);
     sqlite3_bind_text(stmt, 1, login, -1, SQLITE_STATIC);
-    mx_error_sqlite(rv);
+    mx_error_sqlite(rv, "get user by login");
     return for_get_user(stmt);
 }
 
@@ -53,14 +51,13 @@ t_db_user *mx_get_user_by_login(sqlite3 *db, gchar *login) {
  * 
  * return: struct t_db_room with data of user
  */
-
 t_db_user *mx_get_user_by_id(sqlite3 *db, guint64 user_id) {
     sqlite3_stmt *stmt;
     gint32 rv = 0;
 
     rv = sqlite3_prepare_v3(db, "select * from users where id = ?1",
                             -1, 0, &stmt, NULL);
-    mx_error_sqlite(rv);
+    mx_error_sqlite(rv, "get user by id");
     sqlite3_bind_int64(stmt, 1, user_id);
     return for_get_user(stmt);
 }
@@ -74,14 +71,13 @@ t_db_user *mx_get_user_by_id(sqlite3 *db, guint64 user_id) {
  * 
  * return: struct t_db_room with data of user
  */
-
 t_db_user *mx_get_user_by_token(sqlite3 *db, gchar *token) {
     sqlite3_stmt *stmt;
     gint32 rv = 0;
 
     rv = sqlite3_prepare_v3(db, "select * from users where token = ?1",
                             -1, 0, &stmt, NULL);
-    mx_error_sqlite(rv);
+    mx_error_sqlite(rv, "get user by token");
     sqlite3_bind_text(stmt, 1, token, -1, SQLITE_STATIC);
     return for_get_user(stmt);
 }
@@ -102,7 +98,7 @@ t_db_room *mx_get_room_by_id(sqlite3 *db, guint64 id) {
 
     mx_error_sqlite(sqlite3_prepare_v3(db, "select * from rooms where "
                                            "id = ?1",
-                                       -1, 0, &stmt, NULL));
+                                       -1, 0, &stmt, NULL), "get room by id");
     sqlite3_bind_int(stmt, 1, id);
     if (sqlite3_step(stmt) == 100) {
         room = malloc(sizeof(t_db_room));
