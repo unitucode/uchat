@@ -55,7 +55,7 @@ ___
 ```json
 {
     "type": RQ_TOKEN,
-    "token": "SHA-256 token"
+    "token": "SHA-256 token",
     "login": "user_login",
     "desc": "user`s description"
 }
