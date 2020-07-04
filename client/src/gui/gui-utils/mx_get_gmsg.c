@@ -5,8 +5,10 @@ t_gmsg *mx_get_selected_gmsg(GtkBuilder *builder) {
     GObject *row = G_OBJECT(gtk_list_box_get_selected_row(room->box_messages));
     t_gmsg *gmsg = NULL;
 
-    if (row)
+    if (row) {
         gmsg = (t_gmsg*)g_object_get_data(row, "gmsg");
+        g_message("%s", gmsg->msg);
+    }
     if (gtk_list_box_row_is_selected(gmsg->row_msg))
         return gmsg;
     return NULL;
