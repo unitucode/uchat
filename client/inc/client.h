@@ -405,6 +405,7 @@ void mx_add_to_info_members(gint *key,
 void mx_reset_select_count(t_groom *groom);
 void mx_open_files_dir(GtkButton *btn, t_chat *chat);
 void mx_req_send_message(GtkButton *btn, t_chat *chat);
+void mx_req_edit_message(GtkButton *btn, t_chat *chat) ;
 
 /*
  * Gui utils

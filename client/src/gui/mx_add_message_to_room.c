@@ -3,6 +3,7 @@
 
 static void add_message_row(t_gmsg *msg, t_chat *chat, gint position) {
     t_groom *groom = mx_get_groom_by_id(msg->room_id, chat->builder);
+
     if (!groom)
         return;
     GtkWidget *row = gtk_list_box_row_new();
@@ -12,10 +13,8 @@ static void add_message_row(t_gmsg *msg, t_chat *chat, gint position) {
 
     gtk_widget_set_can_focus(row, FALSE);
     data = mx_create_sigdata(chat, NULL, GTK_LIST_BOX_ROW(row));
-
     msg->row_msg = GTK_LIST_BOX_ROW(row);
     g_object_ref(row);
-
     gtk_container_add(GTK_CONTAINER(row), event);
     g_signal_connect(event, "button_release_event",
                      G_CALLBACK(mx_select_msg), data);

@@ -13,6 +13,7 @@ void mx_req_send_message(GtkButton *btn, t_chat *chat) {
     t_groom *room = mx_get_selected_groom(chat->builder,  MX_LOCAL_ROOMS);
     t_dtp *dtp = NULL;
 
+    g_strstrip(message_text);
     if (room && !chat->msg_placeholder && strlen(message_text) > 0) {
         mx_trim_message(&message_text);
         dtp = mx_msg_request(message_text, room->id);
@@ -24,12 +25,13 @@ void mx_req_send_message(GtkButton *btn, t_chat *chat) {
     (void)btn;
 }
 
-static void req_edit_message(GtkButton *btn, t_chat *chat) {
+void mx_req_edit_message(GtkButton *btn, t_chat *chat) {
     t_gmsg *gmsg = mx_get_selected_gmsg(chat->builder);
     gchar *new_text = mx_get_buffer_text("buffer_message", chat->builder);
     t_dtp *dtp = NULL;
 
-    if (strcmp(gmsg->msg, new_text)) {
+    g_strstrip(new_text);
+    if (strcmp(gmsg->msg, new_text) && strlen(new_text) > 0) {
         mx_trim_message(&new_text);
         dtp = mx_edit_msg_request(new_text, gmsg->room_id, gmsg->message_id);
         mx_send(chat->out, dtp);
@@ -55,5 +57,6 @@ void mx_connect_send_message(t_chat *chat) {
                      G_CALLBACK(mx_send_message_handle_shift), chat);
     g_signal_connect(btn_send, "clicked",
                      G_CALLBACK(mx_req_send_message), chat);
-    g_signal_connect(btn_edit, "clicked", G_CALLBACK(req_edit_message), chat);
+    g_signal_connect(btn_edit, "clicked",
+                     G_CALLBACK(mx_req_edit_message), chat);
 }

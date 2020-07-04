@@ -7,6 +7,7 @@ void mx_add_messages_box(t_groom *room, t_chat *chat) {
     GtkWidget *scroll = gtk_scrolled_window_new(NULL, NULL);
     GtkWidget *view = gtk_viewport_new(NULL, NULL);
 
+    gtk_widget_set_can_focus(box, FALSE);
     room->box_messages = GTK_LIST_BOX(box);
     gtk_list_box_set_selection_mode(room->box_messages,
                                     GTK_SELECTION_MULTIPLE);
