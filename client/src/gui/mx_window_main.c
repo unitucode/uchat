@@ -5,7 +5,9 @@ GtkBuilder *mx_init_window(gint argc, char **argv) {
 
     gtk_init(&argc, &argv);
     builder = gtk_builder_new();
-    gtk_builder_add_from_file(builder, MX_GUI_PATH, NULL);
+    if (gtk_builder_add_from_file(builder, MX_GUI_PATH, NULL) == 0)
+        mx_logger(MX_LOG_FILE, G_LOG_LEVEL_ERROR,
+                  "Gui.glade is missing(xml file).");
     gtk_builder_connect_signals(builder, builder);
     return builder;
 }
@@ -23,8 +25,6 @@ static void change_icontheme_paths(GtkBuilder *builder) {
 gint mx_start_gui(t_chat *chat) {
     change_icontheme_paths(chat->builder);
     gtk_main();
-
-    (void)chat;
     return 0;
 }
 

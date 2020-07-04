@@ -172,7 +172,7 @@ dialog headerbar {
 
 /* Search entry styles */
 
-.search {
+.wnd_main .search, .dialog_user_info .search {
 	background-color: #F2F4FF;
 	border-radius: 5px;
     padding: 2px 8px 1px 8px;
@@ -182,7 +182,7 @@ dialog headerbar {
 .box-rooms .search {
     margin: 18px 25px 15px 25px;
 }
-.search image {
+.wnd_main .search image, .dialog_user_info .search image {
     margin-right: 8px;
 }
 
