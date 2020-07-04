@@ -16,7 +16,7 @@ void mx_daemon(void) {
     }
     umask(0);
     sid = setsid();
-    if(sid < 0)
+    if (sid < 0)
         exit(1);
     close(STDIN_FILENO);
     close(STDOUT_FILENO);
