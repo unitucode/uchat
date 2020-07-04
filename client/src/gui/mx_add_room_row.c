@@ -48,6 +48,7 @@ void mx_add_room_row(t_groom *room, t_chat *chat, gchar *listbox_name) {
     GtkWidget *event = gtk_event_box_new();
     t_signal_data *data = NULL;
 
+    gtk_widget_set_can_focus(row, FALSE);
     fill_room(room, box, row, label);
     event_containing(listbox_name, event, label, row);
     data = mx_create_sigdata(chat, room, NULL);
