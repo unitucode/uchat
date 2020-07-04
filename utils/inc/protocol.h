@@ -26,7 +26,7 @@ typedef struct s_dtp t_dtp;
  * ----------
  * All types of errors in protocol
  */
-typedef enum s_error_type {
+typedef enum e_error_type {
     ER_AUTH_DATA = 0,
     ER_USER_EXST,
     ER_CLI_EXST,
@@ -37,7 +37,7 @@ typedef enum s_error_type {
  * ----------
  * All types of request in protocol
  */
-typedef enum s_request_type {
+typedef enum e_request_type {
     RQ_LOG_IN = 0,
     RQ_SIGN_UP,
     RQ_TOKEN,
@@ -73,7 +73,7 @@ typedef enum s_request_type {
  * ----------
  * All types of room
  */
-typedef enum s_room_type {
+typedef enum e_room_type {
     DB_PRIVAT_CHAT = 0,
     DB_GLOBAL_CHAT,
     DB_LS_CHAT
@@ -83,7 +83,7 @@ typedef enum s_room_type {
  * ----------
  * All types of member
  */
-typedef enum s_member_type {
+typedef enum e_member_type {
     DB_CUSTOMER = 0,
     DB_ADMIN,
     DB_MODERATOR,
@@ -95,7 +95,7 @@ typedef enum s_member_type {
  * ----------
  * All statuses of message
  */
-typedef enum s_message_status {
+typedef enum e_message_status {
     DB_MSG_START = 0,
     DB_MSG_EDIT,
 }            t_message_status;
@@ -104,7 +104,7 @@ typedef enum s_message_status {
  * ----------
  * All types of contacts
  */
-typedef enum s_contact_type {
+typedef enum e_contact_type {
     DB_FRIENDS = 0,
     DB_BLACKLIST
 }            t_contact_type;
@@ -113,7 +113,7 @@ typedef enum s_contact_type {
  * ----------
  * All types of message
  */
-typedef enum s_message_type {
+typedef enum e_message_type {
     DB_TEXT_MSG = 0,
     DB_FILE_MSG,
     DB_FILE_TEXT_MSG,
@@ -124,7 +124,7 @@ struct s_dtp {
     char *str;
     cJSON *json;
     size_t len;
-    int type;
+    gint type;
 };
 
 gboolean mx_isvalid_hash(char *hash);

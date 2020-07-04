@@ -30,13 +30,15 @@ static void download(t_client *client, GFile *file, GDataInputStream *in_d) {
     t_dtp *dtp = mx_request_creation(ready);
 
     if (dtp && dtp->type == RQ_READY_READ) {
-        g_print("splice = %ld\n", g_output_stream_splice(out, G_INPUT_STREAM(in), G_OUTPUT_STREAM_SPLICE_CLOSE_SOURCE, NULL, NULL));
+        g_output_stream_splice(
+            out, G_INPUT_STREAM(in), G_OUTPUT_STREAM_SPLICE_CLOSE_SOURCE, 
+            NULL, NULL);
     }
     if (ready)
         g_free(ready);
     if (dtp)
         mx_free_request(&dtp);
-    g_io_stream_close(G_IO_STREAM(client->conn), NULL, NULL); // unrefs
+    g_io_stream_close(G_IO_STREAM(client->conn), NULL, NULL);
 }
 
 static void download_file(gchar *msg, t_client *client) {

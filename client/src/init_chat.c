@@ -23,7 +23,7 @@ static void init_fields(t_chat *chat) {
  * 
  * returns: new chat information
  */
-t_chat *mx_init_chat(GSocketConnection *connection, int argc, char **argv) {
+t_chat *mx_init_chat(GSocketConnection *connection, gint argc, char **argv) {
     t_chat *chat = mx_malloc(sizeof(t_chat));
     GOutputStream *out_s = g_io_stream_get_output_stream(
         G_IO_STREAM(connection));
@@ -36,7 +36,11 @@ t_chat *mx_init_chat(GSocketConnection *connection, int argc, char **argv) {
     chat->out = out;
     chat->in = in;
     init_fields(chat);
+    #ifdef MX_UNIT_TEST
+    chat->builder = NULL;
+    #else
     chat->builder = mx_init_window(argc, argv);
+    #endif
     chat->argc = argc;
     chat->argv = argv;
     mx_init_handlers(chat);

@@ -57,7 +57,7 @@ gboolean mx_old_msgs_hanlder(t_dtp *data, t_chat *chat) {
 
     if (!cJSON_IsNumber(room_id) || !cJSON_IsArray(msgs))
         return FALSE;
-    for (int i = 0; i < cJSON_GetArraySize(msgs); i++) {
+    for (gint i = 0; i < cJSON_GetArraySize(msgs); i++) {
         msg = cJSON_GetArrayItem(msgs, i);
         insert_msg(msg, chat, room_id->valuedouble);
     }

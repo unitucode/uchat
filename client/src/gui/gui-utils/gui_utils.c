@@ -35,12 +35,6 @@ void mx_focus_out(GtkWidget *widget, GdkEvent *event, gpointer *user_data) {
     (void)event;
 }
 
-void mx_clear_label_by_name(gchar *label_name, GtkBuilder *builder) {
-    GtkLabel *label = GTK_LABEL(gtk_builder_get_object(builder, label_name));
-
-    gtk_label_set_text(label, "\0");
-}
-
 gchar *mx_entry_get_text(gchar *entry_name, GtkBuilder *builder) {
     GtkEntry *entry = GTK_ENTRY(gtk_builder_get_object(builder, entry_name));
 

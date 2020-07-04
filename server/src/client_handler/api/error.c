@@ -10,7 +10,7 @@
  * 
  * returns: new request
  */
-t_dtp *mx_error_msg_request(int error_code, char *msg) {
+t_dtp *mx_error_msg_request(guint64 error_code, char *msg) {
     cJSON *json_result = cJSON_CreateObject();
 
     if (!cJSON_AddNumberToObject(json_result, "type", RQ_ERROR_MSG))

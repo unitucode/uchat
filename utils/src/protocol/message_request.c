@@ -1,6 +1,9 @@
 #include "protocol.h"
 
-t_dtp *mx_get_transport_data(cJSON *json_result) { // returns request structure
+/*
+    Returned - The Malloced Data Transpart struct
+*/
+t_dtp *mx_get_transport_data(cJSON *json_result) {
     t_dtp *dtp = NULL;
     char *json_str = NULL;
 

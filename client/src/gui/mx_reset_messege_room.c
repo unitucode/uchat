@@ -13,7 +13,7 @@ void mx_hide_msg_editing(GtkButton *btn, GtkBuilder *builder) {
 }
 
 /*
- * Unselec all messages in current room
+ * Unselect all messages in current room
  */
 void mx_unselect_curr_room_messages(GtkBuilder *builder) {
     t_groom *groom = mx_get_selected_groom(builder, MX_LOCAL_ROOMS);

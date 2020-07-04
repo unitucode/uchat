@@ -10,7 +10,7 @@
  * 
  * returns: new request
  */
-t_dtp *mx_ban_member_request(int room_id, int user_id) {
+t_dtp *mx_ban_member_request(guint64 room_id, guint64 user_id) {
     cJSON *json_result = cJSON_CreateObject();
 
     if (!cJSON_AddNumberToObject(json_result, "type", RQ_BAN_MEMBER))
@@ -22,7 +22,7 @@ t_dtp *mx_ban_member_request(int room_id, int user_id) {
     return mx_get_transport_data(json_result);
 }
 
-static void ban_member(t_client *client, int user_id, int room_id) {
+static void ban_member(t_client *client, guint64 user_id, guint64 room_id) {
     t_db_user *member = mx_get_user_by_id(client->info->database, user_id);
     GDataOutputStream *out = g_hash_table_lookup(client->info->users,
                                                  member->login);

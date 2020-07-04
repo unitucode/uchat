@@ -59,14 +59,6 @@ static void show_msg_control_btn(GtkBuilder *builder,
         mx_switch_room_header(builder, MX_ROOM_CTRL);
 }
 
-void mx_label_set_num(gchar *widgetname, GtkBuilder *builder, gint number) {
-    GObject *widget = gtk_builder_get_object(builder, widgetname);
-    gchar *number_str = g_strdup_printf("%d", number);
-
-    gtk_label_set_text(GTK_LABEL(widget), number_str);
-    g_free(number_str);
-}
-
 void mx_select_msg(gpointer *eventbox, gpointer *event, t_signal_data *data) {
     t_groom *groom = mx_get_selected_groom(data->chat->builder,
                                            MX_LOCAL_ROOMS);

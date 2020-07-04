@@ -16,7 +16,8 @@ static gboolean filter_room_name(GtkListBoxRow *row,
     }
 }
 
-void mx_search_delim_set_visibility(GtkBuilder *builder, gboolean is_visible) {
+void mx_search_delim_set_visibility(GtkBuilder *builder,
+                                    gboolean is_visible) {
     mx_widget_set_visibility_by_name(builder,
                                      "label_search_delim_global", is_visible);
     mx_widget_set_visibility_by_name(builder,
@@ -41,7 +42,7 @@ void mx_search_local_rooms(GtkBuilder *builder, t_filter_data *data) {
 
 void mx_clear_global_search(GtkBuilder *builder) {
     GObject *box = (gtk_builder_get_object(builder, "listbox_global_rooms"));
-    GtkListBoxRow *row = gtk_list_box_get_row_at_index((GTK_LIST_BOX(box)), 0);
+    GtkListBoxRow *row = gtk_list_box_get_row_at_index(GTK_LIST_BOX(box), 0);
 
     mx_widget_set_visibility_by_name(builder,
                                      "label_search_nothing_global", FALSE);

@@ -203,7 +203,7 @@ struct s_chat {
     char *auth_token;
     char *login;
     gchar *desc;
-    int argc;
+    gint argc;
     char **argv;
     gsize id;
     t_groom *curr_room;
@@ -235,7 +235,7 @@ struct s_filter_data {
  */
 gdouble mx_get_used_power(guint64 chars);
 gssize mx_send(GDataOutputStream *out, t_dtp *dtp);
-t_chat *mx_init_chat(GSocketConnection *connection, int argc, char **argv);
+t_chat *mx_init_chat(GSocketConnection *connection, gint argc, char **argv);
 void mx_receiver(GObject *source_object, GAsyncResult *res,
                  gpointer user_data);
 void mx_init_handlers(t_chat *chat);
@@ -318,7 +318,7 @@ void mx_err_cli_exist_handler(GtkBuilder *builder);
 /*
  * Gui functions
  */
-GtkBuilder *mx_init_window(int argc, char **argv);
+GtkBuilder *mx_init_window(gint argc, char **argv);
 void mx_init_gui(t_chat *chat);
 gint mx_start_gui(t_chat *chat);
 void mx_start_main_window(t_chat *chat);
@@ -455,6 +455,7 @@ gchar *mx_get_filename(gchar *full_name);
 gboolean mx_is_file_image(gchar *filename);
 gboolean mx_is_file_animation(gchar *filename);
 void mx_trim_message(gchar **message);
+void mx_label_set_num(gchar *widgetname, GtkBuilder *builder, gint number);
 
 /*
  * Gui callbacks
@@ -491,3 +492,12 @@ void mx_css_connect_from_file(t_chat *chat);
 void mx_connect_theme_switcher(t_chat *chat);
 void change_theme_icon(t_chat *chat, gchar *icon_name);
 gchar *mx_format_text(gchar *text);
+gdouble mx_get_used_power(guint64 chars);
+
+
+/* UNIT-TEST Utils */
+
+void mx_activate_content_test(GtkWidget *window, t_chat *chat);
+int mx_gui_unit_test(t_chat *chat, int argc, char **argv);
+gchar *mx_get_text_from_buffer(GtkTextBuffer *buffer);
+void mx_get_buffer_text_unit(GtkButton *btn, t_chat *chat);

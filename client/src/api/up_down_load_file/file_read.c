@@ -43,7 +43,7 @@ void mx_file_read(gsize size, gchar *name, GInputStream *in) {
     GFile *file = g_file_new_for_path(name);
     GFileOutputStream *out = g_file_create(file, G_FILE_CREATE_NONE, NULL,
                                            NULL);
-    
+
     if (!out)
         return;
     file_read(size, out, in, file);
