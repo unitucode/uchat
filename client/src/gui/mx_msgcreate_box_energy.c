@@ -10,6 +10,7 @@ void mx_msgcreate_box_energy(GtkWidget *box_status, t_gmsg *gmsg) {
     gtk_box_pack_start(GTK_BOX(box_energy), img, FALSE, TRUE, 0);
     gtk_box_pack_start(GTK_BOX(box_energy), value, FALSE, TRUE, 0);
     gtk_box_pack_start(GTK_BOX(box_status), box_energy, FALSE, TRUE, 0);
+    gtk_widget_set_tooltip_text(box_energy, "energy spent on this message");
     gmsg->label_power = GTK_LABEL(value);
     g_free(wat_str);
 }
