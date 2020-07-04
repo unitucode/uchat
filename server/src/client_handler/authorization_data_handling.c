@@ -52,7 +52,7 @@ static char *get_pass_str(t_dtp *data) {
  * returns: success of validation
  */
 gboolean mx_valid_authorization_data(t_dtp *data, char **login,
-                                 char **pass, t_client *client) {
+                                     char **pass, t_client *client) {
     if (client->user != NULL)
         return FALSE;
     if (!(*login = get_login_str(data)))

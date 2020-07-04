@@ -45,7 +45,7 @@ gboolean mx_read_file(t_client *client, gsize size, char *name) {
     GFile *file = g_file_new_for_path(name);
     GFileOutputStream *out = g_file_create(file, G_FILE_CREATE_NONE,
                                            NULL, NULL);
-    
+
     send_ready(client);
     if (!out || !read_file(client, file, size, out)) {
         g_object_unref(file);
