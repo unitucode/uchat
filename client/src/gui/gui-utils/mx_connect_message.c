@@ -52,7 +52,7 @@ void mx_connect_send_message(t_chat *chat) {
     g_signal_connect(textview, "key-press-event",
                      G_CALLBACK(mx_send_message_handle_enter), chat);
     g_signal_connect(textview, "key-release-event",
-                     G_CALLBACK(mx_send_message_handle_shift), chat->builder);
+                     G_CALLBACK(mx_send_message_handle_shift), chat);
     g_signal_connect(btn_send, "clicked",
                      G_CALLBACK(mx_req_send_message), chat);
     g_signal_connect(btn_edit, "clicked", G_CALLBACK(req_edit_message), chat);

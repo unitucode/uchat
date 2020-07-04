@@ -1,15 +1,10 @@
 #include "client.h"
 
-gint select_all;
-gint select_own;
-gint select_another;
-gint select_notedit;
-
-void mx_reset_select_count(void) {
-    select_own = 0;
-    select_another = 0;
-    select_notedit = 0;
-    select_all = 0;
+void mx_reset_select_count(t_groom *groom) {
+    groom->select_own = 0;
+    groom->select_another = 0;
+    groom->select_notedit = 0;
+    groom->select_all = 0;
 }
 
 static void select_row(t_groom *groom, t_gmsg *gmsg,
@@ -18,11 +13,11 @@ static void select_row(t_groom *groom, t_gmsg *gmsg,
                             GTK_LIST_BOX_ROW(row));
 
     if (gmsg->type == DB_STICKER || gmsg->type == DB_FILE_MSG)
-        select_notedit++;
+        groom->select_notedit++;
     if (is_own)
-        select_own++;
+        groom->select_own++;
     else
-        select_another++;
+        groom->select_another++;
     (void)groom;
 }
 
@@ -32,24 +27,31 @@ static void unselect_row(t_groom *groom, t_gmsg *gmsg,
                             GTK_LIST_BOX_ROW(row));
 
     if (gmsg->type == DB_STICKER || gmsg->type == DB_FILE_MSG)
-        select_notedit--;
+        groom->select_notedit--;
     if (is_own)
-        select_own--;
+        groom->select_own--;
     else
-        select_another--;
+        groom->select_another--;
     (void)groom;
 }
 
-static void show_msg_control_btn(GtkBuilder *builder, gboolean is_customer) {
-    select_all = select_own + select_another;
-    if (select_all > 0) {
+static void show_msg_control_btn(GtkBuilder *builder,
+                                 t_groom *groom, gboolean is_customer) {
+    groom->select_all = groom->select_own + groom->select_another;
+    if (groom->select_all > 0) {
         mx_switch_room_header(builder, MX_MSG_CTRL);
-        if (select_all == 1 && select_notedit == 0 && select_another == 0)
-            mx_widget_set_visibility_by_name(builder, "btn_edit_msg", TRUE);
+        if (groom->select_all == 1 && groom->select_notedit == 0
+            && groom->select_another == 0) {
+            mx_widget_set_visibility_by_name(builder,
+                                             "btn_edit_msg", TRUE);
+        }
         else
             mx_widget_set_visibility_by_name(builder, "btn_edit_msg", FALSE);
-        if (select_all > 0 && (select_another == 0 || is_customer))
-            mx_widget_set_visibility_by_name(builder, "btn_delete_msg", TRUE);
+        if (groom->select_all > 0
+            && (groom->select_another == 0 || is_customer)) {
+            mx_widget_set_visibility_by_name(builder,
+                                             "btn_delete_msg", TRUE);
+        }
         else
             mx_widget_set_visibility_by_name(builder, "btn_delete_msg", FALSE);
     }
@@ -62,7 +64,7 @@ void mx_select_msg(gpointer *eventbox, gpointer *event, t_signal_data *data) {
                                            MX_LOCAL_ROOMS);
     t_gmsg *gmsg = (t_gmsg*)g_object_get_data(G_OBJECT(data->row_msg), "gmsg");
     gboolean is_own = !g_strcmp0(data->chat->login, gmsg->login);
-    gboolean is_customer = !g_strcmp0(data->chat->login, groom->customer); 
+    gboolean is_customer = !g_strcmp0(data->chat->login, groom->customer);
 
     if (!mx_widget_is_visible("box_editing_msg", data->chat->builder)) {
         if (gtk_list_box_row_is_selected(GTK_LIST_BOX_ROW(data->row_msg)))
@@ -70,7 +72,9 @@ void mx_select_msg(gpointer *eventbox, gpointer *event, t_signal_data *data) {
         else
             select_row(groom, gmsg, data->row_msg, is_own);
     }
-    show_msg_control_btn(data->chat->builder, is_customer);
+    show_msg_control_btn(data->chat->builder, groom, is_customer);
+    mx_label_set_num("label_msg_count",
+                     data->chat->builder, groom->select_all);
     (void)eventbox;
     (void)event;
 }
