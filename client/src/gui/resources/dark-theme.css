@@ -441,9 +441,6 @@ dialog headerbar {
 .stack_messages list row:hover {
     background-color: transparent;
 }
-.search image {
-    margin-right: 8px;
-}
 .box_msg_ctrl  {
     background-color: #6785FF;
     padding: 7px 25px;
@@ -487,7 +484,7 @@ dialog headerbar {
 
 /* Search entry styles */
 
-.search {
+.wnd_main .search, .dialog_user_info .search {
 	background-color: #3A466B;
 	border-radius: 5px;
     padding: 2px 8px 1px 8px;
@@ -495,6 +492,9 @@ dialog headerbar {
 }
 .box-rooms .search {
     margin: 18px 25px 15px 25px;
+}
+.wnd_main .search image, .dialog_user_info .search image {
+    margin-right: 8px;
 }
 
 /* Dialog window room settings styles */

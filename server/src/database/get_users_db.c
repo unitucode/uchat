@@ -9,7 +9,6 @@
  * 
  * return: json object
  */
-
 cJSON *mx_get_object_user(sqlite3_stmt *stmt) {
     cJSON *user = cJSON_CreateObject();
 
@@ -38,7 +37,6 @@ cJSON *mx_get_object_user(sqlite3_stmt *stmt) {
  * 
  * return: json object
  */
-
 cJSON *mx_get_users(sqlite3 *db, guint64 date) {
     cJSON *users = cJSON_CreateArray();
     sqlite3_stmt *stmt;
@@ -46,9 +44,11 @@ cJSON *mx_get_users(sqlite3 *db, guint64 date) {
 
     rv = sqlite3_prepare_v2(db, "select * from users where date > ?1 order by "
                                 "date desc", -1, &stmt, NULL);
+    mx_error_sqlite(rv, "get users");
     sqlite3_bind_int(stmt, 1, date);
     while ((rv = sqlite3_step(stmt)) == SQLITE_ROW)
         cJSON_AddItemToArray(users, mx_get_object_user(stmt));
+    mx_error_sqlite(rv, "get users");
     sqlite3_finalize(stmt);
     return users;
 }
