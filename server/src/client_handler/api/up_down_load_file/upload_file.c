@@ -13,6 +13,7 @@ static void resend_file(t_client *client, gchar *filename, guint64 room_id,
     db_msg->user_id = client->user->user_id;
     db_msg->power = size;
     mx_insert_message(client->info->database, db_msg);
+    mx_update_room_power(client, room_id);
     file_request = mx_msg_request(db_msg);
     mx_free_message(&db_msg);
     cJSON_Delete(msg);
