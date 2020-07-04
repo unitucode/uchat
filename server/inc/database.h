@@ -11,13 +11,13 @@ typedef struct s_db_user t_db_user;
 typedef struct s_db_message t_db_message;
 typedef struct s_db_room t_db_room;
 
-typedef enum s_type_db {
+typedef enum e_type_db {
     DB_NEW_MESSAGE = 0,
     DB_OLD_MESSAGE,
     DB_SECOND,
     DB_MILISECOND,
     DB_MICROSECOND
-} t_type_db;
+}            t_type_db;
 
 struct s_member{
     guint64 user_id;
