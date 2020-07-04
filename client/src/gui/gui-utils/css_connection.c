@@ -9,11 +9,17 @@ static void mx_remove_css_connect(t_chat *chat) {
 }
 
 void mx_css_connect(char *theme, t_chat *chat) {
+    GError *err = NULL;
+    
     if (chat->css_prov == NULL)
         chat->css_prov = gtk_css_provider_new();
     else
         mx_remove_css_connect(chat);
-    gtk_css_provider_load_from_path(chat->css_prov, theme, NULL);
+    gtk_css_provider_load_from_path(chat->css_prov, theme, &err);
+    if (err) {
+        mx_logger(MX_LOG_FILE, G_LOG_LEVEL_ERROR,
+                  "Dark or light theme CSS is missing!");
+    }
     gtk_style_context_add_provider_for_screen(
         gdk_screen_get_default(),
         GTK_STYLE_PROVIDER(chat->css_prov),

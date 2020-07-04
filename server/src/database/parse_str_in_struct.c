@@ -15,7 +15,7 @@ cJSON *mx_json_is_valid(cJSON *data, gchar *str,
                         cJSON_bool(check_valid)(const cJSON * const)) {
     cJSON *json = cJSON_GetObjectItemCaseSensitive(data, str);
 
-    if(!check_valid(json))
+    if (!check_valid(json))
         return NULL;
     return json;
 }

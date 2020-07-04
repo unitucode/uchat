@@ -73,7 +73,7 @@ ___
     "type": RQ_MSG,
     "room_id": room_id,
     "message": "message",
-    "msg_type" DB_TEXT_MSG
+    "msg_type": DB_TEXT_MSG
 }
 ```
 
@@ -85,9 +85,9 @@ ___
     "room_id": room_id,
     "message": "message",
     "date": date,
-    "message_id", message_id_in_database,
-    "user_id", user_id_that_wrote_message,
-    "msg_type" DB_TEXT_MSG(DB_STICKER ...)
+    "message_id": message_id_in_database,
+    "user_id": user_id_that_wrote_message,
+    "msg_type": DB_TEXT_MSG /*(DB_STICKER ...)*/
 }
 ```
 
@@ -227,7 +227,7 @@ ___
 
 ```json
 {
-   "type": RQ_SEARCH_MSGS
+   "type": RQ_SEARCH_MSGS,
    "msgs": [{ /*array of message*/
    }]
 }
