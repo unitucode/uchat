@@ -46,7 +46,7 @@ gboolean mx_search_msgs_handler(t_dtp *data, t_chat *chat) {
 
     if (!cJSON_IsArray(msgs))
         return FALSE;
-    for (int i = 0; i < cJSON_GetArraySize(msgs); i++) {
+    for (gint i = 0; i < cJSON_GetArraySize(msgs); i++) {
         msg = cJSON_GetArrayItem(msgs, i);
         if (!handle_msg(msg, chat))
             return FALSE;

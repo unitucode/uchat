@@ -5,7 +5,7 @@ static void req_ban_member(GObject *btn, t_chat *chat) {
     t_dtp *dtp = NULL;
 
     dtp = mx_ban_member_request(groom->id,
-                                (int)g_object_get_data(btn, "member_id"));
+                                (guint64)g_object_get_data(btn, "member_id"));
     mx_send(chat->out, dtp);
     mx_free_request(&dtp);
 }

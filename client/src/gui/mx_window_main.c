@@ -1,6 +1,6 @@
 #include "client.h"
 
-GtkBuilder *mx_init_window(int argc, char **argv) {
+GtkBuilder *mx_init_window(gint argc, char **argv) {
     GtkBuilder *builder;
 
     gtk_init(&argc, &argv);

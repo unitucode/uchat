@@ -8,7 +8,7 @@ static gchar *set_tag(gchar *text, const gchar *tag, gchar *delim) {
 
     if (!*parts)
         return g_strdup("");
-    for (int i = 0; parts[i]; i++) {
+    for (gint i = 0; parts[i]; i++) {
         result = g_strjoin("", result, parts[i], NULL);
         save = result;
         i++;

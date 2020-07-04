@@ -21,7 +21,7 @@ void mx_free_request(t_dtp **request) {
 
 static t_dtp *get_filled_dtp(char *str, size_t buf_size) {
     t_dtp *req = mx_malloc(sizeof(t_dtp));
-    int type;
+    gint type;
 
     req->str = strdup(str);
     req->len = buf_size - 1;

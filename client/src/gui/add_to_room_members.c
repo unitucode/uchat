@@ -3,7 +3,8 @@
 static void show_ban_member(GObject *btn, GtkBuilder *builder) {
     GObject *dialog = gtk_builder_get_object(builder, "dialog_ban_member");
     GObject *btn_ban = gtk_builder_get_object(builder, "btn_ban");
-    GObject *label_member = gtk_builder_get_object(builder, "label_ban_login");
+    GObject *label_member = gtk_builder_get_object(builder,
+                                                   "label_ban_login");
 
     g_object_set_data(btn_ban, "member_id",
                       g_object_get_data(btn, "member_id"));
@@ -30,7 +31,8 @@ void mx_add_to_sett_members(gint *key,
         gtk_widget_show_all(GTK_WIDGET(listbox));
         g_object_set_data(G_OBJECT(btn), "member_id", key);
         g_object_set_data(G_OBJECT(btn), "member_login", value);
-        g_signal_connect(btn, "clicked", G_CALLBACK(show_ban_member), builder);
+        g_signal_connect(btn, "clicked", G_CALLBACK(show_ban_member),
+                         builder);
     }
     (void)key;
 }

@@ -84,7 +84,7 @@ static gboolean incoming(GSocketService *service, GSocketConnection *conn,
     return FALSE;
 }
 
-static gboolean is_valid_args(int argc) {
+static gboolean is_valid_args(gint argc) {
     if (argc != 2) {
         g_printerr("Usage ./uchat_server <port>\n");
         return FALSE;
@@ -92,7 +92,7 @@ static gboolean is_valid_args(int argc) {
     return TRUE;
 }
 
-int main(int argc, char **argv) {
+gint main(gint argc, char **argv) {
     GSocketService *service = g_socket_service_new();
     GMainLoop *loop = NULL;
     t_info *info = NULL;

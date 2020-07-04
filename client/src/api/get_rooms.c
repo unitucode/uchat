@@ -63,7 +63,7 @@ gboolean mx_rooms_hanlder(t_dtp *data, t_chat *chat) {
 
     if (!cJSON_IsArray(rooms))
         return FALSE;
-    for (int i = 0; i < cJSON_GetArraySize(rooms); i++) {
+    for (gint i = 0; i < cJSON_GetArraySize(rooms); i++) {
         room = cJSON_GetArrayItem(rooms, i);
         insert_room(room, chat);
     }

@@ -48,5 +48,7 @@ void mx_scrlldwnd_connect(gchar *name, GtkWidget *scroll,
         scrlldwnd = scroll;
     adj = gtk_scrolled_window_get_vadjustment(GTK_SCROLLED_WINDOW(scrlldwnd));
     g_signal_connect(adj, "changed", G_CALLBACK(mx_scroll_to_end), room);
-    g_signal_connect(adj, "value-changed", G_CALLBACK(mx_show_go_down), builder);
+    g_signal_connect(adj, "changed", G_CALLBACK(mx_show_go_down), builder);
+    g_signal_connect(adj, "value-changed", G_CALLBACK(mx_show_go_down),
+                     builder);
 }

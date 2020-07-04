@@ -10,7 +10,7 @@
  * 
  * returns: new request
  */
-t_dtp *mx_upd_room_desc_request(int room_id, char *desc) {
+t_dtp *mx_upd_room_desc_request(guint64 room_id, char *desc) {
     cJSON *json_result = cJSON_CreateObject();
 
     if (!cJSON_AddNumberToObject(json_result, "type", RQ_UPD_ROOM_DESC))

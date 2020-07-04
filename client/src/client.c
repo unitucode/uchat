@@ -21,7 +21,7 @@ static void change_working_dir(void) {
     #endif
 }
 
-static gboolean is_valid(int argc) {
+static gboolean is_valid(gint argc) {
     if (argc != 3) {
         g_printerr("Usage: ./uchat <ip,domen> <port>\n");
         return FALSE;
@@ -29,7 +29,7 @@ static gboolean is_valid(int argc) {
     return TRUE;
 }
 
-int main(int argc, char **argv) {
+gint main(gint argc, char **argv) {
     GSocketConnection *connection = NULL;
     GSocketClient *client = g_socket_client_new();
     t_chat *chat = NULL;
