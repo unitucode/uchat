@@ -484,7 +484,7 @@ dialog headerbar {
 
 /* Search entry styles */
 
-.wnd_main .search, .dialog_user_info .search {
+.wnd_main .search, .wnd-room-info .search {
 	background-color: #3A466B;
 	border-radius: 5px;
     padding: 2px 8px 1px 8px;
@@ -493,7 +493,7 @@ dialog headerbar {
 .box-rooms .search {
     margin: 18px 25px 15px 25px;
 }
-.wnd_main .search image, .dialog_user_info .search image {
+.wnd_main .search image, .wnd-room-info .search image {
     margin-right: 8px;
 }
 
@@ -612,8 +612,17 @@ overshoot.top {
 	color: #D8DCE8;
 	font-weight: 500;
 }
-.box-room-info box label:last-child {
+.box-room-info > box:nth-child(2) label:last-child {
     font-size: 16px;
+}
+.box-room-info > box:first-child > label {
+	font-size: 17px
+}
+.box-room-info > box:first-child > box {
+	font-size: 14px;
+}
+.box-room-info > box:first-child > box image {
+	margin-right: 3px;
 }
 .box-room-info > box:nth-child(3) label,
 .box-room-info > box:nth-child(4) > label {
@@ -751,4 +760,8 @@ overshoot.top {
 }
 .arrow-down-btn:hover {
     opacity: .7 ;
+}
+.box_msg_ctrl > box:first-child {
+	font-size: 14px;
+	color: #fff;
 }
