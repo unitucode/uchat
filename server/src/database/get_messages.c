@@ -9,7 +9,6 @@
  * 
  * return: json object
  */
-
 cJSON *mx_get_object_message(sqlite3_stmt *stmt) {
     cJSON *o_m = cJSON_CreateObject();
 
@@ -29,20 +28,18 @@ cJSON *mx_get_object_message(sqlite3_stmt *stmt) {
 }
 
 /*
- * Function: 
+ * Function: get_messages_by_id
  * -------------------------------
  * 
  */
-
 static cJSON *get_messages_by_id(sqlite3_stmt *stmt, guint64 room_id, 
                                  gint64 count, guint64 date) {
     cJSON *room = cJSON_CreateObject();
     cJSON *message = cJSON_CreateArray();
-    gint32 rv = 0;
 
     sqlite3_bind_int64(stmt, 1, date);
     for (gint64 i = 0; i < count 
-                        && (rv = sqlite3_step(stmt)) == SQLITE_ROW; i++) {
+                       && sqlite3_step(stmt) == SQLITE_ROW; i++) {
         cJSON_AddItemToArray(message, mx_get_object_message(stmt));
     }
     cJSON_AddItemToObject(room, "room_id", cJSON_CreateNumber(room_id));
@@ -61,9 +58,8 @@ static cJSON *get_messages_by_id(sqlite3_stmt *stmt, guint64 room_id,
  * date: time in milisecond
  * count: the number of messages to receive
  * 
- * return json object * 
+ * return json object *
  */
-
 cJSON *mx_get_new_messages_by_id(sqlite3 *db, guint64 room_id, guint64 date,
                                  gint64 count) {
     sqlite3_stmt *stmt;
@@ -72,7 +68,7 @@ cJSON *mx_get_new_messages_by_id(sqlite3 *db, guint64 room_id, guint64 date,
                                                      DB_NEW_MESSAGE);
 
     rv = sqlite3_prepare_v2(db, request, -1, &stmt, NULL);
-    mx_error_sqlite(rv);
+    mx_error_sqlite(rv, "get_new_message by id");
     sqlite3_free(request);
     return get_messages_by_id(stmt, room_id, count, date);
 }
@@ -89,14 +85,14 @@ cJSON *mx_get_new_messages_by_id(sqlite3 *db, guint64 room_id, guint64 date,
  * 
  * return json object
  */
-
 cJSON *mx_get_old_messages_by_id(sqlite3 *db, guint64 room_id, guint64 date,
                                  gint64 count) {
     sqlite3_stmt *stmt;
     gchar *request = mx_create_request_message_by_id(db, room_id, 
                                                      DB_OLD_MESSAGE);
 
-    mx_error_sqlite(sqlite3_prepare_v2(db, request, -1, &stmt, NULL));
+    mx_error_sqlite(sqlite3_prepare_v2(db, request, -1, &stmt, NULL),
+                                       "get old message by id");
     sqlite3_free(request);
     return get_messages_by_id(stmt, room_id, count, date);
 }

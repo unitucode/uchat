@@ -40,7 +40,6 @@ struct s_db_message {
     guint64 user_id;
     guint64 room_id;
     guint64 message_id;
-    guint64 date_dead;
     guint64 date;
     gint8 status;
     gint8 type;
@@ -85,7 +84,7 @@ guint64 mx_get_count_rooms(sqlite3 *db);
 guint64 mx_get_count_messages(sqlite3 *db, guint64 id);
 
 // error
-gboolean mx_error_sqlite(gint32 rv);
+gboolean mx_error_sqlite(gint32 rv, char *error);
 
 // queue
 void mx_db_push_queue_by_id(sqlite3 *db, guint64 user_id,

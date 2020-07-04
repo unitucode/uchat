@@ -7,7 +7,6 @@
  * 
  * db: closed database structure
  */
-
 void mx_create_table(sqlite3 *db) {
     sqlite3_exec(db, "create table if not exists contacts("
                      "user_id       integer not null,"
@@ -37,7 +36,6 @@ void mx_create_table(sqlite3 *db) {
  * 
  * db: closed database structure
  */
-
 void mx_create_table_messages(sqlite3 *db) {
     sqlite3_exec(db, "create table if not exists messages("
                      "user_id       integer             not null,"
@@ -59,7 +57,6 @@ void mx_create_table_messages(sqlite3 *db) {
  * 
  * db: closed database structure
  */
-
 void mx_create_table_users(sqlite3 *db) {
     sqlite3_exec(db, "create table if not exists users("
                            "id             integer primary key not null,"
@@ -79,7 +76,6 @@ void mx_create_table_users(sqlite3 *db) {
  * 
  * db: closed database structure
  */
-
 void mx_create_table_rooms(sqlite3 *db) {
     sqlite3_exec(db, "create table if not exists rooms("
                            "id                 integer primary key not null,"
