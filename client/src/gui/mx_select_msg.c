@@ -59,12 +59,20 @@ static void show_msg_control_btn(GtkBuilder *builder,
         mx_switch_room_header(builder, MX_ROOM_CTRL);
 }
 
+void mx_label_set_num(gchar *widgetname, GtkBuilder *builder, gint number) {
+    GObject *widget = gtk_builder_get_object(builder, widgetname);
+    gchar *number_str = g_strdup_printf("%d", number);
+
+    gtk_label_set_text(GTK_LABEL(widget), number_str);
+    g_free(number_str);
+}
+
 void mx_select_msg(gpointer *eventbox, gpointer *event, t_signal_data *data) {
     t_groom *groom = mx_get_selected_groom(data->chat->builder,
                                            MX_LOCAL_ROOMS);
     t_gmsg *gmsg = (t_gmsg*)g_object_get_data(G_OBJECT(data->row_msg), "gmsg");
     gboolean is_own = !g_strcmp0(data->chat->login, gmsg->login);
-    gboolean is_customer = !g_strcmp0(data->chat->login, groom->customer); 
+    gboolean is_customer = !g_strcmp0(data->chat->login, groom->customer);
 
     if (!mx_widget_is_visible("box_editing_msg", data->chat->builder)) {
         if (gtk_list_box_row_is_selected(GTK_LIST_BOX_ROW(data->row_msg)))
@@ -73,6 +81,8 @@ void mx_select_msg(gpointer *eventbox, gpointer *event, t_signal_data *data) {
             select_row(groom, gmsg, data->row_msg, is_own);
     }
     show_msg_control_btn(data->chat->builder, groom, is_customer);
+    mx_label_set_num("label_msg_count",
+                     data->chat->builder, groom->select_all);
     (void)eventbox;
     (void)event;
 }
