@@ -9,6 +9,7 @@ static void delete_older_message(t_groom *groom) {
 void mx_box_messages_reached(GtkScrolledWindow *scroll,
                              GtkPositionType pos, t_chat *chat) {
     t_groom *groom = mx_get_selected_groom(chat->builder, MX_LOCAL_ROOMS);
+    GtkAdjustment *adj = gtk_scrolled_window_get_vadjustment(scroll);
 
     if (pos == GTK_POS_TOP && !chat->upl_old_msgs) {
         if (!gtk_list_box_get_row_at_index(groom->box_messages, 0))
@@ -21,22 +22,24 @@ void mx_box_messages_reached(GtkScrolledWindow *scroll,
         chat->upl_old_msgs = TRUE;
     }
     if (pos == GTK_POS_TOP) {
-        GtkAdjustment *adj = gtk_scrolled_window_get_vadjustment(scroll);
+        GtkAdjustment *adj1 = gtk_scrolled_window_get_vadjustment(scroll);
 
-        gtk_adjustment_set_value(adj, gtk_adjustment_get_value(adj) + 1);
+        gtk_adjustment_set_value(adj, gtk_adjustment_get_value(adj1) + 1);
     }
     if (pos == GTK_POS_BOTTOM) {
         chat->upl_old_msgs = TRUE;
         while (groom->uploaded > MX_BUF_MSGS) {
             GtkRequisition req;
             GtkRequisition req2;
-            GtkAdjustment *adj = gtk_scrolled_window_get_vadjustment(scroll);
+            GtkAdjustment *adj1 = gtk_scrolled_window_get_vadjustment(scroll);
 
             gtk_widget_get_preferred_size(GTK_WIDGET(gtk_list_box_get_row_at_index(groom->box_messages, 0)), &req, &req2);
             puts("DELETE OLD MSG");
             delete_older_message(groom);
-            gtk_adjustment_set_upper(adj, gtk_adjustment_get_upper(adj) - req2.height);
-            gtk_adjustment_set_value(adj, gtk_adjustment_get_upper(adj) - gtk_adjustment_get_page_size(adj));
+            gtk_adjustment_set_upper(adj1, gtk_adjustment_get_upper(adj1)
+                                           - req2.height);
+            gtk_adjustment_set_value(adj1, gtk_adjustment_get_upper(adj1)
+                                           - gtk_adjustment_get_page_size(adj1));
             groom->uploaded--;
         }
         chat->upl_old_msgs = FALSE;
