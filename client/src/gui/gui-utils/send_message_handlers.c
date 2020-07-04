@@ -4,7 +4,6 @@ void mx_send_message_handle_enter(GtkTextView *textview,
                                   GdkEvent *event, t_chat *chat) {
     GtkTextBuffer *buffer = gtk_text_view_get_buffer(textview);
 
-
     if (event->key.keyval == MX_KEY_SHIFT)
         chat->shift_hold = TRUE;
     g_usleep(0);
