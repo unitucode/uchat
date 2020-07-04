@@ -28,7 +28,12 @@ t_dtp *mx_edit_msg_request(char *msg, guint64 room_id, guint64 msg_id,
     return mx_get_transport_data(json_result);
 }
 
-static gboolean is_valid(t_client *client, gint msg_id, gint room_id) {
+static gboolean is_valid(t_client *client, gint msg_id, gint room_id,
+                         cJSON *msg) {
+    gsize len = strlen(msg->valuestring);
+
+    if (!len || len > MX_MAX_MESSAGE)
+        return FALSE;
     if (!mx_is_member(client->info->database,
                       client->user->user_id, room_id)) {
         return FALSE;
@@ -61,10 +66,10 @@ gboolean mx_edit_msg_handler(t_dtp *msg, t_client *client) {
     t_dtp *resend = NULL;
 
     if (!cJSON_IsNumber(room_id) || !cJSON_IsNumber(msg_id)
-        || !cJSON_IsString(msg_str) || !strlen(msg_str->valuestring)) {
+        || !cJSON_IsString(msg_str)) {
         return FALSE;
     }
-    if (!is_valid(client, msg_id->valuedouble, room_id->valuedouble))
+    if (!is_valid(client, msg_id->valuedouble, room_id->valuedouble, msg_str))
         return FALSE;
     mx_edit_message_by_id(client->info->database, msg_id->valueint,
                           msg_str->valuestring);
