@@ -19,3 +19,4 @@ server/uchat_server_wd/files/*
 utils/libutils.a
 users.db
 info.log
+client/set-theme

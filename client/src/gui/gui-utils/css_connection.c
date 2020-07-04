@@ -3,8 +3,7 @@
 static void mx_remove_css_connect(t_chat *chat) {
     gtk_style_context_remove_provider_for_screen(
         gdk_screen_get_default(),
-        GTK_STYLE_PROVIDER(chat->css_prov)
-    );
+        GTK_STYLE_PROVIDER(chat->css_prov));
     g_clear_object(&chat->css_prov);
     chat->css_prov = gtk_css_provider_new();
 }
@@ -24,7 +23,8 @@ void mx_css_connect(char *theme, t_chat *chat) {
 void change_theme_icon(t_chat *chat, gchar *icon_name) {
     GObject *img = gtk_builder_get_object(chat->builder, "image19");
 
-    gtk_image_set_from_icon_name(GTK_IMAGE(img), icon_name, GTK_ICON_SIZE_DND);
+    gtk_image_set_from_icon_name(GTK_IMAGE(img), icon_name,
+                                 GTK_ICON_SIZE_DND);
     gtk_image_set_pixel_size(GTK_IMAGE(img), 15);
 }
 

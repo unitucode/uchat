@@ -54,7 +54,7 @@ gboolean mx_get_members_handler(t_dtp *data, t_chat *chat) {
 
     if (!cJSON_IsArray(members) || !cJSON_IsNumber(room_id))
         return FALSE;
-    for (int i = 0; i < cJSON_GetArraySize(members); i++) {
+    for (gint i = 0; i < cJSON_GetArraySize(members); i++) {
         member = cJSON_GetArrayItem(members, i);
         if (!insert_member(member, room_id->valuedouble, chat))
             return FALSE;

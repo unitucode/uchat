@@ -1,6 +1,6 @@
 #include "client.h"
 
-void mx_switch_room_header(GtkBuilder *builder, int page_index) {
+void mx_switch_room_header(GtkBuilder *builder, gint page_index) {
     GObject *stack = gtk_builder_get_object(builder, "stack_room_header");
     GObject *page = NULL;
 
@@ -11,7 +11,8 @@ void mx_switch_room_header(GtkBuilder *builder, int page_index) {
     gtk_stack_set_visible_child(GTK_STACK(stack), GTK_WIDGET(page));
 }
 
-void mx_set_room_widgets_visibility(GtkBuilder *builder, gboolean visibility) {
+void mx_set_room_widgets_visibility(GtkBuilder *builder,
+                                    gboolean visibility) {
     GObject *box_entry = gtk_builder_get_object(builder, "box_entry_field");
     GObject *box_header = gtk_builder_get_object(builder, "box_room_header");
     GObject *box_editing = gtk_builder_get_object(builder, "box_editing_msg");

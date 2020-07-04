@@ -10,7 +10,7 @@
  * 
  * returns: new request
  */
-t_dtp *mx_del_msg_request(int room_id, int msg_id) {
+t_dtp *mx_del_msg_request(guint64 room_id, guint64 msg_id) {
     cJSON *json_result = cJSON_CreateObject();
 
     if (!cJSON_AddNumberToObject(json_result, "type", RQ_DEL_MSG))

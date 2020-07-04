@@ -21,7 +21,7 @@ static void change_working_dir(void) {
     #endif
 }
 
-static gboolean is_valid(int argc) {
+static gboolean is_valid(gint argc) {
     if (argc != 3) {
         g_printerr("Usage: ./uchat <ip,domen> <port>\n");
         return FALSE;

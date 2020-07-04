@@ -53,12 +53,12 @@ gboolean mx_handle_message(t_client *client) {
     if (client->upload_file)
         return FALSE;
     if (!client->msg) {
-        g_message("2Closed receiver for\n");
+        mx_logger(MX_LOG_FILE, G_LOG_LEVEL_MESSAGE, "[1]closed receiver");
         mx_deinit_client(&client);
         return FALSE;
     }
     if (!mx_handle_request(client->msg, client)) {
-        g_message("3Closed receiver for\n");
+        mx_logger(MX_LOG_FILE, G_LOG_LEVEL_MESSAGE, "[2]closed receiver");
         mx_deinit_client(&client);
         return FALSE;
     }
@@ -79,7 +79,6 @@ gboolean mx_handle_request(char *request, t_client *client) {
     t_dtp *data = mx_request_creation(request);
 
     if (data) {
-        g_print("recv = %s\n", cJSON_Print(data->json));
         if (client->user || data->type == RQ_LOG_IN
             || data->type == RQ_SIGN_UP
             || data->type == RQ_TOKEN

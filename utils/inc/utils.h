@@ -48,9 +48,9 @@ long long mx_get_current_time(void);
 char *mx_strdup(char *str);
 void *mx_malloc(size_t size);
 void mx_free(void **ptr);
-int mx_close(int fd);
+gint mx_close(gint fd);
 FILE *mx_fopen(const char * restrict path, const char * restrict mode);
-int mx_fclose(FILE *stream);
+gint mx_fclose(FILE *stream);
 
 //logs
 void mx_logger(gchar *file_name, GLogLevelFlags flags, gchar *error);

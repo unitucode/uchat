@@ -7,12 +7,18 @@
 #include <glib.h>
 #include <gio/gio.h>
 
+/*
+ * Icons and images paths
+ */
 #define MX_IMGS_PATH "../src/gui/resources/"
 #define MX_STICKER_PATH MX_IMGS_PATH"stickers/"
 #define MX_GUI_PATH "../src/gui/gui.glade"
 #define MX_IMG_EYE MX_IMGS_PATH"eye.png"
 #define MX_IMG_CLOSEDEYE MX_IMGS_PATH"closed-eye.png"
 
+/*
+ * Error messages for authorization
+ */
 #define MX_ERRMSG_INVALID_LOGIN "Login can be minimum 3 symbol of a-z, 0-9, -"
 #define MX_ERRMSG_NODATA "Please, enter login and password"
 #define MX_ERRMSG_DIFPASS "Passwords must match"
@@ -20,12 +26,21 @@
 #define MX_ERRMSG_USEREXIST "User already exist"
 #define MX_ERRMSG_CLIEXIST "User already authorized"
 
+/*
+ * Controll-headerbar
+ */
 #define MX_ROOM_CTRL 0
 #define MX_MSG_CTRL 1
 
+/*
+ * GtkListBox of room lists
+ */
 #define MX_LOCAL_ROOMS "listbox_rooms"
 #define MX_GLOBAL_ROOMS "listbox_global_rooms"
 
+/*
+ * Themes
+ */
 #define MX_DARK_THEME "../src/gui/resources/dark-theme.css"
 #define MX_LIGHT_THEME "../src/gui/resources/light-theme.css"
 #define MX_THEME_FILE "../set-theme"
@@ -63,12 +78,12 @@
 
 /* Groom
  * ----------
- * box_rooms:
- * page:
- * row_room:
- * stack_msg:
- * box_messages:
- * label_name:
+ * box_rooms: GtkLisBox of all rooms
+ * page: GtkStack page of this room with messages
+ * row_room: pointer to room GtkListBoxRow
+ * stack_msg: GtkStack of pages with messages
+ * box_messages: GtkListBox of all messages or room
+ * label_name: pointer to GtkLabel with room name
  * members: hash table with all members in room
  * is_watched: flag that check is watched new messages in room
  * id: room id
@@ -85,9 +100,9 @@ typedef struct s_groom t_groom;
 
 /* Gmsg
  * ----------
- * row_msg: 
- * label_text:
- * label_power:
+ * row_msg: pointer to message GtkListBoxRow
+ * label_text: pointer to GtkLabel with message content
+ * label_power: pointer to label with message power
  * type: type of message (STICKER, FILE ...)
  * msg: text of message
  * login: login of sender
@@ -117,22 +132,22 @@ typedef struct s_gmsg t_gmsg;
  * error_handler: array of error handlers
  * request_hanlder: array of request handlers
  * msg_placeholder: status of placeholder
- * css_prov:
+ * css_prov: contain css-styles
  */
 typedef struct s_chat t_chat;
 
 /* Filter data
  * ----------
- * is_found_rooms:
- * search_name:
+ * is_found_rooms: flag of found rooms
+ * search_name: contain search name of room
  */
 typedef struct s_filter_data t_filter_data;
 
 /* Signal data
  * ----------
- * groom:
- * chat:
- * row_msg:
+ * groom: t_groom for gpointer user_data
+ * chat: t_chat for gpointer user_data
+ * row_msg: GtkListBoxRow for gpointer user_data
  */
 typedef struct s_signal_data t_signal_data;
 
@@ -177,7 +192,7 @@ struct s_chat {
     char *auth_token;
     char *login;
     gchar *desc;
-    int argc;
+    gint argc;
     char **argv;
     gsize id;
     t_groom *curr_room;
@@ -208,7 +223,7 @@ struct s_filter_data {
  */
 gdouble mx_get_used_power(guint64 chars);
 gssize mx_send(GDataOutputStream *out, t_dtp *dtp);
-t_chat *mx_init_chat(GSocketConnection *connection, int argc, char **argv);
+t_chat *mx_init_chat(GSocketConnection *connection, gint argc, char **argv);
 void mx_receiver(GObject *source_object, GAsyncResult *res,
                  gpointer user_data);
 void mx_init_handlers(t_chat *chat);
@@ -291,7 +306,7 @@ void mx_err_cli_exist_handler(GtkBuilder *builder);
 /*
  * Gui functions
  */
-GtkBuilder *mx_init_window(int argc, char **argv);
+GtkBuilder *mx_init_window(gint argc, char **argv);
 void mx_init_gui(t_chat *chat);
 gint mx_start_gui(t_chat *chat);
 void mx_start_main_window(t_chat *chat);
@@ -379,7 +394,9 @@ void mx_reset_select_count(void);
 void mx_open_files_dir(GtkButton *btn, t_chat *chat);
 void mx_req_send_message(GtkButton *btn, t_chat *chat);
 
-// gui utils
+/*
+ * Gui utils
+ */
 void mx_scrlldwnd_connect(gchar *name, GtkWidget *scroll, GtkBuilder *builder,
                           t_groom *room);
 gchar *mx_entry_get_text(gchar *entry_name, GtkBuilder *builder);
@@ -454,9 +471,6 @@ void mx_send_message_handle_enter(GtkTextView *textview,
                                   GdkEvent *event, t_chat *chat);
 void mx_send_message_handle_shift(GtkWidget *textview,
                                   GdkEvent *event, GtkBuilder *builder);
-
-// void mx_upload_file(gchar *path, gint room_id, t_chat *chat);
-gboolean mx_handle_request(char *request, t_chat *chat);
 void mx_send_auth_request(char *login, char *password,
                           t_chat *chat, t_request_type request_type);
 void mx_css_connect(char *theme, t_chat *chat);

@@ -11,7 +11,7 @@ void mx_daemon(void) {
         exit(1);
     }
     if (process_id > 0) {
-        printf("process_id of child process %d \n", process_id);
+        g_print("process_id of child process %d \n", process_id);
         exit(0);
     }
     umask(0);

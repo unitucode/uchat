@@ -10,7 +10,7 @@ void mx_show_user_info(GtkBuilder *builder, gchar *login, gchar *desc) {
 }
 
 void mx_req_get_member_info(GObject *popup, t_chat *chat) {
-    t_dtp *dtp = mx_member_info_request((int)g_object_get_data(popup,
+    t_dtp *dtp = mx_member_info_request((gint)g_object_get_data(popup,
                                                                "member_id"));
 
     mx_send(chat->out, dtp);
