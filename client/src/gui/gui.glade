@@ -786,8 +786,6 @@
                           <object class="GtkTextView" id="msg_entry">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
-                            <property name="has_focus">True</property>
-                            <property name="is_focus">True</property>
                             <property name="events">GDK_KEY_PRESS_MASK</property>
                             <property name="wrap_mode">word-char</property>
                             <property name="left_margin">10</property>

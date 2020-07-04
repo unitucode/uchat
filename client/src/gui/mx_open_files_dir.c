@@ -34,16 +34,21 @@ static gboolean show_image_viewer(gchar *file_path, GtkBuilder *builder) {
     return FALSE;
 }
 
+static void unselect_msg(t_gmsg *gmsg) {
+    t_signal_data *data = g_object_get_data(G_OBJECT(gmsg->row_msg),
+                                            "sigdata");
+
+    mx_select_msg(NULL, NULL, data);
+}
+
 void mx_open_files_dir(GtkButton *btn, t_chat *chat) {
     GObject *viewer = gtk_builder_get_object(chat->builder,
                                              "popup_image_viewer");
     t_groom *groom = mx_get_selected_groom(chat->builder, MX_LOCAL_ROOMS);
     t_gmsg *gmsg = g_object_get_data(G_OBJECT(btn), "gmsg");
-    t_signal_data *data = g_object_get_data(G_OBJECT(gmsg->row_msg),
-                                            "sigdata");
     GtkImage *img = GTK_IMAGE(gtk_button_get_image(btn));
 
-    mx_select_msg(NULL, NULL, data);
+    unselect_msg(gmsg);
     if (g_file_test(gmsg->msg, G_FILE_TEST_EXISTS)) {
         if (show_image_viewer(gmsg->msg, chat->builder))
             mx_widget_set_visibility(GTK_WIDGET(viewer), TRUE);

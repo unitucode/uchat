@@ -61,7 +61,7 @@ gboolean mx_edit_msg_handler(t_dtp *msg, t_client *client) {
     t_dtp *resend = NULL;
 
     if (!cJSON_IsNumber(room_id) || !cJSON_IsNumber(msg_id)
-        || !cJSON_IsString(msg_str)) {
+        || !cJSON_IsString(msg_str) || !strlen(msg_str->valuestring)) {
         return FALSE;
     }
     if (!is_valid(client, msg_id->valuedouble, room_id->valuedouble))

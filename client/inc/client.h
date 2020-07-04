@@ -33,6 +33,12 @@
 #define MX_MSG_CTRL 1
 
 /*
+ * Keybord
+ */
+#define MX_KEY_ENTER (gint)65293
+#define MX_KEY_SHIFT (gint)65505
+
+/*
  * GtkListBox of room lists
  */
 #define MX_LOCAL_ROOMS "listbox_rooms"
@@ -132,6 +138,7 @@ typedef struct s_gmsg t_gmsg;
  * error_handler: array of error handlers
  * request_hanlder: array of request handlers
  * msg_placeholder: status of placeholder
+ * shift_hold: flag if shift is hold 
  * css_prov: contain css-styles
  */
 typedef struct s_chat t_chat;
@@ -169,6 +176,10 @@ struct s_groom {
     gboolean is_updated;
     gint uploaded;
     gdouble power;
+    gboolean select_all;
+    gboolean select_own;
+    gboolean select_another;
+    gboolean select_notedit;
 };
 
 struct s_gmsg {
@@ -204,6 +215,7 @@ struct s_chat {
     gboolean (*request_handler[RQ_COUNT_REQUEST])(t_dtp *dtp,
                                                   struct s_chat *chat);
     gboolean msg_placeholder;
+    gboolean shift_hold;
     GtkCssProvider *css_prov;
 };
 
@@ -390,7 +402,7 @@ void mx_add_to_sett_members(gint *key,
                             gchar *value, GtkBuilder *builder);
 void mx_add_to_info_members(gint *key,
                             gchar *value, GtkBuilder *builder);
-void mx_reset_select_count(void);
+void mx_reset_select_count(t_groom *groom);
 void mx_open_files_dir(GtkButton *btn, t_chat *chat);
 void mx_req_send_message(GtkButton *btn, t_chat *chat);
 
@@ -470,7 +482,8 @@ void mx_show_join_to_room(GtkWidget *event_box, GdkEventButton *event,
 void mx_send_message_handle_enter(GtkTextView *textview,
                                   GdkEvent *event, t_chat *chat);
 void mx_send_message_handle_shift(GtkWidget *textview,
-                                  GdkEvent *event, GtkBuilder *builder);
+                                  GdkEvent *event, t_chat *chat);
+
 void mx_send_auth_request(char *login, char *password,
                           t_chat *chat, t_request_type request_type);
 void mx_css_connect(char *theme, t_chat *chat);
