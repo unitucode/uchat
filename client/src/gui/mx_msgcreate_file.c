@@ -1,6 +1,8 @@
 #include "client.h"
 
-static void file_type_set_image(GtkWidget *btn, gchar *filename) {
+static GtkWidget *create_image_btn(gchar *filename) {
+    GtkWidget *btn = NULL;
+
     if (g_file_test(filename, G_FILE_TEST_EXISTS)) {
         if (mx_is_file_image(filename) || mx_is_file_animation(filename))
             btn = gtk_button_new_from_icon_name("image", GTK_ICON_SIZE_DND);
@@ -9,16 +11,16 @@ static void file_type_set_image(GtkWidget *btn, gchar *filename) {
     }
     else
         btn = gtk_button_new_from_icon_name("download", GTK_ICON_SIZE_DND);
+    return btn;
 }
 
 void mx_msgcreate_file(GtkWidget *box_info, t_gmsg *gmsg,
                        gboolean is_own, t_chat *chat) {
     GtkWidget *box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
-    GtkWidget *btn = NULL;
     gchar *file = mx_get_filename(gmsg->msg);
     GtkWidget *filename = gtk_label_new(file);
+    GtkWidget *btn = create_image_btn(gmsg->msg);
 
-    file_type_set_image(btn, gmsg->msg);
     mx_widget_set_class(box, "file-button");
     gtk_widget_set_can_focus(btn, FALSE);
     g_object_set_data(G_OBJECT(btn), "gmsg", gmsg);

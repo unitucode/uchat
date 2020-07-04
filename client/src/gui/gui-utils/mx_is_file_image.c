@@ -2,7 +2,8 @@
 
 gboolean mx_is_file_image(gchar *filename) {
     if (g_str_has_suffix(filename, ".png")
-        || g_str_has_suffix(filename, ".jpg")) {
+        || g_str_has_suffix(filename, ".jpg")
+        || g_str_has_suffix(filename, ".jpeg")) {
         return TRUE;
     }
     else
