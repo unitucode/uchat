@@ -35,7 +35,11 @@ t_chat *mx_init_chat(GSocketConnection *connection, gint argc, char **argv) {
     chat->out = out;
     chat->in = in;
     init_fields(chat);
+    #ifdef MX_UNIT_TEST
+    chat->builder = NULL;
+    #else
     chat->builder = mx_init_window(argc, argv);
+    #endif
     chat->argc = argc;
     chat->argv = argv;
     mx_init_handlers(chat);

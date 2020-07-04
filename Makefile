@@ -17,6 +17,7 @@ UTILSO = $(UTILSD)/$(UTILS).a
 CJSONO = libraries/lib/$(CJSON).a
 SQLITEO = libraries/lib/$(SQLITE).a
 
+
 all: $(SQLITE) $(CJSON) $(UTILS) $(CLIENT) $(SERVER)
 
 $(SQLITE): $(SQLITEO)
@@ -60,4 +61,4 @@ clean:
 
 reinstall: uninstall all
 
-.PHONY: all uninstall clean reinstall $(CLIENTO) $(SERVERO) $(SQLITEO) $(CJSONO) $(UTILSO)
+.PHONY: + uninstall clean reinstall $(CLIENTO) $(SERVERO) $(SQLITEO) $(CJSONO) $(UTILSO)

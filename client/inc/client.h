@@ -478,3 +478,12 @@ void mx_css_connect_from_file(t_chat *chat);
 void mx_connect_theme_switcher(t_chat *chat);
 void change_theme_icon(t_chat *chat, gchar *icon_name);
 gchar *mx_format_text(gchar *text);
+gdouble mx_get_used_power(guint64 chars);
+
+
+/* UNIT-TEST Utils */
+
+void mx_activate_content_test(GtkWidget *window, t_chat *chat);
+int mx_gui_unit_test(t_chat *chat, int argc, char **argv);
+gchar *mx_get_text_from_buffer(GtkTextBuffer *buffer);
+void mx_get_buffer_text_unit(GtkButton *btn, t_chat *chat);
