@@ -10,7 +10,7 @@
  * 
  * returns: success of handling
  */
-bool mx_handle_request(char *request, t_chat *chat) {
+gboolean mx_handle_request(char *request, t_chat *chat) {
     t_dtp *data = mx_request_creation(request);
 
     if (data) {
@@ -20,15 +20,16 @@ bool mx_handle_request(char *request, t_chat *chat) {
             || data->type == RQ_TOKEN) {
             if (!chat->request_handler[data->type]
                 || !chat->request_handler[data->type](data, chat)) {
-                return false;
+                return FALSE;
             }
         }
         else {
-            return false;
+            return FALSE;
         }
         mx_free_request(&data);
+        return TRUE;
     }
-    return true;
+    return FALSE;
 }
 
 static gboolean is_connected(t_chat *chat, GDataInputStream *in) {

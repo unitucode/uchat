@@ -5,7 +5,8 @@ void mx_send_auth_request(char *login, char *password,
     char *pass;
     t_dtp *dtp = NULL;
 
-    pass = g_compute_checksum_for_string(G_CHECKSUM_SHA256, password, strlen(password));
+    pass = g_compute_checksum_for_string(G_CHECKSUM_SHA256, password,
+                                         strlen(password));
     if (request_type == RQ_LOG_IN)
         dtp = mx_log_in_request(login, pass);
     else

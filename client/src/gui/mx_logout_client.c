@@ -11,5 +11,4 @@ void mx_logout_client(t_chat *chat) {
         row = gtk_list_box_get_row_at_index(box, 0);
     }
     mx_clear_global_search(chat->builder);
-    // mx_stop_search_room(NULL, NULL, chat->builder);
 }

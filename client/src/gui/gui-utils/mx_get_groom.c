@@ -8,12 +8,12 @@ t_groom *mx_get_groom_by_id(guint64 room_id, GtkBuilder *builder) {
                                            "listbox_rooms");
     GtkListBoxRow *row = NULL;
     t_groom *groom = NULL;
-    bool flag = true;
+    gboolean flag = TRUE;
 
     for (gint i = 0; flag; i++) {
         row = gtk_list_box_get_row_at_index(GTK_LIST_BOX(list), i);
         if (row == NULL)
-            flag = false;
+            flag = FALSE;
         else {
             groom = (t_groom*)g_object_get_data(G_OBJECT(row), "groom");
             if (room_id == groom->id)

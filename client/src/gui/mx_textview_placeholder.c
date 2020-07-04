@@ -11,7 +11,7 @@ static gboolean set_placeholder(GtkWidget *textview, GdkEvent *event,
     gtk_text_buffer_get_end_iter(buffer, &end);
     if (strlen(gtk_text_buffer_get_text(buffer, &start, &end, FALSE)) == 0) {
         gtk_text_buffer_set_text(buffer, placeholder, -1);
-        chat->msg_placeholder = true;
+        chat->msg_placeholder = TRUE;
     }
     (void)event;
     return FALSE;
@@ -31,7 +31,7 @@ static gboolean unset_placeholder(GtkWidget *textview, GdkEvent  *event,
     
     if (chat->msg_placeholder) {
         gtk_text_buffer_set_text(buffer, placeholder, -1);
-        chat->msg_placeholder = false;
+        chat->msg_placeholder = FALSE;
     }
     (void)event;
     return FALSE;

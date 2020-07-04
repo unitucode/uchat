@@ -9,7 +9,7 @@
  * 
  * returns: new request
  */
-t_dtp *mx_delete_room_request(int room_id) {
+t_dtp *mx_delete_room_request(guint64 room_id) {
     cJSON *send = cJSON_CreateObject();
 
     if (!cJSON_AddNumberToObject(send, "type", RQ_DEL_ROOM))

@@ -8,7 +8,7 @@ static void init_fields(t_chat *chat) {
     chat->builder = NULL;
     chat->upl_old_msgs = FALSE;
     chat->msg_placeholder = TRUE;
-    chat->cssProv = NULL;
+    chat->css_prov = NULL;
 }
 
 /*
@@ -22,7 +22,7 @@ static void init_fields(t_chat *chat) {
  * 
  * returns: new chat information
  */
-t_chat *mx_init_chat(GSocketConnection *connection, int argc, char **argv) {
+t_chat *mx_init_chat(GSocketConnection *connection, gint argc, char **argv) {
     t_chat *chat = mx_malloc(sizeof(t_chat));
     GOutputStream *out_s = g_io_stream_get_output_stream(
         G_IO_STREAM(connection));

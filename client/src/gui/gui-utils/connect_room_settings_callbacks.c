@@ -28,12 +28,13 @@ void mx_req_room_sett(GtkButton *btn, t_chat *chat) {
                                               chat->builder);
     char *new_desc = mx_get_buffer_text("buffer_room_desc", chat->builder);
 
-    if (strcmp(groom->room_name, new_name)) {
+    mx_trim_message(&new_desc);
+    if (g_strcmp0(groom->room_name, new_name)) {
         dtp = mx_upd_room_name_request(groom->id, new_name);
         mx_send(chat->out, dtp);
         mx_free_request(&dtp);
     }
-    if (!groom->desc || strcmp(groom->desc, new_desc)) {
+    if (!groom->desc || g_strcmp0(groom->desc, new_desc)) {
         dtp = mx_upd_room_desc_request(groom->id, new_desc);
         mx_send(chat->out, dtp);
         mx_free_request(&dtp);

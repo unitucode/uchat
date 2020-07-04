@@ -25,7 +25,7 @@ static gboolean handle_room(cJSON *room, t_chat *chat) {
     if (!groom)
         return FALSE;
     mx_add_room_row(groom, chat, MX_GLOBAL_ROOMS);
-    return true;
+    return TRUE;
 }
 
 /*
@@ -44,7 +44,7 @@ gboolean mx_search_rooms_handler(t_dtp *data, t_chat *chat) {
 
     if (!cJSON_IsArray(rooms))
         return FALSE;
-    for (int i = 0; i < cJSON_GetArraySize(rooms); i++) {
+    for (gint i = 0; i < cJSON_GetArraySize(rooms); i++) {
         room = cJSON_GetArrayItem(rooms, i);
         if (!handle_room(room, chat))
             return FALSE;

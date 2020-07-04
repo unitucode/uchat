@@ -124,7 +124,7 @@ struct s_dtp {
     char *str;
     cJSON *json;
     size_t len;
-    int type;
+    gint type;
 };
 
 gboolean mx_isvalid_hash(char *hash);

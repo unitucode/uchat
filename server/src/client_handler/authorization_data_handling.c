@@ -51,13 +51,13 @@ static char *get_pass_str(t_dtp *data) {
  * 
  * returns: success of validation
  */
-bool mx_valid_authorization_data(t_dtp *data, char **login,
-                                 char **pass, t_client *client) {
+gboolean mx_valid_authorization_data(t_dtp *data, char **login,
+                                     char **pass, t_client *client) {
     if (client->user != NULL)
-        return false;
+        return FALSE;
     if (!(*login = get_login_str(data)))
-        return false;
+        return FALSE;
     if (!(*pass = get_pass_str(data)))
-        return false;
-    return true;
+        return FALSE;
+    return TRUE;
 }

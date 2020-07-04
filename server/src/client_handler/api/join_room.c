@@ -20,7 +20,7 @@ static t_dtp *get_resend_room(t_db_room *room) {
     return mx_get_transport_data(send);
 }
 
-static t_dtp *new_member(char *login, int user_id, int room_id) {
+static t_dtp *new_member(char *login, guint64 user_id, guint64 room_id) {
     cJSON *member = cJSON_CreateObject();
 
     if (!cJSON_AddNumberToObject(member, "type", RQ_NEW_MEMBER))

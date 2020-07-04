@@ -17,7 +17,7 @@ typedef enum e_type_db {
     DB_SECOND,
     DB_MILISECOND,
     DB_MICROSECOND
-} t_type_db;
+}            t_type_db;
 
 struct s_member{
     guint64 user_id;

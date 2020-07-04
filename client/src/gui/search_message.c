@@ -16,7 +16,7 @@ void mx_add_message_to_found(t_gmsg *gmsg, t_chat *chat) {
 
 void mx_clear_found_msgs(GtkBuilder *builder) {
     GObject *box = (gtk_builder_get_object(builder, "listbox_found_msgs"));
-    GtkListBoxRow *row = gtk_list_box_get_row_at_index((GTK_LIST_BOX(box)), 0);
+    GtkListBoxRow *row = gtk_list_box_get_row_at_index(GTK_LIST_BOX(box), 0);
 
     mx_widget_set_visibility_by_name(builder,
                                      "label_search_nothing_msgs", FALSE);

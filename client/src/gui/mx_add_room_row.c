@@ -4,15 +4,15 @@ gint mx_room_sort(GtkListBoxRow *row1, GtkListBoxRow *row2) {
     t_groom *f_room = g_object_get_data(G_OBJECT(row1), "groom");
 
     if (f_room->is_updated) {
-        return false;
+        return FALSE;
     }
     (void)row2;
-    return true;
+    return TRUE;
 }
 
 static void fill_room(t_groom *room, GtkListBox *box,
                       GtkWidget *row, GtkWidget *label) {
-    room->is_updated = false;
+    room->is_updated = FALSE;
     room->box_rooms = box;
     room->row_room = GTK_LIST_BOX_ROW(row);
     room->label_name = GTK_LABEL(label);
@@ -50,12 +50,10 @@ void mx_add_room_row(t_groom *room, t_chat *chat, gchar *listbox_name) {
 
     fill_room(room, box, row, label);
     event_containing(listbox_name, event, label, row);
-
     data = mx_create_sigdata(chat, room, NULL);
     g_object_set_data_full(G_OBJECT(row), "groom", room,
                            (GDestroyNotify)mx_delete_groom);
     g_object_set_data_full(G_OBJECT(event), "sigdata", data,
                             (GDestroyNotify)mx_free_sigdata);
-
     gtk_widget_show_all(GTK_WIDGET(box));
 }

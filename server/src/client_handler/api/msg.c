@@ -59,7 +59,7 @@ static gboolean is_valid(t_db_message *msg) {
  * 
  * returns: success of handling
  */
-gboolean mx_msg_handler(t_dtp *data, t_client *client) { // TODO leaks
+gboolean mx_msg_handler(t_dtp *data, t_client *client) {
     t_db_message *msg = mx_parse_message(data->json);
 
     if (!is_valid(msg))
