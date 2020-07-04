@@ -55,7 +55,7 @@ ___
 ```json
 {
     "type": RQ_TOKEN,
-    "token": "SHA-256 token"
+    "token": "SHA-256 token",
     "login": "user_login",
     "desc": "user`s description"
 }
@@ -633,5 +633,15 @@ ___
 {
    "type": RQ_LOG_OUT,
    "token": "SHA-256 user token"
+}
+```
+
+### Read ready
+
+**From client to server and server to client request**
+
+```json
+{
+   "type": RQ_READY_READ
 }
 ```

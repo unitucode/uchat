@@ -58,17 +58,16 @@ void mx_receiver(GObject *source_object, GAsyncResult *res,
     gchar *msg = NULL;
 
     if (!is_connected(chat, in))
-        return;
+        mx_logger(MX_LOG_FILE, G_LOG_LEVEL_MESSAGE, "disconnected");
     msg = g_data_input_stream_read_line_finish(in, res, &count, NULL);
-    g_print("msg = %s\n", msg);
     #ifndef MX_UNIT_TEST
     if (!msg)
     #endif
-        return;
+        mx_logger(MX_LOG_FILE, G_LOG_LEVEL_MESSAGE, "disconnected");
     if (!mx_handle_request(msg, chat)) {
         g_free(msg);
         g_io_stream_close(G_IO_STREAM(chat->conn), NULL, NULL);
-        return;
+        mx_logger(MX_LOG_FILE, G_LOG_LEVEL_MESSAGE, "disconnected");
     }
     g_free(msg);
     g_data_input_stream_read_line_async(in, G_PRIORITY_DEFAULT, NULL,
