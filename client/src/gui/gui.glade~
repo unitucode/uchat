@@ -810,7 +810,7 @@
                         <property name="width_request">48</property>
                         <property name="height_request">48</property>
                         <property name="visible">True</property>
-                        <property name="can_focus">True</property>
+                        <property name="can_focus">False</property>
                         <property name="focus_on_click">False</property>
                         <property name="receives_default">True</property>
                         <property name="events"/>
@@ -873,7 +873,7 @@
                         <property name="width_request">40</property>
                         <property name="height_request">40</property>
                         <property name="visible">True</property>
-                        <property name="can_focus">True</property>
+                        <property name="can_focus">False</property>
                         <property name="focus_on_click">False</property>
                         <property name="receives_default">True</property>
                         <property name="no_show_all">True</property>
@@ -926,9 +926,6 @@
                                 <property name="label" translatable="yes">Room Name</property>
                                 <property name="ellipsize">end</property>
                                 <property name="xalign">0</property>
-                                <attributes>
-                                  <attribute name="weight" value="semibold"/>
-                                </attributes>
                               </object>
                               <packing>
                                 <property name="expand">True</property>
@@ -1389,7 +1386,7 @@
                             <child>
                               <object class="GtkButton" id="sticker_1">
                                 <property name="visible">True</property>
-                                <property name="can_focus">True</property>
+                                <property name="can_focus">False</property>
                                 <property name="receives_default">True</property>
                                 <property name="image">img_sticker_1</property>
                               </object>
@@ -1401,7 +1398,7 @@
                             <child>
                               <object class="GtkButton" id="sticker_2">
                                 <property name="visible">True</property>
-                                <property name="can_focus">True</property>
+                                <property name="can_focus">False</property>
                                 <property name="receives_default">True</property>
                                 <property name="image">img_sticker_2</property>
                               </object>
@@ -1413,7 +1410,7 @@
                             <child>
                               <object class="GtkButton" id="sticker_3">
                                 <property name="visible">True</property>
-                                <property name="can_focus">True</property>
+                                <property name="can_focus">False</property>
                                 <property name="receives_default">True</property>
                                 <property name="image">img_sticker_3</property>
                               </object>
@@ -1425,7 +1422,7 @@
                             <child>
                               <object class="GtkButton" id="sticker_4">
                                 <property name="visible">True</property>
-                                <property name="can_focus">True</property>
+                                <property name="can_focus">False</property>
                                 <property name="receives_default">True</property>
                                 <property name="image">img_sticker_4</property>
                               </object>
