@@ -330,7 +330,7 @@ void mx_add_groom(t_groom *room, t_chat *chat);
 void mx_delete_groom(t_groom *room);
 t_groom *mx_create_groom(cJSON *room);
 t_gmsg *mx_create_gmsg(cJSON *msg, t_chat *chat);
-void mx_delete_gmsg(t_gmsg *gmsg);
+gboolean mx_delete_gmsg(t_gmsg *gmsg);
 GtkWidget *mx_create_reg_message_row(t_gmsg *gmsg,
                                      gboolean is_own, t_chat *chat);
 void mx_add_message_to_room_new(t_gmsg *msg, t_chat *chat);

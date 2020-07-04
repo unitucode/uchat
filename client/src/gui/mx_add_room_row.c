@@ -30,7 +30,7 @@ static void event_containing(gchar *listbox_name, GtkWidget *event,
                              GtkWidget *label, GtkWidget *row) {
     if (!g_strcmp0(listbox_name, MX_LOCAL_ROOMS)) {
         g_signal_connect(event, "button_press_event",
-                        G_CALLBACK(mx_select_room), NULL);
+                         G_CALLBACK(mx_select_room), NULL);
     }
     else {
         g_signal_connect(event, "button_press_event",
@@ -55,6 +55,6 @@ void mx_add_room_row(t_groom *room, t_chat *chat, gchar *listbox_name) {
     g_object_set_data_full(G_OBJECT(row), "groom", room,
                            (GDestroyNotify)mx_delete_groom);
     g_object_set_data_full(G_OBJECT(event), "sigdata", data,
-                            (GDestroyNotify)mx_free_sigdata);
+                           (GDestroyNotify)mx_free_sigdata);
     gtk_widget_show_all(GTK_WIDGET(box));
 }

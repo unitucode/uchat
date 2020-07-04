@@ -53,5 +53,6 @@ gboolean mx_get_msgs_handler(t_dtp *data, t_client *client) {
         cJSON_Delete(msgs_json);
         return FALSE;
     }
+    mx_update_room_power(client, room_id->valuedouble);
     return TRUE;
 }

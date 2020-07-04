@@ -1,5 +1,6 @@
 # uchat
 
+![](uchat.gif)
 
 ### [Uchat api](UCHAT_API.md)
 
