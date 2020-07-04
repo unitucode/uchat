@@ -18,6 +18,10 @@ t_groom *mx_init_groom(void) {
     room->customer_id = 0;
     room->members = g_hash_table_new(g_direct_hash, g_direct_equal);
     room->uploaded = 0;
+    room->select_all = 0;
+    room->select_own = 0;
+    room->select_another = 0;
+    room->select_notedit = 0;
     return room;
 }
 

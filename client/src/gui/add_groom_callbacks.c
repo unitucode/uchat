@@ -32,8 +32,8 @@ void mx_set_current_room_sett(GtkBuilder *builder) {
         gtk_label_set_text(GTK_LABEL(header_name), groom->room_name);
         mx_set_room_members(builder, groom);
         set_main_info_current_room_sett(builder, groom);
+        mx_reset_select_count(groom);
     }
-    mx_reset_select_count();
 }
 
 void mx_select_room(GtkWidget *event_box, GdkEventButton *event,

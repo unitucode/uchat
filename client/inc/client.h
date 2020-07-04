@@ -138,6 +138,7 @@ typedef struct s_gmsg t_gmsg;
  * error_handler: array of error handlers
  * request_hanlder: array of request handlers
  * msg_placeholder: status of placeholder
+ * shift_hold: flag if shift is hold 
  * css_prov: contain css-styles
  */
 typedef struct s_chat t_chat;
@@ -175,6 +176,10 @@ struct s_groom {
     gboolean is_updated;
     gint uploaded;
     gdouble power;
+    gboolean select_all;
+    gboolean select_own;
+    gboolean select_another;
+    gboolean select_notedit;
 };
 
 struct s_gmsg {
@@ -397,7 +402,7 @@ void mx_add_to_sett_members(gint *key,
                             gchar *value, GtkBuilder *builder);
 void mx_add_to_info_members(gint *key,
                             gchar *value, GtkBuilder *builder);
-void mx_reset_select_count(void);
+void mx_reset_select_count(t_groom *groom);
 void mx_open_files_dir(GtkButton *btn, t_chat *chat);
 void mx_req_send_message(GtkButton *btn, t_chat *chat);
 
