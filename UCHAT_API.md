@@ -635,3 +635,13 @@ ___
    "token": "SHA-256 user token"
 }
 ```
+
+### Read ready
+
+**From client to server and server to client request**
+
+```json
+{
+   "type": RQ_READY_READ
+}
+```
