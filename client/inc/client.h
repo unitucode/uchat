@@ -116,6 +116,10 @@ typedef struct s_groom t_groom;
  * room_id: room that contains this message
  * message_id: message id
  * power: power that message used
+ * select_all: count of all selected messages
+ * select_own: count of own selected messages
+ * select_another: count of selected messages from another users
+ * select_notedit: count of selected not editable messages
  */
 typedef struct s_gmsg t_gmsg;
 
