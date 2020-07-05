@@ -318,8 +318,8 @@
   <object class="GtkImage" id="image13">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
-    <property name="pixel_size">12</property>
-    <property name="icon_name">close</property>
+    <property name="pixel_size">14</property>
+    <property name="icon_name">edit-clear-symbolic</property>
   </object>
   <object class="GtkImage" id="image14">
     <property name="visible">True</property>
@@ -1237,7 +1237,7 @@
                         <property name="can_focus">False</property>
                         <property name="valign">start</property>
                         <property name="pixel_size">16</property>
-                        <property name="icon_name">edit</property>
+                        <property name="icon_name">edit-dark</property>
                       </object>
                       <packing>
                         <property name="expand">False</property>
