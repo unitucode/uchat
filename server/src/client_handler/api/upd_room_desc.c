@@ -25,7 +25,7 @@ t_dtp *mx_upd_room_desc_request(guint64 room_id, char *desc) {
 static gboolean is_valid(cJSON *desc) {
     gsize len = strlen(desc->valuestring);
 
-    if (len <= 0 || len > MX_MAX_MESSAGE)
+    if (len > MX_MAX_MESSAGE)
         return FALSE;
     return TRUE;
 }
