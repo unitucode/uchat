@@ -12,6 +12,17 @@ static void init_fields(t_chat *chat) {
     chat->css_prov = NULL;
 }
 
+static void fill_chat(t_chat *chat, gint argc,
+                      char **argv, GDataInputStream *in) {
+    chat->argc = argc;
+    chat->argv = argv;
+    mx_init_handlers(chat);
+    mx_init_errors(chat);
+    g_data_input_stream_read_line_async(in, G_PRIORITY_DEFAULT, NULL,
+                                        mx_receiver, chat);
+    mx_css_connect_from_file(chat);
+}
+
 /*
  * Function: mx_init_chat
  * -------------------------------
@@ -41,12 +52,6 @@ t_chat *mx_init_chat(GSocketConnection *connection, gint argc, char **argv) {
     #else
     chat->builder = mx_init_window(argc, argv);
     #endif
-    chat->argc = argc;
-    chat->argv = argv;
-    mx_init_handlers(chat);
-    mx_init_errors(chat);
-    g_data_input_stream_read_line_async(in, G_PRIORITY_DEFAULT, NULL,
-                                        mx_receiver, chat);
-    mx_css_connect_from_file(chat);
+    fill_chat(chat, argc, argv, in);
     return chat;
 }
