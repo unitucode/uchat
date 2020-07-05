@@ -71,8 +71,8 @@ void mx_select_msg(gpointer *eventbox, gpointer *event, t_signal_data *data) {
             unselect_row(groom, gmsg, data->row_msg, is_own);
         else
             select_row(groom, gmsg, data->row_msg, is_own);
+        show_msg_control_btn(data->chat->builder, groom, is_customer);
     }
-    show_msg_control_btn(data->chat->builder, groom, is_customer);
     mx_label_set_num("label_msg_count",
                      data->chat->builder, groom->select_all);
     (void)eventbox;

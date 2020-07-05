@@ -116,6 +116,10 @@ typedef struct s_groom t_groom;
  * room_id: room that contains this message
  * message_id: message id
  * power: power that message used
+ * select_all: count of all selected messages
+ * select_own: count of own selected messages
+ * select_another: count of selected messages from another users
+ * select_notedit: count of selected not editable messages
  */
 typedef struct s_gmsg t_gmsg;
 
@@ -405,6 +409,7 @@ void mx_add_to_info_members(gint *key,
 void mx_reset_select_count(t_groom *groom);
 void mx_open_files_dir(GtkButton *btn, t_chat *chat);
 void mx_req_send_message(GtkButton *btn, t_chat *chat);
+void mx_req_edit_message(GtkButton *btn, t_chat *chat) ;
 
 /*
  * Gui utils
@@ -422,6 +427,7 @@ void mx_widget_switch_visibility(GtkWidget *usr_ctrl, GtkWidget *widget);
 void mx_widget_switch_visibility_by_name(GtkBuilder *builder, gchar *name);
 t_groom *mx_get_selected_groom(GtkBuilder *builder, gchar *list_name);
 t_groom *mx_get_groom_by_id(guint64 room_id, GtkBuilder *builder);
+gboolean mx_is_same_groom(t_groom *groom, GtkBuilder *builder);
 t_gmsg *mx_get_selected_gmsg(GtkBuilder *builder);
 t_gmsg *mx_get_gmsg_by_id(guint64 msg_id, guint64 room_id,
                           GtkBuilder *builder);
