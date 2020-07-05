@@ -19,6 +19,7 @@ void mx_delete_selected_msgs(GtkButton *btn, t_chat *chat) {
 }
 
 void mx_show_edit_msg(GtkButton *btn, t_chat *chat) {
+    GObject *msg_entry = gtk_builder_get_object(chat->builder, "msg_entry");
     GObject *buffer = gtk_builder_get_object(chat->builder, "buffer_message");
     GObject *label_text = gtk_builder_get_object(chat->builder,
                                                  "label_edit_text");
@@ -29,6 +30,7 @@ void mx_show_edit_msg(GtkButton *btn, t_chat *chat) {
     gtk_label_set_text(GTK_LABEL(label_text), old_text);
     gtk_text_buffer_set_text(GTK_TEXT_BUFFER(buffer), msg->msg, -1);
     mx_switch_room_header(chat->builder, MX_ROOM_CTRL);
+    gtk_widget_grab_focus(GTK_WIDGET(msg_entry));
     g_free(old_text);
     (void)btn;
 }

@@ -21,16 +21,21 @@ void mx_unselect_curr_room_messages(GtkBuilder *builder) {
     if (groom) {
         gtk_list_box_unselect_all(groom->box_messages);
         mx_reset_select_count(groom);
+        mx_hide_msg_editing(NULL, builder);
     }
+}
+
+void mx_reset_room_for_search(GtkBuilder *builder) {
+    mx_switch_room_header(builder, MX_ROOM_CTRL);
+    mx_unselect_curr_room_messages(builder);
+    mx_hide_msg_editing(NULL, builder);
 }
 
 void mx_reset_messege_room(t_groom *new_selected, GtkBuilder *builder) {
     t_groom *groom = mx_get_selected_groom(builder, MX_LOCAL_ROOMS);
 
-    if (groom && new_selected->id != groom->id) {
-        mx_switch_room_header(builder, MX_ROOM_CTRL);
-        mx_unselect_curr_room_messages(builder);
-        mx_hide_msg_editing(NULL, builder);
+    if (groom && (!new_selected || new_selected->id != groom->id)) {
+        mx_reset_room_for_search(builder);
         mx_stop_search_message(NULL, NULL, builder);
     }
 }

@@ -24,8 +24,9 @@ void mx_set_room_sett(GtkButton *btn, t_chat *chat) {
 void mx_req_room_sett(GtkButton *btn, t_chat *chat) {
     t_groom *groom = mx_get_selected_groom(chat->builder, MX_LOCAL_ROOMS);
     t_dtp *dtp = NULL;
-    char *new_name = mx_entry_get_text("entry_roomsett_name",
-                                              chat->builder);
+    char *new_name = g_strndup(mx_entry_get_text("entry_roomsett_name",
+                                                 chat->builder),
+                                                 MX_MAX_ROOM_NAME);
     char *new_desc = mx_get_buffer_text("buffer_room_desc", chat->builder);
 
     mx_trim_message(&new_desc);

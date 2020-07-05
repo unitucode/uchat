@@ -10,6 +10,7 @@ void mx_gupd_clear_history(GtkBuilder *builder, guint64 room_id) {
     while (row) {
         gtk_widget_destroy(GTK_WIDGET(row));
         row = gtk_list_box_get_row_at_index(groom->box_messages, 0);
+        mx_hide_msg_editing(NULL, builder);
         groom->uploaded--;
     }
 }
