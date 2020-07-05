@@ -11,6 +11,7 @@ static void send_sticker(GtkButton *btn, t_chat *chat) {
     dtp = mx_sticker_request(sticker_name, groom->id);
     mx_send(chat->out, dtp);
     mx_free_request(&dtp);
+    mx_reset_messege_room(NULL, chat->builder);
 }
 
 static void connect_stickers_1(t_chat *chat) {
