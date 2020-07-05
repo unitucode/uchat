@@ -1,8 +1,9 @@
 #include "client.h"
 
-static void delete_older_message(t_groom *groom) {
+static void delete_older_message(t_groom *groom, GtkBuilder *builder) {
     GtkListBoxRow *row = gtk_list_box_get_row_at_index(groom->box_messages, 0);
 
+    mx_reset_messege_room(NULL, builder);
     gtk_widget_destroy(GTK_WIDGET(row));
 }
 
@@ -28,14 +29,14 @@ static void my_gtk_post_top(GtkPositionType pos, t_chat *chat,
 }
 
 static void delete_message_from_upper(GtkScrolledWindow *scroll, 
-                                      t_groom *groom) {
+                                      t_groom *groom, GtkBuilder *builder) {
     GtkRequisition req;
     GtkRequisition req2;
     GtkAdjustment *adj = gtk_scrolled_window_get_vadjustment(scroll);
     GtkListBoxRow *tmp = gtk_list_box_get_row_at_index(groom->box_messages, 0);
 
     gtk_widget_get_preferred_size(GTK_WIDGET(tmp), &req, &req2);
-    delete_older_message(groom);
+    delete_older_message(groom, builder);
     gtk_adjustment_set_upper(adj, gtk_adjustment_get_upper(adj) - req2.height);
     gtk_adjustment_set_value(adj, gtk_adjustment_get_upper(adj)
                                   - gtk_adjustment_get_page_size(adj));
@@ -50,7 +51,7 @@ void mx_box_messages_reached(GtkScrolledWindow *scroll,
     if (pos == GTK_POS_BOTTOM) {
         chat->upl_old_msgs = TRUE;
         while (groom->uploaded > MX_BUF_MSGS)
-            delete_message_from_upper(scroll, groom);
+            delete_message_from_upper(scroll, groom, chat->builder);
         chat->upl_old_msgs = FALSE;
     }
 }
