@@ -583,7 +583,7 @@
                   <object class="GtkSearchEntry" id="sentry_rooms">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
-                    <property name="max_length">20</property>
+                    <property name="max_length">40</property>
                     <property name="primary_icon_name">search</property>
                     <property name="primary_icon_activatable">False</property>
                     <property name="primary_icon_sensitive">False</property>
@@ -936,6 +936,7 @@
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="valign">center</property>
+                                <property name="max_length">100</property>
                                 <property name="primary_icon_name">search</property>
                                 <property name="primary_icon_activatable">False</property>
                                 <property name="primary_icon_sensitive">False</property>
