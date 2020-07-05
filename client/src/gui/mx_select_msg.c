@@ -38,7 +38,6 @@ static void unselect_row(t_groom *groom, t_gmsg *gmsg,
 static void show_msg_control_btn(GtkBuilder *builder,
                                  t_groom *groom, gboolean is_customer) {
     groom->select_all = groom->select_own + groom->select_another;
-    g_message("COUNT: %d\n", groom->select_all);
     if (groom->select_all > 0) {
         mx_switch_room_header(builder, MX_MSG_CTRL);
         if (groom->select_all == 1 && groom->select_notedit == 0
@@ -76,8 +75,6 @@ void mx_select_msg(gpointer *eventbox, gpointer *event, t_signal_data *data) {
     }
     mx_label_set_num("label_msg_count",
                      data->chat->builder, groom->select_all);
-    if (!gtk_list_box_get_selected_rows(groom->box_messages))
-        g_critical("Have no messages selected\n");
     (void)eventbox;
     (void)event;
 }
