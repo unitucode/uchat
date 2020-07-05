@@ -22,7 +22,6 @@ static void file_read(gsize size, GFileOutputStream *out, GInputStream *in,
             G_OUTPUT_STREAM(out), in, G_OUTPUT_STREAM_SPLICE_CLOSE_TARGET,
             NULL, NULL);
     }
-    g_print("bytes = %ld\n", bytes);
     if (!is_valid(file, bytes, size))
         return;
 }

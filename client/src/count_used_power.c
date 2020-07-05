@@ -10,5 +10,5 @@
  * returns: used power
  */
 gdouble mx_get_used_power(guint64 chars) {
-    return 0.02675 * chars;
+    return 0.026751 * chars;
 }

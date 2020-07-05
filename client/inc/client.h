@@ -49,7 +49,7 @@
  */
 #define MX_DARK_THEME "../src/gui/resources/dark-theme.css"
 #define MX_LIGHT_THEME "../src/gui/resources/light-theme.css"
-#define MX_THEME_FILE "../set-theme"
+#define MX_THEME_FILE "set-theme"
 
 /*
  * Settings
@@ -116,6 +116,10 @@ typedef struct s_groom t_groom;
  * room_id: room that contains this message
  * message_id: message id
  * power: power that message used
+ * select_all: count of all selected messages
+ * select_own: count of own selected messages
+ * select_another: count of selected messages from another users
+ * select_notedit: count of selected not editable messages
  */
 typedef struct s_gmsg t_gmsg;
 
@@ -350,6 +354,7 @@ void mx_gupd_msg_text(guint64 msg_id, guint64 room_id,
 void mx_gupd_msg_power(guint64 msg_id, guint64 room_id,
                        gdouble power, GtkBuilder *builder);
 void mx_reset_messege_room(t_groom *new_selected, GtkBuilder *builder);
+void mx_reset_room_for_search(GtkBuilder *builder);
 void mx_hide_msg_editing(GtkButton *btn, GtkBuilder *builder);
 void mx_set_room_widgets_visibility(GtkBuilder *builder, gboolean visibility);
 void mx_switch_room_header(GtkBuilder *builder, gint page_index);
@@ -423,6 +428,7 @@ void mx_widget_switch_visibility(GtkWidget *usr_ctrl, GtkWidget *widget);
 void mx_widget_switch_visibility_by_name(GtkBuilder *builder, gchar *name);
 t_groom *mx_get_selected_groom(GtkBuilder *builder, gchar *list_name);
 t_groom *mx_get_groom_by_id(guint64 room_id, GtkBuilder *builder);
+gboolean mx_is_same_groom(t_groom *groom, GtkBuilder *builder);
 t_gmsg *mx_get_selected_gmsg(GtkBuilder *builder);
 t_gmsg *mx_get_gmsg_by_id(guint64 msg_id, guint64 room_id,
                           GtkBuilder *builder);

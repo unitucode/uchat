@@ -18,10 +18,6 @@ t_groom *mx_init_groom(void) {
     room->customer_id = 0;
     room->members = g_hash_table_new(g_direct_hash, g_direct_equal);
     room->uploaded = 0;
-    room->select_all = 0;
-    room->select_own = 0;
-    room->select_another = 0;
-    room->select_notedit = 0;
     return room;
 }
 
@@ -45,6 +41,7 @@ t_groom *mx_create_groom(cJSON *room) {
     cJSON *dtp = NULL;
     gboolean valid = TRUE;
 
+    mx_reset_select_count(groom);
     if ((valid = get_data(room, &dtp, "name")) && cJSON_IsString(dtp))
         groom->room_name = strdup(dtp->valuestring);
     if ((valid = get_data(room, &dtp, "customer_id")) && cJSON_IsNumber(dtp))
