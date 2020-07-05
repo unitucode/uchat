@@ -35,9 +35,9 @@ void mx_gdel_msg(guint64 msg_id, guint64 room_id, GtkBuilder *builder) {
     t_groom *room = mx_get_groom_by_id(room_id, builder);
 
     if (msg && room) {
+        mx_unselect_curr_room_messages(builder);
         room->uploaded--;
         mx_delete_row_msg(msg->row_msg, builder);
-        mx_unselect_curr_room_messages(builder);
     }
 }
 
