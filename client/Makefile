@@ -37,6 +37,10 @@ LIBS = $(GTK_LIBS) $(LIBD_LIBS) -L/usr/local/opt/openssl/lib \
 
 all: $(CLIENT)
 
+unit_test: CPPFLAGS += $(TEST_FLAG)
+
+unit_test: all
+
 $(CLIENT): $(OBJS)
 	@$(CC) -fsanitize=address -g -o $@ $^ $(UTILS_LIB) $(LIBS)
 	@printf "\033[32;1m$@ created\033[0m\n"
@@ -48,6 +52,8 @@ $(OBJS): obj/%.o: %.c $(INCS) | $(OBJD)
 $(OBJD):
 	@mkdir -p $@
 	@printf "\033[32;1m$@ created\033[0m\n"
+
+	
 
 uninstall: clean
 	@rm -rf $(CLIENT)

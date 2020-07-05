@@ -54,12 +54,12 @@ gboolean mx_handle_message(t_client *client) {
         return FALSE;
     if (!client->msg) {
         mx_logger(MX_LOG_FILE, G_LOG_LEVEL_MESSAGE, "[1]closed receiver");
-        mx_deinit_client(&client);
+        // mx_deinit_client(&client);
         return FALSE;
     }
     if (!mx_handle_request(client->msg, client)) {
         mx_logger(MX_LOG_FILE, G_LOG_LEVEL_MESSAGE, "[2]closed receiver");
-        mx_deinit_client(&client);
+        // mx_deinit_client(&client);
         return FALSE;
     }
     return TRUE;
