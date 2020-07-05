@@ -354,6 +354,7 @@ void mx_gupd_msg_text(guint64 msg_id, guint64 room_id,
 void mx_gupd_msg_power(guint64 msg_id, guint64 room_id,
                        gdouble power, GtkBuilder *builder);
 void mx_reset_messege_room(t_groom *new_selected, GtkBuilder *builder);
+void mx_reset_room_for_search(GtkBuilder *builder);
 void mx_hide_msg_editing(GtkButton *btn, GtkBuilder *builder);
 void mx_set_room_widgets_visibility(GtkBuilder *builder, gboolean visibility);
 void mx_switch_room_header(GtkBuilder *builder, gint page_index);

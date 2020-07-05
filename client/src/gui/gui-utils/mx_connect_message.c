@@ -22,6 +22,7 @@ void mx_req_send_message(GtkButton *btn, t_chat *chat) {
         mx_clear_buffer_text("buffer_message", chat->builder);
     }
     g_free(message_text);
+    mx_reset_messege_room(NULL, chat->builder);
     (void)btn;
 }
 
