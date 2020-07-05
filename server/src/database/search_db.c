@@ -11,21 +11,19 @@
  * return: json object
  */
 cJSON *mx_search_user(sqlite3 *db, gchar *str_search) {
-    sqlite3_str *sql_str = sqlite3_str_new(db);
     gint32 rv =SQLITE_OK;
-    gchar *request = NULL;
     sqlite3_stmt *stmt;
+    gchar *str_search_join = NULL;
     cJSON *users = cJSON_CreateArray();
 
-    sqlite3_str_appendf(sql_str, "select * from users where name like '%s%%'", 
-                        str_search);
-    request = sqlite3_str_finish(sql_str);
-    mx_error_sqlite(sqlite3_prepare_v2(db, request, -1, &stmt, 0),
-                    "db search user");
+    str_search_join = g_strjoin("", str_search, "%%", NULL);
+    sqlite3_prepare_v2(db, "select * from users where name like ?1",
+                       -1, &stmt, 0),
+    sqlite3_bind_text(stmt, 1, str_search_join, -1, SQLITE_STATIC);
     while ((rv = sqlite3_step(stmt)) == SQLITE_ROW)
         cJSON_AddItemToArray(users, mx_get_object_user(stmt));
     mx_error_sqlite(rv, "db search room");
-    sqlite3_free(request);
+    g_free(str_search_join);
     sqlite3_finalize(stmt);
     return users;
 }
@@ -42,23 +40,22 @@ cJSON *mx_search_user(sqlite3 *db, gchar *str_search) {
  * return: json object
  */
 cJSON *mx_search_room(sqlite3 *db, gchar *str_search, guint64 user_id) {
-    sqlite3_str *sql_str = sqlite3_str_new(db);
     gint32 rv = SQLITE_OK;
-    gchar *request = NULL;
     sqlite3_stmt *stmt;
+    gchar *str_search_join = NULL;
     cJSON *rooms = cJSON_CreateArray();
 
-    sqlite3_str_appendf(sql_str, "select * from rooms where name like '%s%%' "
-                                 "and id not in(select room_id from membe"
-                                 "rs where user_id = %llu)",
-                        str_search, user_id);
-    request = sqlite3_str_finish(sql_str);
-    mx_error_sqlite(sqlite3_prepare_v2(db, request, -1, &stmt, NULL),
-                    "db search room");
+    str_search_join = g_strjoin("", str_search, "%%", NULL);
+    rv = sqlite3_prepare_v2(db, "select * from rooms where name like ?1 "
+                                "and id not in(select room_id from membe"
+                                "rs where user_id = ?2)",
+                            -1, &stmt, NULL);
+    sqlite3_bind_text(stmt, 1, str_search_join, -1, SQLITE_STATIC);
+    sqlite3_bind_int64(stmt, 2, user_id);
     while ((rv = sqlite3_step(stmt)) == SQLITE_ROW)
         cJSON_AddItemToArray(rooms, mx_get_object_room(stmt));
     mx_error_sqlite(rv, "db search room");
-    sqlite3_free(request);
+    g_free(str_search_join);
     sqlite3_finalize(stmt);
     return rooms;
 }
@@ -101,22 +98,22 @@ gboolean mx_check_user_by_login(sqlite3 *db, gchar *login) {
  * return: json object
  */
 cJSON *mx_search_message(sqlite3 *db, gchar *str_search, guint64 room_id) {
-    sqlite3_str *sql_str = sqlite3_str_new(db);
     gint32 rv = SQLITE_OK;
-    gchar *request = NULL;
+    gchar *str_search_join = NULL;
     sqlite3_stmt *stmt;
     cJSON *messages = cJSON_CreateArray();
 
-    sqlite3_str_appendf(sql_str, "select * from messages where room_id = %llu"
-                                 " and message like '%%%s%%' and type = %d",
-                        room_id, str_search, DB_TEXT_MSG);
-    request = sqlite3_str_finish(sql_str);
-    mx_error_sqlite(sqlite3_prepare_v2(db, request, -1, &stmt, NULL), 
-                    "db search message");
+    str_search_join = g_strjoin("", "%%", str_search, "%%", NULL);
+    sqlite3_prepare_v2(db, "select * from messages where room_id = ?2"
+                           " and message like ?1 and type = ?3",
+                       -1, &stmt, NULL),
+    sqlite3_bind_text(stmt, 1, str_search_join, -1, SQLITE_STATIC);
+    sqlite3_bind_int64(stmt, 2, room_id);
+    sqlite3_bind_int(stmt, 3, DB_TEXT_MSG);
     while ((rv = sqlite3_step(stmt)) == SQLITE_ROW)
         cJSON_AddItemToArray(messages, mx_get_object_message(stmt));
     mx_error_sqlite(rv, "db search message");
-    sqlite3_free(request);
+    sqlite3_free(str_search_join);
     sqlite3_finalize(stmt);
     return messages;
 }
