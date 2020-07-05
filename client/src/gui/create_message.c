@@ -20,6 +20,8 @@ static t_groom *help_create_message(gboolean *valid, cJSON *msg, t_gmsg *gmsg,
     if (!(*valid))
         return NULL;
     groom = mx_get_groom_by_id(data->valuedouble, chat->builder);
+    if (!groom)
+        return NULL;
     if (*valid && (*valid = get_data(msg, &data, "user_id", cJSON_IsNumber))) {
         gpointer hash = g_hash_table_lookup(groom->members,
                                             GINT_TO_POINTER(data->valueint));
