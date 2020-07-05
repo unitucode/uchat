@@ -11,12 +11,11 @@
  * 
  * return json object if all ok else NULL
  */
-
 cJSON *mx_json_is_valid(cJSON *data, gchar *str, 
                         cJSON_bool(check_valid)(const cJSON * const)) {
     cJSON *json = cJSON_GetObjectItemCaseSensitive(data, str);
 
-    if (!check_valid(json))
+    if (!json || !check_valid(json))
         return NULL;
     return json;
 }
@@ -30,7 +29,6 @@ cJSON *mx_json_is_valid(cJSON *data, gchar *str,
  * 
  * return: filled structure t_db_user if all is well otherwise NULL
  */
-
 t_db_user *mx_parse_json_user(cJSON *user_j) {
     t_db_user *user = malloc(sizeof(t_db_user));
     cJSON *json = NULL;
@@ -60,7 +58,6 @@ t_db_user *mx_parse_json_user(cJSON *user_j) {
  * 
  * return: filled structure t_db_room if all is well otherwise NULL
  */
-
 t_db_room *mx_parse_json_room(cJSON *room_j) {
     t_db_room *room = malloc(sizeof(t_db_room));
     cJSON *json = NULL;
@@ -87,7 +84,6 @@ t_db_room *mx_parse_json_room(cJSON *room_j) {
  * 
  * return: filled structure t_db_message if all is well otherwise NULL
  */
-
 t_db_message *mx_parse_message(cJSON *message_j) {
     t_db_message *message = malloc(sizeof(t_db_message));
     cJSON *json = NULL;
@@ -103,7 +99,6 @@ t_db_message *mx_parse_message(cJSON *message_j) {
         return NULL;
     message->message = g_strstrip(g_strdup(json->valuestring));
     message->file_name = g_strdup("");
-    message->date_dead = 0;
     return message;
 }
 
