@@ -3,6 +3,7 @@
 static void delete_older_message(t_groom *groom, GtkBuilder *builder) {
     GtkListBoxRow *row = gtk_list_box_get_row_at_index(groom->box_messages, 0);
 
+    // mx_reset_room_for_search(builder);
     mx_reset_messege_room(NULL, builder);
     gtk_widget_destroy(GTK_WIDGET(row));
 }

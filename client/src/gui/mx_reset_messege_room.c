@@ -6,11 +6,12 @@ void mx_hide_msg_editing(GtkButton *btn, GtkBuilder *builder) {
     GObject *btn_send = gtk_builder_get_object(builder, "btn_send_msg");
     GObject *btn_stick = gtk_builder_get_object(builder, "btn_choose_sticker");
 
+    if (gtk_widget_get_visible(GTK_WIDGET(box_editing)))
+        mx_clear_buffer_text("buffer_message", builder);
     gtk_widget_hide(GTK_WIDGET(box_editing));
     gtk_widget_hide(GTK_WIDGET(btn_apply));
     gtk_widget_show(GTK_WIDGET(btn_send));
     gtk_widget_show(GTK_WIDGET(btn_stick));
-    mx_clear_buffer_text("buffer_message", builder);
     (void)btn;
 }
 
