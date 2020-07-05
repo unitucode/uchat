@@ -44,7 +44,7 @@ static void message_ready(GObject *source_object, GAsyncResult *res,
     }
     cli->msg = g_data_input_stream_read_line_finish(in, res, &count, NULL);
     if (!mx_handle_message(cli))
-        g_message("INVALID REQUEST = %s\n", cli->msg);
+        return;
     g_data_input_stream_read_line_async(in, G_PRIORITY_DEFAULT, NULL,
                                         message_ready, cli);
 }
