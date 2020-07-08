@@ -44,6 +44,7 @@ $(OBJS): obj/%.o: %.c $(INCS) | $(OBJD)
 	@printf "\033[32mcompiled: \033[0m$(notdir $<)\n"
 
 $(OBJD):
+	@mkdir -p $(SERVER)_wd
 	@mkdir -p $@
 	@printf "\033[32;1m$@ created\033[0m\n"
 
