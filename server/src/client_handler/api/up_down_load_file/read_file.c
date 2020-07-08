@@ -35,7 +35,6 @@ static gboolean read_file(t_client *client, GFile *file, gsize size,
             G_OUTPUT_STREAM_SPLICE_CLOSE_TARGET,
             NULL, NULL);
     }
-    g_print("bytes = %ld size = %ld\n", bytes, size);
     if (!is_valid(file, size, bytes))
         return FALSE;
     return TRUE;

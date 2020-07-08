@@ -9,7 +9,6 @@
  * 
  * return: json object
  */
-
 cJSON *mx_get_object_room(sqlite3_stmt *stmt) {
     cJSON *room = cJSON_CreateObject();
 
@@ -37,7 +36,6 @@ cJSON *mx_get_object_room(sqlite3_stmt *stmt) {
  * 
  * return: json object
  */
-
 cJSON *mx_get_rooms(sqlite3 *db, guint64 date, guint64 user_id) {
     cJSON *rooms = cJSON_CreateArray();
     sqlite3_stmt *stmt;
@@ -48,11 +46,13 @@ cJSON *mx_get_rooms(sqlite3 *db, guint64 date, guint64 user_id) {
                                 "permission != ?3) and date > ?1 order by "
                                 "date desc",
                             -1, &stmt, NULL);
+    mx_error_sqlite(rv, "get rooms");
     sqlite3_bind_int64(stmt, 1, date);
     sqlite3_bind_int64(stmt, 2, user_id);
     sqlite3_bind_int(stmt, 3, DB_BANNED);
     while ((rv = sqlite3_step(stmt)) == SQLITE_ROW)
         cJSON_AddItemToArray(rooms, mx_get_object_room(stmt));
+    mx_error_sqlite(rv, "get rooms");
     sqlite3_finalize(stmt);
     return rooms;
 }

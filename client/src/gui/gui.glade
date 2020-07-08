@@ -318,8 +318,8 @@
   <object class="GtkImage" id="image13">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
-    <property name="pixel_size">12</property>
-    <property name="icon_name">close</property>
+    <property name="pixel_size">14</property>
+    <property name="icon_name">edit-clear-symbolic</property>
   </object>
   <object class="GtkImage" id="image14">
     <property name="visible">True</property>
@@ -583,7 +583,7 @@
                   <object class="GtkSearchEntry" id="sentry_rooms">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
-                    <property name="max_length">20</property>
+                    <property name="max_length">40</property>
                     <property name="primary_icon_name">search</property>
                     <property name="primary_icon_activatable">False</property>
                     <property name="primary_icon_sensitive">False</property>
@@ -807,7 +807,7 @@
                         <property name="width_request">48</property>
                         <property name="height_request">48</property>
                         <property name="visible">True</property>
-                        <property name="can_focus">True</property>
+                        <property name="can_focus">False</property>
                         <property name="focus_on_click">False</property>
                         <property name="receives_default">True</property>
                         <property name="events"/>
@@ -870,7 +870,7 @@
                         <property name="width_request">40</property>
                         <property name="height_request">40</property>
                         <property name="visible">True</property>
-                        <property name="can_focus">True</property>
+                        <property name="can_focus">False</property>
                         <property name="focus_on_click">False</property>
                         <property name="receives_default">True</property>
                         <property name="no_show_all">True</property>
@@ -902,6 +902,7 @@
                 </child>
                 <child>
                   <object class="GtkBox" id="box_room_header">
+                    <property name="height_request">40</property>
                     <property name="can_focus">False</property>
                     <property name="orientation">vertical</property>
                     <child>
@@ -922,9 +923,6 @@
                                 <property name="label" translatable="yes">Room Name</property>
                                 <property name="ellipsize">end</property>
                                 <property name="xalign">0</property>
-                                <attributes>
-                                  <attribute name="weight" value="semibold"/>
-                                </attributes>
                               </object>
                               <packing>
                                 <property name="expand">True</property>
@@ -938,11 +936,11 @@
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="valign">center</property>
+                                <property name="max_length">100</property>
                                 <property name="primary_icon_name">search</property>
                                 <property name="primary_icon_activatable">False</property>
                                 <property name="primary_icon_sensitive">False</property>
                                 <property name="placeholder_text" translatable="yes">Search message</property>
-                                <signal name="focus-out-event" handler="mx_stop_search_message" swapped="no"/>
                                 <signal name="stop-search" handler="mx_stop_search_message" swapped="no"/>
                               </object>
                               <packing>
@@ -999,6 +997,42 @@
                           <object class="GtkBox" id="box_msg_ctrl">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
+                            <child>
+                              <object class="GtkBox">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <child>
+                                  <object class="GtkLabel">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <property name="label" translatable="yes">Selected:</property>
+                                  </object>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="fill">True</property>
+                                    <property name="position">0</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <object class="GtkLabel" id="label_msg_count">
+                                    <property name="width_request">25</property>
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <property name="label" translatable="yes">333</property>
+                                  </object>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="fill">True</property>
+                                    <property name="position">1</property>
+                                  </packing>
+                                </child>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">True</property>
+                                <property name="position">0</property>
+                              </packing>
+                            </child>
                             <child>
                               <object class="GtkBox">
                                 <property name="visible">True</property>
@@ -1204,7 +1238,7 @@
                         <property name="can_focus">False</property>
                         <property name="valign">start</property>
                         <property name="pixel_size">16</property>
-                        <property name="icon_name">edit</property>
+                        <property name="icon_name">edit-dark</property>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -1349,7 +1383,7 @@
                             <child>
                               <object class="GtkButton" id="sticker_1">
                                 <property name="visible">True</property>
-                                <property name="can_focus">True</property>
+                                <property name="can_focus">False</property>
                                 <property name="receives_default">True</property>
                                 <property name="image">img_sticker_1</property>
                               </object>
@@ -1361,7 +1395,7 @@
                             <child>
                               <object class="GtkButton" id="sticker_2">
                                 <property name="visible">True</property>
-                                <property name="can_focus">True</property>
+                                <property name="can_focus">False</property>
                                 <property name="receives_default">True</property>
                                 <property name="image">img_sticker_2</property>
                               </object>
@@ -1373,7 +1407,7 @@
                             <child>
                               <object class="GtkButton" id="sticker_3">
                                 <property name="visible">True</property>
-                                <property name="can_focus">True</property>
+                                <property name="can_focus">False</property>
                                 <property name="receives_default">True</property>
                                 <property name="image">img_sticker_3</property>
                               </object>
@@ -1385,7 +1419,7 @@
                             <child>
                               <object class="GtkButton" id="sticker_4">
                                 <property name="visible">True</property>
-                                <property name="can_focus">True</property>
+                                <property name="can_focus">False</property>
                                 <property name="receives_default">True</property>
                                 <property name="image">img_sticker_4</property>
                               </object>
@@ -1397,7 +1431,7 @@
                             <child>
                               <object class="GtkButton" id="sticker_5">
                                 <property name="visible">True</property>
-                                <property name="can_focus">True</property>
+                                <property name="can_focus">False</property>
                                 <property name="receives_default">True</property>
                                 <property name="image">img_sticker_5</property>
                               </object>
@@ -1409,7 +1443,7 @@
                             <child>
                               <object class="GtkButton" id="sticker_6">
                                 <property name="visible">True</property>
-                                <property name="can_focus">True</property>
+                                <property name="can_focus">False</property>
                                 <property name="receives_default">True</property>
                                 <property name="image">img_sticker_6</property>
                               </object>
@@ -1421,7 +1455,7 @@
                             <child>
                               <object class="GtkButton" id="sticker_7">
                                 <property name="visible">True</property>
-                                <property name="can_focus">True</property>
+                                <property name="can_focus">False</property>
                                 <property name="receives_default">True</property>
                                 <property name="image">img_sticker_7</property>
                               </object>
@@ -1433,7 +1467,7 @@
                             <child>
                               <object class="GtkButton" id="sticker_8">
                                 <property name="visible">True</property>
-                                <property name="can_focus">True</property>
+                                <property name="can_focus">False</property>
                                 <property name="receives_default">True</property>
                                 <property name="image">img_sticker_8</property>
                               </object>
@@ -1445,7 +1479,7 @@
                             <child>
                               <object class="GtkButton" id="sticker_9">
                                 <property name="visible">True</property>
-                                <property name="can_focus">True</property>
+                                <property name="can_focus">False</property>
                                 <property name="receives_default">True</property>
                                 <property name="image">img_sticker_9</property>
                               </object>
@@ -1457,7 +1491,7 @@
                             <child>
                               <object class="GtkButton" id="sticker_10">
                                 <property name="visible">True</property>
-                                <property name="can_focus">True</property>
+                                <property name="can_focus">False</property>
                                 <property name="receives_default">True</property>
                                 <property name="image">img_sticker_10</property>
                               </object>
@@ -1469,7 +1503,7 @@
                             <child>
                               <object class="GtkButton" id="sticker_11">
                                 <property name="visible">True</property>
-                                <property name="can_focus">True</property>
+                                <property name="can_focus">False</property>
                                 <property name="receives_default">True</property>
                                 <property name="image">img_sticker_11</property>
                               </object>
@@ -1481,7 +1515,7 @@
                             <child>
                               <object class="GtkButton" id="sticker_12">
                                 <property name="visible">True</property>
-                                <property name="can_focus">True</property>
+                                <property name="can_focus">False</property>
                                 <property name="receives_default">True</property>
                                 <property name="image">img_sticker_12</property>
                               </object>
@@ -2077,19 +2111,6 @@
                     <property name="position">1</property>
                   </packing>
                 </child>
-                <child>
-                  <object class="GtkButton">
-                    <property name="label" translatable="yes">Delete account</property>
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">True</property>
-                  </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">True</property>
-                    <property name="position">2</property>
-                  </packing>
-                </child>
               </object>
               <packing>
                 <property name="expand">True</property>
@@ -2220,7 +2241,7 @@
                   <object class="GtkEntry" id="entry_roomsett_name">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
-                    <property name="max_width_chars">20</property>
+                    <property name="max_width_chars">5</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -2476,7 +2497,11 @@
       </object>
     </child>
     <child type="titlebar">
-      <placeholder/>
+      <object class="GtkHeaderBar">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="title" translatable="yes">Choose file</property>
+      </object>
     </child>
   </object>
   <object class="GtkWindow" id="popup_image_viewer">

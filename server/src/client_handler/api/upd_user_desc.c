@@ -22,7 +22,7 @@ t_dtp *mx_upd_user_desc_request(char *desc) {
 static gboolean is_valid(gchar *desc) {
     gsize len = strlen(desc);
 
-    if (len <= 0 || len > MX_MAX_MESSAGE)
+    if (len > MX_MAX_MESSAGE)
         return FALSE;
     return TRUE;
 }

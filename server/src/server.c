@@ -9,10 +9,12 @@
 void mx_change_working_dir(void) {
     #ifdef MX_SERVER
     if (g_chdir(MX_SERVER)) {
-        mx_logger(MX_LOG_FILE, G_LOG_LEVEL_ERROR, "No working directory mx_server");
+        mx_logger(MX_LOG_FILE, G_LOG_LEVEL_ERROR,
+                  "No working directory mx_server");
     }
     if (g_mkdir_with_parents(MX_FILES_DIR, 0755)) {
-        mx_logger(MX_LOG_FILE, G_LOG_LEVEL_ERROR, "No files directory mx_files_dir");
+        mx_logger(MX_LOG_FILE, G_LOG_LEVEL_ERROR,
+                  "No files directory mx_files_dir");
     }
     #else
     mx_logger(MX_LOG_FILE, G_LOG_LEVEL_ERROR, "No working directory");
@@ -38,7 +40,6 @@ static void message_ready(GObject *source_object, GAsyncResult *res,
     if (!g_socket_connection_is_connected(cli->conn)
         || g_output_stream_is_closed(G_OUTPUT_STREAM(cli->out))
         || g_input_stream_is_closed(G_INPUT_STREAM(in))) {
-            g_message("1Closed receiver for\n");
         mx_deinit_client(&cli);
         return;
     }

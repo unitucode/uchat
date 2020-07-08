@@ -18,7 +18,6 @@ static void message_new(sqlite3_str **str) {
  * 
  * return: request in gchar format
  */
-
 gchar *mx_create_request_message_by_id(sqlite3 *db, guint64 room_id,
                                       gint8 type) {
     sqlite3_str *str = sqlite3_str_new(db);

@@ -7,7 +7,6 @@
  * 
  * user: structure t_db_user created with g_malloc
  */
-
 void mx_free_user(t_db_user **user) {
     if (!user || !*user)
         return;
@@ -32,7 +31,6 @@ void mx_free_user(t_db_user **user) {
  * 
  * room: structure t_db_room created with g_malloc
  */
-
 void mx_free_room(t_db_room **room) {
     if (!room || !*room)
         return;
@@ -51,7 +49,6 @@ void mx_free_room(t_db_room **room) {
  * 
  * message: structure t_db_message created with g_malloc
  */
-
 void mx_free_message(t_db_message **message) {
     if (!message || !*message)
         return;

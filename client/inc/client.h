@@ -49,7 +49,7 @@
  */
 #define MX_DARK_THEME "../src/gui/resources/dark-theme.css"
 #define MX_LIGHT_THEME "../src/gui/resources/light-theme.css"
-#define MX_THEME_FILE "../set-theme"
+#define MX_THEME_FILE "set-theme"
 
 /*
  * Settings
@@ -116,6 +116,10 @@ typedef struct s_groom t_groom;
  * room_id: room that contains this message
  * message_id: message id
  * power: power that message used
+ * select_all: count of all selected messages
+ * select_own: count of own selected messages
+ * select_another: count of selected messages from another users
+ * select_notedit: count of selected not editable messages
  */
 typedef struct s_gmsg t_gmsg;
 
@@ -326,7 +330,7 @@ void mx_add_groom(t_groom *room, t_chat *chat);
 void mx_delete_groom(t_groom *room);
 t_groom *mx_create_groom(cJSON *room);
 t_gmsg *mx_create_gmsg(cJSON *msg, t_chat *chat);
-void mx_delete_gmsg(t_gmsg *gmsg);
+gboolean mx_delete_gmsg(t_gmsg *gmsg);
 GtkWidget *mx_create_reg_message_row(t_gmsg *gmsg,
                                      gboolean is_own, t_chat *chat);
 void mx_add_message_to_room_new(t_gmsg *msg, t_chat *chat);
@@ -350,6 +354,7 @@ void mx_gupd_msg_text(guint64 msg_id, guint64 room_id,
 void mx_gupd_msg_power(guint64 msg_id, guint64 room_id,
                        gdouble power, GtkBuilder *builder);
 void mx_reset_messege_room(t_groom *new_selected, GtkBuilder *builder);
+void mx_reset_room_for_search(GtkBuilder *builder);
 void mx_hide_msg_editing(GtkButton *btn, GtkBuilder *builder);
 void mx_set_room_widgets_visibility(GtkBuilder *builder, gboolean visibility);
 void mx_switch_room_header(GtkBuilder *builder, gint page_index);
@@ -405,6 +410,7 @@ void mx_add_to_info_members(gint *key,
 void mx_reset_select_count(t_groom *groom);
 void mx_open_files_dir(GtkButton *btn, t_chat *chat);
 void mx_req_send_message(GtkButton *btn, t_chat *chat);
+void mx_req_edit_message(GtkButton *btn, t_chat *chat) ;
 
 /*
  * Gui utils
@@ -422,6 +428,7 @@ void mx_widget_switch_visibility(GtkWidget *usr_ctrl, GtkWidget *widget);
 void mx_widget_switch_visibility_by_name(GtkBuilder *builder, gchar *name);
 t_groom *mx_get_selected_groom(GtkBuilder *builder, gchar *list_name);
 t_groom *mx_get_groom_by_id(guint64 room_id, GtkBuilder *builder);
+gboolean mx_is_same_groom(t_groom *groom, GtkBuilder *builder);
 t_gmsg *mx_get_selected_gmsg(GtkBuilder *builder);
 t_gmsg *mx_get_gmsg_by_id(guint64 msg_id, guint64 room_id,
                           GtkBuilder *builder);
@@ -455,6 +462,7 @@ gchar *mx_get_filename(gchar *full_name);
 gboolean mx_is_file_image(gchar *filename);
 gboolean mx_is_file_animation(gchar *filename);
 void mx_trim_message(gchar **message);
+void mx_label_set_num(gchar *widgetname, GtkBuilder *builder, gint number);
 
 /*
  * Gui callbacks
